@@ -129,6 +129,7 @@ import { IoMoon, IoSunny } from "react-icons/io5";
 const Header = () => {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  
 
   // Initialize dark mode state on component mount
   useEffect(() => {
@@ -156,12 +157,12 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-900">
+    <header className="bg-white dark:bg-gray-900 w-full fixed z-[999] ">
       <div className="container mx-auto px-4">
         <div className="flex h-24 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12 items-center">
-            <Link to="/home">
-              <img className="h-24 w-24" src={logo} alt="safesolution" />
+            <Link to="/home" >
+              <img className="h-24 w-24 " src={logo} alt="safesolution"  />
             </Link>
           </div>
 
