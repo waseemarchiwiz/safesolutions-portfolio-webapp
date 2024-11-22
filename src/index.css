@@ -1,0 +1,16 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  @apply font-['inter']  
+}
+
+h1{
+  @apply font-['Geist']
+}
+
+
+ 
