@@ -43,7 +43,7 @@ export default function WhyChoose() {
       </div>
 
       {/* Wrap the mapped cards with a div that has a grid layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3   gap-6">
         {cardData.map((item, index) => {
           return (
             <CardContainer key={index} className="inter-var">
