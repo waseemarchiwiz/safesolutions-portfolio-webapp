@@ -210,7 +210,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-24 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12 items-center">
-            <Link to="/home">
+            <Link to="/">
               <img className="h-24 w-24" src={logo} alt="safesolution" />
             </Link>
           </div>
@@ -221,7 +221,7 @@ const Header = () => {
                 <li>
                   <Link
                     className="text-black transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    to="/home"
+                    to="/"
                   >
                     Home
                   </Link>
@@ -305,7 +305,7 @@ const Header = () => {
                   <li>
                     <Link
                       className="block text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-                      to="/home"
+                      to="/"
                     >
                       Home
                     </Link>

@@ -4,6 +4,7 @@ import Testimonial from '../components/HomeComponents/Testimonial'
 import ProjComp from '../components/HomeComponents/ProjComp'
 import WhyChoose from '../components/HomeComponents/WhyChoose'
 import About from '../components/HomeComponents/AboutComp'
+import ServicesComponent from '../components/HomeComponents/ServicesComponent'
  
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
       <ProjComp />
       <WhyChoose />
       <About />
+      <ServicesComponent />
       {/* <Testimonial /> */}
     </div>
   )
