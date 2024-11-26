@@ -18,7 +18,7 @@ const ServicesComponent = () => {
         </p>
       </div>
       <div className="container
-       grid grid-cols-4 gap-3 my-20 ">
+       grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-3 my-20 ">
         <div className="border border-[#343434] dark:hover:border-indigo-600 hover:border-white hover:border-2  w-[300px] h-[150px] p-5 cursor-pointer bg-black text-white rounded-md group    ">
           <div className="flex flex-col gap-3 ">
             <GiArtificialIntelligence className="w-12 h-12  group-hover:scale-120 ease-in  transition-all group-hover:text-white  text-neutral-500 dark:text-neutral-200 " />
