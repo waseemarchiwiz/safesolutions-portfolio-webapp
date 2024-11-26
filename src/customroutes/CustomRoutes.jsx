@@ -13,7 +13,7 @@ const CustomRoutes = () => {
       element: <Layout />,
       children: [
         {
-          path: "home",
+          path: "/",
           element: <Home />,
         },
         {
