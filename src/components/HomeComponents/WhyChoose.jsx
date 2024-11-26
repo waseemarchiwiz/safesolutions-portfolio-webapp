@@ -36,9 +36,9 @@ export default function WhyChoose() {
           Why Choose us
         </h1>
         <p className=" font-light leading-[33px]   w-auto   ">
-          Our comprehensive back office support services are designed to
-          streamline your business operations, allowing you to focus on core
-          activities and strategic initiatives.
+          We provide expert back-office support services, leveraging innovation,
+          industry expertise, and emerging technologies to streamline operations
+          and deliver tailored solutions.
         </p>
       </div>
 
@@ -79,7 +79,7 @@ export default function WhyChoose() {
                   >
                     Try now →
                   </CardItem> */}
-                  {/* <CardItem
+                {/* <CardItem
                     translateZ={20}
                     as="button"
                     className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
