@@ -42,9 +42,9 @@ const Testimonial = () => {
           growth-oriented partnership to its clients.
         </p> */}
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-          First-Hand Opinions of Clients on Their Partnership Experience
+        Hear From Our Clients
         </h1>
-        <p className=" font-light leading-[33px] text-black dark:text-white mt-4  text-center  w-auto   ">
+        <p className=" font-light text-[26px] leading-[50px] text-black dark:text-white mt-4  text-center  w-auto   ">
           We are a software and mobile application development company that
           ensures its expertise extends to offer a seamlessly productive and
           growth-oriented partnership to its clients.
@@ -63,7 +63,7 @@ const Testimonial = () => {
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index}>
               <div className=" flex justify-center   flex-col text-black  dark:text-white p-8 rounded-xl shadow-lg  dark:shadow-[#1f2937]  mx-auto h-96 max-w-xl">
-                <p className="text-black dark:text-white italic mb-4">
+                <p className="text-black text-[20px] leading-[50px] dark:text-white italic mb-4">
                   "{testimonial.text}"
                 </p>
                 <div className="flex items-center mt-6">

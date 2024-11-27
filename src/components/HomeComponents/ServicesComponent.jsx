@@ -9,7 +9,7 @@ const ServicesComponent = () => {
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Our Services
         </h1>
-        <p className=" font-light leading-[33px] text-center  w-auto   ">
+        <p className=" font-light text-[26px] leading-[50px] text-center  w-auto   ">
           Our services include Medical Billing and Coding, Web Development and
           Cloud Services, BIM services and Visualization services, and FINTECH.
           We provide robust, proactive and effective management of all problems

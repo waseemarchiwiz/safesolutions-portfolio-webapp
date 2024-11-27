@@ -8,7 +8,7 @@ const About = () => {
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             About us
           </h1>
-          <p className=" font-light leading-[33px] text-center    w-auto   ">
+          <p className=" font-light text-[26px] leading-[50px] text-center    w-auto   ">
             Safe Solutions Consultants is excelling in the services of
             backoffice solutions for healthcare, Software Development,
             Architecture and Design and FINTECH.
@@ -43,7 +43,7 @@ const About = () => {
 
           {/* Description */}
           <div className="col-span-12 md:col-span-8">
-            <p className="text-gray-600 leading-relaxed dark:text-white">
+            <p className="text-gray-600 text-[22px] leading-[30px] dark:text-white">
               SafeSolution Consultants is a premier IT services provider,
               enabling businesses to transform their digital strategies and
               achieve lasting success. We have been delivering innovative

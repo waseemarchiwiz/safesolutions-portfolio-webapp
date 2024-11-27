@@ -16,7 +16,7 @@ const ProjComp = () => {
     <div className="mt-10 p-10">
       <div className=" flex justify-center items-center    px-10    ">
         <div className="grid lg:grid-cols-6  gap-3    ">
-          <div className="border-r-[0.5px] border-r-[#111827]  p-20">
+          <div className="lg:border-r-[0.5px] lg:border-r-[#111827]       p-20">
             {
               dark ? (
                 <img src={archiwizdark} alt="archiwiz" />
@@ -26,7 +26,7 @@ const ProjComp = () => {
             }
           </div>
 
-          <div className="border-r-[0.5px] border-r-[#111827]  p-20">
+          <div className="lg:border-r-[0.5px] lg:border-r-[#111827]   p-20">
             {
               dark ? (
                 <img
@@ -39,7 +39,7 @@ const ProjComp = () => {
               ) : null // Handle other cases if needed
             }
           </div>
-          <div className="border-r-[0.5px] border-r-[#111827]  p-20">
+          <div className="lg:border-r-[0.5px] lg:border-r-[#111827]   p-20">
             {
               dark ? (
                 <img src={alphalogo} alt="archiwiz" />
@@ -48,7 +48,7 @@ const ProjComp = () => {
               ) : null // Handle other cases if needed
             }
           </div>
-          <div className="border-r-[0.5px] border-r-[#111827]  p-20">
+          <div className="lg:border-r-[0.5px] lg:border-r-[#111827]    p-20">
             {
               dark ? (
                 <img src={archiwizdark} alt="archiwiz" />
@@ -57,7 +57,7 @@ const ProjComp = () => {
               ) : null // Handle other cases if needed
             }
           </div>
-          <div className="border-r-[0.5px] border-r-[#111827]  p-20">
+          <div className="lg:border-r-[0.5px] lg:border-r-[#111827]    p-20">
             {
               dark ? (
                 <img src={archiwizdark} alt="archiwiz" />
