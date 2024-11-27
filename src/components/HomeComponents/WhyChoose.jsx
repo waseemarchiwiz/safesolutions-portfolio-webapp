@@ -27,6 +27,7 @@ export default function WhyChoose() {
         "https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=2560&auto=format&fit=crop",
       link: "https://example.com/growth",
     },
+     
   ];
 
   return (
@@ -43,11 +44,11 @@ export default function WhyChoose() {
       </div>
 
       {/* Wrap the mapped cards with a div that has a grid layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3   gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3    gap-6">
         {cardData.map((item, index) => {
           return (
             <CardContainer key={index} className="inter-var">
-              <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
+              <CardBody className="w-full bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  rounded-xl p-6 border">
                 <CardItem
                   translateZ="50"
                   className="text-xl font-bold   text-neutral-600 dark:text-white"
