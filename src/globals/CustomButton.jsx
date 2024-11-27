@@ -3,7 +3,7 @@ import React from "react";
 const CustomButton = ({ styleType = "base", label = "Download", href = "#" }) => {
   // Define styles for the two button types
   const baseStyle = `
-    group relative inline-block text-sm font-medium text-white focus:outline-none focus:ring
+    group relative inline-block text-lg font-medium text-white focus:outline-none focus:ring
   `;
   const baseInnerStyle = `
     block border border-red-600 bg-red-600 px-[26px] py-2 transition-transform 

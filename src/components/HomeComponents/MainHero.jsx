@@ -85,7 +85,7 @@ const MainHero = () => {
                   <h1 className="md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white">
                     {slide.title}
                   </h1>
-                  <p className="font-light leading-[42px] text-white md:max-w-3xl w-full">
+                  <p className="font-light text-[20px] leading-[50px]   text-white md:max-w-3xl w-full">
                     {slide.description}
                   </p>
                 </div>

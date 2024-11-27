@@ -5,11 +5,12 @@
 @tailwind utilities;
 
 body{
-  @apply font-['inter']  bg-slate-100
+ 
+  @apply font-['Oswald']  bg-slate-100
 }
 
 h1{
-  @apply font-['Geist']
+  @apply font-['Oswald']
 }
 
 ::-webkit-scrollbar {

@@ -36,7 +36,7 @@ export default function WhyChoose() {
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Why Choose us
         </h1>
-        <p className=" font-light leading-[33px]   w-auto   ">
+        <p className=" font-light text-[26px] leading-[50px]   w-auto   ">
           We provide expert back-office support services, leveraging innovation,
           industry expertise, and emerging technologies to streamline operations
           and deliver tailored solutions.

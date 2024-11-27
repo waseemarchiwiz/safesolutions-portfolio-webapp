@@ -6,6 +6,8 @@ import WhyChoose from '../components/HomeComponents/WhyChoose'
 import About from '../components/HomeComponents/AboutComp'
 import ServicesComponent from '../components/HomeComponents/ServicesComponent'
 import ProjectsComponent from '../components/HomeComponents/ProjectsComponent'
+import FaqComponents from '../components/HomeComponents/FaqComponents'
+import WorkingArea from '../components/HomeComponents/WorkingArea'
  
 
 const Home = () => {
@@ -17,7 +19,9 @@ const Home = () => {
       <About />
       <ServicesComponent />
       <ProjectsComponent />
-      {/* <Testimonial /> */}
+      <Testimonial />
+      <WorkingArea />
+      <FaqComponents />
     </div>
   )
 }
