@@ -2,10 +2,9 @@ import EmblaCarousel from "../../globals/emblacarousels/EmblaCarousels";
 import React from "react";
 import "../../globals/emblacarousels/embla.css";
 import "../../globals/emblacarousels/base.css";
-import alphabuilt from '../../assets/projectlogos/alphabuilt.png'
-import archiwiz from '../../assets/projectlogos/archiwiz.webp'
-import lumsden from '../../assets/projectlogos/lumsdenlogo.webp'
-
+import alphabuilt from "../../assets/projectlogos/alphabuilt.png";
+import archiwiz from "../../assets/projectlogos/archiwiz.webp";
+import lumsden from "../../assets/projectlogos/lumsdenlogo.webp";
 
 const OPTIONS = {
   align: "start",
@@ -17,50 +16,49 @@ const SLIDE_COUNT = 10;
 // const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const SLIDES = [
-    {
-      image:  alphabuilt,
-      title: "Alphabuilt",
-      description: "This is the description for slide 1.",
-      link: "https://archiwiz.com/",
-    },
-    {
-      image: archiwiz,
-      title: "Archiwiz",
-      description: "This is the description for slide 2.",
-      link: "https://example.com/slide2",
-    },
-    {
-      image: lumsden,
-      title: "Lumsden Trading",
-      description: "This is the description for slide 3.",
-      link: "https://example.com/slide3",
-    },
-    {
-        image:  alphabuilt,
-        title: "Alphabuilt",
-        description: "This is the description for slide 1.",
-        link: "https://archiwiz.com/",
-      },
-      {
-        image:  alphabuilt,
-        title: "Alphabuilt",
-        description: "This is the description for slide 1.",
-        link: "https://archiwiz.com/",
-      },
-      {
-        image:  alphabuilt,
-        title: "Alphabuilt",
-        description: "This is the description for slide 1.",
-        link: "https://archiwiz.com/",
-      },
-      {
-        image:  alphabuilt,
-        title: "Alphabuilt",
-        description: "This is the description for slide 1.",
-        link: "https://archiwiz.com/",
-      },
-     
-  ];
+  {
+    image: alphabuilt,
+    title: "Alphabuilt",
+    description: "This is the description for slide 1.",
+    link: "https://archiwiz.com/",
+  },
+  {
+    image: archiwiz,
+    title: "Archiwiz",
+    description: "This is the description for slide 2.",
+    link: "https://example.com/slide2",
+  },
+  {
+    image: lumsden,
+    title: "Lumsden Trading",
+    description: "This is the description for slide 3.",
+    link: "https://example.com/slide3",
+  },
+  {
+    image: alphabuilt,
+    title: "Alphabuilt",
+    description: "This is the description for slide 1.",
+    link: "https://archiwiz.com/",
+  },
+  {
+    image: alphabuilt,
+    title: "Alphabuilt",
+    description: "This is the description for slide 1.",
+    link: "https://archiwiz.com/",
+  },
+  {
+    image: alphabuilt,
+    title: "Alphabuilt",
+    description: "This is the description for slide 1.",
+    link: "https://archiwiz.com/",
+  },
+  {
+    image: alphabuilt,
+    title: "Alphabuilt",
+    description: "This is the description for slide 1.",
+    link: "https://archiwiz.com/",
+  },
+];
 
 const ProjectsComponent = () => {
   return (
