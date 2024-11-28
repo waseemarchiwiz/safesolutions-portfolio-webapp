@@ -4,6 +4,8 @@ const About = () => {
   return (
     <div className="bg-gray-100 py-10  dark:bg-[#1f2937]">
       <div className="container mx-auto px-6">
+      <hr className="border-t-1 border-black  mt-10" />
+
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             About us
@@ -60,3 +62,4 @@ const About = () => {
 };
 
 export default About;
+
