@@ -31,7 +31,7 @@ export default function WhyChoose() {
   ];
 
   return (
-    <div className="flex justify-center flex-col p-10 items-center bg-zinc-200 dark:bg-zinc-900">
+    <div className="flex justify-center flex-col p-10 items-center  dark:bg-zinc-900">
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Why Choose us
@@ -92,7 +92,11 @@ export default function WhyChoose() {
             </CardContainer>
           );
         })}
+
+      
       </div>
+  
     </div>
+    
   );
 }

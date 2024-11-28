@@ -14,13 +14,14 @@ const Home = () => {
   return (
     <div className='dark:bg-gray-800 dark:text-gray-200 '>
       <MainHero />
-      <ProjComp />
+      
       <WhyChoose />
       <About />
+      <WorkingArea />
       <ServicesComponent />
+      {/* <ProjComp /> */}
       <ProjectsComponent />
       <Testimonial />
-      <WorkingArea />
       <FaqComponents />
     </div>
   )

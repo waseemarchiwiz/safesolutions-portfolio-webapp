@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
 export default function FlipText({
   word,
   duration = 0.5,
-  delayMultiple = 0.08,
+  delayMultiple = 0.01,
 
   framerProps = {
     hidden: { rotateX: -90, opacity: 0 },
@@ -16,7 +16,7 @@ export default function FlipText({
   className
 }) {
   return (
-    (<div className="flex justify-center space-x-2">
+    (<div className="flex  space-x-2">
       <AnimatePresence mode="wait">
         {word.split("").map((char, i) => (
           <motion.span
