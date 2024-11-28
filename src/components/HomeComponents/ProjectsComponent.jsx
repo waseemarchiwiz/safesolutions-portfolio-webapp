@@ -1,69 +1,12 @@
-import EmblaCarousel from "../../globals/emblacarousels/EmblaCarousels";
 import React from "react";
-import "../../globals/emblacarousels/embla.css";
-import "../../globals/emblacarousels/base.css";
-import alphabuilt from "../../assets/projectlogos/alphabuilt.png";
-import archiwiz from "../../assets/projectlogos/archiwiz.webp";
-import lumsden from "../../assets/projectlogos/lumsdenlogo.webp";
-
-const OPTIONS = {
-  align: "start",
-  dragFree: true,
-  direction: "rtl",
-  loop: true,
-};
-const SLIDE_COUNT = 10;
-// const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
-
-const SLIDES = [
-  {
-    image: alphabuilt,
-    title: "Alphabuilt",
-    description: "This is the description for slide 1.",
-    link: "https://archiwiz.com/",
-  },
-  {
-    image: archiwiz,
-    title: "Archiwiz",
-    description: "This is the description for slide 2.",
-    link: "https://example.com/slide2",
-  },
-  {
-    image: lumsden,
-    title: "Lumsden Trading",
-    description: "This is the description for slide 3.",
-    link: "https://example.com/slide3",
-  },
-  {
-    image: alphabuilt,
-    title: "Alphabuilt",
-    description: "This is the description for slide 1.",
-    link: "https://archiwiz.com/",
-  },
-  {
-    image: alphabuilt,
-    title: "Alphabuilt",
-    description: "This is the description for slide 1.",
-    link: "https://archiwiz.com/",
-  },
-  {
-    image: alphabuilt,
-    title: "Alphabuilt",
-    description: "This is the description for slide 1.",
-    link: "https://archiwiz.com/",
-  },
-  {
-    image: alphabuilt,
-    title: "Alphabuilt",
-    description: "This is the description for slide 1.",
-    link: "https://archiwiz.com/",
-  },
-];
+import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 const ProjectsComponent = () => {
   return (
     <div className="px-10 flex justify-center items-center ">
       <div className="container mt-20 ">
+        {/* <hr className="border-t-1 border-black  mt-10" /> */}
+
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             Our Projects
@@ -76,8 +19,12 @@ const ProjectsComponent = () => {
           </p>
         </div>
 
-        <div className="my-20">
-          <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+        <div className="my-20 flex justify-center items-center">
+          <InfiniteMovingCards
+            items={testimonials}
+            direction="right"
+            speed="slow"
+          />
         </div>
       </div>
     </div>
@@ -85,3 +32,35 @@ const ProjectsComponent = () => {
 };
 
 export default ProjectsComponent;
+
+const testimonials = [
+  {
+    quote:
+      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
+    name: "Charles Dickens",
+    title: "A Tale of Two Cities",
+  },
+  {
+    quote:
+      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
+    name: "William Shakespeare",
+    title: "Hamlet",
+  },
+  {
+    quote: "All that we see or seem is but a dream within a dream.",
+    name: "Edgar Allan Poe",
+    title: "A Dream Within a Dream",
+  },
+  {
+    quote:
+      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    name: "Jane Austen",
+    title: "Pride and Prejudice",
+  },
+  {
+    quote:
+      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
+    name: "Herman Melville",
+    title: "Moby-Dick",
+  },
+];

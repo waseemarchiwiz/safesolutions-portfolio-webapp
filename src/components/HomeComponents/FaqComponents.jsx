@@ -43,7 +43,9 @@ const FaqComponent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-[#000000] bg-[#e4e4e7] ">
+    <div className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-[#000000] ">
+       <hr className="border-t-1 border-black  mt-10" />
+      
       <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
         Frequently Asked Questions
       </h1>
