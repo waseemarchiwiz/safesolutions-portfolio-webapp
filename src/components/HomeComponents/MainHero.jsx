@@ -44,6 +44,8 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import CustomButton from "../../globals/CustomButton";
 import hero1 from "../../assets/hero.jpg";
+import FlipText from "../ui/flip-text";
+import WordPullUp from "../ui/word-pull-up";
 
 const MainHero = () => {
   const slides = [
@@ -63,7 +65,7 @@ const MainHero = () => {
   ];
 
   return (
-    <div className="w-full h-[70vh] relative">
+    <div className="w-full h-[75vh] relative">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -77,21 +79,44 @@ const MainHero = () => {
             <div
               className="w-full h-full bg-cover bg-center  relative"
               style={{
-                backgroundImage: `linear-gradient(to right, white, transparent), url(${slide.image})`,
+                backgroundImage: `linear-gradient(to right, black, transparent), url(${slide.image})`,
               }}
             >
               <div className="absolute top-0 left-0 py-40 md:px-52 bg-black/50 w-full h-full flex flex-col justify-center">
                 <div className="container mx-auto px-4">
-                  <h1 className="md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white">
+                  {/* <h1 className="md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white">
                     {slide.title}
-                  </h1>
-                  <p className="font-light text-[20px] leading-[50px]   text-white md:max-w-3xl w-full">
+                  </h1> */}
+                  
+
+                  <FlipText
+                    className="  md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white     "
+                    word={slide.title}
+                  />
+
+                  <WordPullUp
+                    className="font-light text-[30px]        text-white  md:max-w-5xl w-full"
+                    words={slide.description}
+                  />
+                  {/* <p className="font-light text-[20px] leading-[50px]   text-white md:max-w-3xl w-full">
                     {slide.description}
-                  </p>
+                  </p> */}
+                <hr class="w-6 lg:w-16 xl:w-36 h-1 my-4 mt-5 bg-indigo-600 border-0 rounded"></hr>
+
                 </div>
                 <div className="mt-5 mx-4">
-                  <CustomButton label="Consult our experts" />
+                  <a
+                    className="group relative inline-block overflow-hidden border rounded-lg text-white border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                    href="#"
+                  >
+                    <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+
+                    <span className="relative text-sm font-medium text-white transition-colors">
+                      Contact us
+                    </span>
+                  </a>
                 </div>
+
               </div>
             </div>
           </SwiperSlide>
