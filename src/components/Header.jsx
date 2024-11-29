@@ -58,15 +58,15 @@ const Header = () => {
                 </li>
 
                 <div className=" mx-auto">
-                  <a
+                  <Link
                     className="group relative inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-3 focus:outline-none focus:ring"
-                    href="contact"
+                    to={"/contact"}
                   >
                     <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                     <span className="relative text-sm font-medium text-white transition-colors">
                       Contact us
                     </span>
-                  </a>
+                  </Link>
                 </div>
 
                 <button onClick={toggleTheme} aria-label="Toggle Dark Mode">
