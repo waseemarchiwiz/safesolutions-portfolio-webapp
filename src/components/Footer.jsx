@@ -2,10 +2,10 @@ import React from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 const Footer = () => {
-  return ( 
+  return (
     <div className="">
       <footer className=" bg-white dark:bg-gray-900">
-        <div className=" container mx-auto  px-4 space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+        <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-teal-600 dark:text-teal-300">
                

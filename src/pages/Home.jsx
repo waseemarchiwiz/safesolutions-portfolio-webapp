@@ -13,8 +13,7 @@ import WorkingArea from '../components/HomeComponents/WorkingArea'
 const Home = () => {
   return (
     <div className='dark:bg-gray-800 dark:text-gray-200 '>
-      <MainHero />
-      
+      <MainHero /> 
       <WhyChoose />
       <About />
       <WorkingArea />
