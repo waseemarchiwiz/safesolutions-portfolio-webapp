@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Services from "../pages/Services";
 import Careers from "../pages/Careers";
+import Contactus from "../pages/Contactus";
 
 const CustomRoutes = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const CustomRoutes = () => {
         {
           path: "services",
           element: <Services />
+        },
+        {
+          path: "contact",
+          element: <Contactus />
         },
         {
           path: "*",

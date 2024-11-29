@@ -8,8 +8,8 @@ import CustomButton from "../../globals/CustomButton";
 import hero1 from "../../assets/hero.jpg";
 import FlipText from "../ui/flip-text";
 import WordPullUp from "../ui/word-pull-up";
-import hero12 from '../../assets/hero1.png'
-import hero2 from '../../assets/hero2.png'
+import hero12 from "../../assets/hero.jpg";
+import hero2 from "../../assets/about.webp";
 
 const MainHero = () => {
   const slides = [
@@ -47,43 +47,26 @@ const MainHero = () => {
             >
               <div className="absolute top-0 left-0 py-40  bg-black/50 w-full h-full flex flex-col justify-center">
                 <div className="container mx-auto px-4">
-                  {/* <h1 className="md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white">
+             
+                  <div className=" text-center text-white text-5xl font-bold font-['Poppins']">
+                    {" "}
                     {slide.title}
-                  </h1> */}
-
-                  <div className=" text-center text-gray-300 text-5xl font-bold font-['Poppins']">Very varied and quality Furniture</div>
-                  <div className="md:w-[628px] w-full mx-auto mt-6 text-center text-gray-300 text-xl font-normal font-['Poppins'] leading-normal">Lörem ipsum neskade nölingar ronar emedan pogon huruvida vittneslitteratur. Polyk obel, manera innan antenat.</div>
-                  {/* <FlipText
-                    className="  md:text-[40px] text-[60px] lg:text-[80px] pt-[40px] text-white     "
-                    word={slide.title}
-                  /> */}
-                  {/* <FlipText
-                    className="text-center text-white text-5xl font-bold   "
-                    word={slide.title}
-                  /> */}
-
-                  {/* <WordPullUp
-                    className="font-light text-[30px]  text-white  md:max-w-5xl w-full"
-                    words={slide.description}
-                  /> */}
-                  {/* <WordPullUp
-                    className="text-center mx-w-md text-white text-sm font-normal leading-normal mt-6"
-                    words={slide.description}
-                  /> */}
-                  {/* <p className="font-light text-[20px] leading-[50px]   text-white md:max-w-3xl w-full">
+                  </div>
+                  <div className="md:w-[628px] w-full mx-auto mt-6 text-center text-white text-xl font-normal font-['Poppins'] leading-normal">
+                    {" "}
                     {slide.description}
-                  </p> */}
+                  </div>
+                   
                   <hr className="w-6 lg:w-16 xl:w-36 h-1 my-4 mt-5 mx-auto bg-indigo-600 border-0 rounded"></hr>
-
                 </div>
                 <div className="mt-5 mx-auto">
                   <a
-                    className="group relative inline-block overflow-hidden border rounded-lg text-white border-indigo-600 px-6 md:px-8 py-3 focus:outline-none focus:ring"
+                    className="group relative inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-3 focus:outline-none focus:ring"
                     href="#"
                   >
                     <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                     <span className="relative text-sm font-medium text-white transition-colors">
-                      Contact Us
+                      Consult us
                     </span>
                   </a>
                 </div>

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import about from '../../src/assets/about.webp'
 import ProjectsComponent from '../components/HomeComponents/ProjectsComponent'
 import { Galley } from "../components/AboutComponents/Gallery";
+import WhyChoose from "../components/HomeComponents/WhyChoose";
 
 const About = () => {
   return (
@@ -100,6 +101,7 @@ const About = () => {
       </div>
       <ProjectsComponent />
       <Galley />
+      <WhyChoose />
 
     </div>
   );
