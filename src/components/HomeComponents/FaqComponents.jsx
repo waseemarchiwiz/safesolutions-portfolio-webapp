@@ -36,7 +36,7 @@ const faqData = [
 ];
 
 const FaqComponent = () => {
-  const [openIndex, setOpenIndex] = useState(null); // State to track the currently open FAQ
+  const [openIndex, setOpenIndex] = useState(null);  
 
   const toggleFaq = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index)); // Close if already open, otherwise open
@@ -49,7 +49,7 @@ const FaqComponent = () => {
       <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
         Frequently Asked Questions
       </h1>
-      <div className=" max-w-3xl space-y-4 container mx-auto gap-5 my-10">
+      <div className=" max-w-3xl space-y-2 container mx-auto gap-5 my-10">
         {faqData.map((faq, index) => (
           <div
             key={index}

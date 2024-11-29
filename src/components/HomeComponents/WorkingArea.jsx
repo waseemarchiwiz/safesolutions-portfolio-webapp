@@ -7,9 +7,8 @@ import { PinContainer } from "../ui/3d-pin";
 const WorkingArea = () => {
   return (
     <div className="px-10 flex justify-center items-center bg-[#ffffff]  dark:bg-[#1f2937] ">
-            
       <div className="container ">
-      <hr className="border-t-1 border-black  mt-10"   />
+        <hr className="border-t-1 border-black  mt-10" />
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             Strategic Partnerships to Unlock Greater Business Value
@@ -104,7 +103,7 @@ const WorkingArea = () => {
             >
               <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem] ">
                 <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-slate-100">
-                 Github
+                  Github
                 </h3>
                 <div className="text-base !m-0 !p-0 font-normal">
                   <span className="text-slate-500 ">

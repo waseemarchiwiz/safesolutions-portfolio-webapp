@@ -5,7 +5,7 @@ const ProjectsComponent = () => {
   return (
     <div className="px-10 flex justify-center items-center ">
       <div className="container mt-20 ">
-        {/* <hr className="border-t-1 border-black  mt-10" /> */}
+        
 
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
