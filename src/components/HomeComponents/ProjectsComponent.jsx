@@ -3,7 +3,7 @@ import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 const ProjectsComponent = () => {
   return (
-    <div className="px-10 flex justify-center items-center ">
+    <div className="px-10 flex justify-center items-center dark:bg-zinc-900">
       <div className="container mt-20 ">
         
 
@@ -11,7 +11,7 @@ const ProjectsComponent = () => {
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             Our Projects
           </h1>
-          <p className=" font-light text-[26px] leading-[50px]  text-center  w-auto   ">
+          <p className=" font-light text-[20px] md:text-[26px] leading-[50px]  text-center  w-auto   ">
             At Safe Solution, we pride ourselves on delivering impactful
             solutions tailored to our clients' unique needs. With a focus on
             innovation, precision, and excellence, we have successfully

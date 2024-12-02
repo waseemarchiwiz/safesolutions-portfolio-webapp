@@ -3,12 +3,12 @@ import { GiArtificialIntelligence } from "react-icons/gi";
 import { HoverEffect } from "../ui/card-hover-effect";
 const ServicesComponent = () => {
   return (
-    <div className="flex justify-center flex-col p-10 items-center bg-white dark:bg-zinc-900 ">
-      <div className="flex flex-col gap-4 px-32">
+    <div className="flex justify-center flex-col p-10 items-center px-32 bg-white dark:bg-zinc-900 ">
+      <div className="flex flex-col gap-4  ">
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Our Services
         </h1>
-        <p className=" font-light text-[26px] leading-[50px] text-center  w-auto   ">
+        <p className=" font-light text-[20px] md:text-[26px] leading-[50px]     text-center  w-auto   ">
           Our services include Medical Billing and Coding, Web Development and
           Cloud Services, BIM services and Visualization services, and FINTECH.
           We provide robust, proactive and effective management of all problems

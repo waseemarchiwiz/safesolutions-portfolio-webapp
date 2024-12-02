@@ -27,7 +27,6 @@ export default function WhyChoose() {
         "https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=2560&auto=format&fit=crop",
       link: "https://example.com/growth",
     },
-     
   ];
 
   return (
@@ -36,7 +35,7 @@ export default function WhyChoose() {
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Why Choose us
         </h1>
-        <p className=" font-light text-[26px] leading-[50px]   w-auto   ">
+        <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-center     w-auto   ">
           We provide expert back-office support services, leveraging innovation,
           industry expertise, and emerging technologies to streamline operations
           and deliver tailored solutions.
@@ -47,7 +46,7 @@ export default function WhyChoose() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3    gap-6">
         {cardData.map((item, index) => {
           return (
-            <CardContainer key={index} className="inter-var">
+            <CardContainer key={index} className="inter-var mt-10">
               <CardBody className="w-full bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  rounded-xl p-6 border">
                 <CardItem
                   translateZ="50"
@@ -71,32 +70,11 @@ export default function WhyChoose() {
                     alt="thumbnail"
                   />
                 </CardItem>
-                {/* <div className="flex justify-between items-center mt-6">
-                  <CardItem
-                    translateZ={20}
-                    href={item.link}
-                    target="__blank"
-                    className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                  >
-                    Try now →
-                  </CardItem> */}
-                {/* <CardItem
-                    translateZ={20}
-                    as="button"
-                    className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                  >
-                    Sign up
-                  </CardItem> */}
-                {/* </div> */}
               </CardBody>
             </CardContainer>
           );
         })}
-
-      
       </div>
-  
     </div>
-    
   );
 }

@@ -67,7 +67,7 @@ const testimonials = [
   },]
 const Testimonial = () => {
   return (
-    <section className=" text-black  dark:bg-black py-20">
+    <section className=" text-black  dark:bg-zinc-900 py-20">
       <div className="container mx-auto px-6">
         {/* <h2 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10 ">
           First-Hand Opinions of Clients on Their Partnership Experience
@@ -80,7 +80,7 @@ const Testimonial = () => {
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           First-Hand Opinions of Clients on Their Partnership Experience
         </h1>
-        <p className=" font-light text-[26px] leading-[50px] text-black dark:text-white mt-4  text-center  w-auto   ">
+        <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-black dark:text-white mt-4  text-center  w-auto   ">
           We are a software and mobile application development company that
           ensures its expertise extends to offer a seamlessly productive and
           growth-oriented partnership to its clients.
@@ -128,3 +128,43 @@ const Testimonial = () => {
 };
 
 export default Testimonial;
+
+
+// import React from 'react'
+
+// const Testimonial = () => {
+//   return (
+//     <div>
+//    <div className="mt-4 font-[sans-serif]">
+//   <div className="max-w-6xl mx-auto">
+//     <div className="grid md:grid-cols-2 items-center md:gap-16 gap-8">
+//       <div className="space-y-4 bg-green-100 rounded-3xl py-8 px-4">
+//         <div className="flex items-center ml-auto p-6 bg-white shadow-md rounded-3xl max-w-md">
+//           <img src="https://readymadeui.com/profile_2.webp" className="w-20 h-20 rounded-full" />
+//           <div className="ml-4">
+//             <h4 className="text-gray-800 text-base font-bold">John Doe</h4>
+//             <p className="text-sm text-gray-500 mt-2">Veniam proident aute magna anim excepteur et ex consectetur velit ullamco veniam minim aute sit.</p>
+//           </div>
+//         </div>
+//         <div className="flex items-center p-6 bg-white shadow-md rounded-3xl max-w-md">
+//           <div className="mr-4">
+//             <h4 className="text-gray-800 text-base font-bold">Mark Adair</h4>
+//             <p className="text-sm text-gray-500 mt-2">Veniam proident aute magna anim excepteur et ex consectetur velit ullamco veniam minim aute sit.</p>
+//           </div>
+//           <img src="https://readymadeui.com/profile_3.webp" className="w-20 h-20 rounded-full ml-auto" />
+//         </div>
+//       </div>
+//       <div className="max-md:-order-1">
+//         <h6 className="text-xl font-bold text-gray-300">Testimonials</h6>
+//         <h2 className="text-gray-800 text-4xl font-extrabold mt-4">We are loyal with our customer</h2>
+//         <p className="text-sm text-gray-500 mt-4 leading-relaxed">Veniam proident aute magna anim excepteur et ex consectetur velit ullamco veniam minim aute sit. Elit occaecat officia et laboris Lorem minim. Officia do aliqua adipisicing ullamco in.</p>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
+//     </div>
+//   )
+// }
+
+// export default Testimonial

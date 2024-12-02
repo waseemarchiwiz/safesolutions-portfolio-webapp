@@ -8,7 +8,7 @@ const Footer = () => {
         <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-teal-600 dark:text-teal-300">
-               
+
               <Link to="/home">
               <img className="h-24 w-24" src={logo} alt="safesolution" />
             </Link>
