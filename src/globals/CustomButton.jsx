@@ -1,33 +1,31 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const CustomButton = ({ styleType = "base", label = "Download", href = "#" }) => {
-  // Define styles for the two button types
-  const baseStyle = `
-    group relative inline-block text-lg font-medium text-white focus:outline-none focus:ring
+const CustomButton = ({
+  label = "Contact Us",
+  to = "/contact",
+  styleType = "default",
+  className = "",
+  handleClick,
+
+}) => {
+  const defaultStyle = `
+    group relative  inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-3 focus:outline-none focus:ring
   `;
-  const baseInnerStyle = `
-    block border border-red-600 bg-red-600 px-[26px] py-2 transition-transform 
-    active:border-red-500 active:bg-red-500 group-hover:-translate-x-1 group-hover:-translate-y-1
+  const defaultInnerStyle = `
+    absolute inset-y-0 left-0 w-[2px]  bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500
   `;
-  
-  const borderStyle = `
-    group relative inline-block text-sm font-medium text-red-600 focus:outline-none focus:ring active:text-red-500
-  `;
-  const borderInnerStyle = `
-    block border border-current bg-white px-12 py-3 transition-transform 
-    group-hover:-translate-x-1 group-hover:-translate-y-1
+  const textStyle = `
+    relative text-sm font-medium text-white transition-colors
   `;
 
   return (
-    <a
-      className={styleType === "base" ? baseStyle : borderStyle}
-      href={href}
-    >
-      <span className="absolute inset-0 border border-current"></span>
-      <span className={styleType === "base" ? baseInnerStyle : borderInnerStyle}>
-        {label}
-      </span>
-    </a>
+    <div className="mx-auto">
+      <Link  className={`${defaultStyle} ${className}`} to={to} onClick={handleClick} >
+        <span className={defaultInnerStyle}></span>
+        <span className={textStyle}>{label}</span>
+      </Link>
+    </div>
   );
 };
 
