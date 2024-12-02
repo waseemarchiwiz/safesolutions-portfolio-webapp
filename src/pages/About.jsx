@@ -4,6 +4,8 @@ import about from '../../src/assets/about.webp'
 import ProjectsComponent from '../components/HomeComponents/ProjectsComponent'
 import { Galley } from "../components/AboutComponents/Gallery";
 import WhyChoose from "../components/HomeComponents/WhyChoose";
+import BlogComponents from "../components/BlogComponents";
+import Teams from "../components/Teams";
 
 const About = () => {
   return (
@@ -100,8 +102,8 @@ const About = () => {
         </div>
       </div>
       <ProjectsComponent />
-      <Galley />
-      <WhyChoose />
+      <Teams />
+      <BlogComponents />
 
     </div>
   );
