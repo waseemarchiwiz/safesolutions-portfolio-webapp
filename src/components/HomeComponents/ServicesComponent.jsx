@@ -1,9 +1,10 @@
 import React from "react";
 import { GiArtificialIntelligence } from "react-icons/gi";
 import { HoverEffect } from "../ui/card-hover-effect";
+import CustomButton from "../../globals/CustomButton";
 const ServicesComponent = () => {
   return (
-    <div className="flex justify-center flex-col p-10 items-center px-32 bg-white dark:bg-zinc-900 ">
+    <div className="flex justify-center flex-col p-10 items-center md:px-32 bg-white dark:bg-zinc-900 ">
       <div className="flex flex-col gap-4  ">
         <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
           Our Services
@@ -17,9 +18,9 @@ const ServicesComponent = () => {
         </p>
       </div>
 
-      <div className="container">
+      <div className="container flex flex-col justify-center items-center">
         <HoverEffect items={projects} />
-        <hr className="border-t-1 border-black  mt-10" />
+        <CustomButton label="Learn More" className="mt-10" to="/services" />
       </div>
     </div>
   );

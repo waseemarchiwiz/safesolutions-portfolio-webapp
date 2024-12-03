@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div className="">
-      <footer className=" bg-white dark:bg-gray-900">
+      <footer className=" bg-white dark:bg-[#18181B]">
         <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-teal-600 dark:text-teal-300">
-
               <Link to="/home">
-              <img className="h-24 w-24" src={logo} alt="safesolution" />
-            </Link>
+                <img className="h-24 w-24" src={logo} alt="safesolution" />
+              </Link>
             </div>
 
             <ul className="mt-8 flex justify-start gap-6 sm:mt-0 sm:justify-end">
@@ -145,7 +144,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    1on1 Coaching
+                    Web Development
                   </Link>
                 </li>
 
@@ -154,7 +153,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    Company Review
+                    App Development
                   </Link>
                 </li>
 
@@ -163,7 +162,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    Accounts Review
+                    AR/VR
                   </Link>
                 </li>
 
@@ -172,18 +171,11 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    HR Consulting
+                    ERP Management
                   </Link>
                 </li>
 
-                <li>
-                  <Link
-                    // href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    SEO Optimisation
-                  </Link>
-                </li>
+               
               </ul>
             </div>
 
@@ -301,7 +293,7 @@ const Footer = () => {
           </div>
 
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            &copy; 2022. Company Name. All rights reserved.
+            &copy; 2022. Safe Solution. All rights reserved.
           </p>
         </div>
       </footer>

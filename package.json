@@ -13,6 +13,7 @@
     "test": "react-scripts test --passWithNoTests"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
     "@tabler/icons-react": "^3.22.0",
     "clsx": "^2.1.1",
     "embla-carousel": "8.5.1",
