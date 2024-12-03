@@ -105,42 +105,46 @@ const FaqComponent = () => {
 
   const faqs = [
     {
-      question: "Are there any special discounts available during the event?",
+      question: "What industries does your software company specialize in?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor auctor arcu, at fermentum dui.",
+        "We specialize in industries such as finance, healthcare, e-commerce, logistics, and education, offering tailored software solutions for each sector.",
     },
     {
-      question:
-        "What are the dates and locations for the product launch events?",
+      question: "Do you provide custom software development services?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin aliquam turpis at erat venenatis malesuada.",
+        "Yes, we offer custom software development services designed to meet your unique business needs and objectives.",
     },
     {
-      question: "Can I bring a guest with me to the product launch event?",
+      question: "What technologies do you use for software development?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac lacus lectus. Morbi congue facilisis sapien.",
+        "Our team is skilled in modern technologies including React, Node.js, Python, Java, PHP, and cloud platforms like AWS and Azure.",
     },
     {
-      question: "Are there any special promotions available during the event?",
+      question: "What is your approach to data security in software projects?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et tincidunt arcu.",
+        "We implement industry-standard security measures, including encryption, secure authentication, and compliance with data protection regulations like GDPR and HIPAA.",
+    },
+    {
+      question: "Do you offer post-launch support for software projects?",
+      answer:
+        "Yes, we provide comprehensive post-launch support, including maintenance, updates, and bug fixes to ensure your software continues to perform optimally.",
     },
   ];
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900 ">
-      <div className="max-w-7xl mx-auto sm:px-8 px-4  ">
-        <div className="mb-12 max-w-4xl">
+      <div className="max-w-7xl  mx-auto sm:px-8 px-4  ">
+        <div className="mb-12 max-w-4xl ">
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div>
+        <div className="w-full ">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="accordion bg-white shadow-md rounded-lg mt-10"
+              className="accordion bg-white shadow-md rounded-lg mt-10  "
             >
               <button
                 type="button"
