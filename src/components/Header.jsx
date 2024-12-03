@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../assets/logo.png";
 import CustomButton from "../globals/CustomButton";
 import { IoMoon, IoSunny } from "react-icons/io5";
@@ -8,8 +8,9 @@ import { useTheme } from "../context/ThemeContext";
 const Header = () => {
   const { dark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation(); // Get the current location
 
-  console.log(dark);
+  const isActive = (path) => location.pathname === path; // Check if the path is active
 
   return (
     <header className="bg-white dark:bg-gray-900 w-full fixed z-[999]">
@@ -26,7 +27,11 @@ const Header = () => {
               <ul className="flex items-center gap-6 text-[16px]">
                 <li>
                   <Link
-                    className="text-black transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                    className={`transition hover:text-gray-500/75 ${
+                      isActive("/")
+                        ? "text-blue-500 dark:text-blue-300 font-semibold"
+                        : "text-black dark:text-white"
+                    }`}
                     to="/"
                   >
                     Home
@@ -34,7 +39,11 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    className="text-black transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                    className={`transition hover:text-gray-500/75 ${
+                      isActive("/about")
+                        ? "text-blue-500 dark:text-blue-300 font-semibold"
+                        : "text-black dark:text-white"
+                    }`}
                     to="/about"
                   >
                     About
@@ -42,7 +51,11 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    className="text-black transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                    className={`transition hover:text-gray-500/75 ${
+                      isActive("/services")
+                        ? "text-blue-500 dark:text-blue-300 font-semibold"
+                        : "text-black dark:text-white"
+                    }`}
                     to="/services"
                   >
                     Services
@@ -50,15 +63,18 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    className="text-black transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                    className={`transition hover:text-gray-500/75 ${
+                      isActive("/careers")
+                        ? "text-blue-500 dark:text-blue-300 font-semibold"
+                        : "text-black dark:text-white"
+                    }`}
                     to="/careers"
                   >
                     Careers
                   </Link>
                 </li>
 
-                 
-                  <CustomButton label="Contact us" to="/contact" />
+                <CustomButton label="Contact us" to="/contact" />
 
                 <button onClick={toggleTheme} aria-label="Toggle Dark Mode">
                   {dark ? (
@@ -107,7 +123,11 @@ const Header = () => {
                 <ul className="space-y-4">
                   <li>
                     <Link
-                      className="block text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      className={`block transition ${
+                        isActive("/")
+                          ? "text-blue-500 dark:text-blue-300 font-semibold"
+                          : "text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      }`}
                       to="/"
                     >
                       Home
@@ -115,7 +135,11 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className="block text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      className={`block transition ${
+                        isActive("/about")
+                          ? "text-blue-500 dark:text-blue-300 font-semibold"
+                          : "text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      }`}
                       to="/about"
                     >
                       About
@@ -123,7 +147,11 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className="block text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      className={`block transition ${
+                        isActive("/services")
+                          ? "text-blue-500 dark:text-blue-300 font-semibold"
+                          : "text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      }`}
                       to="/services"
                     >
                       Services
@@ -131,7 +159,11 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className="block text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      className={`block transition ${
+                        isActive("/careers")
+                          ? "text-blue-500 dark:text-blue-300 font-semibold"
+                          : "text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+                      }`}
                       to="/careers"
                     >
                       Careers
