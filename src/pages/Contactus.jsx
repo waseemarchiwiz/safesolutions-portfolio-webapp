@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import about from "../../src/assets/about.webp";
 import CustomButton from "../globals/CustomButton";
+import ScrolltoTop from '../globals/ScrolltoTop';
 const Contactus = () => {
   return (
     <div className="dark:bg-gray-800 dark:text-gray-200">
@@ -100,7 +101,7 @@ const Contactus = () => {
                 </svg>
                 Send Message
               </button> */}
-               <CustomButton label="Contact us" to="/contact" className="w-44 text-center ml-44 mt-3 " handleClick={()=>console.log("Hello world")} />
+               <CustomButton label="Contact us" to="/contact" className="w-44 text-center md:ml-44 mt-3 " handleClick={()=>console.log("Hello world")} />
 
             </form>
             <ul className="mt-4 flex flex-wrap justify-center gap-6">
@@ -150,6 +151,7 @@ const Contactus = () => {
           </div>
         </div>
       </div>
+      <ScrolltoTop />
     </div>
   );
 };
