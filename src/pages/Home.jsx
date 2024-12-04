@@ -8,7 +8,6 @@ import ServicesComponent from '../components/HomeComponents/ServicesComponent'
 import ProjectsComponent from '../components/HomeComponents/ProjectsComponent'
 import FaqComponents from '../components/HomeComponents/FaqComponents'
 import WorkingArea from '../components/HomeComponents/WorkingArea'
-import ScrolltoTop from '../globals/ScrolltoTop';
  
 
 const Home = () => {

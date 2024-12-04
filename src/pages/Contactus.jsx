@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import about from "../../src/assets/about.webp";
 import CustomButton from "../globals/CustomButton";
-import ScrolltoTop from '../globals/ScrolltoTop';
+ 
 const Contactus = () => {
   return (
     <div className="dark:bg-gray-800 dark:text-gray-200">

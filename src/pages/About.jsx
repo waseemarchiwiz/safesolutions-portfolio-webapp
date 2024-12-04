@@ -8,8 +8,7 @@ import BlogComponents from "../components/BlogComponents";
 import Teams from "../components/Teams";
 
 import { useLocation } from "react-router-dom";
-import ScrolltoTop from "../globals/ScrolltoTop";
-
+ 
 const About = () => {
   //  const {pathname} = useLocation();
 

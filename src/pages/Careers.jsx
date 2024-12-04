@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, MapPin, Briefcase, Filter } from 'lucide-react';
 import { motion } from "framer-motion";
 import CustomButton from '../globals/CustomButton';
-import ScrolltoTop from '../globals/ScrolltoTop';
+ 
 const Careers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
