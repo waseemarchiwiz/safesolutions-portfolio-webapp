@@ -8,6 +8,7 @@ import ServicesComponent from '../components/HomeComponents/ServicesComponent'
 import ProjectsComponent from '../components/HomeComponents/ProjectsComponent'
 import FaqComponents from '../components/HomeComponents/FaqComponents'
 import WorkingArea from '../components/HomeComponents/WorkingArea'
+import ScrollToTop from '../globals/ScrollToTop'
  
 
 const Home = () => {
@@ -21,8 +22,8 @@ const Home = () => {
       {/* <ProjComp /> */}
       <ProjectsComponent />
       <Testimonial />
-      <FaqComponents />
-      
+      <FaqComponents  />
+      <ScrollToTop  />
     </div>
   )
 }

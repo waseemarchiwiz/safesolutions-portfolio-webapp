@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div className="">
@@ -174,8 +175,6 @@ const Footer = () => {
                     ERP Management
                   </Link>
                 </li>
-
-               
               </ul>
             </div>
 
@@ -204,13 +203,15 @@ const Footer = () => {
                 </li>
 
                 <li>
-                  <Link
+                  <a
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    Accounts Review
-                  </Link>
+                    Services
+                  </a>
                 </li>
+
+                 
               </ul>
             </div>
 
@@ -231,21 +232,14 @@ const Footer = () => {
 
                 <li>
                   <Link
-                    href="#"
+                    href="#faqs"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
                     FAQs
                   </Link>
                 </li>
 
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Live Chat
-                  </Link>
-                </li>
+                 
               </ul>
             </div>
 
