@@ -23,7 +23,7 @@ const Home = () => {
       <ProjectsComponent />
       <Testimonial />
       <FaqComponents />
-      <ScrolltoTop />
+      
     </div>
   )
 }

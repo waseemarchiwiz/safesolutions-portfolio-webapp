@@ -109,7 +109,7 @@ const About = () => {
       <ProjectsComponent />
       <Teams />
       <BlogComponents />
-      <ScrolltoTop />
+     
     </div>
   );
 };
