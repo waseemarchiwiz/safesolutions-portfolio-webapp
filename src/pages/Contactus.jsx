@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import about from "../../src/assets/about.webp";
 import CustomButton from "../globals/CustomButton";
+import ScrollToTop from "../globals/ScrollToTop";
  
 const Contactus = () => {
   return (
@@ -151,7 +152,7 @@ const Contactus = () => {
           </div>
         </div>
       </div>
- 
+      <ScrollToTop />
     </div>
   );
 };

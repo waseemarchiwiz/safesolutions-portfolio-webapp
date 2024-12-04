@@ -8,16 +8,13 @@ import BlogComponents from "../components/BlogComponents";
 import Teams from "../components/Teams";
 
 import { useLocation } from "react-router-dom";
+import ScrollToTop from "../globals/ScrollToTop";
  
 const About = () => {
-  //  const {pathname} = useLocation();
-
-  //  useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [pathname]);
+  
 
   return (
-    <div className="dark:bg-gray-800 dark:text-gray-200">
+    <div className="dark:bg-[#18181B] dark:text-gray-200">
       {/* Hero Section */}
       <div
         style={{
@@ -115,42 +112,3 @@ const About = () => {
 
 export default About;
 
-<div className="flex flex-row justify-center items-center py-16">
-  <div className="flex flex-row justify-center items-center gap-10 w-[50%] h-auto   ">
-    {/* Card 1 */}
-    <motion.div
-      className="h-96 w-[60%] bg-gray-700 text-white flex   justify-center "
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }} // Trigger animation when 20% of the element is visible
-      transition={{ duration: 0.8 }}
-      style={{
-        backgroundImage: `url(${about})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    ></motion.div>
-
-    {/* Card 2 */}
-    <motion.div
-      className="h-96 w-[40%]  text-white flex     "
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }} // Add delay for staggered effect
-    >
-      <p className="text-black md:text-lg text-[10px]  dark:text-gray-200">
-        Safe Solutions Consultants is a team of expert developers and IT
-        consultants dedicated to delivering innovative and customized IT
-        solutions. With a focus on empowering businesses, we offer a diverse
-        range of software development and IT services designed to help our
-        clients achieve their objectives efficiently and effectively. Our
-        mission is to provide cutting-edge, reliable, and cost-effective IT
-        solutions tailored to meet the unique needs of our clients. We envision
-        becoming a global leader in IT and software development services,
-        consistently driving excellence and innovation. At the core of our
-        operations are the values we hold dear: Innovation, Quality, Integrity,
-        and Customer Satisfaction.
-      </p>
-    </motion.div>
-  </div>
-</div>;
