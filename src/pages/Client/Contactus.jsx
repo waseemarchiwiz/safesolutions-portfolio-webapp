@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 // import about from "../../src/assets/about.webp";
 import CustomButton from "../../globals/CustomButton";
 import ScrollToTop from "../../globals/ScrollToTop";
- 
+
 const Contactus = () => {
   return (
     <div className="dark:bg-gray-800 dark:text-gray-200">
@@ -79,7 +79,6 @@ const Contactus = () => {
                   className="px-2 pt-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
                   defaultValue={""}
                 />
-                
               </div>
               {/* <button
                 type="button"
@@ -102,8 +101,11 @@ const Contactus = () => {
                 </svg>
                 Send Message
               </button> */}
-               <CustomButton label="Contact us" to="/contact" className="w-44 text-center md:ml-44 mt-3 " handleClick={()=>console.log("Hello world")} />
-
+              <CustomButton
+                label="Contact us"
+                to="/contact"
+                className="w-44 text-center md:ml-44 mt-3 "
+              />
             </form>
             <ul className="mt-4 flex flex-wrap justify-center gap-6">
               <li className="flex items-center text-blue-600">
@@ -143,12 +145,19 @@ const Contactus = () => {
             </ul>
           </div>
           <div className="z-10 relative h-full max-md:min-h-[350px]">
-            <iframe
-              src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            {/* <iframe
+              src="https://maps.app.goo.gl/MN5L1Mz3aJ7ZBmsE8"
               className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
               frameBorder={0}
               allowFullScreen
-            />
+            /> */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.9338834705823!2d71.42091651231424!3d33.9942319730671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d91053fa827467%3A0xfa6672cfa90d9eae!2s103%20Industrial%20Estate%20Rd%2C%20Hayatabad%2C%20Peshawar%2C%20Khyber%20Pakhtunkhwa%2C%20Pakistan!5e0!3m2!1sen!2s!4v1733482280218!5m2!1sen!2s"
+              className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
+              allowfullscreen=""
+              loading="lazy"
+              // referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </div>
