@@ -11,7 +11,7 @@ const Services = React.lazy(() => import("../pages/Client/Services"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
-const AdminDashboard = React.lazy(() => import("../pages/Admin/dashboard"));
+const AdminDashboard = React.lazy(() => import("../pages/Admin/AdminDashboard"));
 
 const CustomRoutes = () => {
   const router = createBrowserRouter([
