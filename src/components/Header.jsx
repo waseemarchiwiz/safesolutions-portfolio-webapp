@@ -120,6 +120,11 @@ const Header = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="p-6">
+                <div className="md:flex md:items-center md:gap-12 items-center">
+            <Link to="/">
+              <img className="h-24 w-24" src={logo} alt="safesolution" />
+            </Link>
+          </div>
                 <ul className="space-y-4">
                   <li>
                     <Link
