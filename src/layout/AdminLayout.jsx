@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
-    <SidebarProvider>
+    <SidebarProvider >
       <AppSidebar />
-      <main>
+      <main className="container">
         <SidebarTrigger />
         <Outlet />
       </main>

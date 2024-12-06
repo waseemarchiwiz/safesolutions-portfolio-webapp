@@ -1,5 +1,5 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-
+import logo from "../assets/logo.png";
 import {
   Sidebar,
   SidebarContent,
@@ -19,22 +19,22 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Blogs",
     url: "#",
     icon: Inbox,
   },
   {
-    title: "Calendar",
+    title: "Testimonial",
     url: "#",
     icon: Calendar,
   },
   {
-    title: "Search",
+    title: "Services",
     url: "#",
     icon: Search,
   },
   {
-    title: "Settings",
+    title: "Careers",
     url: "#",
     icon: Settings,
   },
@@ -42,24 +42,31 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <div className="flex flex-col gap-20  py-10  ">
+            <SidebarGroupLabel>
+              <img src={logo} alt="" />
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      className="gap-6 hover:bg-[#2477bb] hover:text-white"
+                    >
+                      <a href={item.url}>
+                        <item.icon />
+                        <span className="text-[20px]   ">{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </div>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
