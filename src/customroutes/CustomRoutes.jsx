@@ -1,23 +1,35 @@
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "../layout/Layout";
-// import AdminLayout from "../layout/AdminLayout";
 
-// Lazy load the pages
-const Home = React.lazy(() => import("../pages/Home"));
-const About = React.lazy(() => import("../pages/About"));
-const Services = React.lazy(() => import("../pages/Services"));
-const Careers = React.lazy(() => import("../pages/Careers"));
-const Contactus = React.lazy(() => import("../pages/Contactus"));
+const ClientLayout = React.lazy(() => import("../layout/Layout"));
+const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
+
+const Home = React.lazy(() => import("../pages/Client/Home"));
+const About = React.lazy(() => import("../pages/Client/About"));
+const Services = React.lazy(() => import("../pages/Client/Services"));
+const Careers = React.lazy(() => import("../pages/Client/Careers"));
+const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const LoadingPage = React.lazy(() => import("../pages/LoadingPage"));
-const BlogDetails = React.lazy(() => import("../pages/BlogDetails"));
-
+const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
+const AdminDashboard = React.lazy(() =>
+  import("../pages/Admin/AdminDashboard")
+);
 
 const CustomRoutes = () => {
   const router = createBrowserRouter([
     {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <AdminDashboard />,
+        },
+      ],
+    },
+    {
       path: "/",
-      element: <Layout />,
+      element: <ClientLayout />,
       children: [
         {
           path: "/",
