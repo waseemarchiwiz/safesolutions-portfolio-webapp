@@ -1,3 +1,4 @@
+import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const About = React.lazy(() => import("../pages/Client/About"));
 const Services = React.lazy(() => import("../pages/Client/Services"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
-const LoadingPage = React.lazy(() => import("../pages/LoadingPage"));
+
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
 const AdminDashboard = React.lazy(() =>
   import("../pages/Admin/AdminDashboard")
@@ -23,7 +24,11 @@ const CustomRoutes = () => {
       children: [
         {
           path: "dashboard",
-          element: <AdminDashboard />,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminDashboard />
+            </Suspense>
+          ),
         },
       ],
     },
