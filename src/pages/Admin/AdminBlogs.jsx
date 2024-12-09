@@ -40,7 +40,7 @@ const AdminBlogs = () => {
           {({ isSubmitting, setFieldValue }) => (
             <Form className="space-y-6">
               {/* Title and Name */}
-              <div className="font-sans  grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="  grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field
                   name="title"
                   label="Title"
@@ -58,7 +58,7 @@ const AdminBlogs = () => {
               </div>
 
               {/* Date and Technology */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
                 <Field name="date" label="Date" type="date" as={CustomInput} />
                 <Field
                   name="technology"
@@ -71,9 +71,7 @@ const AdminBlogs = () => {
 
               {/* Image Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Image
-                </label>
+                <label className="block text-sm    text-gray-700">Image</label>
                 <input
                   type="file"
                   onChange={(event) => {

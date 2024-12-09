@@ -5,7 +5,7 @@ import React from "react";
 const AdminDashboard = () => {
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold text-gray-800 my-4 ml-6">
+      <h1 className="text-[30px] ml-5">
         Admin Dashboard
       </h1>
       <div className="flex flex-wrap gap-4">
