@@ -1,4 +1,4 @@
-import Blogs from "@/pages/Admin/Blogs";
+import Blogs from "@/pages/Admin/AdminBlogs";
 import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
