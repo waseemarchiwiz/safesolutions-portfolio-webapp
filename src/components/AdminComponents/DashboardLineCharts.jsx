@@ -46,7 +46,7 @@ const DashboardChart = () => {
   return (
     <div className="bg-white shadow-lg rounded-3xl p-6 mt-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-[30px]">
           Monthly Performance Trends
         </h2>
         <div className="flex items-center space-x-4">

@@ -5,7 +5,7 @@ export const CustomInput = ({ label, type, isTextarea, ...props }) => {
   const InputComponent = isTextarea ? "textarea" : "input";
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm   text-gray-700">{label}</label>
       <InputComponent
         {...props}
         type={type}
