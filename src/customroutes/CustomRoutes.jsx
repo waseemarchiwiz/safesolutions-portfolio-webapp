@@ -1,3 +1,4 @@
+import Blogs from "@/pages/Admin/Blogs";
 import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -19,11 +20,20 @@ const CustomRoutes = () => {
       path: "/admin",
       element: <AdminLayout />,
       children: [
-        {
+       
+         {
           path: "dashboard",
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminDashboard />
+            </Suspense>
+          ),
+        },
+        {
+          path: "blogs",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <Blogs />
             </Suspense>
           ),
         },
