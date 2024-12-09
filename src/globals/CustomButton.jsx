@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CustomButton = ({
   label = "Contact Us",
-  to = "/contact",
+  to = "",
   styleType = "default",
   className = "",
   handleClick,
