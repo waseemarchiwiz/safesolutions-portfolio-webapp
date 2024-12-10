@@ -73,6 +73,18 @@ const Header = () => {
                     Careers
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    className={`transition hover:text-gray-500/75 ${
+                      isActive("/careers")
+                        ? "text-blue-500 dark:text-blue-300 font-semibold"
+                        : "text-black dark:text-white"
+                    }`}
+                    to="/blogs"
+                  >
+                    Blogs
+                  </Link>
+                </li>
 
                 <CustomButton label="Contact us" to="/contact" />
 
@@ -121,10 +133,10 @@ const Header = () => {
             >
               <nav className="p-6">
                 <div className="md:flex md:items-center md:gap-12 items-center">
-            <Link to="/">
-              <img className="h-24 w-24" src={logo} alt="safesolution" />
-            </Link>
-          </div>
+                  <Link to="/">
+                    <img className="h-24 w-24" src={logo} alt="safesolution" />
+                  </Link>
+                </div>
                 <ul className="space-y-4">
                   <li>
                     <Link

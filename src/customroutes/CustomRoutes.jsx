@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCareers from "@/pages/Admin/AdminCareers";
 import AdminProjects from "@/pages/Admin/AdminProjects";
+import AdminTeams from "@/pages/Admin/AdminTeams";
 
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
 const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
@@ -11,6 +12,7 @@ const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
 const Home = React.lazy(() => import("../pages/Client/Home"));
 const About = React.lazy(() => import("../pages/Client/About"));
 const Services = React.lazy(() => import("../pages/Client/Services"));
+const BlogsPage = React.lazy(() => import("../pages/Client/Blogs"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
@@ -53,6 +55,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminProjects />
+            </Suspense>
+          ),
+        },
+        {
+          path: "teams",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminTeams />
             </Suspense>
           ),
         },
@@ -107,6 +117,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <BlogDetails />
+            </Suspense>
+          ),
+        },
+        {
+          path: "blogs",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <BlogsPage />
             </Suspense>
           ),
         },
