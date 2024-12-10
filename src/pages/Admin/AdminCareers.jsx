@@ -12,7 +12,7 @@ const AdminCareers = () => {
     description: "",
   };
 
-  const handleSubmit = (values, { resetForm,setSubmitting }) => {
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log("Submitted Job Opening:", values);
     // Simulate a network request delay
     setTimeout(() => {

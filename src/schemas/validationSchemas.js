@@ -60,3 +60,19 @@ export const projectValidationSchema = Yup.object().shape({
       value ? ["image/jpeg", "image/png"].includes(value.type) : false
     ),
 });
+
+export const teamMemberValidationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Name is required")
+    .min(3, "Name must be at least 3 characters"),
+  role: Yup.string()
+    .required("Role is required")
+    .min(3, "Role must be at least 3 characters"),
+  image: Yup.mixed()
+    .required("Image is required")
+    .test(
+      "fileType",
+      "Only image files are allowed (jpg, png)",
+      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
+    ),
+});

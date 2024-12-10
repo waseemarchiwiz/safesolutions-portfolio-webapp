@@ -1,71 +1,58 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
-import { CustomInput } from "@/globals/CustomInput";
-import { projectValidationSchema } from "@/schemas/validationSchemas";
+import { CustomInput } from "../../globals/CustomInput";
+import { teamMemberValidationSchema } from "../../schemas/validationSchemas";
 
-const AdminProjects = () => {
+const AdminTeams = () => {
   const initialValues = {
-    projectName: "",
-    projectDescription: "",
-    projectUrl: "",
-    projectImage: null,
+    name: "",
+    role: "",
+    image: null,
   };
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("Submitted Project Data:", values);
+    console.log("Team Member Data:", values);
     setTimeout(() => {
       setSubmitting(false);
+      alert("Team member added successfully!");
       resetForm();
-      alert("Project submitted successfully!");
     }, 2000);
   };
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">
-        Add Project
-      </h1>
+      <h1 className="text-[30px] ml-5">Add Team Member</h1>
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}
-          validationSchema={projectValidationSchema}
+          validationSchema={teamMemberValidationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, setFieldValue }) => (
             <Form className="space-y-6">
-              <div className="font-sans grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Field
-                  name="projectName"
-                  label="Project Name"
-                  type="text"
-                  placeholder="Enter project name"
-                  as={CustomInput}
-                />
-                <Field
-                  name="projectUrl"
-                  label="Project URL"
-                  type="text"
-                  placeholder="Enter project URL"
-                  as={CustomInput}
-                />
-              </div>
               <Field
-                name="projectDescription"
-                label="Project Description"
-                isTextarea={true}
-                rows="6"
-                placeholder="Describe the project"
+                name="name"
+                label="Name"
+                type="text"
+                placeholder="Enter team member's name"
+                as={CustomInput}
+              />
+              <Field
+                name="role"
+                label="Role"
+                type="text"
+                placeholder="Enter team member's role"
                 as={CustomInput}
               />
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
-                  Project Image
+                  Image
                 </label>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg, image/png"
                   onChange={(event) =>
-                    setFieldValue("projectImage", event.target.files[0])
+                    setFieldValue("image", event.target.files[0])
                   }
                   className="mt-1 block w-full p-2 border rounded-md"
                 />
@@ -73,7 +60,7 @@ const AdminProjects = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+                className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
               >
                 {isSubmitting ? (
                   <div className="flex justify-center items-center">
@@ -112,4 +99,4 @@ const AdminProjects = () => {
   );
 };
 
-export default AdminProjects;
+export default AdminTeams;
