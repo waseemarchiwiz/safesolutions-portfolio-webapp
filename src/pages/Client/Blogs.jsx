@@ -15,7 +15,7 @@ const BlogPage = () => {
       description:
         "Integrate and build sustainable homes with our new plans. Explore modern techniques for eco-friendly and innovative structures.",
       image:
-        "https://themes247.net/html5/construction-template/demo/assets/img/news/1.jpg",
+        "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg",
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ const BlogPage = () => {
       description:
         "A look into the innovations shaping the future of construction and sustainable development for buildings.",
       image:
-        "https://themes247.net/html5/construction-template/demo/assets/img/news/2.jpg",
+        "https://cdn.pixabay.com/photo/2014/12/15/14/05/home-office-569153_640.jpg",
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ const BlogPage = () => {
       description:
         "Learn essential safety tips to ensure a secure working environment for construction projects.",
       image:
-        "https://themes247.net/html5/construction-template/demo/assets/img/news/3.jpg",
+        "https://cdn.pixabay.com/photo/2016/11/23/14/49/controls-1853330_640.jpg",
     },
     {
       id: 4,
@@ -87,13 +87,11 @@ const BlogPage = () => {
     startIndex,
     startIndex + postsPerPage
   );
-
   // Change category handler
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
   };
-
   // Change page handler
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -131,11 +129,11 @@ const BlogPage = () => {
           </p>
         </motion.div>
       </div>
-      <div className="container  mx-auto w-[70%] grid grid-cols-1 lg:grid-cols-3 gap-8 mt-20">
+      <div className="container  mx-auto w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-16 mt-20">
         {/* Main Content */}
         <div className="lg:col-span-2">
           {/* Category Filter */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label className="font-semibold text-gray-700 mr-2">
               Category:
             </label>
@@ -150,7 +148,7 @@ const BlogPage = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Blog Posts */}
           {selectedPosts.map((post, index) => (
@@ -202,7 +200,7 @@ const BlogPage = () => {
         {/* Sidebar */}
         <aside
           style={{
-            marginTop: "70px",
+            marginTop: "5px",
           }}
         >
           <div class="flex lg:ml-auto max-lg:w-full">
@@ -216,7 +214,7 @@ const BlogPage = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 192.904 192.904"
                 width="16px"
-                class="cursor-pointer fill-gray-400"
+                class="cursor-pointer fill-gray-400 hover:fill-[#4f46e5]"
               >
                 <path d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"></path>
               </svg>
@@ -224,43 +222,63 @@ const BlogPage = () => {
           </div>
 
           {/* Categories */}
-          <div className="bg-white shadow-md p-4 rounded-md mb-6">
-            <h3 className="text-lg font-semibold mb-4">Categories</h3>
-            <ul className="space-y-2">
+          <div className="bg-white w-[70%]  mb-6 mt-10 ml-1">
+            <h3 className="text-lg hover:text-[#4f46e5] dark:text-white tracking-wide  mb-4">
+              Categories
+            </h3>
+            <ul className="space-y-1">
               {categories.map((cat, idx) => (
-                <li
-                  key={idx}
-                  className={`cursor-pointer text-blue-600 hover:underline ${
-                    selectedCategory === cat ? "font-bold" : ""
-                  }`}
-                  onClick={() => handleCategoryChange(cat)}
-                >
-                  {cat}
-                </li>
+                <div className="flex flex-row w-full justify-between">
+                  <li
+                    key={idx}
+                    className={`cursor-pointer  py-3 border-b border-s-gray-100   text-gray-500 hover:text-[#4f46e5] ${
+                      selectedCategory === cat ? "" : ""
+                    }`}
+                    onClick={() => handleCategoryChange(cat)}
+                  >
+                    {cat}
+                  </li>
+                  <h3 className="  text-gray-500 hover:text-[#216eb5  mb-4">
+                    (2)
+                  </h3>
+                </div>
               ))}
             </ul>
           </div>
 
           {/* Latest News */}
-          <div className="bg-white shadow-md p-4 rounded-md mb-6">
-            <h3 className="text-lg font-semibold mb-4">Latest News</h3>
+          <div className="bg-white  ml-1  rounded-md mb-6">
+            <h3 className="text-xl hover:text-[#4f46e5] tracking-wide   dark:text-white  mb-4">
+              Latest News
+            </h3>
             {latestNews.map((news, idx) => (
-              <div key={idx} className="mb-4">
-                <h4 className="text-blue-600 hover:underline">{news.title}</h4>
-                <span className="text-sm text-gray-500">{news.date}</span>
+              <div className="flex gap-4 mt-5">
+                <div>
+                  <img
+                    src={news.image}
+                    alt={news.title}
+                    className="w-[150px] h-[90px] object-cover rounded-md"
+                  />
+                </div>
+                <div key={idx} className="mb-4 ">
+                  <h4 className="text-[#4f46e5] hover:underline">
+                    {news.title}
+                  </h4>
+                  <span className="text-sm text-gray-500">{news.date}</span>
+                </div>
               </div>
             ))}
           </div>
 
           {/* Tags */}
-          <div className="bg-white shadow-md p-4 rounded-md">
+          <div className="bg-white   p-4 rounded-md">
             <h3 className="text-lg font-semibold mb-4">Tags Cloud</h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 ">
               {["Buildings", "Architectural", "Interior", "Construction"].map(
                 (tag, idx) => (
                   <span
                     key={idx}
-                    className="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+                    className="text-sm bg-gray-200 hover:bg-[#4f46e5] px-3 py-1 rounded cursor-pointer hover:text-white  "
                   >
                     {tag}
                   </span>
