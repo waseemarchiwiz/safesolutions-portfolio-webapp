@@ -11,17 +11,18 @@ const AdminProjects = () => {
     projectImage: null,
   };
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log("Submitted Project Data:", values);
     setTimeout(() => {
       setSubmitting(false);
+      resetForm();
       alert("Project submitted successfully!");
     }, 2000);
   };
 
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold text-gray-800 my-4 ml-6">
+      <h1 className="text-[30px] ml-5">
         Add Project
       </h1>
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
@@ -72,7 +73,7 @@ const AdminProjects = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
               >
                 {isSubmitting ? (
                   <div className="flex justify-center items-center">
