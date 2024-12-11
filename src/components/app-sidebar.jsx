@@ -38,6 +38,17 @@ const items = [
     url: "/admin/careers",
     icon: Settings,
   },
+  {
+    title: "Testemonials",
+    url: "/admin/testimonials",
+    icon: Settings,
+  },
+  {
+    title: "Faqs",
+    url: "/admin/faqs",
+    icon: Settings,
+  },
+ 
 ];
 
 export function AppSidebar() {
