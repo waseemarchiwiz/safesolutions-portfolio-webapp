@@ -1,22 +1,22 @@
 import * as Yup from "yup";
 export const blogValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  name: Yup.string().required("Name is required"),
-  date: Yup.date()
-    .required("Date is required")
-    .typeError("Invalid date format"),
-  technology: Yup.string().required("Technology is required"),
+  category: Yup.string().required("Category is required"),
+  tags: Yup.array()
+    .of(Yup.string().required("Tag cannot be empty"))
+    .min(1, "At least one tag is required")
+    .required("Tags are required"), // For multiple tags input
   image: Yup.mixed()
     .required("Image is required")
     .test(
       "fileSize",
       "File size is too large",
-      (value) => value && value[0]?.size <= 5000000 // 5MB limit
+      (value) => value && value.size <= 5000000 // 5MB limit
     )
     .test(
       "fileType",
       "Unsupported file type",
-      (value) => value && ["image/jpeg", "image/png"].includes(value[0]?.type)
+      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
     ),
   content: Yup.string()
     .required("Content is required")
@@ -75,4 +75,8 @@ export const teamMemberValidationSchema = Yup.object().shape({
       "Only image files are allowed (jpg, png)",
       (value) => value && ["image/jpeg", "image/png"].includes(value.type)
     ),
+  githubLink: Yup.string().required("Link is required").url("Invalid URL format"),
+  linkedInLink: Yup.string().required("Link is required").url("Invalid URL format"),
+  twitterLink: Yup.string().required("Link is required").url("Invalid URL format"),
+  
 });

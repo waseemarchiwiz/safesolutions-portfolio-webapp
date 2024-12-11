@@ -7,6 +7,7 @@ import WhyChoose from "../../components/HomeComponents/WhyChoose";
 import BlogComponents from "../../components/BlogComponents";
 import Teams from "../../components/AboutComponents/Teams";
 import ScrollToTop from "../../globals/ScrollToTop";
+import PartnersSection from "@/components/AboutComponents/PartnersSection";
 
  
  
@@ -104,7 +105,7 @@ const About = () => {
 
       <ProjectsComponent />
       <Teams />
-      <BlogComponents />
+      <PartnersSection />
       <ScrollToTop />
      
     </div>
