@@ -61,7 +61,7 @@ const BlogDetails = () => {
     .slice(0, 3);
 
   return (
-    <div className="bg-gray-100 py-8 px-4">
+    <div className="bg-gray-100  dark:bg-[#18181b] ">
       <div
         style={{
           backgroundImage:
@@ -112,7 +112,7 @@ const BlogDetails = () => {
           {selectedPosts.map((post, index) => (
             <div
               key={post?.id}
-              className="bg-white shadow-md  overflow-hidden mb-6"
+              className="bg-white dark:bg-[#18181b]  shadow-md  overflow-hidden mb-6"
             >
               <img
                 src={post.image}
@@ -120,13 +120,13 @@ const BlogDetails = () => {
                 className="w-full h-[30em] object-cover"
               />
               <div className="p-6">
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                   {post.title}
                 </h2>
-                <div className="text-gray-500 text-sm mt-2">
+                <div className="text-gray-500 dark:text-white text-sm mt-2">
                   <span>{post.date}</span> | <span>{post.category}</span>
                 </div>
-                <p className="text-gray-600 mt-4">{post.description}</p>
+                <p className="text-gray-600 dark:text-white mt-4">{post.description}</p>
               </div>
             </div>
           ))}
@@ -141,7 +141,7 @@ const BlogDetails = () => {
           }}
         >
           <div class="flex lg:ml-auto max-lg:w-full">
-            <div class="flex xl:w-80 max-xl:w-full bg-gray-100 px-4 py-3 rounded outline outline-transparent border focus-within:border-blue-600 focus-within:bg-transparent transition-all">
+            <div class="flex xl:w-80 max-xl:w-full bg-gray-100 dark:bg-[#18181b]  px-4 py-3 rounded outline outline-transparent border focus-within:border-blue-600 focus-within:bg-transparent transition-all">
               <input
                 type="text"
                 placeholder="Search something..."
@@ -159,7 +159,7 @@ const BlogDetails = () => {
           </div>
 
           {/* Categories */}
-          <div className="bg-white w-[70%]  mb-6 mt-10 ml-1">
+          <div className="bg-white dark:bg-[#18181b]  w-[70%]  mb-6 mt-10 ml-1">
             <h3 className="text-lg hover:text-[#4f46e5] dark:text-white tracking-wide  mb-4">
               Categories
             </h3>
@@ -168,14 +168,14 @@ const BlogDetails = () => {
                 <div className="flex flex-row w-full justify-between">
                   <li
                     key={idx}
-                    className={`cursor-pointer  py-3 border-b border-s-gray-100   text-gray-500 hover:text-[#4f46e5] ${
+                    className={`cursor-pointer  py-3 border-b border-s-gray-100 dark:text-white  text-gray-500 hover:text-[#4f46e5] ${
                       selectedCategory === cat ? "" : ""
                     }`}
                     onClick={() => handleCategoryChange(cat)}
                   >
                     {cat}
                   </li>
-                  <h3 className="  text-gray-500 hover:text-[#216eb5  mb-4">
+                  <h3 className="  text-gray-500 dark:text-white hover:text-[#216eb5  mb-4">
                     (2)
                   </h3>
                 </div>
@@ -184,7 +184,7 @@ const BlogDetails = () => {
           </div>
 
           {/* Latest News */}
-          <div className="bg-white  ml-1  rounded-md mb-6">
+          <div className="bg-white  dark:bg-[#18181b]  ml-1  rounded-md mb-6">
             <h3 className="text-xl hover:text-[#4f46e5] tracking-wide   dark:text-white  mb-4">
               Latest blogs
             </h3>
@@ -198,24 +198,24 @@ const BlogDetails = () => {
                   />
                 </div>
                 <div key={idx} className="mb-4 ">
-                  <h4 className="text-[#4f46e5] hover:underline">
+                  <h4 className="text-[#4f46e5] dark:text-white hover:underline">
                     {news.title}
                   </h4>
-                  <span className="text-sm text-gray-500">{news.date}</span>
+                  <span className="text-sm text-gray-500 dark:text-white">{news.date}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Tags */}
-          <div className="bg-white   p-4 rounded-md">
-            <h3 className="text-lg font-semibold mb-4">Tags Cloud</h3>
+          <div className="bg-white dark:bg-[#18181b]    p-4 rounded-md">
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">Tags Cloud</h3>
             <div className="flex flex-wrap gap-2 ">
               {["Buildings", "Architectural", "Interior", "Construction"].map(
                 (tag, idx) => (
                   <span
                     key={idx}
-                    className="text-sm bg-gray-200 hover:bg-[#4f46e5] px-3 py-1 rounded cursor-pointer hover:text-white  "
+                    className="text-sm bg-gray-200 dark:text-white dark:bg-[#18181b]  hover:bg-[#4f46e5] px-3 py-1 rounded cursor-pointer hover:text-white  "
                   >
                     {tag}
                   </span>
