@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCareers from "@/pages/Admin/AdminCareers";
 import AdminProjects from "@/pages/Admin/AdminProjects";
 import AdminTeams from "@/pages/Admin/AdminTeams";
+import AdminTestemonial from "@/pages/Admin/AdminTestemonial";
+import AdminFaqs from "@/pages/Admin/AdminFaqs";
 
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
 const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
@@ -16,6 +18,7 @@ const BlogsPage = React.lazy(() => import("../pages/Client/Blogs"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
+
 const AdminDashboard = React.lazy(() =>
   import("../pages/Admin/AdminDashboard")
 );
@@ -63,6 +66,30 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminTeams />
+            </Suspense>
+          ),
+        },
+        {
+          path: "testimonials",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminTestemonial />
+            </Suspense>
+          ),
+        },
+        {
+          path: "testimonials",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminTestemonial />
+            </Suspense>
+          ),
+        },
+        {
+          path: "faqs",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminFaqs />
             </Suspense>
           ),
         },

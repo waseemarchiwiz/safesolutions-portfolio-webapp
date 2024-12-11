@@ -80,3 +80,21 @@ export const teamMemberValidationSchema = Yup.object().shape({
   twitterLink: Yup.string().required("Link is required").url("Invalid URL format"),
   
 });
+
+//testemonial schemea
+
+export const testimonialSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Name is required")
+    .min(3, "Name must be at least 3 characters"),
+  image: Yup.mixed().required("Image is required"),
+  description: Yup.string()
+    .required("Description is required")
+    .min(10, "Description must be at least 10 characters"),
+  designation: Yup.string().required("Designation is required"),
+});
+
+export const faqSchema = Yup.object().shape({
+  question: Yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
+  answer: Yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+});
