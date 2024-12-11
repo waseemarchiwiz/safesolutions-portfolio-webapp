@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { CustomInput } from "../../globals/CustomInput";
 import { teamMemberValidationSchema } from "../../schemas/validationSchemas";
 
 const AdminTeams = () => {
+  const [previewImage, setPreviewImage] = useState(null);
+
   const initialValues = {
     name: "",
     role: "",
     image: null,
+    githubLink: "",
+    linkedInLink: "",
+    twitterLink: "",
   };
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
@@ -15,6 +20,7 @@ const AdminTeams = () => {
     setTimeout(() => {
       setSubmitting(false);
       alert("Team member added successfully!");
+      setPreviewImage(null);
       resetForm();
     }, 2000);
   };
@@ -51,12 +57,49 @@ const AdminTeams = () => {
                 <input
                   type="file"
                   accept="image/jpeg, image/png"
-                  onChange={(event) =>
-                    setFieldValue("image", event.target.files[0])
-                  }
+                  onChange={(event) => {
+                    const file = event.target.files[0];
+                    setFieldValue("image", file);
+                    if (file) {
+                      const preview = URL.createObjectURL(file);
+                      setPreviewImage(preview);
+                    } else {
+                      setPreviewImage(null);
+                    }
+                  }}
                   className="mt-1 block w-full p-2 border rounded-md"
                 />
+                {previewImage && (
+                  <div className="mt-4">
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="w-64 h-64 rounded-md"
+                    />
+                  </div>
+                )}
               </div>
+              <Field
+                name="githubLink"
+                label="Githuburl"
+                type="text"
+                placeholder="Enter github profile url"
+                as={CustomInput}
+              />
+              <Field
+                name="twitterLink"
+                label="Twitterurl"
+                type="text"
+                placeholder="Enter twitter profile url"
+                as={CustomInput}
+              />
+              <Field
+                name="linkedInLink"
+                label="LinkedInurl"
+                type="text"
+                placeholder="Enter linkedin profile url"
+                as={CustomInput}
+              />
               <button
                 type="submit"
                 disabled={isSubmitting}
