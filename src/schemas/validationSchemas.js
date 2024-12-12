@@ -131,3 +131,15 @@ export const servicesValidationSchema = Yup.object().shape({
     .required("description is required")
     .min(30, "Content must be at least 30 characters"),
 });
+
+export const contactValidationSchema = Yup.object({
+  fullName: Yup.string().required("Full Name is required"),
+  subject: Yup.string().required("Subject is required"),
+
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  message: Yup.string()
+    .required("message is required")
+    .min(30, "Message must be at least 30 characters"),
+});
