@@ -2,6 +2,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { projectValidationSchema } from "@/schemas/validationSchemas";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 const AdminProjects = () => {
   const initialValues = {
@@ -22,9 +23,7 @@ const AdminProjects = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">
-        Add Project
-      </h1>
+      <BreadCrumb page={"Add Projects"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}

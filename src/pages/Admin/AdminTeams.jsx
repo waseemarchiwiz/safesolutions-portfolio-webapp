@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { CustomInput } from "../../globals/CustomInput";
 import { teamMemberValidationSchema } from "../../schemas/validationSchemas";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 const AdminTeams = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -27,7 +28,7 @@ const AdminTeams = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Add Team Member</h1>
+      <BreadCrumb page={"Add Teams"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}

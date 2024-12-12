@@ -4,6 +4,7 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { CustomInput } from "../../globals/CustomInput";
 import { servicesValidationSchema } from "../../schemas/validationSchemas";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 const AdminServices = () => {
   // Initial form values
@@ -40,7 +41,7 @@ const AdminServices = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Create a Service</h1>
+      <BreadCrumb page={"Add Services"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}
