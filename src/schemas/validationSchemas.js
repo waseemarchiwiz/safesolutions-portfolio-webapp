@@ -75,10 +75,15 @@ export const teamMemberValidationSchema = Yup.object().shape({
       "Only image files are allowed (jpg, png)",
       (value) => value && ["image/jpeg", "image/png"].includes(value.type)
     ),
-  githubLink: Yup.string().required("Link is required").url("Invalid URL format"),
-  linkedInLink: Yup.string().required("Link is required").url("Invalid URL format"),
-  twitterLink: Yup.string().required("Link is required").url("Invalid URL format"),
-  
+  githubLink: Yup.string()
+    .required("Link is required")
+    .url("Invalid URL format"),
+  linkedInLink: Yup.string()
+    .required("Link is required")
+    .url("Invalid URL format"),
+  twitterLink: Yup.string()
+    .required("Link is required")
+    .url("Invalid URL format"),
 });
 
 //testemonial schemea
@@ -95,6 +100,34 @@ export const testimonialSchema = Yup.object().shape({
 });
 
 export const faqSchema = Yup.object().shape({
-  question: Yup.string().required('Question is required').min(5, 'Question must be at least 5 characters'),
-  answer: Yup.string().required('Answer is required').min(10, 'Answer must be at least 10 characters'),
+  question: Yup.string()
+    .required("Question is required")
+    .min(5, "Question must be at least 5 characters"),
+  answer: Yup.string()
+    .required("Answer is required")
+    .min(10, "Answer must be at least 10 characters"),
+});
+
+export const servicesValidationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  // category: Yup.string().required("Category is required"),
+  keypoints: Yup.array()
+    .of(Yup.string().required("Keypoint cannot be empty"))
+    .min(1, "At least one tag is required")
+    .required("Tags are required"), // For multiple tags input
+  image: Yup.mixed()
+    .required("Image is required")
+    .test(
+      "fileSize",
+      "File size is too large",
+      (value) => value && value.size <= 5000000 // 5MB limit
+    )
+    .test(
+      "fileType",
+      "Unsupported file type",
+      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
+    ),
+  description: Yup.string()
+    .required("description is required")
+    .min(30, "Content must be at least 30 characters"),
 });
