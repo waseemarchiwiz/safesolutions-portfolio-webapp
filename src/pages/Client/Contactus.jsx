@@ -3,8 +3,31 @@ import { motion } from "framer-motion";
 // import about from "../../src/assets/about.webp";
 import CustomButton from "../../globals/CustomButton";
 import ScrollToTop from "../../globals/ScrollToTop";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { CustomInput } from "@/globals/CustomInput";
+import { contactValidationSchema } from "@/schemas/validationSchemas";
 
 const Contactus = () => {
+  const initialValues = {
+    fullName: "",
+    subject: "",
+    email: "",
+    message: "",
+  };
+
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
+    try {
+      console.log("Blog Data:", values);
+      alert("Blog submitted successfully!");
+      resetForm();
+      setPreviewImage(null);
+    } catch (error) {
+      console.error("Submission error:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <div className="dark:bg-gray-800 dark:text-gray-200">
       <div
@@ -31,7 +54,7 @@ const Contactus = () => {
         </motion.div>
       </div>
       <div className=" p-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-white mt-4 font-[sans-serif] before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
+        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-white mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
           <div>
             <h2 className="text-gray-800 text-3xl font-extrabold">
               Get In Touch
@@ -40,73 +63,73 @@ const Contactus = () => {
               Have a specific inquiry or looking to explore new opportunities?
               Our experienced team is ready to engage with you.
             </p>
-            <form>
-              <div className="space-y-4 mt-8">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="px-2 py-3 bg-white  w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Street"
-                  className="px-2 py-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                />
-                <div className="grid grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="City"
-                    className="px-2 py-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Postcode"
-                    className="px-2 py-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                  />
-                </div>
-                <input
-                  type="number"
-                  placeholder="Phone No."
-                  className="px-2 py-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="px-2 py-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                />
-                <textarea
-                  placeholder="Write Message"
-                  className="px-2 pt-3 bg-white w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 outline-none"
-                  defaultValue={""}
-                />
-              </div>
-              {/* <button
-                type="button"
-                className="mt-8 flex items-center justify-center text-sm w-full rounded-md px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16px"
-                  height="16px"
-                  fill="#fff"
-                  className="mr-2"
-                  viewBox="0 0 548.244 548.244"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M392.19 156.054 211.268 281.667 22.032 218.58C8.823 214.168-.076 201.775 0 187.852c.077-13.923 9.078-26.24 22.338-30.498L506.15 1.549c11.5-3.697 24.123-.663 32.666 7.88 8.542 8.543 11.577 21.165 7.879 32.666L390.89 525.906c-4.258 13.26-16.575 22.261-30.498 22.338-13.923.076-26.316-8.823-30.728-22.032l-63.393-190.153z"
-                    clipRule="evenodd"
-                    data-original="#000000"
-                  />
-                </svg>
-                Send Message
-              </button> */}
-              <CustomButton
-                label="Contact us"
-                to="/contact"
-                className="w-44 text-center md:ml-44 mt-3 "
-              />
-            </form>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={contactValidationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, touched, isSubmitting }) => (
+                <Form>
+                  <div className="space-y-4 mt-8">
+                    <Field
+                      name="fullName"
+                      label="Full Name"
+                      type="text"
+                      placeholder="Enter Full Name"
+                      as={CustomInput}
+                    />
+                    {errors.fullName && touched.fullName && (
+                      <div className="text-red-600">{errors.fullName}</div>
+                    )}
+
+                    <Field
+                      name="subject"
+                      label="Subject"
+                      type="text"
+                      placeholder="Subject"
+                      as={CustomInput}
+                    />
+                    {errors.subject && touched.subject && (
+                      <div className="text-red-600">{errors.subject}</div>
+                    )}
+
+                    <Field
+                      name="email"
+                      label="Email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      as={CustomInput}
+                    />
+                    {errors.email && touched.email && (
+                      <div className="text-red-600">{errors.email}</div>
+                    )}
+
+                    <Field
+                      name="message"
+                      label="Message"
+                      isTextarea={true}
+                      rows="6"
+                      placeholder="Write your thoughts"
+                      as={CustomInput}
+                    />
+                    {errors.message && touched.message && (
+                      <div className="text-red-600">{errors.message}</div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${
+                        isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit"}
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+
             <ul className="mt-4 flex flex-wrap justify-center gap-6">
               <li className="flex items-center text-blue-600">
                 <svg
