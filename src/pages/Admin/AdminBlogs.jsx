@@ -4,6 +4,7 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { CustomInput } from "../../globals/CustomInput";
 import { blogValidationSchema } from "../../schemas/validationSchemas";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 const AdminBlogs = () => {
   // Initial form values
@@ -40,7 +41,7 @@ const AdminBlogs = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Create a Blog</h1>
+      <BreadCrumb page={"Add Blogs"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}

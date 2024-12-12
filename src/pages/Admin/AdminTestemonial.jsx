@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 
 import { testimonialSchema } from "@/schemas/validationSchemas";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 // Define validation schema for the testimonial form
 
@@ -28,7 +29,7 @@ const AdminTestimonial = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Admin Testimonials</h1>
+      <BreadCrumb page={"Add Testimonials"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}

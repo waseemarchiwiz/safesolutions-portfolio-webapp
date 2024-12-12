@@ -2,6 +2,8 @@ import React from "react";
 import { jobOpeningSchema } from "@/schemas/validationSchemas";
 import { Field, Form, Formik } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
+import Careers from "../Client/Careers";
 
 const AdminCareers = () => {
   const initialValues = {
@@ -24,7 +26,8 @@ const AdminCareers = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Add Careers</h1>
+      <BreadCrumb page={"Add Careers"} />
+      {/* <h1 className="text-[30px] ml-5">Add Careers</h1> */}
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}
@@ -79,7 +82,7 @@ const AdminCareers = () => {
                 placeholder="Describe the job"
                 as={CustomInput}
               />
-             <button
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${

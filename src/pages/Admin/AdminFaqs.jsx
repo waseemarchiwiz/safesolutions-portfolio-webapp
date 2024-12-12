@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput"; // Assuming you have a custom input component
 import { faqSchema } from "@/schemas/validationSchemas";
 import CustomButton from "@/globals/CustomButton";
+import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
 // Define the validation schema for the FAQ form
 
@@ -24,7 +25,7 @@ const AdminFaqs = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-[30px] ml-5">Add FAQ</h1>
+      <BreadCrumb page={"Add Faqs"} />
       <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
         <Formik
           initialValues={initialValues}
