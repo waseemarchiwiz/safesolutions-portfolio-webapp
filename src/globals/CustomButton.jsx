@@ -9,10 +9,10 @@ const CustomButton = ({
   handleClick,
 }) => {
   const defaultStyle = `
-    group relative h-[40px]  inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring
+    group relative h-[40px]  inline-block overflow-hidden border rounded-lg text-white bg-black border-[#2170B7] px-6 md:px-8 py-[6px] focus:outline-none focus:ring
   `;
   const defaultInnerStyle = `
-    absolute inset-y-0 left-0 w-[2px]  bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500
+    absolute inset-y-0 left-0 w-[2px]  bg-[#2170B7] transition-all group-hover:w-full group-active:bg-[#2170B7]
   `;
   const textStyle = `
     relative text-sm font-medium text-white transition-colors
