@@ -1,13 +1,7 @@
-import Blogs from "@/pages/Admin/AdminBlogs";
 import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCareers from "@/pages/Admin/AdminCareers";
-import AdminProjects from "@/pages/Admin/AdminProjects";
-import AdminTeams from "@/pages/Admin/AdminTeams";
-import AdminTestemonial from "@/pages/Admin/AdminTestemonial";
-import AdminFaqs from "@/pages/Admin/AdminFaqs";
-
+ 
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
 const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
 
@@ -18,6 +12,22 @@ const BlogsPage = React.lazy(() => import("../pages/Client/Blogs"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
+
+const AdminBlogs = React.lazy(() => import("../pages/Admin/AdminBlogs"));
+
+const AdminCareers = React.lazy(() => import("../pages/Admin/AdminCareers"));
+
+const AdminProjects = React.lazy(() => import("../pages/Admin/AdminProjects"));
+
+const AdminTeams = React.lazy(() => import("../pages/Admin/AdminTeams"));
+
+const AdminTestemonial = React.lazy(() =>
+  import("../pages/Admin/AdminTestemonial")
+);
+
+const AdminFaqs = React.lazy(() => import("../pages/Admin/AdminFaqs"));
+
+const AdminServices = React.lazy(() => import("../pages/Admin/AdminServices"));
 
 const AdminDashboard = React.lazy(() =>
   import("../pages/Admin/AdminDashboard")
@@ -41,7 +51,7 @@ const CustomRoutes = () => {
           path: "blogs",
           element: (
             <Suspense fallback={<LoadingPage />}>
-              <Blogs />
+              <AdminBlogs />
             </Suspense>
           ),
         },
@@ -90,6 +100,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminFaqs />
+            </Suspense>
+          ),
+        },
+        {
+          path: "services",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminServices />
             </Suspense>
           ),
         },

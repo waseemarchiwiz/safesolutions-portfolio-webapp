@@ -185,7 +185,7 @@ const Sidebar = React.forwardRef((
       {/* This is what handles the sidebar gap on desktop */}
       <div
         className={cn(
-          "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+          "duration-200 relative h-svh w-[--sidebar-width] bg-transparent   transition-[width] ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
           variant === "floating" || variant === "inset"
@@ -330,7 +330,7 @@ const SidebarContent = React.forwardRef(({ className, ...props }, ref) => {
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden bg-[#2170B7]",
         className
       )}
       {...props} />)
