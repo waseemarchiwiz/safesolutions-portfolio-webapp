@@ -210,79 +210,42 @@ const Footer = () => {
                     Services
                   </a>
                 </li>
-
-                 
               </ul>
             </div>
 
             <div>
               <p className="font-medium text-gray-900 dark:text-white">
-                Helpful Links
+                Contact us
               </p>
-
-              <ul className="mt-6 space-y-4 text-[16px]">
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Contact
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="#faqs"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    FAQs
-                  </Link>
-                </li>
-
-                 
-              </ul>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-6 space-y-4 text-[16px]">
+                Industrial Road, Street No. 1,
+                <br />
+                Plot No. 103-104 A, Hayatabad, Peshawar
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                (813) 678-8860
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                info@archiwiz.com
+              </p>
             </div>
 
             <div>
-              <p className="font-medium text-gray-900 dark:text-white">Legal</p>
-
-              <ul className="mt-6 space-y-4 text-[16px]">
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Accessibility
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Returns Policy
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Refund Policy
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Hiring Statistics
-                  </Link>
-                </li>
-              </ul>
+              <p className="font-medium text-gray-900 dark:text-white">
+                Office hours
+              </p>
+              <p className="mt-6  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Monday - Friday: 10:00 AM - 6:00 PM
+              </p>
+              <p className=" text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Saturday: Closed
+              </p>
+              <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Sunday: Closed
+              </p>
+              <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Available 24/7 for online inquiries at safesolution@archiwiz.com
+              </p>
             </div>
           </div>
 
@@ -296,3 +259,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+ 

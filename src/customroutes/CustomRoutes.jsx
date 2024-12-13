@@ -1,7 +1,7 @@
 import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
- 
+
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
 const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
 
