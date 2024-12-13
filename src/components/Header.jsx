@@ -76,7 +76,7 @@ const Header = () => {
                 <li>
                   <Link
                     className={`transition hover:text-gray-500/75 ${
-                      isActive("/careers")
+                      isActive("/blogs")
                         ? "text-blue-500 dark:text-blue-300 font-semibold"
                         : "text-black dark:text-white"
                     }`}

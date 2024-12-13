@@ -1,87 +1,15 @@
 import React, { useState } from "react";
-import TabComponent from "../../globals/TabComponents"; // Adjust the import path as needed
-import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Select from "react-select";
+import { CustomInput } from "../../../globals/CustomInput";
+import { servicesValidationSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
-import { CustomInput } from "../../globals/CustomInput";
-import { blogValidationSchema } from "../../schemas/validationSchemas";
-import CustomTable from "@/globals/CustomTable";
-
-const AdminBlogs = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const tabs = [
-    { title: "VIEW BLOGS", content: <BlogsTable /> },
-    { title: "ADD BLOG", content: <BlogForm /> },
-  ];
-
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
-
-  return (
-    <div className="p-10">
-      <div className="container flex flex-row justify-between align-center">
-        <div>
-          <BreadCrumb page={"Manage Blogs"} />
-        </div>
-        <TabComponent
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabClick={handleTabClick}
-        />
-      </div>
-      <div className="p-4">{tabs[activeTab].content}</div>
-    </div>
-  );
-};
-
-export default AdminBlogs;
-
-const BlogsTable = () => {
-  // Implement the taconst headers = ["Name", "Email", "Role", "Joined At"];
-  const headers = ["Title", "Category", "Tags", "Content"];
-  const data = [
-    {
-      name: "John Doe",
-      email: "john@example.com",
-      role: "Admin",
-      joinedAt: "2022-05-15",
-    },
-    {
-      name: "Jane Smith",
-      email: "jane@example.com",
-      role: "User",
-      joinedAt: "2022-07-20",
-    },
-    // ... more data
-  ];
-  const handleEdit = (row) => {
-    console.log("Edit", row);
-  };
-  const handleDelete = (row) => {
-    console.log("Delete", row);
-  };
-  return (
-    <CustomTable
-      headers={headers}
-      data={data}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      itemsPerPage={5}
-    />
-  );
-};
-
-const BlogForm = () => {
-  // Initial form values
+const ServicesForm = () => {
   const initialValues = {
     title: "",
-    category: "",
-    tags: [],
+    // category: "",
+    keypoints: [],
     image: null,
-    content: "",
+    description: "",
   };
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -111,7 +39,7 @@ const BlogForm = () => {
     <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
       <Formik
         initialValues={initialValues}
-        validationSchema={blogValidationSchema}
+        validationSchema={servicesValidationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, setFieldValue, values }) => (
@@ -125,56 +53,35 @@ const BlogForm = () => {
               as={CustomInput}
             />
 
-            {/* Category Dropdown */}
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
-                Category
-              </label>
-              <Select
-                options={categoryOptions}
-                className="basic-single-select"
-                classNamePrefix="select"
-                onChange={(selectedOption) =>
-                  setFieldValue(
-                    "category",
-                    selectedOption ? selectedOption.value : ""
-                  )
-                }
-                value={categoryOptions.find(
-                  (option) => option.value === values.category
-                )}
-                placeholder="Select Category"
-              />
-              <ErrorMessage
-                name="category"
-                component="span"
-                className="text-red-500 text-xs"
-              />
-            </div>
-
             {/* Tags Input */}
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Tags</label>
+              <label className="block text-sm text-gray-700 mb-2">
+                Key Points
+              </label>
               <CreatableSelect
                 isMulti
                 onChange={(selectedOptions) =>
                   setFieldValue(
-                    "tags",
+                    "keypoints",
                     selectedOptions
                       ? selectedOptions.map((option) => option.value)
                       : []
                   )
                 }
-                value={values.tags.map((tag) => ({ label: tag, value: tag }))}
-                placeholder="Add tags"
+                value={values.keypoints.map((keypoints) => ({
+                  label: keypoints,
+                  value: keypoints,
+                }))}
+                placeholder="Write Key Points"
               />
               <ErrorMessage
-                name="tags"
+                name="keypoints"
                 component="span"
                 className="text-red-500 text-xs"
               />
             </div>
 
+            {/* Image Upload */}
             {/* Image Upload */}
             <div>
               <label className="block text-sm text-gray-700">Image</label>
@@ -215,8 +122,8 @@ const BlogForm = () => {
 
             {/* Content */}
             <Field
-              name="content"
-              label="Content"
+              name="description"
+              label="description"
               isTextarea={true}
               rows="6"
               placeholder="Write your thoughts"
@@ -269,3 +176,5 @@ const BlogForm = () => {
     </div>
   );
 };
+
+export default ServicesForm;
