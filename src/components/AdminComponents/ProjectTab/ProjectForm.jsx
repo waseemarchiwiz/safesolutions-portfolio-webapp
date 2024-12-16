@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { projectValidationSchema } from "../../../schemas/validationSchemas";
-import CreatableSelect from "react-select/creatable";
+import axios from "axios";
+import apiUrl from "../../../../baseUrl";
+import { toast } from "react-toastify";
+
 const ProjectForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const initialValues = {
     projectName: "",
     projectDescription: "",
@@ -11,14 +16,53 @@ const ProjectForm = () => {
     projectImage: null,
   };
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("Submitted Project Data:", values);
-    setTimeout(() => {
-      setSubmitting(false);
-      resetForm();
-      alert("Project submitted successfully!");
-    }, 2000);
+  const handleSubmit = async (values, { resetForm }) => {
+    // Start submission process
+    setIsSubmitting(true);
+
+    const formData = new FormData();
+    formData.append("title", values.projectName);
+    formData.append("description", values.projectDescription);
+    formData.append("link", values.projectUrl);
+
+    // Append image if exists
+    if (values.projectImage) {
+      formData.append("image", values.projectImage);
+    }
+
+    try {
+      const response = await axios.post(`${apiUrl}/store/project`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Check the exact structure of your response
+      console.log("Response:", response.data);
+
+      if (response.data.success === true || response.status === 200) {
+        // Success toast
+        toast.success(response.data.message || "Project added successfully!");
+
+        resetForm();
+      } else {
+        // Error toast for unsuccessful response
+        toast.error(response.data.message || "Failed to add project");
+      }
+    } catch (error) {
+      // Error toast for network or server errors
+      console.error("Error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          error.message ||
+          "An error occurred while adding the project"
+      );
+    } finally {
+      // Always stop submitting
+      setIsSubmitting(false);
+    }
   };
+
   return (
     <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
       <Formik
@@ -26,7 +70,7 @@ const ProjectForm = () => {
         validationSchema={projectValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, setFieldValue }) => (
+        {({ setFieldValue }) => (
           <Form className="space-y-6">
             <div className="font-sans grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field
@@ -110,4 +154,5 @@ const ProjectForm = () => {
     </div>
   );
 };
+
 export default ProjectForm;

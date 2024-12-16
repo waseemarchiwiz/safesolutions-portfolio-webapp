@@ -6,7 +6,7 @@ import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
 import CustomTable from "@/globals/CustomTable";
 import ProjectTable from "../../components/AdminComponents/ProjectTab/ProjectTable";
-import ProjectForm from '../../components/AdminComponents/ProjectTab/ProjectForm'
+import ProjectForm from "../../components/AdminComponents/ProjectTab/ProjectForm";
 
 const AdminProjects = () => {
   const [activeTab, setActiveTab] = useState(0);
