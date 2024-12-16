@@ -1,12 +1,14 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(apiUrl, "ksdjfskjd");
+
 const apiInstance = axios.create({
-    // baseURL: "http://localhost:3000/api",
-    baseURL: 'https://dummyjson.com/',
-    timeout: 4000,
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
+  baseURL: apiUrl,
+  timeout: 4000,
+  headers: {
+    // "Content-Type": "application/    json",
+  },
+});
 
 export default apiInstance;
