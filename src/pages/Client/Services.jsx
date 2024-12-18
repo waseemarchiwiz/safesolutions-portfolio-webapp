@@ -28,14 +28,9 @@ const Services = () => {
       title: "Software Development",
       content: <ServicesTab />,
     },
-    {
-      title: "Architecture & Design",
-      content: (
-        <p>
-          We provide cutting-edge architecture and design services to bring your
-          creative visions to life.
-        </p>
-      ),
+     {
+      title: "Archetecture and Design",
+      content: <BackofficeServicesTab />,
     },
   ];
   const handleTabClick = (index) => {
