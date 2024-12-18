@@ -11,6 +11,7 @@ const FaqsForm = () => {
 
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     console.log("FAQ Submitted:", values);
+    
     setTimeout(() => {
       setSubmitting(false);
       resetForm();
