@@ -3,21 +3,41 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { faqSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
+import apiUrl from "../../../../baseUrl";
+import { toast } from "react-toastify";
+import axios from "axios";
 const FaqsForm = () => {
   const initialValues = {
     question: "",
     answer: "",
   };
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("FAQ Submitted:", values);
-    
-    setTimeout(() => {
-      setSubmitting(false);
-      resetForm();
-      alert("FAQ Submitted!");
-    }, 2000);
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log("Values being sent:", values); // Log the data being sent
+    console.log("API URL:", `${apiUrl}/store/faq`); // Log the API endpoint
+
+    try {
+      const response = await axios.post(`${apiUrl}/store/faq`, values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response, "Faq1 Response");
+
+      if (response.data.succes === true) {
+        toast.success(response.data.message || "Faq Added Successfully");
+        resetForm(); // Optional: Reset the form after successful submission
+      } else {
+        toast.error(response.data.message || "Failed to add Faq");
+      }
+    } catch (error) {
+      console.error("Error details:", error); // Log error details
+      toast.error(error.response?.data?.message || "Failed to add Faq");
+    } finally {
+      setSubmitting(false); // Ensure the form submission state is reset
+    }
   };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -85,4 +105,4 @@ const FaqsForm = () => {
     </Formik>
   );
 };
-export default FaqsForm
+export default FaqsForm;
