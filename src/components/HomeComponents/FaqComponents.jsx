@@ -1,10 +1,8 @@
-import axios from "axios";
-import apiUrl from "../../../baseUrl";
-import React, { useEffect, useState } from "react";
+ 
+import React, { useState } from "react";
 
 const FaqComponent = () => {
   const [openIndexes, setOpenIndexes] = useState([]);
-  const [faqsData, setFaqsData] = useState([]);
 
   const toggleAccordion = (index) => {
     setOpenIndexes((prevIndexes) =>
@@ -14,26 +12,36 @@ const FaqComponent = () => {
     );
   };
 
-  const fetchFaqsData = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/get/faq`);
-      console.log(response?.data?.faqs, "faq get");
-      setFaqsData(response?.data?.faqs);
-    } catch (error) {
-      console.error("Fetch faqs error:", error);
-      toast.error("Failed to fetch FAQs");
-    }
-  };
-  useEffect(() => {
-    fetchFaqsData();
-  }, []);
+  const faqs = [
+    {
+      question: "What industries does your software company specialize in?",
+      answer:
+        "We specialize in industries such as finance, healthcare, e-commerce, logistics, and education, offering tailored software solutions for each sector.",
+    },
+    {
+      question: "Do you provide custom software development services?",
+      answer:
+        "Yes, we offer custom software development services designed to meet your unique business needs and objectives.",
+    },
+    {
+      question: "What technologies do you use for software development?",
+      answer:
+        "Our team is skilled in modern technologies including React, Node.js, Python, Java, PHP, and cloud platforms like AWS and Azure.",
+    },
+    {
+      question: "What is your approach to data security in software projects?",
+      answer:
+        "We implement industry-standard security measures, including encryption, secure authentication, and compliance with data protection regulations like GDPR and HIPAA.",
+    },
+    {
+      question: "Do you offer post-launch support for software projects?",
+      answer:
+        "Yes, we provide comprehensive post-launch support, including maintenance, updates, and bug fixes to ensure your software continues to perform optimally.",
+    },
+  ];
 
- 
   return (
-    <div
-      id="faqs"
-      className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"
-    >
+    <div id="faqs" className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"   >
       <div className="max-w-7xl  mx-auto sm:px-8 px-4  ">
         <div className="mb-12 max-w-4xl ">
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
@@ -42,7 +50,7 @@ const FaqComponent = () => {
         </div>
 
         <div className="w-full ">
-          {faqsData.map((faq, index) => (
+          {faqs.map((faq, index) => (
             <div
               key={index}
               className="accordion bg-white shadow-md rounded-lg mt-10  "

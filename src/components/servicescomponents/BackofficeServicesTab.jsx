@@ -1,3 +1,4 @@
+import CustomButton from "@/globals/CustomButton";
 import {
   FaBriefcase,
   FaClipboardList,
@@ -108,7 +109,7 @@ const ServiceCard = ({ icon, title, description, features }) => (
 const BackofficeServicesTab = () => (
   <div className="min-h-screen bg-gray-50 dark:bg-[#18181B] py-16 px-4">
     <div className="container mx-auto">
-      <div className="text-center mb-12">
+      {/* <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
           Backoffice Support Services
         </h1>
@@ -116,7 +117,7 @@ const BackofficeServicesTab = () => (
           Comprehensive backoffice solutions to streamline operations and
           support your business growth.
         </p>
-      </div>
+      </div> */}
       <div className="grid md:grid-cols-3 gap-8">
         {backofficeServices.map((service, index) => (
           <ServiceCard
