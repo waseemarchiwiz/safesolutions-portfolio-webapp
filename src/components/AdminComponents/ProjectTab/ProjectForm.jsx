@@ -40,14 +40,14 @@ const ProjectForm = () => {
       // Check the exact structure of your response
       console.log("Response:", response.data);
 
-      if (response.data.success === true || response.status === 200) {
+      if (response.data.succes === true || response.status === 200) {
         // Success toast
-        toast.success(response.data.message || "Project added successfully!");
+        toast.success("Project added successfully!");
 
         resetForm();
       } else {
         // Error toast for unsuccessful response
-        toast.error(response.data.message || "Failed to add project");
+        toast.error("Failed to add project");
       }
     } catch (error) {
       // Error toast for network or server errors
