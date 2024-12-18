@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { testimonialSchema } from "@/schemas/validationSchemas";
+import apiUrl from "../../../../baseUrl";
+import axios from "axios";
+import { toast } from "react-toastify";
 export const TestimonialForm = () => {
   const [preview, setPreview] = useState(null);
 
@@ -12,14 +15,41 @@ export const TestimonialForm = () => {
     designation: "",
   };
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("Testimonial Submitted:", values);
-    setTimeout(() => {
-      setSubmitting(false);
-      resetForm();
-      alert("Testimonial Submitted!");
+  const handleSubmit = async (values, { resetForm }) => {
+    const formData = new FormData();
+
+    // Append each field to the FormData instance
+    formData.append("name", values.name);
+    formData.append("designation", values.designation);
+    formData.append("description", values.description);
+
+    // Append the file if available
+    if (values.image) {
+      formData.append("image", values.image);
+    }
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/store/testimonial`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // This header is optional; Axios automatically sets it for FormData
+          },
+        }
+      );
+      console.log(response);
+      // alert("Testimonial submitted successfully!");
+      if (response.data.succes) {
+        toast.success("Testimonial submitted successfully!");
+        resetForm();
+      }
+    } catch (error) {
+      console.error("Error submitting testimonial:", error.message);
+      toast.error("Failed to submit testimonial. Please try again.");
+    } finally {
       setPreview(null);
-    }, 2000);
+    }
   };
 
   return (
@@ -47,7 +77,7 @@ export const TestimonialForm = () => {
                 as={CustomInput}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid ">
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                   Image
