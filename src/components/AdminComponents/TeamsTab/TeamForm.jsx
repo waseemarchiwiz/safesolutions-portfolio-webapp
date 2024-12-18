@@ -2,6 +2,9 @@ import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { teamMemberValidationSchema } from "@/schemas/validationSchemas";
 import React, { useState } from "react";
+import axios from "axios";
+import apiUrl from "../../../../baseUrl";
+import { toast } from "react-toastify";
 export const TeamsForm = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -14,14 +17,40 @@ export const TeamsForm = () => {
     twitterLink: "",
   };
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("Team Member Data:", values);
-    setTimeout(() => {
-      setSubmitting(false);
-      alert("Team member added successfully!");
-      setPreviewImage(null);
-      resetForm();
-    }, 2000);
+  const handleSubmit = async (values, { resetForm }) => {
+    const formData = new FormData();
+
+    // Append each field to the FormData instance
+    formData.append("name", values.name);
+    formData.append("role", values.role);
+    formData.append("github", values.githubLink);
+    formData.append("linkedin", values.linkedInLink);
+    formData.append("twitter", values.twitterLink);
+
+    // Append the file if available
+    if (values.image) {
+      formData.append("image", values.image);
+    }
+
+    try {
+      const response = await axios.post(`${apiUrl}/store/team`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // This header is optional; Axios automatically sets it for FormData
+        },
+      });
+
+      console.log(response);
+      // alert("Testimonial submitted successfully!");
+      if (response.data.succes) {
+        toast.success("Teams Added successfully!");
+        resetForm();
+      }
+    } catch (error) {
+      console.error("Error submitting testimonial:", error.message);
+      toast.error("Failed to submit testimonial. Please try again.");
+    } finally {
+      setPreview(null);
+    }
   };
   return (
     <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
