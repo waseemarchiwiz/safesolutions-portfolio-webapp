@@ -4,6 +4,9 @@ import { CustomInput } from "../../../globals/CustomInput";
 import { blogValidationSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
+import axios from "axios";
+import apiUrl from "../../../../baseUrl";
+import { toast } from "react-toastify";
 export const BlogForm = () => {
   // Initial form values
   const initialValues = {
@@ -11,20 +14,44 @@ export const BlogForm = () => {
     category: "",
     tags: [],
     image: null,
-    content: "",
+    description: "",
   };
 
   const [previewImage, setPreviewImage] = useState(null);
 
   // Form submission handler
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    // Ensure tags is an array or an empty array if not
+    const formattedTags = Array.isArray(values.tags) ? values.tags : [];
+
+    // Convert tags to a JSON string
+    const formattedTagsString = JSON.stringify(formattedTags);
+
+    console.log(formattedTagsString); // Logs the correctly formatted tags array
+
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("category", values.category);
+    formData.append("description", values.description);
+    formData.append("tags[]", formattedTagsString); // Convert array to JSON string for Postman
+
+    if (values.image) {
+      formData.append("image", values.image);
+    }
+
     try {
-      console.log("Blog Data:", values);
-      alert("Blog submitted successfully!");
-      resetForm();
-      setPreviewImage(null);
-    } catch (error) {
-      console.error("Submission error:", error);
+      const response = await axios.post(`${apiUrl}/store/blog`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(response.data, "blog form values");
+      if (response?.data?.succes) {
+        toast.success("Blog Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Failed to add blog");
+      }
+    } catch (e) {
+      console.error("Error submitting form:", e.response?.data || e.message);
     } finally {
       setSubmitting(false);
     }
@@ -145,7 +172,7 @@ export const BlogForm = () => {
 
             {/* Content */}
             <Field
-              name="content"
+              name="description"
               label="Content"
               isTextarea={true}
               rows="6"
