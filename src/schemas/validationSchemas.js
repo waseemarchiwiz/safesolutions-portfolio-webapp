@@ -18,30 +18,21 @@ export const blogValidationSchema = Yup.object().shape({
       "Unsupported file type",
       (value) => value && ["image/jpeg", "image/png"].includes(value.type)
     ),
-  content: Yup.string()
-    .required("Content is required")
-    .min(50, "Content must be at least 50 characters"),
+  description: Yup.string()
+    .required("Description is required")
+    .min(50, "Description must be at least 50 characters"),
 });
 
 export const jobOpeningSchema = Yup.object().shape({
   title: Yup.string()
     .required("Job title is required")
     .min(3, "Job title must be at least 3 characters"),
-  department: Yup.string()
-    .required("Department is required")
-    .min(3, "Department name must be at least 3 characters"),
-  location: Yup.string()
-    .required("Location is required")
-    .oneOf(["Remote", "Onsite"], "Location must be either Remote or Onsite"),
-  type: Yup.string()
-    .required("Job type is required")
-    .oneOf(
-      ["Full-time", "Part-time", "Contract"],
-      "Job type must be one of: Full-time, Part-time, Contract"
-    ),
-  description: Yup.string()
-    .required("Description is required")
-    .min(10, "Description must be at least 10 characters long"),
+  job_description: Yup.string()
+    .required("Job Description is required")
+    .min(10, "Job Description  must be at least 20 characters"),
+  location: Yup.string().required("Location is required"),
+  short_description: Yup.string().required("short description is required"),
+  link: Yup.string().required("link is required").url("Invalid URL format"),
 });
 
 export const projectValidationSchema = Yup.object().shape({

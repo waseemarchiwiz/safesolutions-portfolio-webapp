@@ -28,7 +28,7 @@ const Services = () => {
       title: "Software Development",
       content: <ServicesTab />,
     },
-     {
+    {
       title: "Archetecture and Design",
       content: <BackofficeServicesTab />,
     },
@@ -91,7 +91,7 @@ const Services = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="tab-content bg-gray-100 p-6 rounded-lg shadow">
+        <div className="tab-content bg-gray-100 dark:bg-[#18181B] p-6 rounded-lg shadow">
           {tabs[activeTab].content}
         </div>
         <ScrollToTop />
