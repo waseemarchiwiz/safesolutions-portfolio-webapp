@@ -3,22 +3,34 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { jobOpeningSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
+import axios from "axios";
+import apiUrl from "../../../../baseUrl";
+import { toast } from "react-toastify";
 export const CareersForm = () => {
   const initialValues = {
     title: "",
-    department: "",
-    location: "Remote", // default value for location
-    type: "Full-time",
-    description: "",
+    job_description: "",
+    location: "", // default value for location
+    short_description: "",
+    link: "",
   };
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    console.log("Submitted Job Opening:", values);
-    // Simulate a network request delay
-    setTimeout(() => {
-      setSubmitting(false);
-      resetForm();
-      alert("Job Opening Submitted!");
-    }, 2000);
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log(values, "values1");
+    try {
+      const response = await axios.post(`${apiUrl}/store/career`, values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.data.succes) {
+        resetForm();
+        setSubmitting(false);
+        toast.success("Job added successfully");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(error.response?.data?.message || "An error occurred");
+    }
   };
 
   return (
@@ -39,14 +51,14 @@ export const CareersForm = () => {
                 as={CustomInput}
               />
               <Field
-                name="department"
-                label="Department"
+                name="job_description"
+                label="Job Description"
                 type="text"
-                placeholder="Enter Department"
+                placeholder="Enter Job Description"
                 as={CustomInput}
               />
             </div>
-            <div className="  grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="  grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                   Location
@@ -67,13 +79,27 @@ export const CareersForm = () => {
                 placeholder="Enter job type"
                 as={CustomInput}
               />
-            </div>
+            </div> */}
             <Field
-              name="description"
-              label="Job Description"
+              name="location"
+              label="Location"
+              // isTextarea={true}
+              // rows="6"
+              placeholder="Job Location"
+              as={CustomInput}
+            />
+            <Field
+              name="short_description"
+              label="Short Description"
               isTextarea={true}
               rows="6"
-              placeholder="Describe the job"
+              placeholder="Write a short description about job"
+              as={CustomInput}
+            />
+            <Field
+              name="link"
+              label="Easy Apply Link"
+              placeholder="Platform Link"
               as={CustomInput}
             />
             <button
