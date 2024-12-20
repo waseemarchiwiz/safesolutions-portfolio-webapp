@@ -130,9 +130,10 @@ const BackofficeServicesTab = () => (
         ))}
       </div>
       <div className="text-center mt-12">
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors font-semibold">
-          Get Started
-        </button>
+        <CustomButton
+          handleClick={() => navigate("/contact")}
+          label="Get Started"
+        />
       </div>
     </div>
   </div>
