@@ -11,17 +11,19 @@ import ScrollToTop from "../../globals/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="dark:bg-gray-800 dark:text-gray-200 ">
-      <MainHero />
-      <WhyChoose />
-      <AboutComp />
-      <WorkingArea />
-      <ServicesComponent />
-      {/* <ProjComp /> */}
-      <ProjectsComponent />
-      <Testimonial />
-      <FaqComponent />
-      <ScrollToTop />
+    <div className="dark:bg-[#18181b] dark:text-gray-200">
+      <div>
+        <MainHero />
+        <WhyChoose />
+        <AboutComp />
+        <WorkingArea />
+        <ServicesComponent />
+        {/* <ProjComp /> */}
+        <ProjectsComponent />
+        <Testimonial />
+        <FaqComponent />
+        <ScrollToTop />
+      </div>
     </div>
   );
 };
