@@ -40,14 +40,14 @@ export const TeamsForm = () => {
       });
 
       console.log(response);
-      // alert("Testimonial submitted successfully!");
+
       if (response.data.succes) {
         toast.success("Teams Added successfully!");
         resetForm();
       }
     } catch (error) {
-      console.error("Error submitting testimonial:", error.message);
-      toast.error("Failed to submit testimonial. Please try again.");
+      console.error("Error submitting Teams:", error.message);
+      toast.error("Failed to submit Teams. Please try again.");
     } finally {
       setPreview(null);
     }

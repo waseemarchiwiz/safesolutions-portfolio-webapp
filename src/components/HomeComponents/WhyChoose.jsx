@@ -30,50 +30,52 @@ export default function WhyChoose() {
   ];
 
   return (
-    <div className="flex justify-center flex-col p-10 items-center  dark:bg-zinc-900">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-          Why Choose us
-        </h1>
-        <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-center     w-auto   ">
-          We provide expert back-office support services, leveraging innovation,
-          industry expertise, and emerging technologies to streamline operations
-          and deliver tailored solutions.
-        </p>
-      </div>
+    <div className="container mx-auto px-4">
+      <div className=" flex justify-center flex-col p-10 items-center  dark:bg-[#18181b]">
+        <div className="flex flex-col gap-4">
+          <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
+            Why Choose us
+          </h1>
+          <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-center     w-auto   ">
+            We provide expert back-office support services, leveraging
+            innovation, industry expertise, and emerging technologies to
+            streamline operations and deliver tailored solutions.
+          </p>
+        </div>
 
-      {/* Wrap the mapped cards with a div that has a grid layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3    gap-6">
-        {cardData.map((item, index) => {
-          return (
-            <CardContainer key={index} className="inter-var mt-10">
-              <CardBody className="w-full bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  rounded-xl p-6 border">
-                <CardItem
-                  translateZ="50"
-                  className="text-xl font-bold   text-neutral-600 dark:text-white"
-                >
-                  {item.title}
-                </CardItem>
-                <CardItem
-                  as="p"
-                  translateZ="60"
-                  className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-                >
-                  {item.description}
-                </CardItem>
-                <CardItem translateZ="100" className="w-full mt-4">
-                  <img
-                    src={item.image}
-                    height="1000"
-                    width="1000"
-                    className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                    alt="thumbnail"
-                  />
-                </CardItem>
-              </CardBody>
-            </CardContainer>
-          );
-        })}
+        {/* Wrap the mapped cards with a div that has a grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3    gap-6">
+          {cardData.map((item, index) => {
+            return (
+              <CardContainer key={index} className="inter-var mt-10">
+                <CardBody className="w-full bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  rounded-xl p-6 border">
+                  <CardItem
+                    translateZ="50"
+                    className="text-xl font-bold   text-neutral-600 dark:text-white"
+                  >
+                    {item.title}
+                  </CardItem>
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                  >
+                    {item.description}
+                  </CardItem>
+                  <CardItem translateZ="100" className="w-full mt-4">
+                    <img
+                      src={item.image}
+                      height="1000"
+                      width="1000"
+                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                      alt="thumbnail"
+                    />
+                  </CardItem>
+                </CardBody>
+              </CardContainer>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
-import LoadingPage from "../pages/LoadingPage";
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoadingPage from "../pages/LoadingPage";
 
+// Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
 const AdminLayout = React.lazy(() => import("../layout/AdminLayout"));
 
+// Lazy loading for client pages
 const Home = React.lazy(() => import("../pages/Client/Home"));
 const About = React.lazy(() => import("../pages/Client/About"));
 const Services = React.lazy(() => import("../pages/Client/Services"));
@@ -13,22 +15,17 @@ const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
 const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails"));
 
+// Lazy loading for admin pages
 const AdminBlogs = React.lazy(() => import("../pages/Admin/AdminBlogs"));
-
 const AdminCareers = React.lazy(() => import("../pages/Admin/AdminCareers"));
-
 const AdminProjects = React.lazy(() => import("../pages/Admin/AdminProjects"));
-
 const AdminTeams = React.lazy(() => import("../pages/Admin/AdminTeams"));
-
 const AdminTestemonial = React.lazy(() =>
   import("../pages/Admin/AdminTestemonial")
 );
-
+const Signin = React.lazy(() => import("../pages/Admin/Signin"));
 const AdminFaqs = React.lazy(() => import("../pages/Admin/AdminFaqs"));
-
 const AdminServices = React.lazy(() => import("../pages/Admin/AdminServices"));
-
 const AdminDashboard = React.lazy(() =>
   import("../pages/Admin/AdminDashboard")
 );
@@ -36,8 +33,20 @@ const AdminDashboard = React.lazy(() =>
 const CustomRoutes = () => {
   const router = createBrowserRouter([
     {
+      path: "/login",
+      element: (
+        <Suspense fallback={<LoadingPage />}>
+          <Signin />
+        </Suspense>
+      ),
+    },
+    {
       path: "/admin",
-      element: <AdminLayout />,
+      element: (
+        <Suspense fallback={<LoadingPage />}>
+          <AdminLayout />
+        </Suspense>
+      ),
       children: [
         {
           path: "dashboard",
@@ -88,14 +97,6 @@ const CustomRoutes = () => {
           ),
         },
         {
-          path: "testimonials",
-          element: (
-            <Suspense fallback={<LoadingPage />}>
-              <AdminTestemonial />
-            </Suspense>
-          ),
-        },
-        {
           path: "faqs",
           element: (
             <Suspense fallback={<LoadingPage />}>
@@ -115,7 +116,11 @@ const CustomRoutes = () => {
     },
     {
       path: "/",
-      element: <ClientLayout />,
+      element: (
+        <Suspense fallback={<LoadingPage />}>
+          <ClientLayout />
+        </Suspense>
+      ),
       children: [
         {
           path: "/",
@@ -173,14 +178,6 @@ const CustomRoutes = () => {
             </Suspense>
           ),
         },
-        // {
-        //   path: "admin/dashboard",
-        //   element: (
-        //     <Suspense fallback={<LoadingPage />}>
-        //       <AdminLayout />
-        //     </Suspense>
-        //   ),
-        // },
         {
           path: "*",
           element: <h2>404 Not Found</h2>,

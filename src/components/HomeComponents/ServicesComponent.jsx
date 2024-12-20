@@ -4,23 +4,25 @@ import { HoverEffect } from "../ui/card-hover-effect";
 import CustomButton from "../../globals/CustomButton";
 const ServicesComponent = () => {
   return (
-    <div className="flex justify-center flex-col p-10 items-center md:px-32 bg-white dark:bg-zinc-900 ">
-      <div className="flex flex-col gap-4  ">
-        <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-          Our Services
-        </h1>
-        <p className=" font-light text-[20px] md:text-[26px] leading-[50px]     text-center  w-auto   ">
-          Our services include Medical Billing and Coding, Web Development and
-          Cloud Services, BIM services and Visualization services, and FINTECH.
-          We provide robust, proactive and effective management of all problems
-          related to our services to help our clients make the most of their
-          investments.
-        </p>
-      </div>
+    <div className="container mx-auto px-4">
+      <div className="flex justify-center flex-col p-10 items-center md:px-32 bg-white dark:bg-zinc-900 ">
+        <div className="flex flex-col gap-4  ">
+          <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
+            Our Services
+          </h1>
+          <p className=" font-light text-[20px] md:text-[26px] leading-[50px]     text-center  w-auto   ">
+            Our services include Medical Billing and Coding, Web Development and
+            Cloud Services, BIM services and Visualization services, and
+            FINTECH. We provide robust, proactive and effective management of
+            all problems related to our services to help our clients make the
+            most of their investments.
+          </p>
+        </div>
 
-      <div className="container flex flex-col justify-center items-center">
-        <HoverEffect items={projects} />
-        <CustomButton label="Learn More" className="mt-10" to="/services" />
+        <div className="container flex flex-col justify-center items-center">
+          <HoverEffect items={projects} />
+          <CustomButton label="Learn More" className="mt-10" to="/services" />
+        </div>
       </div>
     </div>
   );
