@@ -21,6 +21,7 @@ export const BlogForm = () => {
 
   // Form submission handler
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log(values, "valuess");
     // Ensure tags is an array or an empty array if not
     const formattedTags = Array.isArray(values.tags) ? values.tags : [];
 
