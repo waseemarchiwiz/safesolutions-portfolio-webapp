@@ -53,32 +53,31 @@ const projects = [
 ];
 const ProjectsComponent = () => {
   return (
-    <div  className="container mx-auto px-4">
+    <div className="container mx-auto px-4">
       <div className="  px-10 flex justify-center items-center dark:bg-zinc-900">
-      <div className="container mt-20 ">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-            Our Projects
-          </h1>
-          <p className=" font-light text-[20px] md:text-[26px] leading-[50px]  text-center  w-auto   ">
-            At Safe Solution, we pride ourselves on delivering impactful
-            solutions tailored to our clients' unique needs. With a focus on
-            innovation, precision, and excellence, we have successfully
-            completed a diverse range of projects
-          </p>
-        </div>
+        <div className="container mt-20 ">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
+              Our Projects
+            </h1>
+            <p className=" font-light text-[20px] md:text-[26px] leading-[50px]  text-center  w-auto   ">
+              At Safe Solution, we pride ourselves on delivering impactful
+              solutions tailored to our clients' unique needs. With a focus on
+              innovation, precision, and excellence, we have successfully
+              completed a diverse range of projects
+            </p>
+          </div>
 
-        <div className="my-20 flex justify-center items-center">
-          <InfiniteMovingCards
-            items={projects}
-            direction="right"
-            speed="slow"
-          />
+          <div className="my-20 flex justify-center items-center">
+            <InfiniteMovingCards
+              items={projects}
+              direction="right"
+              speed="slow"
+            />
+          </div>
         </div>
       </div>
     </div>
-    </div>
-    
   );
 };
 

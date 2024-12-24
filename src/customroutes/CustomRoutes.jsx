@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingPage from "../pages/LoadingPage";
+import ProjectDetails from "@/pages/Client/ProjectDetails";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -175,6 +176,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <BlogsPage />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/erpdetails",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <ProjectDetails />
             </Suspense>
           ),
         },

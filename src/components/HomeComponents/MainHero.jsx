@@ -5,7 +5,7 @@ import CustomButton from "../../globals/CustomButton";
 
 const MainHero = () => {
   return (
-    <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center overflow-hidden h-[85vh]">
+    <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center overflow-hidden p-10">
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/60 to-purple-900/60 z-0"></div>
 
       <div className="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-8 items-center mt-10">
@@ -62,7 +62,7 @@ const MainHero = () => {
             <img
               src={hero2}
               alt="Business Innovation"
-              className="relative z-10 w-full h-full object-cover rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300"
+              className="relative z-10 w-full h-full   object-cover rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
           </div>
