@@ -7,8 +7,8 @@ const AdminDashboard = () => {
     <div className="p-10">
       <h1 className="text-[30px] ml-5">Admin Dashboard</h1>
       <div className="flex flex-wrap gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-          <KPICard title="Blogs" value="42" change="5.2%" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6   ">
+          <KPICard title="Blogs" value="42" change="5.2%"  />
           <KPICard title="Testimonials" value="28" change="3.7%" />
           <KPICard title="Services" value="6" change="2.1%" />
           <KPICard title="Careers" value="12" change="4.5%" />

@@ -1,14 +1,14 @@
-import React from 'react'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
- 
-import CustomRoutes from './customroutes/CustomRoutes'
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import CustomRoutes from "./customroutes/CustomRoutes";
 
 const App = () => {
   return (
     <>
       <CustomRoutes />
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -20,7 +20,7 @@ const App = () => {
         pauseOnHover
       />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

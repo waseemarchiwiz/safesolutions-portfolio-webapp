@@ -69,6 +69,8 @@ const KPICard = ({
         relative 
         overflow-hidden
         w-80
+         
+        
       `}
     >
       {/* Subtle background effect */}
