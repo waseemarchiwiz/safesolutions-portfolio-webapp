@@ -1,3 +1,4 @@
+import React from "react";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import logo from "../assets/logo.png";
 import {
@@ -10,12 +11,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useLocation } from "react-router-dom";
-import { useTheme } from "@/context/ThemeContext";
-import { IoMoon, IoSunny } from "react-icons/io5";
-import { FaBriefcase, FaIdCard } from "react-icons/fa";
-import { FaQuoteLeft } from "react-icons/fa";
-import { FaServicestack } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+// import { useAuth } from '../auth/AuthContext';
+import {
+  FaBriefcase,
+  FaIdCard,
+  FaQuoteLeft,
+  FaServicestack,
+} from "react-icons/fa";
 
 const items = [
   { title: "Dashboard", url: "dashboard", icon: Home },
@@ -29,8 +32,14 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const { dark, toggleTheme } = useTheme();
-  const location = useLocation();
+  const navigate = useNavigate();
+  // const { logout } = useAuth();
+  // const location = useLocation();
+
+  const handleLogout = () => {
+    // logout();
+    navigate("/admin/login");
+  };
 
   return (
     <Sidebar
@@ -38,16 +47,13 @@ export function AppSidebar() {
       className="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white shadow-2xl h-screen"
     >
       <SidebarContent className="flex flex-col h-full">
-        {/* Sidebar Logo and Menu */}
         <div className="flex flex-col flex-grow">
           <SidebarGroup>
             <div className="flex flex-col gap-12 py-10">
-              {/* Logo */}
               <SidebarGroupLabel className="flex items-center justify-center">
                 <img src={logo} alt="Logo" className="h-20 w-auto" />
               </SidebarGroupLabel>
 
-              {/* Sidebar Items */}
               <SidebarGroupContent>
                 <SidebarMenu>
                   {items.map((item) => {
@@ -56,23 +62,21 @@ export function AppSidebar() {
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
                           asChild
-                          className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300   ${
+                          className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 ${
                             isActive
-                              ? "bg-white text-black shadow-md    "
-                              : "hover:bg-white text-white    "
+                              ? "bg-white text-black shadow-md"
+                              : "hover:bg-white/10 text-white"
                           }`}
                         >
                           <a
                             href={item.url}
-                            className="flex items-center gap-4 "
+                            className="flex items-center gap-4"
                           >
-                            {/* Icon */}
                             <item.icon
-                              className={`w-7 h-7 hover:text-black transition-transform duration-300 ${
-                                isActive ? "scale-125 " : ""
+                              className={`w-7 h-7 transition-transform duration-300 ${
+                                isActive ? "scale-125" : ""
                               }`}
                             />
-                            {/* Label */}
                             <span className="text-lg font-semibold">
                               {item.title}
                             </span>
@@ -87,24 +91,27 @@ export function AppSidebar() {
           </SidebarGroup>
         </div>
 
-        {/* Sidebar Footer */}
-        {/* <div className="py-6">
-          <div className="flex flex-col items-center justify-center">
-            <button onClick={toggleTheme} aria-label="Toggle Dark Mode">
-              {dark ? (
-                <div className="flex flex-row gap-2">
-                  <IoSunny color="yellow" size={24} />
-                  <span>Light Mode</span>
-                </div>
-              ) : (
-                <div className="flex flex-row gap-2">
-                  <IoMoon color="black" size={24} />
-                  <span>Dark Mode</span>
-                </div>
-              )}
-            </button>
-          </div>
-        </div> */}
+        <div className="p-4 mt-auto">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-3 text-white bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            Logout
+          </button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );
