@@ -12,15 +12,17 @@ const projects = [
     name: "ERP System",
     description:
       "Comprehensive ERP and CRM implementation and customization to streamline business processes and improve customer management.",
-    link: "erp.archiwiz.com",
+    link: "",
+    route: "/erpdetails",
     img: erpimage,
   },
   {
     name: "Archiwiz Portal",
     description:
       "Efficient data extraction solutions using technologies like Beautiful Soup, Scrapy, and Selenium.",
-    link: "https://portal.archiwiz.com/",
+    link: "",
     img: archiwiz,
+    route: "/portaldetails",
   },
   {
     name: "Precision Health",
@@ -28,6 +30,7 @@ const projects = [
       "Medical Precison gives information about medical health that how to maintain it",
     link: "https://orange-ocean-0cfaffb1e.5.azurestaticapps.net/",
     img: precision,
+    route: "/",
   },
   {
     name: "Medical Nate",
@@ -35,6 +38,7 @@ const projects = [
       "Medical Precison gives information about medical health that how to maintain it",
     link: "https://medicalkp-hcffechccfexazfb.eastus-01.azurewebsites.net/",
     img: nate,
+    route: "",
   },
   {
     name: "Lumsden Trading",

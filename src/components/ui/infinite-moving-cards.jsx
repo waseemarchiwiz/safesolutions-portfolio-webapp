@@ -6,11 +6,9 @@ export const InfiniteMovingCards = ({
   speed = "fast",
   pauseOnHover = true,
   className,
-  
 }) => {
   const containerRef = React.useRef(null);
   const scrollerRef = React.useRef(null);
-
   useEffect(() => {
     addAnimation();
   }, []);
@@ -61,6 +59,7 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
   return (
     <div
       ref={containerRef}
@@ -87,8 +86,8 @@ export const InfiniteMovingCards = ({
             key={item.name}
           >
             <a
-              href={item.link}
-              target="_blank"
+              href={item.link === "" ? item.route : item.link}
+              target={item.link === "" ? "_self" : "_blank"}
               rel="noopener noreferrer"
               className="block h-full w-full"
             >

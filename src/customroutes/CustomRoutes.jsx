@@ -1,7 +1,9 @@
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingPage from "../pages/LoadingPage";
-import ProjectDetails from "@/pages/Client/ProjectDetails";
+import ERPDetails from "@/pages/Client/projectsdetails/ERPDetails";
+import PortalDetails from "@/pages/Client/projectsdetails/PortalDetails";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -37,7 +39,9 @@ const CustomRoutes = () => {
       path: "/admin/login",
       element: (
         <Suspense fallback={<LoadingPage />}>
-          <Signin />
+           
+           <Signin />
+           
         </Suspense>
       ),
     },
@@ -45,7 +49,9 @@ const CustomRoutes = () => {
       path: "/admin",
       element: (
         <Suspense fallback={<LoadingPage />}>
-          <AdminLayout />
+          <ProtectedRoutes>
+            <AdminLayout />
+          </ProtectedRoutes>
         </Suspense>
       ),
       children: [
@@ -183,7 +189,15 @@ const CustomRoutes = () => {
           path: "/erpdetails",
           element: (
             <Suspense fallback={<LoadingPage />}>
-              <ProjectDetails />
+              <ERPDetails />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/portaldetails",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <PortalDetails />
             </Suspense>
           ),
         },

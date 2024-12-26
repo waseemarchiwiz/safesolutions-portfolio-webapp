@@ -11,9 +11,9 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import erpimage from "../../assets/erp.webp";
+import erpimage from "../../../assets/erp.webp";
 
-const ProjectDetails = () => {
+const ERPDetails = () => {
   const [activeTab, setActiveTab] = useState("services");
   const [hoveredCard, setHoveredCard] = useState(null);
 
@@ -285,7 +285,7 @@ const ProjectDetails = () => {
   );
 };
 
-export default ProjectDetails;
+export default ERPDetails;
 
 // Add this to your CSS/Tailwind config
 const customStyles = `
