@@ -6,16 +6,23 @@ import { toast } from "react-toastify";
 import { teamMemberValidationSchema } from "@/schemas/validationSchemas";
 import { CustomInput } from "@/globals/CustomInput";
 import { Formik, Form, Field } from "formik";
+import apiInstance from "../../../../api-config";
 
 export const TeamsTable = () => {
   const [teamsData, setTeamsData] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const userToken = localStorage.getItem("apiusertoken");
+  console.log("token2121", userToken);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/get/team`);
-      if (response.data.succes) {
+      const response = await apiInstance.get("/get/team", {
+        headers: {
+          apiusertoken: userToken,
+        },
+      });
+      if (response?.data?.success) {
         setTeamsData(response?.data?.Teams);
       } else {
         toast.error("Failed to fetch teams");
@@ -108,6 +115,7 @@ export const TeamsTable = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            apiusertoken: userToken,
           },
         }
       );

@@ -38,6 +38,7 @@ export function AppSidebar() {
 
   const handleLogout = () => {
     // logout();
+    localStorage.removeItem("apiusertoken");
     navigate("/admin/login");
   };
 

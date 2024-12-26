@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import apiInstance from "../../../api-config";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -22,9 +23,15 @@ const Signin = () => {
       const response = await apiInstance.post("/login", values);
       if (response?.data?.success) {
         navigate("/admin/dashboard");
+        toast.success("Login Successfully");
+        const token = response?.data?.token;
+
+        localStorage.setItem("apiusertoken", token);
       } else {
+        toast.error("Invalid Credentials");
         console.error(
           "Login failed:",
+
           response?.data?.message || "Unknown error"
         );
       }

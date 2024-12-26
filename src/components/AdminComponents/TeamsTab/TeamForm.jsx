@@ -5,8 +5,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 export const TeamsForm = () => {
   const [previewImage, setPreviewImage] = useState(null);
+  const userToken = localStorage.getItem("apiusertoken");
+
+  console.log("token2121", userToken);
 
   const initialValues = {
     name: "",
@@ -33,15 +37,16 @@ export const TeamsForm = () => {
     }
 
     try {
-      const response = await axios.post(`${apiUrl}/store/team`, formData, {
+      const response = await apiInstance.post("/store/team", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // This header is optional; Axios automatically sets it for FormData
+          "Content-Type": "multipart/form-data",
+          user_access_token: userToken, // This header is optional; Axios automatically sets it for FormData
         },
       });
 
       console.log(response);
 
-      if (response.data.succes) {
+      if (response?.data?.success) {
         toast.success("Teams Added successfully!");
         resetForm();
       }
