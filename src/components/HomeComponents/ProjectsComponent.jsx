@@ -22,7 +22,7 @@ const projects = [
       "Efficient data extraction solutions using technologies like Beautiful Soup, Scrapy, and Selenium.",
     link: "",
     img: archiwiz,
-    route: "/",
+    route: "/portaldetails",
   },
   {
     name: "Precision Health",
