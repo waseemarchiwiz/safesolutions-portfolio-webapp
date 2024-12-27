@@ -6,20 +6,23 @@ import CreatableSelect from "react-select/creatable";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
 import axios from "axios";
+import apiInstance from "../../../../api-config";
 const FaqsForm = () => {
   const initialValues = {
     question: "",
     answer: "",
   };
+  const userToken = localStorage.getItem("apiusertoken");
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log("Values being sent:", values); // Log the data being sent
     console.log("API URL:", `${apiUrl}/store/faq`); // Log the API endpoint
 
     try {
-      const response = await axios.post(`${apiUrl}/store/faq`, values, {
+      const response = await apiInstance.post("/store/faq", values, {
         headers: {
           "Content-Type": "application/json",
+          user_access_token: userToken,
         },
       });
       console.log(response, "Faq1 Response");
