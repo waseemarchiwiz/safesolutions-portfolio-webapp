@@ -39,9 +39,7 @@ const CustomRoutes = () => {
       path: "/admin/login",
       element: (
         <Suspense fallback={<LoadingPage />}>
-           
-           <Signin />
-           
+          <Signin />
         </Suspense>
       ),
     },

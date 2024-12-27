@@ -6,11 +6,13 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { jobOpeningSchema } from "@/schemas/validationSchemas";
+import apiInstance from "../../../../api-config";
 
 export const CareersTable = () => {
   const [careersData, setCareersData] = useState([]);
   const [selectedCareer, setSelectedCareer] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const userToken = localStorage.getItem("apiusertoken");
 
   const headers = [
     "ID",
@@ -19,13 +21,17 @@ export const CareersTable = () => {
     "Location",
     "Short Descriiption",
     "Apply Link",
-     
   ];
 
   const fetchCareers = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/get/career`);
+      const response = await apiInstance.get("/get/career", {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       console.log(response, "careers response");
+
       if (response?.data?.succes) {
         setCareersData(response?.data?.careers);
         toast.success("Careers fetched successfully");
@@ -63,7 +69,11 @@ export const CareersTable = () => {
     );
     if (!isConfirmed) return;
     try {
-      await axios.delete(`${apiUrl}/delete/career/${row.id}`);
+      await apiInstance.delete(`/delete/career/${row.id}`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       setCareersData((prevCareers) =>
         prevCareers.filter((career) => career.id !== row.id)
       );
@@ -78,12 +88,13 @@ export const CareersTable = () => {
     try {
       setSubmitting(true);
 
-      const response = await axios.put(
-        `${apiUrl}/update/career/${selectedCareer.id}`,
+      const response = await apiInstance.put(
+        `/update/career/${selectedCareer.id}`,
         values,
         {
           headers: {
             "Content-Type": "application/json",
+            user_access_token: userToken,
           },
         }
       );

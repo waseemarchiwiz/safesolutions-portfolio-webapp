@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import logo from "../assets/logo.png";
 import {
@@ -32,16 +32,19 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   // const { logout } = useAuth();
   // const location = useLocation();
 
   const handleLogout = () => {
-    // logout();
-    localStorage.removeItem("apiusertoken");
-    navigate("/admin/login");
+    setLoading(true); // Start loader
+    setTimeout(() => {
+      localStorage.removeItem("apiusertoken");
+      setLoading(false); // Stop loader
+      navigate("/admin/login");
+    }, 3000); // Simulate logout delay
   };
-
   return (
     <Sidebar
       collapsible="icon"
@@ -95,22 +98,44 @@ export function AppSidebar() {
         <div className="p-4 mt-auto">
           <button
             onClick={handleLogout}
+            disabled={loading} // Disable button when loading
             className="w-full px-4 py-3 text-white bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            Logout
+            {loading ? (
+              <>
+                <svg
+                  className="w-5 h-5 animate-spin"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 4v4m0 8v4m4-4h4m-8 0H4"
+                  />
+                </svg>
+                Logging out...
+              </>
+            ) : (
+              <>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
+                Logout
+              </>
+            )}
           </button>
         </div>
       </SidebarContent>
