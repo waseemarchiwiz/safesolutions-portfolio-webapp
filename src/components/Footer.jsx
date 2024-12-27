@@ -228,6 +228,19 @@ const Footer = () => {
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 info@archiwiz.com
               </p>
+
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-6 space-y-4 text-[16px]">
+                3rd Floor, Paris Business Center Block A Soan Gardens
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Islamabad
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-6 space-y-4 text-[16px]">
+                Office 1005, 813, 814 NASTP Alpha
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Near Old Airport, Rawalpindi
+              </p>
             </div>
 
             <div>
@@ -259,5 +272,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
- 

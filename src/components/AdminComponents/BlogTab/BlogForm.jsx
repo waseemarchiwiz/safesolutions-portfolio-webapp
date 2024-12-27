@@ -7,6 +7,7 @@ import Select from "react-select";
 import axios from "axios";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 export const BlogForm = () => {
   // Initial form values
   const initialValues = {
@@ -18,7 +19,8 @@ export const BlogForm = () => {
   };
 
   const [previewImage, setPreviewImage] = useState(null);
-
+  const userToken = localStorage.getItem("apiusertoken");
+  console.log("token2121", userToken);
   // Form submission handler
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log(values, "valuess");
@@ -41,8 +43,11 @@ export const BlogForm = () => {
     }
 
     try {
-      const response = await axios.post(`${apiUrl}/store/blog`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await apiInstance.post(`/store/blog`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          user_access_token: userToken,
+        },
       });
       console.log(response.data, "blog form values");
       if (response?.data?.succes) {

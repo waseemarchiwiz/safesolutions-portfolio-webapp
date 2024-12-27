@@ -36,6 +36,3 @@ const AdminCareers = () => {
 };
 
 export default AdminCareers;
-
-
-

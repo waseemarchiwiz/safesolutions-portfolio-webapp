@@ -5,6 +5,7 @@ import { projectValidationSchema } from "../../../schemas/validationSchemas";
 import axios from "axios";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 
 const ProjectForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +32,7 @@ const ProjectForm = () => {
     }
 
     try {
-      const response = await axios.post(`${apiUrl}/store/project`, formData, {
+      const response = await apiInstance.post(`/store/project`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

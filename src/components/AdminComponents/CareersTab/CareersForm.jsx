@@ -6,7 +6,9 @@ import CreatableSelect from "react-select/creatable";
 import axios from "axios";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 export const CareersForm = () => {
+  const userToken = localStorage.getItem("apiusertoken");
   const initialValues = {
     title: "",
     job_description: "",
@@ -17,12 +19,13 @@ export const CareersForm = () => {
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log(values, "values1");
     try {
-      const response = await axios.post(`${apiUrl}/store/career`, values, {
+      const response = await apiInstance.post("/store/career", values, {
         headers: {
           "Content-Type": "application/json",
+          user_access_token: userToken,
         },
       });
-      if (response.data.succes) {
+      if (response.data.success) {
         resetForm();
         setSubmitting(false);
         toast.success("Job added successfully");

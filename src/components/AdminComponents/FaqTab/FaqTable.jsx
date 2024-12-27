@@ -8,16 +8,22 @@ import { faqSchema } from "@/schemas/validationSchemas";
 import { CustomInput } from "@/globals/CustomInput";
 import { Form, Field } from "formik";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 export const FaqsTable = () => {
   const [faqsData, setFaqsData] = useState([]);
   const [selectedFaq, setSelectedFaq] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const userToken = localStorage.getItem("apiusertoken");
 
   const headers = ["id", "Question", "Answer"];
 
   const fetchFaqsData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/get/faq`);
+      const response = await apiInstance.get("/get/faq", {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       console.log(response?.data?.faqs, "faq get");
       setFaqsData(response?.data?.faqs);
     } catch (error) {
@@ -50,7 +56,11 @@ export const FaqsTable = () => {
     );
     if (!isConfirmed) return;
     try {
-      await axios.delete(`${apiUrl}/delete/faq/${row.id}`);
+      await apiInstance.delete(`/delete/faq/${row.id}`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       setFaqsData((prev) => prev.filter((faq) => faq.id !== row.id));
       toast.success("Project deleted successfully!");
     } catch (error) {
@@ -61,9 +71,10 @@ export const FaqsTable = () => {
   const handleUpdate = async (values, { setSubmitting }) => {
     console.log(values, "update");
     try {
-      await axios.put(`${apiUrl}/update/faq/${selectedFaq.id}`, values, {
+      await apiInstance.put(`/update/faq/${selectedFaq.id}`, values, {
         headers: {
           "Content-Type": "application/json",
+          user_access_token: userToken,
         },
       });
 
