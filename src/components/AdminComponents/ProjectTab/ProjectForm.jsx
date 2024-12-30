@@ -9,7 +9,7 @@ import apiInstance from "../../../../api-config";
 
 const ProjectForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const userToken = localStorage.getItem("apiusertoken");
   const initialValues = {
     projectName: "",
     projectDescription: "",
@@ -35,6 +35,7 @@ const ProjectForm = () => {
       const response = await apiInstance.post(`/store/project`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          user_access_token: userToken,
         },
       });
 
