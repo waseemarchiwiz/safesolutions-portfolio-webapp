@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { servicesValidationSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
+import apiInstance from "../../../../api-config";
+import { toast } from "react-toastify";
 const ServicesForm = () => {
   const initialValues = {
     title: "",
@@ -12,28 +14,57 @@ const ServicesForm = () => {
     description: "",
   };
 
+  const userToken = localStorage.getItem("apiusertoken");
+
   const [previewImage, setPreviewImage] = useState(null);
 
   // Form submission handler
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log(values, "values firn");
+
+    const formattedPoints = Array.isArray(values.keypoints)
+      ? values.keypoints
+      : [];
+    console.log(formattedPoints, "formattedPoints");
+    const keypointsJson = JSON.stringify(formattedPoints);
+
+    const formData = new FormData();
+
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("key_point[]", keypointsJson);
+    if (values.image) {
+      formData.append("image", values.image);
+    }
+
     try {
-      console.log("Blog Data:", values);
-      alert("Blog submitted successfully!");
-      resetForm();
-      setPreviewImage(null);
+      const response = await apiInstance.post(`/store/service`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          user_access_token: userToken, // Custom user token
+        },
+      });
+      console.log(response?.data?.success, "service form values");
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+        resetForm();
+      } else {
+        toast.error("Failed to add blog");
+      }
+
+      console.log(response, "response from server");
     } catch (error) {
-      console.error("Submission error:", error);
-    } finally {
+      console.error("Error while submitting form:", error);
       setSubmitting(false);
     }
   };
 
   // Category options for the dropdown
-  const categoryOptions = [
-    { value: "technology", label: "Technology" },
-    { value: "science", label: "Science" },
-    { value: "art", label: "Art" },
-  ];
+  // const categoryOptions = [
+  //   { value: "technology", label: "Technology" },
+  //   { value: "science", label: "Science" },
+  //   { value: "art", label: "Art" },
+  // ];
 
   return (
     <div className="bg-gray-100 mt-10 p-6 rounded-md shadow-md">
