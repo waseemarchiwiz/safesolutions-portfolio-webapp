@@ -100,7 +100,7 @@ export const CareersTable = () => {
         }
       );
 
-      if (response.data.success) {
+      if (response?.data?.success) {
         toast.success("Job posting updated successfully!");
 
         setCareersData((prevCareers) =>
