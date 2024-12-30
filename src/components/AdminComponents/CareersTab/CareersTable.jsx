@@ -64,8 +64,9 @@ export const CareersTable = () => {
   };
 
   const handleDelete = async (row) => {
+    console.log(row, "delete");
     const isConfirmed = window.confirm(
-      `Are you sure you want to delete the job posting "${row.jobTitle}"?`
+      `Are you sure you want to delete the job posting "${row.title}"?`
     );
     if (!isConfirmed) return;
     try {
@@ -99,8 +100,8 @@ export const CareersTable = () => {
         }
       );
 
-      if (response.data.success) {
-        toast.success("Job posting updated successfully!");
+      if (response?.data?.success) {
+        toast.success("careers updated successfully!");
 
         setCareersData((prevCareers) =>
           prevCareers.map((career) =>

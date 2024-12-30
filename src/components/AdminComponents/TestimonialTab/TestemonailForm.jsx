@@ -5,8 +5,10 @@ import { testimonialSchema } from "@/schemas/validationSchemas";
 import apiUrl from "../../../../baseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
+import apiInstance from "../../../../api-config";
 export const TestimonialForm = () => {
   const [preview, setPreview] = useState(null);
+  const userToken = localStorage.getItem("apiusertoken");
 
   const initialValues = {
     name: "",
@@ -29,18 +31,15 @@ export const TestimonialForm = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${apiUrl}/store/testimonial`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // This header is optional; Axios automatically sets it for FormData
-          },
-        }
-      );
+      const response = await apiInstance.post(`/store/testimonial`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // This header is optional; Axios automatically sets it for FormData
+          user_access_token: userToken,
+        },
+      });
       console.log(response);
       // alert("Testimonial submitted successfully!");
-      if (response.data.succes) {
+      if (response.data.success) {
         toast.success("Testimonial submitted successfully!");
         resetForm();
       }

@@ -6,16 +6,22 @@ import { toast } from "react-toastify";
 import { Field, Form, Formik } from "formik";
 import { testimonialSchema } from "@/schemas/validationSchemas";
 import { CustomInput } from "@/globals/CustomInput";
+import apiInstance from "../../../../api-config";
 
 export const TestimonialTable = () => {
   const headers = ["Id", "Image", "Name", "Designation", "Description"];
   const [testemonailData, setTestimonialData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const userToken = localStorage.getItem("apiusertoken");
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/get/testimonial`);
+      const response = await apiInstance.get(`/get/testimonial`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       // setProjectsData(response?.data.projects);
       if (response.data.succes) {
         setTestimonialData(response.data.testimonials);
@@ -23,7 +29,7 @@ export const TestimonialTable = () => {
       //  console.log(response,"testemonial Data")
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch Testemonials");
+      // toast.error("Failed to fetch Testemonials");
     }
   };
 
@@ -60,7 +66,11 @@ export const TestimonialTable = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(`${apiUrl}/delete/testimonial/${row?.id}`);
+      await apiInstance.delete(`/delete/testimonial/${row?.id}`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
 
       // Remove from local state
       setTestimonialData((prevProjects) =>
@@ -85,12 +95,13 @@ export const TestimonialTable = () => {
         formData.append("image", values.image);
       }
 
-      const response = await axios.put(
-        `${apiUrl}/update/testimonial/${selectedTestimonial.id}`,
+      const response = await apiInstance.put(
+        `/update/testimonial/${selectedTestimonial.id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            user_access_token: userToken,
           },
         }
       );

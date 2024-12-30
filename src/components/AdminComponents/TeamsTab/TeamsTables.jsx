@@ -13,16 +13,17 @@ export const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const userToken = localStorage.getItem("apiusertoken");
+
   console.log("token2121", userToken);
 
   const fetchData = async () => {
     try {
       const response = await apiInstance.get("/get/team", {
         headers: {
-          apiusertoken: userToken,
+          user_access_token: userToken,
         },
       });
-      if (response?.data?.success) {
+      if (response?.data?.succes) {
         setTeamsData(response?.data?.Teams);
       } else {
         toast.error("Failed to fetch teams");
@@ -48,6 +49,7 @@ export const TeamsTable = () => {
   ];
 
   const data = teamsData.map((team) => ({
+    id: team.id,
     Image: (
       <img
         src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${team.image}`}
@@ -56,7 +58,6 @@ export const TeamsTable = () => {
         className="rounded-[50%]"
       />
     ),
-    id: team.id,
     name: team.name,
     role: team.role,
     githubUrl: team.github,
@@ -82,7 +83,11 @@ export const TeamsTable = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(`${apiUrl}/delete/team/${row?.id}`);
+      await apiInstance.delete(`/delete/team/${row?.id}`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
       setTeamsData((prevTeams) =>
         prevTeams.filter((team) => team.id !== row.id)
       );
@@ -109,13 +114,13 @@ export const TeamsTable = () => {
         formData.append("image", values.image);
       }
 
-      const response = await axios.put(
-        `${apiUrl}/update/team/${selectedTeam.id}`,
+      const response = await apiInstance.put(
+        `/update/team/${selectedTeam.id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            apiusertoken: userToken,
+            user_access_token: userToken,
           },
         }
       );

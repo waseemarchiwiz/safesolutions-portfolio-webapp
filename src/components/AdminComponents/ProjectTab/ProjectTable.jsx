@@ -1,21 +1,28 @@
 import CustomTable from "@/globals/CustomTable";
 import axios from "axios";
-import apiUrl from "../../../../baseUrl";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { projectValidationSchema } from "../../../schemas/validationSchemas";
 import { CustomInput } from "../../../globals/CustomInput";
+import apiInstance from "../../../../api-config";
 
-export const ProjectTable = () => {
+const ProjectTable = () => {
   const [projectsData, setProjectsData] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const apiusertoken = localStorage.getItem("apiusertoken");
 
-  const fetchData = async () => {
+  // Fetch projects data from the server
+  const fetchProjects = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/get/project`);
-      setProjectsData(response?.data.projects);
+      const response = await apiInstance.get("/get/project", {
+        headers: {
+          user_access_token: apiusertoken,
+        },
+      });
+      setProjectsData(response.data.projects);
+      toast.success("Projects fetched successfully");
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch projects");
@@ -23,10 +30,10 @@ export const ProjectTable = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchProjects();
   }, []);
 
-  const headers = ["id", "Image", "Name", "URL", "Description", "Actions"];
+  const headers = ["ID", "Image", "Name", "URL", "Description"];
 
   const data = projectsData.map((project) => ({
     id: project.id,
@@ -59,29 +66,20 @@ export const ProjectTable = () => {
         formData.append("image", values.projectImage);
       }
 
-      const response = await axios.put(
-        `${apiUrl}/update/project/${selectedProject.id}`,
+      const response = await apiInstance.put(
+        `/update/project/${selectedProject.id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            user_access_token: apiusertoken,
           },
         }
       );
 
       if (response.data.success) {
         toast.success("Project updated successfully!");
-
-        // Update local state
-        setProjectsData((prevProjects) =>
-          prevProjects.map((project) =>
-            project.id === selectedProject.id
-              ? { ...project, ...values }
-              : project
-          )
-        );
-
-        // Close modal
+        await fetchProjects(); // Refetch data to ensure consistency
         setIsEditModalOpen(false);
       } else {
         toast.error(response.data.message || "Failed to update project");
@@ -102,14 +100,14 @@ export const ProjectTable = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(`${apiUrl}/delete/project/${row?.id}`);
-
-      // Remove from local state
-      setProjectsData((prevProjects) =>
-        prevProjects.filter((project) => project.id !== row.id)
-      );
+      await apiInstance.delete(`/delete/project/${row.id}`, {
+        headers: {
+          user_access_token: apiusertoken,
+        },
+      });
 
       toast.success("Project deleted successfully!");
+      await fetchProjects(); // Refetch data after deletion
     } catch (error) {
       console.error("Delete error:", error);
       toast.error("Failed to delete project");
