@@ -26,7 +26,7 @@ const AdminServices = () => {
     <div className="p-10">
       <div className="container flex flex-row justify-between align-center">
         <div>
-          <BreadCrumb page={"Manage Blogs"} />
+          <BreadCrumb page={"Services"} />
         </div>
         <TabComponent
           tabs={tabs}
