@@ -137,6 +137,7 @@ export const ServicesTable = () => {
         }
       );
 
+      console.log(response, "this is service response");
       // Update the state with updated service data
       const updatedService = response?.data?.service; // Adjust based on API response
       setServicesData((prevSer) =>
