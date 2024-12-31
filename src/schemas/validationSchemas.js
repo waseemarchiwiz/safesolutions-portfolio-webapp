@@ -106,18 +106,18 @@ export const servicesValidationSchema = Yup.object().shape({
     .of(Yup.string().required("Keypoint cannot be empty"))
     .min(1, "At least one tag is required")
     .required("Tags are required"), // For multiple tags input
-  image: Yup.mixed()
-    .required("Image is required")
-    .test(
-      "fileSize",
-      "File size is too large",
-      (value) => value && value.size <= 5000000 // 5MB limit
-    )
-    .test(
-      "fileType",
-      "Unsupported file type",
-      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
-    ),
+  // image: Yup.mixed()
+  //   .required("Image is required")
+  //   .test(
+  //     "fileSize",
+  //     "File size is too large",
+  //     (value) => value && value.size <= 5000000 // 5MB limit
+  //   )
+  //   .test(
+  //     "fileType",
+  //     "Unsupported file type",
+  //     (value) => value && ["image/jpeg", "image/png"].includes(value.type)
+  //   ),
   description: Yup.string()
     .required("description is required")
     .min(30, "Content must be at least 30 characters"),

@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+ 
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const FaqComponent = () => {
   const [openIndexes, setOpenIndexes] = useState([]);
+  const [faqData, setFaqData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const userUrl =
+    "https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/api/user";
+  const api_token = "hilalahmadkhanisafullstackdevelopertoprotectedtheapi";
 
   const toggleAccordion = (index) => {
     setOpenIndexes((prevIndexes) =>
@@ -11,7 +19,8 @@ const FaqComponent = () => {
     );
   };
 
-  const faqs = [
+  // Fallback FAQ data
+  const defaultFaqs = [
     {
       question: "What industries does your software company specialize in?",
       answer:
@@ -39,20 +48,59 @@ const FaqComponent = () => {
     },
   ];
 
+  const fetchFaq = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`${userUrl}/get/faqs`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
+
+      if (response?.data?.succes && response?.data?.faqs?.length > 0) {
+        setFaqData(response.data.faqs);
+      } else {
+        // If API returns empty or invalid data, use default FAQs
+        setFaqData(defaultFaqs);
+      }
+    } catch (error) {
+      console.error("Error fetching FAQs:", error);
+      // If API call fails, use default FAQs
+      setFaqData(defaultFaqs);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFaq();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center p-10">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-white"></div>
+      </div>
+    );
+  }
+
   return (
-    <div id="faqs" className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"   >
-      <div className="max-w-7xl  mx-auto sm:px-8 px-4  ">
-        <div className="mb-12 max-w-4xl ">
+    <div
+      id="faqs"
+      className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"
+    >
+      <div className="max-w-7xl mx-auto sm:px-8 px-4">
+        <div className="mb-12 max-w-4xl">
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="w-full ">
-          {faqs.map((faq, index) => (
+        <div className="w-full">
+          {faqData.map((faq, index) => (
             <div
               key={index}
-              className="accordion bg-white shadow-md rounded-lg mt-10  "
+              className="accordion bg-white shadow-md rounded-lg mt-10"
             >
               <button
                 type="button"
