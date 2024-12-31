@@ -4,6 +4,7 @@ import LoadingPage from "../pages/LoadingPage";
 import ERPDetails from "@/pages/Client/projectsdetails/ERPDetails";
 import PortalDetails from "@/pages/Client/projectsdetails/PortalDetails";
 import ProtectedRoutes from "./ProtectedRoutes";
+import ErrorPage from "@/pages/ErrorPage";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -201,7 +202,7 @@ const CustomRoutes = () => {
         },
         {
           path: "*",
-          element: <h2>404 Not Found</h2>,
+          element: <ErrorPage />,
         },
       ],
     },
