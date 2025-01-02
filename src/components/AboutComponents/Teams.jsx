@@ -1,38 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ImGithub } from "react-icons/im";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Lottie from "lottie-react";
+import loaderAnimation from "../../assets/lottie/loadanimate.json";
+
+const teamMembers = [
+  {
+    name: "John Doe",
+    role: "Software Engineer",
+    image: "https://readymadeui.com/team-1.webp",
+  },
+  {
+    name: "Mark Adair",
+    role: "Software Engineer",
+    image: "https://readymadeui.com/team-2.webp",
+  },
+  {
+    name: "Simon Konecki",
+    role: "Web Designer",
+    image: "https://readymadeui.com/team-3.webp",
+  },
+  {
+    name: "Sophia",
+    role: "Software Developer",
+    image: "https://readymadeui.com/team-4.webp",
+  },
+  {
+    name: "Alen",
+    role: "Software Engineer",
+    image: "https://readymadeui.com/team-5.webp",
+  },
+  {
+    name: "Eleanor",
+    role: "Web Designer",
+    image: "https://readymadeui.com/team-6.webp",
+  },
+];
 const Teams = () => {
-  const teamMembers = [
-    {
-      name: "John Doe",
-      role: "Software Engineer",
-      image: "https://readymadeui.com/team-1.webp",
-    },
-    {
-      name: "Mark Adair",
-      role: "Software Engineer",
-      image: "https://readymadeui.com/team-2.webp",
-    },
-    {
-      name: "Simon Konecki",
-      role: "Web Designer",
-      image: "https://readymadeui.com/team-3.webp",
-    },
-    {
-      name: "Sophia",
-      role: "Software Developer",
-      image: "https://readymadeui.com/team-4.webp",
-    },
-    {
-      name: "Alen",
-      role: "Software Engineer",
-      image: "https://readymadeui.com/team-5.webp",
-    },
-    {
-      name: "Eleanor",
-      role: "Web Designer",
-      image: "https://readymadeui.com/team-6.webp",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [teamsMemberData, setTeamsMemberData] = useState([]);
+
+  const userUrl = import.meta.env.VITE_USER_URL;
+  const api_token = import.meta.env.VITE_API_TOKEN;
+
+  const fetchCareers = async () => {
+    try {
+      const response = await axios.get(`${userUrl}/get/team`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
+      console.log(response, "Teams Member Data response");
+
+      if (response?.data?.succes) {
+        setTeamsMemberData(response?.data?.Teams, "teams member data");
+      } else {
+        setCareersData(teamMembers); // Fallback to a default set of job openings
+      }
+    } catch (error) {
+      setTeamsMemberData(teamMembers); // Fallback if API call fails
+    } finally {
+      setLoading(false); // Stop the loader once the data is fetched (or fallback is used)
+    }
+  };
+  console.log(teamsMemberData);
+
+  // Fetch careers when the component mounts
+  useEffect(() => {
+    fetchCareers();
+  }, []);
+
   return (
     <div>
       <div className="my-4 mt-28">

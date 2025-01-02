@@ -7,6 +7,7 @@ const CustomButton = ({
   styleType = "default",
   className = "",
   handleClick,
+  target = "",
 }) => {
   const defaultStyle = `
     group relative h-[40px]  inline-block overflow-hidden border rounded-lg text-white bg-black border-[#2170B7] px-6 md:px-8 py-[6px] focus:outline-none focus:ring
@@ -24,6 +25,8 @@ const CustomButton = ({
         className={`${defaultStyle} ${className}`}
         to={to}
         onClick={handleClick}
+        
+        target={target}
       >
         <span className={defaultInnerStyle}></span>
         <span className={textStyle}>{label}</span>

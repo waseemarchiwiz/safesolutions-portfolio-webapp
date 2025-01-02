@@ -185,21 +185,21 @@ const CustomRoutes = () => {
           ),
         },
         {
-          path: "/erpdetails",
+          path: "/projectdetail/:project",
           element: (
             <Suspense fallback={<LoadingPage />}>
               <ERPDetails />
             </Suspense>
           ),
         },
-        {
-          path: "/portaldetails",
-          element: (
-            <Suspense fallback={<LoadingPage />}>
-              <PortalDetails />
-            </Suspense>
-          ),
-        },
+        // {
+        //   path: "/portaldetails",
+        //   element: (
+        //     <Suspense fallback={<LoadingPage />}>
+        //       <PortalDetails />
+        //     </Suspense>
+        //   ),
+        // },
         {
           path: "*",
           element: <ErrorPage />,
