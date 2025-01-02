@@ -4,6 +4,16 @@ import nate from "../assets/nate.png";
 import archiwiz from "../assets/portal.png";
 import lumsden from "../assets/lumsden.png";
 import archiwizfront from "../assets/archiwizfrontpage.png";
+import {
+  BarChart3,
+  BookOpen,
+  Briefcase,
+  ChartArea,
+  HelpCircle,
+  Package,
+  Phone,
+  Users,
+} from "lucide-react";
 
 export const projects = [
   {
@@ -14,8 +24,8 @@ export const projects = [
     img: erpimage,
     version: "2.0.1",
     lastupdated: "2024-12-23",
-    tabs:{
-       services: [
+    tabs: {
+      services: [
         {
           title: "Financial Management",
           description:
@@ -31,36 +41,48 @@ export const projects = [
           title: "Human Resources",
           description:
             "Comprehensive HR management and employee self-service portal",
-          features: ["Payroll Processing", "Time & Attendance", "Employee Records"],
+          features: [
+            "Payroll Processing",
+            "Time & Attendance",
+            "Employee Records",
+          ],
           icon: Users,
         },
         {
           title: "Inventory Management",
           description: "Real-time inventory tracking and optimization",
-          features: ["Stock Control", "Purchase Orders", "Warehouse Management"],
+          features: [
+            "Stock Control",
+            "Purchase Orders",
+            "Warehouse Management",
+          ],
           icon: Package,
         },
         {
           title: "Customer Relations",
           description: "Integrated CRM with customer support features",
-          features: ["Contact Management", "Support Tickets", "Customer Portal"],
+          features: [
+            "Contact Management",
+            "Support Tickets",
+            "Customer Portal",
+          ],
           icon: Phone,
         },
       ],
-      projectDetails:[
+      projectDetails: [
         {
           name: "Enterprise ERP Solution",
           version: "2.0.1",
           lastUpdated: "2024-12-23",
           deploymentType: "Cloud-based",
           supportHours: "24/7",
-        }
+        },
       ],
-      support:[
+      support: [
         {
           title: "Technical Support",
           description: "24/7 technical support and assistance",
-          icon: Chat,
+          icon: ChartArea,
         },
         {
           title: "Customer Support",
@@ -74,11 +96,12 @@ export const projects = [
         },
         {
           title: "Training & Certification",
-          description: "Access to industry-specific training and certifications",
+          description:
+            "Access to industry-specific training and certifications",
           icon: BookOpen,
         },
-      ]
-    }
+      ],
+    },
   },
   {
     name: "Archiwiz Portal",
