@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import BlogDetails from "./BlogDetails";
 import { getProjectByBlog } from "@/lib/Blog";
+import ScrollToTop from "@/globals/ScrollToTop";
 
 const Blog = () => {
   const blogRoute = useParams();
@@ -25,7 +26,12 @@ const Blog = () => {
     );
   }
 
-  return <BlogDetails data={blogData} />;
+  return (
+    <>
+      <BlogDetails data={blogData} />
+      <ScrollToTop />
+    </>
+  );
 };
 
 export default Blog;
