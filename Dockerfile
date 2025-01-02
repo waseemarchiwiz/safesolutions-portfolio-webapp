@@ -13,6 +13,13 @@ RUN npm install --force
 # Copy the rest of the application files to the working directory
 COPY . .
 
+# Set the environment variables
+ARG VITE_API_URL
+ARG VITE_API_TOKEN
+
+# Set the environment variables
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_API_TOKEN=$VITE_API_TOKEN
 
 # Build the application
 RUN npm run build
