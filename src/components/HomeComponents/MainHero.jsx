@@ -41,6 +41,8 @@ const MainHero = () => {
             </motion.p>
           </div>
 
+         {/* /* The code snippet you provided is using the `motion` component from the `framer-motion`
+         library in a React application. */ }
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

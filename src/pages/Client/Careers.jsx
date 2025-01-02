@@ -11,8 +11,7 @@ const Careers = () => {
   const [careersData, setCareersData] = useState([]);
   const [loading, setLoading] = useState(true); // Loader state to track data fetching
 
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const api_token = import.meta.env.VITE_API_TOKEN;
+  
 
   // Function to fetch career data from API
   const fetchCareers = async () => {
