@@ -35,7 +35,7 @@ const teamMembers = [
     github: "https://github.com/adnankhan",
     twitter: "https://twitter.com/adnankhan",
   },
-   
+
   {
     name: "Asad ullah",
     role: "Junior Full Stack Developer",
