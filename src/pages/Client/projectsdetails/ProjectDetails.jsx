@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Building2,
 } from "lucide-react";
+import ScrollToTop from "@/globals/ScrollToTop";
 
 const ProjectDetails = ({ data }) => {
   const [activeTab, setActiveTab] = useState("services");
@@ -188,6 +189,7 @@ const ProjectDetails = ({ data }) => {
           )}
         </div>
       </div>
+      <ScrollToTop />
     </div>
   );
 };
