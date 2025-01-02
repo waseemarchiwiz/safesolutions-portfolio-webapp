@@ -76,8 +76,14 @@ export const AnimatedTestimonials = ({
                 >
                   <img
                     // src={`${testimonial.src}`}
-                    src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testimonial.image}`}
+                    // src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testimonial.image}`}
                     // src="https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/uploads/1735715353010-testemonial.avif"
+
+                    src={
+                      testimonial.image
+                        ? `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testimonial.image}`
+                        : testimonial.src
+                    }
                     alt={testimonial.name}
                     width={500}
                     height={500}
