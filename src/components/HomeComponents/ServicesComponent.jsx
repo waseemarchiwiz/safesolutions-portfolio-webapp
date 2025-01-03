@@ -5,7 +5,7 @@ import CustomButton from "../../globals/CustomButton";
 const ServicesComponent = () => {
   return (
     <div className="container mx-auto px-4">
-      <div className="flex justify-center flex-col p-10 items-center md:px-32 bg-white dark:bg-zinc-900 ">
+      <div className="flex justify-center flex-col p-10 items-center md:px-32 bg-[#f1f5f9] dark:bg-zinc-900 ">
         <div className="flex flex-col gap-4  ">
           <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
             Our Services
