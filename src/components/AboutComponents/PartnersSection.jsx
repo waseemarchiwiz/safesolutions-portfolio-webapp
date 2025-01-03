@@ -9,7 +9,7 @@ const PartnersSection = () => {
     {
       name: "Archiwiz",
       logo: archiwiz,
-      link: "#",
+      link: "https://archiwiz.com/",
     },
     {
       name: "Alphabuilt",
@@ -19,7 +19,7 @@ const PartnersSection = () => {
     {
       name: "Lumsden Trading",
       logo: lumsden,
-      link: "#",
+      link: "https://lumsdentrading.com/",
     },
   ];
 

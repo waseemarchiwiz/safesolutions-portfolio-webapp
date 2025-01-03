@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  Settings2,
+} from "lucide-react";
 import logo from "../assets/logo.png";
 import {
   Sidebar,
@@ -29,6 +36,7 @@ const items = [
   { title: "Testimonials", url: "/admin/testimonials", icon: FaQuoteLeft },
   { title: "Faqs", url: "/admin/faqs", icon: FaIdCard },
   { title: "Services", url: "/admin/services", icon: FaServicestack },
+  { title: "Setings", url: "/admin/settings", icon: Settings },
 ];
 
 export function AppSidebar() {

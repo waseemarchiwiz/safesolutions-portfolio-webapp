@@ -5,6 +5,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import ErrorPage from "@/pages/ErrorPage";
 import Project from "@/pages/Client/projectsdetails/Project";
 import Blog from "@/pages/Client/BlogDetails/Blogs";
+import AdminSetting from "@/pages/Admin/AdminSetting";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -17,7 +18,9 @@ const Services = React.lazy(() => import("../pages/Client/Services"));
 const BlogsPage = React.lazy(() => import("../pages/Client/Blogs"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
-const BlogDetails = React.lazy(() => import("../pages/Client/BlogDetails/BlogDetails"));
+const BlogDetails = React.lazy(() =>
+  import("../pages/Client/BlogDetails/BlogDetails")
+);
 
 // Lazy loading for admin pages
 const AdminBlogs = React.lazy(() => import("../pages/Admin/AdminBlogs"));
@@ -115,6 +118,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminServices />
+            </Suspense>
+          ),
+        },
+        {
+          path: "settings",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <AdminSetting />
             </Suspense>
           ),
         },

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div className="">
-      <footer className=" bg-white dark:bg-[#18181B]">
+      <footer className=" bg-[#F1F5F9] dark:bg-[#18181B]">
         <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-teal-600 dark:text-teal-300">
@@ -186,7 +186,7 @@ const Footer = () => {
               <ul className="mt-6 space-y-4 text-[16px]">
                 <li>
                   <Link
-                    // href="#"
+                    to={"/about"}
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
                     About
@@ -194,21 +194,22 @@ const Footer = () => {
                 </li>
 
                 <li>
-                  <a
-                    // href="#"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    Meet the Team
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    // href="#"
+                  <Link
+                    to={"/services"}
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
                     Services
-                  </a>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    // href="#"
+                    to={"/careers"}
+                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
+                  >
+                    Careers
+                  </Link>
                 </li>
               </ul>
             </div>

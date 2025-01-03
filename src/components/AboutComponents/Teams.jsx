@@ -7,6 +7,8 @@ import loaderAnimation from "../../assets/lottie/loadanimate.json";
 import hilalpic from "../../assets/teamsImages/hilal.jpg";
 import kaleempic from "../../assets/teamsImages/kaleem.jpg";
 import asadpic from "../../assets/teamsImages/asadullah.jpg";
+import adnanPic from "../../assets/teamsImages/adnan.jpeg";
+import junaidPic from "../../assets/teamsImages/junaid.jpeg";
 
 import { FaLinkedin, FaTwitter } from "react-icons/fa";
 
@@ -30,7 +32,7 @@ const teamMembers = [
   {
     name: "Adnan Khan",
     role: "Junior Full Stack Developer",
-    image: "https://readymadeui.com/team-3.webp",
+    image: adnanPic,
     linkedin: "https://linkedin.com/in/adnankhan",
     github: "https://github.com/adnankhan",
     twitter: "https://twitter.com/adnankhan",
@@ -40,14 +42,14 @@ const teamMembers = [
     name: "Asad ullah",
     role: "Junior Full Stack Developer",
     image: asadpic,
-    linkedin: "https://linkedin.com/in/asadullah",
-    github: "https://github.com/asadullah",
+    linkedin: "https://www.linkedin.com/in/asad-ullah-97521b260/",
+    github: "https://github.com/AsadUllah077",
     twitter: "https://twitter.com/asadullah",
   },
   {
-    name: "Waseem Khan",
-    role: "Junior Backend Developer",
-    image: "https://readymadeui.com/team-6.webp", // Updated for image consistency
+    name: "Muhammad Junaid",
+    role: "Junior Python  Developer",
+    image: junaidPic, // Updated for image consistency
     linkedin: "https://linkedin.com/in/waseemkhan-backend",
     github: "https://github.com/waseemkhan-backend",
     twitter: "https://twitter.com/waseemkhan-backend",

@@ -20,8 +20,8 @@ const ProjectDetails = ({ data }) => {
   ];
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="w-full mx-auto p-4 space-y-6 bg-gray-50 min-h-screen">
+    <div className="container mx-auto px-4  ">
+      <div className="w-full mx-auto p-4 space-y-6 bg-gray-50 dark:bg-[#18181b] min-h-screen">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -67,8 +67,8 @@ const ProjectDetails = ({ data }) => {
         </div>
 
         {/* Tabs */}
-        <div className="p-1 flex justify-center items-center">
-          <div className="flex bg-white space-x-2 justify-center items-center mt-5">
+        <div className="p-1 flex justify-center items-center bg-white dark:bg-[#18181b]">
+          <div className="flex bg-white dark:bg-[#18181b] space-x-2 justify-center items-center mt-5">
             {tabs.map(({ id, icon: Icon, label }) => (
               <button
                 key={id}
@@ -98,7 +98,7 @@ const ProjectDetails = ({ data }) => {
               {data.tabs.services.map((service, index) => (
                 <div
                   key={index}
-                  className={`bg-white rounded-xl shadow-md p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer
+                  className={`bg-white dark:bg-[#18181b] rounded-xl shadow-md p-6 transform transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer
                   ${hoveredCard === index ? "border-l-4 border-blue-500" : ""}`}
                   onMouseEnter={() => setHoveredCard(index)}
                   onMouseLeave={() => setHoveredCard(null)}
@@ -109,14 +109,14 @@ const ProjectDetails = ({ data }) => {
                         className: "w-6 h-6 text-blue-600",
                       })}
                     </div>
-                    <h3 className="text-xl font-semibold">{service.title}</h3>
+                    <h3 className="text-xl font-semibold dark:text-white">{service.title}</h3>
                   </div>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  <p className="text-gray-600  dark:text-white mb-4">{service.description}</p>
                   <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
                       <li
                         key={idx}
-                        className="flex items-center gap-2 text-gray-700"
+                        className="flex items-center gap-2 text-gray-700 dark:text-white"
                       >
                         <ChevronRight className="w-4 h-4 text-blue-500" />
                         {feature}
@@ -130,7 +130,7 @@ const ProjectDetails = ({ data }) => {
 
           {/* Project Details Tab */}
           {activeTab === "details" && (
-            <div className="bg-white rounded-xl shadow-md p-8 animate-fadeIn">
+            <div className="bg-white dark:bg-[#18181b]  rounded-xl shadow-md p-8 animate-fadeIn">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {data.tabs.projectDetails.map((detail, index) => (
                   <React.Fragment key={index}>
@@ -139,20 +139,20 @@ const ProjectDetails = ({ data }) => {
                         <div className="p-2 bg-blue-100 rounded-lg">
                           <Building2 className="w-6 h-6 text-blue-600" />
                         </div>
-                        <h3 className="text-xl font-semibold">
+                        <h3 className="text-xl font-semibold ">
                           Deployment Information
                         </h3>
                       </div>
                       <div className="space-y-3 pl-12">
                         <p className="flex items-center gap-2">
-                          <span className="font-semibold">Type:</span>
-                          <span className="text-gray-600">
+                          <span className="font-semibold ">Type:</span>
+                          <span className="text-gray-600 dark:text-white">
                             {detail.deploymentType}
                           </span>
                         </p>
                         <p className="flex items-center gap-2">
-                          <span className="font-semibold">Support Hours:</span>
-                          <span className="text-gray-600">
+                          <span className="font-semibold ">Support Hours:</span>
+                          <span className="text-gray-600 dark:text-white">
                             {detail.supportHours}
                           </span>
                         </p>
@@ -166,14 +166,14 @@ const ProjectDetails = ({ data }) => {
 
           {/* Support Tab */}
           {activeTab === "support" && (
-            <div className="bg-white rounded-xl shadow-md p-8 animate-fadeIn">
+            <div className="bg-white dark:bg-[#18181b] rounded-xl shadow-md p-8 animate-fadeIn">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {data.tabs.support.map((item, index) => (
                   <div
                     key={index}
                     className="space-y-4 transform transition-all duration-300 hover:scale-105"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 ">
                       <div className="p-2 bg-blue-100 rounded-lg">
                         {React.createElement(item.icon, {
                           className: "w-6 h-6 text-blue-600",
@@ -181,7 +181,7 @@ const ProjectDetails = ({ data }) => {
                       </div>
                       <h3 className="text-xl font-semibold">{item.title}</h3>
                     </div>
-                    <p className="text-gray-600">{item.description}</p>
+                    <p className="text-gray-600 dark:text-white">{item.description}</p>
                   </div>
                 ))}
               </div>
