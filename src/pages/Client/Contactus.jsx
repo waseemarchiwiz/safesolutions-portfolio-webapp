@@ -7,29 +7,41 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomInput } from "@/globals/CustomInput";
 import { contactValidationSchema } from "@/schemas/validationSchemas";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Contactus = () => {
   const initialValues = {
-    fullName: "",
+    name: "",
     subject: "",
     email: "",
     message: "",
   };
+  const userUrl = import.meta.env.VITE_USER_URL;
+  const api_token = import.meta.env.VITE_API_TOKEN;
+  console.log(api_token);
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    console.log(values);
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     try {
-      console.log("Blog Data:", values);
-      alert("Blog submitted successfully!");
-      resetForm();
-      setPreviewImage(null);
-    } catch (error) {
-      console.error("Submission error:", error);
-    } finally {
-      setSubmitting(false);
-    }
+      const response = await axios.post(`${userUrl}/contact`, values, {
+        headers: {
+          "Content-Type": "application/json",
+          api_token: api_token,
+        },
+      });
+      if (response?.data?.success) {
+        toast.success(response?.data?.message || "message sent successfully");
+        resetForm();
+        setSubmitting(false);
+      } else {
+        toast.error(response?.data?.message || "Failed to send message");
+      }
+      console.log(response);
+    } catch (error) {}
   };
   return (
-    <div className="dark:bg-gray-800 dark:text-gray-200">
+    <div className="dark:[#18181B] dark:text-gray-200">
       <div
         style={{
           backgroundImage:
@@ -54,7 +66,7 @@ const Contactus = () => {
         </motion.div>
       </div>
       <div className=" p-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-white mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
+        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#F1F5F9] dark:[#18181B] mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
           <div>
             <h2 className="text-gray-800 text-3xl font-extrabold">
               Get In Touch
@@ -72,7 +84,7 @@ const Contactus = () => {
                 <Form>
                   <div className="space-y-4 mt-8">
                     <Field
-                      name="fullName"
+                      name="name"
                       label="Full Name"
                       type="text"
                       placeholder="Enter Full Name"
