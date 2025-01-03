@@ -106,11 +106,11 @@ const FaqComponent = () => {
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="accordion bg-white shadow-md rounded-lg mt-10"
+              className="accordion bg-white  dark:bg-[#18181b] shadow-md rounded-lg mt-10"
             >
               <button
                 type="button"
-                className="toggle-button p-6 w-full text-base text-left text-gray-800 flex items-center"
+                className="toggle-button p-6 w-full text-base text-left text-gray-800 dark:text-white flex items-center"
                 onClick={() => toggleAccordion(index)}
               >
                 <span className="mr-4">{faq.question}</span>
@@ -129,7 +129,9 @@ const FaqComponent = () => {
                   openIndexes.includes(index) ? "max-h-screen pb-6" : "max-h-0"
                 }`}
               >
-                <p className="text-sm text-gray-500">{faq.answer}</p>
+                <p className="text-sm text-gray-500 dark:text-white">
+                  {faq.answer}
+                </p>
               </div>
             </div>
           ))}

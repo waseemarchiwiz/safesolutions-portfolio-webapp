@@ -13,7 +13,7 @@ const Header = () => {
   const isActive = (path) => location.pathname === path; // Check if the path is active
 
   return (
-    <header className="bg-white dark:bg-gray-900 w-full fixed z-[999]">
+    <header className="bg-[#F1F5F9] dark:bg-gray-900 w-full fixed z-[999]">
       <div className="container mx-auto px-4">
         <div className="flex h-24 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12 items-center">

@@ -104,7 +104,7 @@ const Careers = () => {
               {careersData.map((job, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-black p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                  className="bg-white dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
                 >
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {job.title}

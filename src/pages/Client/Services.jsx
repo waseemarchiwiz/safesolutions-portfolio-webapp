@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import {
-  Check,
-  Rocket,
-  CodeIcon,
-  PaletteIcon,
-  ShieldCheckIcon,
-  DatabaseIcon,
-  ChartPieIcon,
-  ServerIcon,
-  GlobeIcon,
-} from "lucide-react";
+
 import { motion } from "framer-motion";
 import ScrollToTop from "../../globals/ScrollToTop";
-import TabComponent from "@/globals/TabComponents";
-import ServicesTab from "./ServicesTab";
+
 import BackofficeServicesTab from "@/components/servicescomponents/BackofficeServicesTab";
+import SoftwareService from "../../components/servicescomponents/SoftwareServices";
+import Archetecture from "@/components/servicescomponents/Archetecture";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -26,11 +17,11 @@ const Services = () => {
     },
     {
       title: "Software Development",
-      content: <ServicesTab />,
+      content: <SoftwareService />,
     },
     {
       title: "Archetecture and Design",
-      content: <BackofficeServicesTab />,
+      content: <Archetecture />,
     },
   ];
   const handleTabClick = (index) => {
@@ -62,7 +53,7 @@ const Services = () => {
           </p>
         </motion.div>
       </div>
-      <div className="min-h-screen bg-gray-50 flex flex-col  items-center    dark:bg-[#18181B] py-16 px-4">
+      <div className="min-h-screen bg-[#F1F5F9] flex flex-col  items-center    dark:bg-[#18181B] py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
@@ -82,7 +73,7 @@ const Services = () => {
               className={`px-6 py-2 mx-2 text-sm font-medium rounded-lg transition-all duration-300 ${
                 activeTab === index
                   ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-gray-200 text-gray-700 hover:bg-blue-200"
+                  : "bg-[#F1F5F9] text-gray-700 hover:bg-blue-200"
               }`}
             >
               {tab.title}
@@ -91,7 +82,7 @@ const Services = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="tab-content bg-gray-100 dark:bg-[#18181B] p-6 rounded-lg shadow">
+        <div className="tab-content bg-[#F1F5F9] dark:bg-[#18181B] p-6 rounded-lg shadow">
           {tabs[activeTab].content}
         </div>
         <ScrollToTop />
