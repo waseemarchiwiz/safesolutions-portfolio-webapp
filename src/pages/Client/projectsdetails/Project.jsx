@@ -25,7 +25,11 @@ const Project = () => {
     );
   }
 
-  return <ProjectDetails data={projectData} />;
+  return (
+    <div className="dark:bg-[#18181b]">
+      <ProjectDetails data={projectData} />
+    </div>
+  );
 };
 
 export default Project;

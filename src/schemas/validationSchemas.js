@@ -124,7 +124,7 @@ export const servicesValidationSchema = Yup.object().shape({
 });
 
 export const contactValidationSchema = Yup.object({
-  fullName: Yup.string().required("Full Name is required"),
+  name: Yup.string().required("Full Name is required"),
   subject: Yup.string().required("Subject is required"),
 
   email: Yup.string()

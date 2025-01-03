@@ -64,13 +64,15 @@ const BlogDetails = ({ data }) => {
 
         {/* Blog Content */}
         <div>
-          <p className="text-black text-lg  ">
+          <p className="text-black text-lg dark:text-white ">
             Published on: {blogData.date} | Category: {blogData.category}
           </p>
-          <h2 className="text-black text-2xl font-bold mt-5">
+          <h2 className="text-black dark:text-white text-2xl font-bold mt-5">
             {blogData.title}
           </h2>
-          <p className="text-black text-lg mt-4">{blogData.description}</p>
+          <p className="text-black dark:text-white text-lg mt-4">
+            {blogData.description}
+          </p>
         </div>
       </div>
     </div>
