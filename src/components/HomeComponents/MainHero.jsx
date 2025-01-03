@@ -1,14 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
-import hero2 from "../../assets/hero2.jpg";
+import hero2 from "../../assets/heronew.jpg";
 import CustomButton from "../../globals/CustomButton";
 
 const MainHero = () => {
   return (
-    <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center overflow-hidden p-10">
+    <div className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center overflow-hidden p-10 sm:bg-red-400">
+      {/* <div className="relative  bg-purple-700     flex items-center overflow-hidden p-10  xl:bg-green-500  lg:bg-yellow-500 md:bg-blue-500 sm:bg-red-500 " > */}
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/60 to-purple-900/60 z-0"></div>
 
-      <div className="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-8 items-center mt-10">
+      <div className="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-8 items-center mt-20  ">
         {/* Text Content */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -41,8 +42,8 @@ const MainHero = () => {
             </motion.p>
           </div>
 
-         {/* /* The code snippet you provided is using the `motion` component from the `framer-motion`
-         library in a React application. */ }
+          {/* /* The code snippet you provided is using the `motion` component from the `framer-motion`
+         library in a React application. */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
