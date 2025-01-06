@@ -31,10 +31,13 @@ const ProjectsComponent = ({ background }) => {
   return (
     <section className={`${background} p-16`}>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-            Our Projects
-          </h1>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+            <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+              Our Projects
+            </span>
+          </div>
           <p className="font-light text-[20px] md:text-[26px] leading-[50px] text-center">
             At Safe Solution, we pride ourselves on delivering impactful
             solutions tailored to our clients' unique needs. With a focus on

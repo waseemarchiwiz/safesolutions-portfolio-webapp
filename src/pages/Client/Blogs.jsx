@@ -4,53 +4,10 @@ import CustomButton from "@/globals/CustomButton";
 import { useNavigate } from "react-router-dom";
 import ScrollToTop from "@/globals/ScrollToTop";
 import { blogPosts } from "../../lib/Blog";
+import hero from "../../assets/hero.png";
+
 const BlogPage = () => {
   const navigate = useNavigate();
-  // const blogPosts = [
-  //   {
-  //     id: 1,
-  //     title: "Best Treehouse Plans",
-  //     date: "2024-12-01",
-
-  //     category: "Architecture",
-  //     description:
-  //       "Integrate and build sustainable homes with our new plans. Explore modern techniques for eco-friendly and innovative structures.",
-  //     image:
-  //       "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "The Future of Buildings",
-  //     date: "2024-12-05",
-
-  //     category: "Construction",
-  //     description:
-  //       "A look into the innovations shaping the future of construction and sustainable development for buildings.",
-  //     image:
-  //       "https://cdn.pixabay.com/photo/2014/12/15/14/05/home-office-569153_640.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Construction Safety Tips",
-  //     date: "2024-12-03",
-
-  //     category: "Safety",
-  //     description:
-  //       "Learn essential safety tips to ensure a secure working environment for construction projects.",
-  //     image:
-  //       "https://cdn.pixabay.com/photo/2016/11/23/14/49/controls-1853330_640.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Modern Office Designs",
-  //     date: "2024-12-02",
-
-  //     category: "Architecture",
-  //     description:
-  //       "Explore modern office designs that boost productivity and promote sustainability in the workplace.",
-  //     image: "https://via.placeholder.com/600x400",
-  //   },
-  // ];
 
   const categories = ["All", "Architecture", "Construction", "Safety"];
 
@@ -89,30 +46,48 @@ const BlogPage = () => {
 
   return (
     <div className="bg-gray-100 dark:bg-[#18181b] ">
-      <div
-        style={{
-          backgroundImage:
-            "url('https://www.cedar.com/wp-content/uploads/2022/06/About-Us-Images-052022-05.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-        }}
-        className="h-60 flex items-center justify-center"
-      >
-        <motion.div
-          className="text-center text-white px-6"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+      <div className="relative h-[80vh] overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${hero})`,
+          }}
         >
-          <h1 className="text-5xl font-bold mb-4 text-indigo-500">
-            Our<span className="text-white"> Blogs</span>
-          </h1>
-          <p className="text-white text-lg mt-10">
-            Join our team and be part of an inspiring journey. Explore
-            opportunities to grow, learn, and make an impact.
-          </p>
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-blue-900 " />
+        </div>
+
+        <div className="relative h-full container mx-auto px-6 flex flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
+          >
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-white text-sm font-medium">Our Blogs</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <span className="text-white">
+                Insights and Ideas to Elevate Your{" "}
+              </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+                Blogging Journey
+              </span>
+            </h1>
+
+            <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto">
+              Join our team and be part of an inspiring journey. Explore
+              opportunities to grow, learn, and make an impact.
+            </p>
+
+            {/* <button className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg text-white font-medium hover:opacity-90 transition-all">
+              Get Started
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button> */}
+          </motion.div>
+        </div>
       </div>
       <div className="container dark:bg-[#18181b]  mx-auto w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-16 mt-20">
         {/* Main Content */}

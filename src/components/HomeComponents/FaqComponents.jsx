@@ -106,7 +106,7 @@ const FaqComponent = () => {
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="accordion bg-white  dark:bg-[#18181b] shadow-md rounded-lg mt-10"
+              className="accordion bg-[#F1F1F9]   dark:bg-[#18181b] shadow-md rounded-lg mt-10"
             >
               <button
                 type="button"
