@@ -1,58 +1,62 @@
-import React, { useEffect, useState } from "react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { AnimatedTestimonials } from "../ui/animated-testimonials";
+ 
+import React, { useState, useEffect } from "react";
+import { StarIcon, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
-import Lottie from "lottie-react";
-import loaderAnimation from "../../assets/lottie/loadanimate.json"; // Path to your Lottie JSON file
-
-const defaultTestimonials = [
-  {
-    description:
-      "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
-    name: "Sarah Chen",
-    designation: "Product Manager at TechFlow",
-    src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    description:
-      "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
-    name: "Michael Rodriguez",
-    designation: "CTO at InnovateSphere",
-    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    description:
-      "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
-    name: "Emily Watson",
-    designation: "Operations Director at CloudScale",
-    src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    description:
-      "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
-    name: "James Kim",
-    designation: "Engineering Lead at DataPro",
-    src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    description:
-      "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
-    name: "Lisa Thompson",
-    designation: "VP of Technology at FutureNet",
-    src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
 
 const Testimonial = () => {
-  const [testimonialData, setTestimonialData] = useState([]);
-  const [loading, setLoading] = useState(true); // Loader state
-
+  const [hoveredId, setHoveredId] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
+  const [testimonialData, setTestimonialData] = useState([]);
 
-  // Function to fetch testimonials from API
+  const testimonials = [
+    {
+      id: 1,
+      name: "Sarah Johnson",
+      designation: "Marketing Director",
+      // image: "/api/placeholder/64/64",
+      description:
+        "Working with this team has transformed our business. Their attention to detail and innovative solutions have helped us achieve remarkable results.",
+      rating: 5,
+      company: "TechCorp Inc.",
+      // bgColor: "bg-blue-50",
+    },
+    {
+      id: 2,
+      name: "Michael Chen",
+      designation: "Product Manager",
+      // image: "/api/placeholder/64/64",
+      description:
+        "The level of professionalism and expertise is outstanding. They consistently deliver beyond expectations and have become an invaluable partner.",
+      rating: 5,
+      company: "Innovation Labs",
+      // bgColor: "bg-purple-50",
+    },
+    {
+      id: 3,
+      name: "Emily Rodriguez",
+      designation: "CEO",
+      // image: "/api/placeholder/64/64",
+      description:
+        "I'm incredibly impressed with their dedication and ability to understand our unique needs. They've helped us stay ahead in a competitive market.",
+      rating: 5,
+      company: "StartUp Vision",
+      // bgColor: "bg-pink-50",
+    },
+    {
+      id: 3,
+      name: "Emily Rodriguez",
+      description: "CEO",
+      // image: "/api/placeholder/64/64",
+      description:
+        "I'm incredibly impressed with their dedication and ability to understand our unique needs. They've helped us stay ahead in a competitive market.",
+      rating: 5,
+      company: "StartUp Vision",
+      // bgColor: "bg-pink-50",
+    },
+  ];
   const fetchTestimonials = async () => {
     try {
       const response = await axios.get(`${userUrl}/get/testimonial`, {
@@ -67,47 +71,206 @@ const Testimonial = () => {
       } else {
         setTestimonialData(defaultTestimonials); // Fallback to default data
       }
+      console.log(response, "testimonials Response");
     } catch (error) {
       console.error("Error fetching testimonials:", error);
-      setTestimonialData(defaultTestimonials); // Fallback on error
+      setTestimonialData(testimonials); // Fallback on error
     } finally {
-      setLoading(false); // Stop loader
+      // setLoading(false); // Stop loader
     }
   };
-
-  // Fetch testimonials when the component mounts
   useEffect(() => {
     fetchTestimonials();
   }, []);
+  useEffect(() => {
+    let interval;
+    if (isAutoPlaying) {
+      interval = setInterval(() => {
+        setActiveIndex((current) =>
+          current === testimonials.length - 3 ? 0 : current + 1
+        );
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, testimonials.length]);
+
+  const renderStars = (rating) => {
+    return [...Array(rating)].map((_, index) => (
+      <StarIcon
+        key={index}
+        size={16}
+        className="text-yellow-400 fill-yellow-400 transform transition-transform duration-300 hover:scale-110"
+      />
+    ));
+  };
+
+  const handlePrevious = () => {
+    setActiveIndex((current) =>
+      current === 0 ? testimonials.length - 3 : current - 1
+    );
+    setIsAutoPlaying(false);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((current) =>
+      current === testimonials.length - 3 ? 0 : current + 1
+    );
+    setIsAutoPlaying(false);
+  };
 
   return (
-    <div className="container mx-auto px-4">
-      <section className="text-black py-20">
-        <div className="container mx-auto px-6">
-          <h1 className="text-3xl font-bold text-center text-neutral-800 dark:text-white mt-10">
-            First-Hand Opinions of Clients on Their Partnership Experience
-          </h1>
-          <p className="font-light text-[20px] md:text-[26px] leading-[50px] text-black dark:text-white mt-4 text-center w-auto">
-            We are a software and mobile application development company that
-            ensures its expertise extends to offer a seamlessly productive and
-            growth-oriented partnership to its clients.
-          </p>
+    <section className="  bg-[#F1F5F9] dark:bg-[#18181b]  py-20 px-4 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+      <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
 
-          {loading ? (
-            <div className="flex justify-center items-center mt-10">
-              <Lottie
-                animationData={loaderAnimation}
-                loop
-                style={{ height: "50px", width: "50px" }}
-              />
-            </div>
-          ) : (
-            <AnimatedTestimonials testimonials={testimonialData} />
-          )}
+      <div className="max-w-6xl mx-auto relative">
+        <div className="text-center mb-16 transform transition-all duration-500 hover:scale-105">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            What Our Clients Say
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto">
+            Discover why businesses trust us to deliver exceptional results and
+            drive their success forward.
+          </p>
         </div>
-      </section>
-    </div>
+
+        <div className="relative">
+          {/* Navigation Buttons */}
+          <button
+            onClick={handlePrevious}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-8 z-10 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-8 z-10 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden ">
+            <div
+              className="flex transition-transform duration-500  ease-in-out"
+              style={{ transform: `translateX(-${activeIndex * 33.33}%)` }}
+            >
+              {testimonialData.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="w-full lg:w-1/3 flex-shrink-0 px-4   "
+                >
+                  <div
+                    className={`${testimonial.bgColor || "dark:bg-[18181b]"}  
+                    } backdrop-blur-lg rounded-lg p-8 
+                              transform transition-all duration-500 hover:-translate-y-2 
+                              
+                              ${
+                                hoveredId === testimonial.id
+                                  ? "shadow-2xl scale-105"
+                                  : "shadow-lg"
+                              }
+                              cursor-pointer h-full`}
+                    onMouseEnter={() => setHoveredId(testimonial.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                  >
+                    <Quote className="w-12 h-12 text-gray-400  mb-4 opacity-50" />
+
+                    <div className="flex items-center mb-6">
+                      <div className="relative">
+                        {/* <img
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="w-16 h-16 rounded-full object-cover ring-4 ring-white"
+                        /> */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 hover:opacity-20 transition-opacity duration-300" />
+                      </div>
+                      <div className="ml-1">
+                        <h3 className="font-semibold text-lg text-gray-900  dark:text-white transform transition-all duration-300 hover:translate-x-2">
+                          {testimonial.name}
+                        </h3>
+                        <p className="text-gray-600 dark:text-white">
+                          {testimonial.designation}
+                        </p>
+                        {/* <p className="text-sm text-gray-500">
+                          {testimonial.company}
+                        </p> */}
+                      </div>
+                    </div>
+
+                    {/* <div className="flex mb-4 space-x-1">
+                      {renderStars(testimonial.rating)}
+                    </div> */}
+
+                    <p className="text-gray-700 dark:text-white leading-relaxed">
+                      "{testimonial.description}"
+                    </p>
+
+                    {hoveredId === testimonial.id && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shine" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Carousel Indicators */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {[...Array(testimonials.length - 2)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setActiveIndex(index);
+                  setIsAutoPlaying(false);
+                }}
+                className={`w-3 h-3 rounded-full transition-all duration-300 
+                          ${
+                            activeIndex === index
+                              ? "bg-blue-600 w-6"
+                              : "bg-gray-300"
+                          }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
+
+// Add these keyframes to your global CSS
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  @keyframes shine {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  .animate-shine {
+    animation: shine 1.5s infinite;
+  }
+`;
+document.head.appendChild(style);
 
 export default Testimonial;
