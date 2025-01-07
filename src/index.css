@@ -1,36 +1,34 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body{
-  @apply font-['Oswald']  bg-slate-100
+body {
+  @apply font-['Oswald']  bg-slate-100;
 }
 
-h1{
-  @apply font-['Oswald']
+h1 {
+  @apply font-['Oswald'];
 }
 
 ::-webkit-scrollbar {
-  width: 13px;
+  width: 7px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 0px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #b4cfe9; 
+  background: #b4cfe9;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #ad9b9b; 
+  background: #ad9b9b;
 }
 @layer base {
   :root {
@@ -66,7 +64,8 @@ h1{
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;}
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -99,10 +98,14 @@ h1{
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;}}
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
 @layer base {
   * {
-    @apply border-border;}
+    @apply border-border;
+  }
   body {
-    @apply bg-background text-foreground;}}
- 
+    @apply bg-background text-foreground;
+  }
+}
