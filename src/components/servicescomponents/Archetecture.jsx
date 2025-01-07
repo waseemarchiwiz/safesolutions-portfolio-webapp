@@ -11,115 +11,146 @@ import {
   FaBuilding,
   FaCheck,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const architectureServices = [
   {
     icon: <FaLaptopCode className="w-12 h-12 text-teal-500" />,
-    title: "Introduction to BIM",
+    title: "BIM Services",
     description:
-      "Building Information Modeling (BIM) is revolutionizing the architecture and construction industry. It provides a digital representation of the physical and functional characteristics of a building, ensuring better collaboration and decision-making.",
+      "Building Information Modeling improves collaboration, coordination, communication, reduces errors and rework, while saving cost",
     features: [
-      "Comprehensive Digital Models",
-      "Multi-Disciplinary Collaboration",
-      "Improved Project Visualization",
+      "2D conceptual plan & details",
+      "3D Structural, Architectural, MEP & Site Modelling (Coordination & Clash detection)",
+      "4D Project Scheduling",
     ],
+    link: "https://www.archiwiz.com/services/bim-services",
   },
   {
     icon: <FaDraftingCompass className="w-12 h-12 text-blue-500" />,
-    title: "BIM for Design and Planning",
+    title: "Visualization",
     description:
-      "BIM enhances design and planning processes by enabling accurate simulations and analyses before construction begins, reducing errors and costly rework.",
+      "Turn designs into immersive experiences through still renders, 360 views, and virtual tours, enhancing engagement while saving costs.",
     features: [
-      "Design Validation",
-      "Simulations for Energy Efficiency",
-      "Space Optimization Insights",
+      "Still Render (Day/Night)",
+      "Still Render (Exterior / Interior)",
+      "360 Renders",
+      "House Tour",
+      "Multistage Tour",
     ],
+    link: "https://www.archiwiz.com/services/visualization-services",
   },
   {
     icon: <FaCubes className="w-12 h-12 text-yellow-500" />,
-    title: "3D Modeling & Rendering in BIM",
+    title: "Scanning",
     description:
       "Leverage BIM’s advanced 3D modeling capabilities for precise representations of structures, combined with realistic renderings for client presentations.",
-    features: [
-      "3D Conceptual Models",
-      "Photo-realistic Visualizations",
-      "Virtual Walkthroughs",
-    ],
+    features: ["Lidar Scanning Survey", "Scan to BIM", "Scan to Visualize"],
+    link: "https://www.archiwiz.com/services/scanning",
   },
   {
     icon: <FaRulerCombined className="w-12 h-12 text-green-500" />,
-    title: "BIM for Construction Management",
+    title: "Landscape(yardvinyana)",
     description:
-      "BIM supports construction management by integrating schedules, costs, and resource data into a cohesive model, enhancing efficiency and reducing delays.",
-    features: [
-      "Integrated Scheduling (4D BIM)",
-      "Cost Estimation (5D BIM)",
-      "Resource Management",
-    ],
+      "Complete landscape services to elevate your outdoor spaces with design and visualization expertise.",
+    features: ["Basic Designing", "Takeoff & Costing", "Procurement", "Render"],
+    link: "https://www.archiwiz.com/services/landscape",
   },
   {
     icon: <FaBuilding className="w-12 h-12 text-cyan-500" />,
-    title: "Compliance and Regulations",
+    title: "Civil Works",
     description:
-      "BIM ensures adherence to building standards and legal requirements, streamlining approvals and minimizing risks associated with regulatory non-compliance.",
+      "Comprehensive civil works solutions and stunning visual storytelling with advanced technology.",
     features: [
-      "Regulatory Compliance Checks",
-      "Automated Documentation",
-      "Seamless Approval Processes",
+      "GIS Mapping Survey",
+      "Drainage Plan",
+      "Utility Map",
+      "Flood Zone Map",
+      "Country Information",
     ],
+    link: "https://www.archiwiz.com/services/civil-works",
   },
   {
     icon: <FaCheck className="w-12 h-12 text-green-500" />,
-    title: "Quality Assurance with BIM",
+    title: "Photogrammetry & Videography",
     description:
-      "BIM facilitates quality assurance by identifying potential issues early in the project lifecycle, reducing risks and ensuring superior outcomes.",
+      "Capture and showcase properties with high-quality videos, virtual tours, and drone footage.",
     features: [
-      "Clash Detection",
-      "Error Reduction",
-      "Enhanced Quality Control",
+      "HDR Images",
+      "HDR Bracketed",
+      "360 Images",
+      "Retail HD videos",
+      "House Tours",
     ],
+    link: "https://www.archiwiz.com/services/photography-&-videography",
   },
   {
     icon: <FaTree className="w-12 h-12 text-orange-500" />,
-    title: "Sustainability and BIM",
+    title: "Drone Services",
     description:
-      "Integrating BIM with sustainability goals enables eco-friendly designs by analyzing energy consumption and optimizing material use.",
+      "Leverage aerial drone technology for surveying, inspection, and monitoring, offering unique perspectives and data for project evaluation.",
     features: [
-      "Energy Efficiency Analysis",
-      "Material Optimization",
-      "Carbon Footprint Reduction",
+      "Drone Inspection",
+      "Drone Survey",
+      "Aerial Shot",
+      "Drone Videos",
+      "Ortho Projection",
+      "Drone Imagery to Model",
     ],
+    link: "https://www.archiwiz.com/services/drone-services",
+  },
+  {
+    icon: <FaCheck className="w-12 h-12 text-green-500" />,
+
+    title: "Vendor Management and Dealership",
+    description:
+      "Streamline your procurement process with our vendor management services, ensuring the best deals and quality products for your projects.",
+    features: [
+      "Data Analysis",
+      "Market Research on Data Base",
+      "Beginning the Pricing Process From different vendor",
+      "Purchase Order",
+      "Timely deliver on site",
+      "Dealership Top Knobs",
+      "Dealership Hardware's",
+      "Dealership Windows and Doors",
+    ],
+    link: "https://www.archiwiz.com/services/vendor-management",
   },
   {
     icon: <FaCity className="w-12 h-12 text-red-500" />,
-    title: "Urban Planning with BIM",
+    title: "Project Management",
     description:
-      "BIM extends its capabilities to urban planning, helping design sustainable and smart cities with efficient infrastructure management.",
+      "Expert project management services to oversee your projects from inception to completion, ensuring timelines, budgets, and quality are met.",
     features: [
-      "Zoning and Infrastructure Planning",
-      "Simulation of Urban Environments",
-      "Community-Centric Design",
+      "Project Schedule",
+      "Project Coordination",
+      "Project Budgeting & Time Management",
+      "Project Risk and Communication Plan",
     ],
+    link: "https://www.archiwiz.com/services/project-management",
   },
 ];
 
-const ServiceCard = ({ icon, title, description, features }) => (
+const ServiceCard = ({ icon, title, description, features, link }) => (
   <div className="bg-white dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-    <div className="mb-4">{icon}</div>
-    <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
-      {title}
-    </h3>
-    <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
-    <ul className="space-y-2">
-      {features.map((feature, index) => (
-        <li
-          key={index}
-          className="flex items-center text-gray-700 dark:text-gray-300"
-        >
-          <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
-        </li>
-      ))}
-    </ul>
+    <Link to={link} target="_blank">
+      <div className="mb-4">{icon}</div>
+      <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
+        {title}
+      </h3>
+      <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
+      <ul className="space-y-2">
+        {features.map((feature, index) => (
+          <li
+            key={index}
+            className="flex items-center text-gray-700 dark:text-gray-300"
+          >
+            <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
+          </li>
+        ))}
+      </ul>
+    </Link>
   </div>
 );
 
@@ -144,6 +175,7 @@ const Archetecture = () => {
               title={service.title}
               description={service.description}
               features={service.features}
+              link={service.link} // Link to service details
             />
           ))}
         </div>
