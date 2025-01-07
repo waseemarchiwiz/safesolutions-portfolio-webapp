@@ -1,9 +1,8 @@
- 
-
 import React, { useState, useEffect } from "react";
 import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header";
+import { motion } from "framer-motion";
 
 const MainHero = () => {
   const [scrolled, setScrolled] = useState(0);
@@ -57,7 +56,12 @@ const MainHero = () => {
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left content */}
-            <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
               <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-white/90">
@@ -117,7 +121,7 @@ const MainHero = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Right content - 3D Grid */}
             <div className="relative aspect-square">
