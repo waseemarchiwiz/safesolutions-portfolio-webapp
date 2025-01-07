@@ -134,3 +134,16 @@ export const contactValidationSchema = Yup.object({
     .required("message is required")
     .min(30, "Message must be at least 30 characters"),
 });
+
+export const EasyApplyValidationSchema = Yup.object({
+  name: Yup.string().required("Full Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  phone: Yup.string()
+    .matches(/^[0-9]{10}$/, "Phone must be a 10-digit number")
+    .required("Phone is required"),
+  resume: Yup.mixed().required("Resume is required"),
+  experience: Yup.string().required("Experience Level is required"),
+  message: Yup.string().required("Message is required"),
+});
