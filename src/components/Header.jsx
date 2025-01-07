@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { IoMoon, IoSunny } from "react-icons/io5";
@@ -57,14 +56,14 @@ const Header = () => {
                             item === "Home" ? "/" : `/${item.toLowerCase()}`
                           )
                             ? "text-blue-500 dark:text-white"
-                            : "text-gray-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                            : "text-gray-400 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                         }`}
                       >
                         {item}
                         {isActive(
                           item === "Home" ? "/" : `/${item.toLowerCase()}`
                         ) && (
-                          <span className="absolute bottom-0 left-0 h-0.5 w-full bg-blue-500 dark:bg-blue-400" />
+                          <span className="absolute bottom-0 left-0 h-0.5 w-full bg-blue-500 dark:bg-blue-400 " />
                         )}
                       </Link>
                     </li>

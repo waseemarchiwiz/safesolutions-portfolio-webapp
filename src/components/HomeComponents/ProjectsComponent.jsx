@@ -34,7 +34,7 @@ const ProjectsComponent = ({ background }) => {
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
             <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+            <span className="text-purple-600 dark:text-white text-sm font-medium">
               Our Projects
             </span>
           </div>

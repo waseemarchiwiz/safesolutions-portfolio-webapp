@@ -1,4 +1,3 @@
- 
 import React, { useState, useEffect } from "react";
 import { StarIcon, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
@@ -127,10 +126,14 @@ const Testimonial = () => {
 
       <div className="max-w-6xl mx-auto relative">
         <div className="text-center mb-16 transform transition-all duration-500 hover:scale-105">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-purple-600 dark:text-white text-sm font-medium">
+                Testimonials
+              </span>
+            </div>
+
+          <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto mt-7">
             Discover why businesses trust us to deliver exceptional results and
             drive their success forward.
           </p>
@@ -195,7 +198,7 @@ const Testimonial = () => {
                           {testimonial.name}
                         </h3>
                         <p className="text-gray-600 dark:text-white">
-                          {testimonial.designation}
+                          {/* {testimonial.designation} */}
                         </p>
                         {/* <p className="text-sm text-gray-500">
                           {testimonial.company}

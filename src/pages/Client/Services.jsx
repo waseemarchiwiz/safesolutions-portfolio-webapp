@@ -13,6 +13,7 @@ import {
 import BackofficeServicesTab from "@/components/servicescomponents/BackofficeServicesTab";
 import SoftwareService from "../../components/servicescomponents/SoftwareServices";
 import Archetecture from "@/components/servicescomponents/Archetecture";
+import ArchiwizConstruction from "@/components/servicescomponents/ArchiwizConstruction";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -29,6 +30,10 @@ const Services = () => {
     {
       title: "Archetecture and Design",
       content: <Archetecture />,
+    },
+    {
+      title: "Archiwiz Construction",
+      content: <ArchiwizConstruction />,
     },
   ];
   const handleTabClick = (index) => {
@@ -63,7 +68,7 @@ const Services = () => {
 
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="text-white">Empowering Your </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
                 Digital Journey
               </span>
             </h1>
@@ -83,10 +88,14 @@ const Services = () => {
       <div className="min-h-screen bg-[#F1F5F9] flex flex-col  items-center    dark:bg-[#18181B] py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
-              Our Services
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                Services We Provide
+              </span>
+            </div>
+
+            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto mt-5">
               We provide cutting-edge digital solutions to help your business
               thrive in the modern world.
             </p>

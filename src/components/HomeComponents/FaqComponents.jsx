@@ -56,7 +56,7 @@ const FaqComponent = () => {
           api_token: api_token,
         },
       });
-
+      console.log(response, "faqs response");
       if (response?.data?.succes && response?.data?.faqs?.length > 0) {
         setFaqData(response.data.faqs);
       } else {
@@ -95,11 +95,16 @@ const FaqComponent = () => {
       id="faqs"
       className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"
     >
+       <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse " />
+              <span className="text-purple-600 dark:text-white text-sm font-medium">
+                Frequently Asked Questions (FAQs)
+              </span>
+            </div>
+
       <div className="max-w-7xl mx-auto sm:px-8 px-4">
         <div className="mb-12 max-w-4xl">
-          <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
-            Frequently Asked Questions
-          </h2>
+       
         </div>
 
         <div className="w-full">

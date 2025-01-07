@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../globals/CustomButton";
 
-const AboutComp = () => {
+const WhySafe = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -9,29 +9,40 @@ const AboutComp = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-slate-900">
+    <div className="relative overflow-hidden dark:bg-black ">
       {/* Animated background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-        {/* Animated particles */}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-white/10 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 6}px`,
-              height: `${Math.random() * 6}px`,
-              animationDuration: `${3 + Math.random() * 3}s`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          />
-        ))}
-      </div>
 
       {/* Main content */}
-      <div className="relative min-h-[600px] container     mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+      <div className="relative min-h-[600px] container dark:bg-black    mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
         {/* Left side - Image */}
+
+        {/* Right side - Content */}
+        <div
+          className={`w-full lg:w-1/2 transform transition-all duration-1000 delay-300 ${
+            isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
+          }`}
+        >
+          <div className="space-y-6">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white ">
+              Why Work With Safe Solution
+            </h2>
+
+            <p className="text-lg text-gray-600 dark:text-white leading-relaxed">
+              SafeSolution Consultants is a premier IT services provider,
+              enabling businesses to transform their digital strategies and
+              achieve lasting success. We have been delivering innovative
+              solutions that help companies navigate the complexities of the
+              digital age.
+            </p>
+
+            <p className="text-lg text-gray-600 dark:text-white leading-relaxed">
+              With a skilled team of experts, we design and implement tailored
+              IT infrastructures that empower our clients to become leaders in
+              their respective industries.
+            </p>
+          </div>
+        </div>
+
         <div
           className={`w-full lg:w-1/2 transform transition-all duration-1000 ${
             isVisible
@@ -83,50 +94,9 @@ const AboutComp = () => {
             </div>
           </div>
         </div>
-
-        {/* Right side - Content */}
-        <div
-          className={`w-full lg:w-1/2 transform transition-all duration-1000 delay-300 ${
-            isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
-          }`}
-        >
-          <div className="space-y-6">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-white/80 text-sm">About SafeSolution</span>
-            </div>
-
-            <h2 className="text-4xl lg:text-5xl font-bold text-white">
-              Transforming Business Through
-              <span className="block mt-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Digital Innovation
-              </span>
-            </h2>
-
-            <p className="text-lg text-gray-300 leading-relaxed">
-              SafeSolution Consultants is a premier IT services provider,
-              enabling businesses to transform their digital strategies and
-              achieve lasting success. We have been delivering innovative
-              solutions that help companies navigate the complexities of the
-              digital age.
-            </p>
-
-            <p className="text-lg text-gray-300 leading-relaxed">
-              With a skilled team of experts, we design and implement tailored
-              IT infrastructures that empower our clients to become leaders in
-              their respective industries.
-            </p>
-
-            <CustomButton
-              label="Learn More"
-              className="mt-8 relative group overflow-hidden"
-              to="/about"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
 };
 
-export default AboutComp;
+export default WhySafe;

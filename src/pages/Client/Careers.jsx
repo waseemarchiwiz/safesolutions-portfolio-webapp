@@ -7,11 +7,17 @@ import axios from "axios";
 import Lottie from "lottie-react";
 import loaderAnimation from "../../assets/lottie/loadanimate.json"; // Path to your Lottie JSON file
 import hero from "../../assets/hero.png";
+import { Field, Form, Formik } from "formik";
+import { CustomInput } from "@/globals/CustomInput";
+import { EasyApplyValidationSchema } from "@/schemas/validationSchemas";
+import { toast } from "react-toastify";
+import WhySafe from "@/components/CareerComponents/WhySafe";
 
 const Careers = () => {
   const [careersData, setCareersData] = useState([]);
-  const [loading, setLoading] = useState(true); // Loader state to track data fetching
-  //  const  [modalOpen,setModalOpen]
+  const [loading, setLoading] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(""); // Loader state to track data fetching
+  const [modalOpen, setModalOpen] = useState(false);
   // Function to fetch career data from API
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
@@ -42,6 +48,139 @@ const Careers = () => {
     fetchCareers();
   }, []);
 
+  const handleApply = (job) => {
+    setSelectedJob(job); // Update selected job for modal
+    setModalOpen(true); // Open the modal
+  };
+
+  const handleSubmit = async (values) => {
+    console.log(values, "Submitted Values");
+    // TODO: Send the form data to the server for easy apply
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    formData.append("message", values.message);
+    if (values.resume) {
+      formData.append("file", values.resume);
+    }
+    formData.append("experience", values.experience);
+    try {
+      const response = await axios.post(
+        "https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/api/user/easy/apply",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            api_token: api_token,
+          },
+        }
+      );
+      console.log(response, "response easy apply");
+
+      if (response?.data?.success) {
+        toast.success(response?.data?.message);
+        setModalOpen(false); // Close the modal after submission
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const EditModal = () => {
+    if (!modalOpen || !selectedJob) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="bg-white dark:bg-[#18181b]   p-8 rounded-lg w-full max-w-[50%]">
+          <h2 className="text-2xl mb-4">{selectedJob.title}</h2>
+
+          {/* Formik for submitting resume and details */}
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              phone: "",
+              resume: null, // Updated to handle file upload
+              experience: "",
+              message: "",
+            }}
+            onSubmit={(values) => {
+              handleSubmit(values); // Correctly pass the values
+              setModalOpen(false); // Close the modal after submission
+            }}
+            validationSchema={EasyApplyValidationSchema}
+          >
+            {({ isSubmitting, setFieldValue }) => (
+              <Form className="space-y-4">
+                <Field
+                  name="name"
+                  label="Full Name"
+                  type="text"
+                  as={CustomInput}
+                />
+                <Field
+                  name="email"
+                  label="Email"
+                  type="email"
+                  as={CustomInput}
+                />
+                <Field
+                  name="phone"
+                  label="Phone"
+                  type="number"
+                  as={CustomInput}
+                />
+                <div>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Upload CV
+                  </label>
+                  <input
+                    name="resume"
+                    type="file"
+                    className="border rounded px-3 py-2 w-full"
+                    onChange={(event) =>
+                      setFieldValue("resume", event.currentTarget.files[0])
+                    }
+                  />
+                </div>
+                <Field
+                  name="experience"
+                  label="Experience Level"
+                  type="text"
+                  as={CustomInput}
+                />
+                <Field
+                  name="message"
+                  label="Message"
+                  isTextarea={true}
+                  rows="4"
+                  as={CustomInput}
+                />
+
+                <div className="flex justify-end space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => setModalOpen(false)}
+                    className="px-4 py-2 bg-gray-200 rounded dark:text-black"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-4 py-2 bg-blue-500 text-white   rounded"
+                  >
+                    {isSubmitting ? "Submitting" : "Submit"}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    );
+  };
   return (
     <div>
       {/* Hero Section */}
@@ -70,9 +209,9 @@ const Careers = () => {
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-white">Join </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-                our team and be part of an inspiring journey.
+              <span className="text-white">We Seek </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                Dreamers.
               </span>
             </h1>
 
@@ -88,13 +227,21 @@ const Careers = () => {
           </motion.div>
         </div>
       </div>
-
+      <WhySafe />
       <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto">
-              We're building something amazing and we want you to be part of it.
-              Explore our open positions and start your career journey with us.
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                Trending Oppurtunities
+              </span>
+            </div>
+
+            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto mt-4">
+              We promise you a dynamic and collaborative work environment where
+              innovation thrives, and every challenge becomes an opportunity to
+              grow and excel
             </p>
           </div>
 
@@ -147,9 +294,9 @@ const Careers = () => {
                   <div className="mt-4">
                     <CustomButton
                       label="Apply Now"
-                      // onClick={() => window.open(job.link, "_blank")}
-                      to={job.link}
-                      target="_blank"
+                      // to={job.link}
+                      // target="_blank"
+                      handleClick={() => handleApply(job)}
                     />
                   </div>
                 </div>
@@ -158,6 +305,8 @@ const Careers = () => {
           )}
         </div>
       </div>
+      {/* check condition if model open show the form with formik  */}
+      <EditModal />
       <ScrollToTop />
     </div>
   );

@@ -41,32 +41,46 @@ const Contactus = () => {
     } catch (error) {}
   };
   return (
-    <div className="dark:[#18181B] dark:text-gray-200">
-      <div
-        style={{
-          backgroundImage:
-            "url('https://www.cedar.com/wp-content/uploads/2022/06/About-Us-Images-052022-05.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "60vh",
-        }}
-      >
-        <motion.div
-          className="container mx-auto px-6 py-16 text-center"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <div className="dark:bg-[#18181B] dark:text-gray-200">
+      <div className="relative h-[80vh] overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://www.cedar.com/wp-content/uploads/2022/06/About-Us-Images-052022-05.png')",
+          }}
         >
-          <h1 className="text-5xl font-bold mb-4 text-indigo-500 mt-40">
-            Contact <span className="text-white">Us</span>
-          </h1>
-          <p className="text-white text-lg mt-10">
-            We’re here to assist you. Reach out anytime!
-          </p>
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-blue-900 " />
+        </div>
+
+        <div className="relative h-full container mx-auto px-6 flex flex-col justify-center ">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
+          >
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-white text-sm font-medium">Contact us</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <span className="text-white">We are always ready </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                to help you
+              </span>
+            </h1>
+
+            <p className="text-lg text-gray-200 mb-8 max-w-xl">
+              Learn who we are and why we excel in delivering innovative
+              solutions that drive business growth and digital transformation.
+            </p>
+          </motion.div>
+        </div>
       </div>
       <div className=" p-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#F1F5F9] dark:[#18181B] mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
+        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#F1F5F9] dark:bg-[#18181B] mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
           <div>
             <h2 className="text-gray-800 text-3xl font-extrabold">
               Get In Touch

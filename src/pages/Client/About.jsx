@@ -18,17 +18,17 @@ const About = () => {
   const navigate = useNavigate();
   const achievements = [
     {
-      number: "10+",
+      number: "2+",
       label: "Years Experience",
       icon: <Building className="w-6 h-6" />,
     },
     {
-      number: "500+",
+      number: "+10",
       label: "Projects Completed",
       icon: <Gitlab className="w-6 h-6" />,
     },
     {
-      number: "200+",
+      number: "10+",
       label: "Happy Clients",
       icon: <Users className="w-6 h-6" />,
     },
@@ -71,7 +71,7 @@ const About = () => {
 
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="text-white">Transforming Ideas into </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
                 Digital Reality
               </span>
             </h1>
@@ -82,7 +82,7 @@ const About = () => {
             </p>
 
             <CustomButton
-              onClick={() => navigate("/contact")}
+              handleClick={() => navigate("/contact")}
               // className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg text-white font-medium hover:opacity-90 transition-all"
             >
               Get Started
@@ -184,7 +184,7 @@ const About = () => {
                   <Users className="w-6 h-6 text-purple-500" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-xl mb-1">200+</h4>
+                  <h4 className="font-bold text-xl mb-1">10+</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
                     Satisfied Clients
                   </p>
