@@ -11,7 +11,7 @@ const AboutComp = () => {
   return (
     <div className="relative overflow-hidden bg-slate-900">
       {/* Animated background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-purple-900/90 to-slate-900/95">
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
         {/* Animated particles */}
         {[...Array(20)].map((_, i) => (
           <div
