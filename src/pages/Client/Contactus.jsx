@@ -41,7 +41,7 @@ const Contactus = () => {
     } catch (error) {}
   };
   return (
-    <div className="dark:bg-[#18181B] dark:text-gray-200">
+    <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200">
       <div className="relative h-[80vh] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -80,9 +80,9 @@ const Contactus = () => {
         </div>
       </div>
       <div className=" p-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#F1F5F9] dark:bg-[#18181B] mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
+        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#FFFFFF] dark:bg-black mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
           <div>
-            <h2 className="text-gray-800 text-3xl font-extrabold">
+            <h2 className="text-gray-800 dark:text-white text-3xl font-extrabold">
               Get In Touch
             </h2>
             <p className="text-sm text-gray-500 mt-4 leading-relaxed">
