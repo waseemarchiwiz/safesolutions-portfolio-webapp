@@ -16,10 +16,12 @@ COPY . .
 # Set the environment variables
 ARG VITE_API_URL
 ARG VITE_API_TOKEN
+ARG VITE_USER_URL
 
 # Set the environment variables
 ENV VITE_API_URL=$VITE_API_URL
 ENV VITE_API_TOKEN=$VITE_API_TOKEN
+ENV VITE_USER_URL=$VITE_USER_URL
 
 # Build the application
 RUN npm run build
