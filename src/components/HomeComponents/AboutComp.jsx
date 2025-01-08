@@ -58,7 +58,7 @@ const AboutComp = () => {
                 <div className="grid grid-cols-3 gap-4 text-white">
                   <div>
                     <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                      10+
+                      2+
                     </div>
                     <div className="text-sm text-gray-300">
                       Years Experience
@@ -66,7 +66,7 @@ const AboutComp = () => {
                   </div>
                   <div>
                     <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                      500+
+                      10+
                     </div>
                     <div className="text-sm text-gray-300">Projects Done</div>
                   </div>
@@ -98,7 +98,7 @@ const AboutComp = () => {
 
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
               Transforming Business Through
-              <span className="block mt-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
                 Digital Innovation
               </span>
             </h2>

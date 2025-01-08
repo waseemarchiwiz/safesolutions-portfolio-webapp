@@ -21,7 +21,7 @@ const BlogDetails = ({ data }) => {
   const blogData = data || fallbackData;
 
   return (
-    <div className="bg-gray-100 dark:bg-[#18181b]">
+    <div className="bg-[#FFFFFF] dark:bg-black">
       {/* Hero Section */}
       <div className="relative h-[80vh] overflow-hidden">
         <div

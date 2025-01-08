@@ -6,7 +6,7 @@ import { FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <div className="">
-      <footer className=" bg-[#F1F5F9] dark:bg-[#18181B]">
+      <footer className=" bg-[#FFFFFF] dark:bg-black">
         <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div className="text-teal-600 dark:text-teal-300">
@@ -174,7 +174,7 @@ const Footer = () => {
                 <br />
                 Plot No. 103-104 A, Hayatabad, Peshawar
               </p>
-              
+
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 info@archiwiz.com
               </p>
@@ -212,7 +212,6 @@ const Footer = () => {
               <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 Available 24/7 for online inquiries at safesolution@archiwiz.com
               </p>
-              
             </div>
           </div>
 

@@ -118,20 +118,20 @@ const Testimonial = () => {
   };
 
   return (
-    <section className="  bg-[#F1F5F9] dark:bg-[#18181b]  py-20 px-4 relative overflow-hidden">
+    <section className="  bg-[#FFFFFF] dark:bg-black  py-20 px-4 relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
       <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
       <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-6xl mx-auto relative  ">
         <div className="text-center mb-16 transform transition-all duration-500 hover:scale-105">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-white text-sm font-medium">
-                Testimonials
-              </span>
-            </div>
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+            <span className="text-purple-600 dark:text-white text-sm font-medium">
+              Testimonials
+            </span>
+          </div>
 
           <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto mt-7">
             Discover why businesses trust us to deliver exceptional results and
@@ -139,7 +139,7 @@ const Testimonial = () => {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative ">
           {/* Navigation Buttons */}
           <button
             onClick={handlePrevious}
@@ -158,7 +158,7 @@ const Testimonial = () => {
           </button>
 
           {/* Carousel Container */}
-          <div className="overflow-hidden ">
+          <div className="overflow-hidden bg-[#FFFFFF] dark:bg-black p-10 ">
             <div
               className="flex transition-transform duration-500  ease-in-out"
               style={{ transform: `translateX(-${activeIndex * 33.33}%)` }}

@@ -30,8 +30,8 @@ export default function WhyChoose() {
   ];
 
   return (
-    <div className="container mx-auto px-4">
-      <div className=" flex justify-center flex-col p-10 items-center  dark:bg-[#18181b]">
+    <div className="container mx-auto px-4 bg-[#FFFFFF] dark:bg-black">
+      <div className=" flex justify-center flex-col p-10 items-center  bg-[#FFFFFF] dark:bg-black">
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
             <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
@@ -39,7 +39,7 @@ export default function WhyChoose() {
               Why Choose us
             </span>
           </div>
-          <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-center     w-auto   ">
+          <p className=" font-light text-[20px] md:text-[26px] leading-[50px] text-center      w-auto   ">
             We provide expert back-office support services, leveraging
             innovation, industry expertise, and emerging technologies to
             streamline operations and deliver tailored solutions.

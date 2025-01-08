@@ -11,7 +11,7 @@ import ScrollToTop from "../../globals/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="dark:bg-[#18181b] dark:text-gray-200">
+    <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200  ">
       <div>
         <MainHero />
         <WhyChoose />

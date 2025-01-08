@@ -45,7 +45,7 @@ const BlogPage = () => {
     .slice(0, 3);
 
   return (
-    <div className="bg-gray-100 dark:bg-[#18181b] ">
+    <div className="bg-[#FFFFFF] dark:bg-black ">
       <div className="relative h-[80vh] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -89,14 +89,14 @@ const BlogPage = () => {
           </motion.div>
         </div>
       </div>
-      <div className="container dark:bg-[#18181b]  mx-auto w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-16 mt-20">
+      <div className="container bg-[#FFFFFF] dark:bg-black  mx-auto w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-16 mt-20">
         {/* Main Content */}
-        <div className="lg:col-span-2 dark:bg-[#18181b] ">
+        <div className="lg:col-span-2 bg-[#FFFFFF] dark:bg-black ">
           {/* Blog Posts */}
           {selectedPosts.map((post, index) => (
             <div
               key={post?.id}
-              className="bg-white dark:bg-[#18181b]  shadow-md  overflow-hidden mb-6"
+              className="bg-[#FFFFFF] dark:bg-black  shadow-md  overflow-hidden mb-6"
             >
               <img
                 src={post.image}
@@ -166,7 +166,7 @@ const BlogPage = () => {
           </div> */}
 
           {/* Categories */}
-          <div className="bg-white dark:text-white dark:bg-[#18181b]  w-[70%]  mb-6   ml-1">
+          <div className="bg-[#FFFFFF] dark:bg-black dark:text-white    w-[70%]  mb-6   ml-1">
             <h3 className="text-lg hover:text-[#4f46e5] dark:text-white tracking-wide  mb-4">
               Categories
             </h3>
@@ -191,7 +191,7 @@ const BlogPage = () => {
           </div>
 
           {/* Latest News */}
-          <div className="bg-white dark:bg-[#18181b]   ml-1  rounded-md mb-6">
+          <div className="bg-[#FFFFFF] dark:bg-black   ml-1  rounded-md mb-6">
             <h3 className="text-xl hover:text-[#4f46e5]  tracking-wide   dark:text-white  mb-4">
               Latest News
             </h3>
@@ -217,7 +217,7 @@ const BlogPage = () => {
           </div>
 
           {/* Tags */}
-          <div className="bg-white   dark:bg-[#18181b]   p-4 rounded-md">
+          <div className="bg-[#FFFFFF] dark:bg-black   p-4 rounded-md">
             {/* <h3 className="text-lg font-semibold dark:text-white mb-4">
               Tags Cloud
             </h3> */}

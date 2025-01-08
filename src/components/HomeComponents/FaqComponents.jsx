@@ -93,25 +93,23 @@ const FaqComponent = () => {
   return (
     <div
       id="faqs"
-      className="flex flex-col gap-10 justify-center items-center p-10 dark:bg-zinc-900"
+      className="flex flex-col gap-10 justify-center items-center p-10 bg-[#FFFFFF] dark:bg-black"
     >
-       <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse " />
-              <span className="text-purple-600 dark:text-white text-sm font-medium">
-                Frequently Asked Questions (FAQs)
-              </span>
-            </div>
+      <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+        <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse " />
+        <span className="text-purple-600 dark:text-white text-sm font-medium">
+          Frequently Asked Questions (FAQs)
+        </span>
+      </div>
 
       <div className="max-w-7xl mx-auto sm:px-8 px-4">
-        <div className="mb-12 max-w-4xl">
-       
-        </div>
+        <div className="mb-12 max-w-4xl"></div>
 
         <div className="w-full">
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="accordion bg-[#F1F1F9]   dark:bg-[#18181b] shadow-md rounded-lg mt-10"
+              className="accordion bg-[#FFFFFF] dark:bg-black shadow-md rounded-lg mt-10"
             >
               <button
                 type="button"

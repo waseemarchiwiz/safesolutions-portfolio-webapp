@@ -40,8 +40,8 @@ const Services = () => {
     setActiveTab(index);
   };
   return (
-    <div>
-      <div className="relative h-[80vh] overflow-hidden">
+    <div className="bg-[#FFFFFF] dark:bg-black">
+      <div className="relative h-[80vh]  overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -85,7 +85,7 @@ const Services = () => {
           </motion.div>
         </div>
       </div>
-      <div className="min-h-screen bg-[#F1F5F9] flex flex-col  items-center    dark:bg-[#18181B] py-16 px-4">
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-black flex flex-col  items-center       py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
@@ -101,7 +101,7 @@ const Services = () => {
             </p>
           </div>
         </div>
-        <div className="tabs flex justify-center mb-8">
+        <div className="tabs flex flex-wrap justify-center mb-8   p-4">
           {tabs.map((tab, index) => (
             <button
               key={index}
@@ -109,7 +109,7 @@ const Services = () => {
               className={`px-4 py-2 mx-2 text-sm   font-medium rounded-lg transition-all duration-300 ${
                 activeTab === index
                   ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-[#F1F5F9] text-gray-700 hover:bg-blue-200"
+                  : "bg-[#FFFFFF] text-gray-700 hover:bg-blue-200"
               }`}
             >
               {tab.title}
@@ -123,7 +123,7 @@ const Services = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
-          className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl"
+          className="bg-[#FFFFFF] dark:bg-black p-8 rounded-2xl  "
         >
           {tabs[activeTab].content}
         </motion.div>
