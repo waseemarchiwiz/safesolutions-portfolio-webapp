@@ -14,6 +14,14 @@ import {
   Cpu,
   Glasses,
   Box,
+  Building,
+  Calculator,
+  Archive,
+  MessageCircle,
+  Settings,
+  Cloud,
+  Gamepad,
+  Eye,
 } from "lucide-react";
 
 // Import images
@@ -24,6 +32,9 @@ import archiwiz from "../assets/portal.png";
 import lumsden from "../assets/lumsden.png";
 import archiwizfront from "../assets/archiwizfrontpage.png";
 import digitalPic from "../assets/digitaltwin.webp";
+import { FaCube, FaTools } from "react-icons/fa";
+import { GiVrHeadset } from "react-icons/gi";
+import { Tooltip } from "recharts";
 
 export const projects = [
   {
@@ -117,7 +128,7 @@ export const projects = [
   {
     name: "Archiwiz Portal",
     description:
-      "Efficient data extraction solutions using technologies like Beautiful Soup, Scrapy, and Selenium.",
+      "Archiwiz Portal offers cutting-edge solutions for architectural project management, cost estimation, and digital asset organization. With advanced tools for 3D modeling, 360° visualizations, and efficient communication, Archiwiz simplifies complex workflows while providing seamless data integration and project collaboration",
     route: "/portal",
     img: archiwiz,
     version: "1.0.1",
@@ -126,36 +137,45 @@ export const projects = [
     tabs: {
       services: [
         {
-          title: "Data Extraction",
-          description: "Advanced web scraping and data collection solutions",
+          title: "Architecture Services Management",
+          description: "Comprehensive management of architectural projects.",
           features: [
-            "Automated Data Collection",
-            "Custom Scraping Scripts",
-            "Real-time Data Updates",
+            "3D Modeling and Visualization",
+            "360° Views and Walkthroughs",
+            "Point Cloud Data Integration",
           ],
-          icon: Database,
+          icon: Building,
         },
         {
-          title: "Data Processing",
-          description: "Efficient data processing and transformation",
-          features: ["Data Cleaning", "Format Conversion", "Data Validation"],
-          icon: Code,
-        },
-        {
-          title: "Web Integration",
-          description: "Seamless integration with web platforms",
+          title: "RS Management",
+          description:
+            "Cost estimation and resource planning for architecture projects.",
           features: [
-            "API Development",
-            "Database Integration",
-            "Custom Workflows",
+            "Accurate Cost Estimation",
+            "Project Resource Allocation",
+            "Budget Management Tools",
           ],
-          icon: Globe,
+          icon: Calculator,
         },
         {
-          title: "Analytics",
-          description: "Comprehensive data analysis and reporting",
-          features: ["Custom Reports", "Data Visualization", "Trend Analysis"],
-          icon: Search,
+          title: "Digital Assets Management",
+          description: "Streamlined organization and access to digital assets.",
+          features: [
+            "Asset Categorization",
+            "Secure Storage Solutions",
+            "Search and Retrieval Optimization",
+          ],
+          icon: Archive,
+        },
+        {
+          title: "Internal Communication",
+          description: "Efficient communication solutions for teams.",
+          features: [
+            "Centralized Messaging",
+            "Project Collaboration Tools",
+            "Notification and Updates",
+          ],
+          icon: MessageCircle,
         },
       ],
       projectDetails: [
@@ -170,17 +190,18 @@ export const projects = [
       support: [
         {
           title: "Technical Support",
-          description: "Expert technical assistance",
+          description: "Expert technical assistance.",
           icon: BookOpen,
         },
         {
           title: "Documentation",
-          description: "Comprehensive API and usage documentation",
+          description: "Comprehensive API and usage documentation.",
           icon: BookOpen,
         },
       ],
     },
   },
+
   {
     name: "Precision Health",
     description:
@@ -213,96 +234,172 @@ export const projects = [
   },
   {
     name: "Digital Twin",
-    description: "Creative design and innovation solutions.",
-    // link: "https://archiwiz.com/",
+    description:
+      "Innovative digital solutions for creating virtual replicas of physical assets to enhance efficiency and decision-making.",
     route: "/digitaltwin",
     img: digitalPic,
     type: "detailed",
     tabs: {
       services: [
         {
-          title: "Digital Management",
+          title: "Virtual Asset Modeling",
           description:
-            "Complete accounting, budgeting, and financial reporting solutions",
+            "Accurate 3D modeling and replication of physical assets",
           features: [
-            "General Ledger",
-            "Accounts Payable/Receivable",
-            "Asset Management",
+            "High-Precision 3D Models",
+            "Real-Time Synchronization",
+            "Lifecycle Monitoring",
           ],
           icon: BarChart3,
         },
         {
-          title: "Human Resources",
-          description:
-            "Comprehensive HR management and employee self-service portal",
+          title: "Operational Optimization",
+          description: "Streamline operations with data-driven insights",
           features: [
-            "Payroll Processing",
-            "Time & Attendance",
-            "Employee Records",
+            "Predictive Maintenance",
+            "Process Automation",
+            "Performance Analytics",
+          ],
+          icon: Settings,
+        },
+        {
+          title: "Data Integration",
+          description: "Seamless integration with IoT devices and platforms",
+          features: [
+            "Sensor Data Integration",
+            "Cloud Connectivity",
+            "Advanced Analytics",
+          ],
+          icon: Cloud,
+        },
+        {
+          title: "Collaboration Tools",
+          description:
+            "Enhanced team collaboration through shared virtual spaces",
+          features: [
+            "Real-Time Team Collaboration",
+            "Shared Virtual Environments",
+            "Interactive Workflows",
           ],
           icon: Users,
-        },
-        {
-          title: "Inventory Management",
-          description: "Real-time inventory tracking and optimization",
-          features: [
-            "Stock Control",
-            "Purchase Orders",
-            "Warehouse Management",
-          ],
-          icon: Package,
-        },
-        {
-          title: "Customer Relations",
-          description: "Integrated CRM with customer support features",
-          features: [
-            "Contact Management",
-            "Support Tickets",
-            "Customer Portal",
-          ],
-          icon: Phone,
         },
       ],
       projectDetails: [
         {
-          name: "Enterprise ERP Solution",
-          version: "2.0.1",
+          name: "Digital Twin Platform",
+          version: "1.5.3",
           lastUpdated: "2024-12-23",
-          deploymentType: "Cloud-based",
+          deploymentType: "Hybrid",
           supportHours: "24/7",
         },
       ],
       support: [
         {
           title: "Technical Support",
-          description: "24/7 technical support and assistance",
+          description: "Round-the-clock technical assistance",
           icon: HelpCircle,
         },
         {
-          title: "Customer Support",
-          description: "High-quality customer support and resolutions",
-          icon: HelpCircle,
+          title: "Training & Onboarding",
+          description: "Comprehensive training for optimal platform use",
+          icon: BookOpen,
         },
         {
-          title: "Maintenance & Updates",
-          description: "Regular software updates and maintenance",
+          title: "Custom Development",
+          description: "Tailored solutions to meet specific requirements",
           icon: Briefcase,
         },
         {
-          title: "Training & Certification",
-          description:
-            "Access to industry-specific training and certifications",
-          icon: BookOpen,
+          title: "Platform Maintenance",
+          description: "Regular updates and performance improvements",
+          icon: FaTools,
         },
       ],
     },
   },
   {
-    name: "AR/VR",
-    description: "Creative design and innovation solutions.",
-    link: "https://archiwiz.com/",
+    name: "AR/VR Solutions",
+    description:
+      "Innovative augmented and virtual reality solutions for immersive experiences across diverse industries.",
+    route: "/ar-vr",
     img: archiwizfront,
-    type: "external",
+    type: "detailed",
+    tabs: {
+      services: [
+        {
+          title: "Augmented Reality",
+          description: "Enhance real-world experiences with digital overlays",
+          features: [
+            "Real-Time Interactions",
+            "Custom AR Applications",
+            "Device Compatibility",
+          ],
+          icon: Eye,
+        },
+        {
+          title: "Virtual Reality",
+          description:
+            "Create immersive virtual environments for diverse use cases",
+          features: [
+            "Simulated Environments",
+            "Collaborative Virtual Spaces",
+            "Interactive Experiences",
+          ],
+          icon: GiVrHeadset,
+        },
+        {
+          title: "3D Asset Creation",
+          description: "Develop detailed 3D models for AR/VR integration",
+          features: [
+            "High-Quality 3D Models",
+            "Performance Optimization",
+            "Custom Designs",
+          ],
+          icon: FaCube,
+        },
+        {
+          title: "Interactive Solutions",
+          description: "Engage users with tailored AR/VR applications",
+          features: [
+            "Gamification Features",
+            "Personalized User Experiences",
+            "Interactive Workflows",
+          ],
+          icon: Gamepad,
+        },
+      ],
+      projectDetails: [
+        {
+          name: "AR/VR Platform",
+          version: "1.2.0",
+          lastUpdated: "2024-12-23",
+          deploymentType: "Cloud-Based",
+          supportHours: "24/7",
+        },
+      ],
+      support: [
+        {
+          title: "Technical Support",
+          description: "24/7 expert assistance for AR/VR solutions",
+          icon: HelpCircle,
+        },
+        {
+          title: "Training & Implementation",
+          description: "Comprehensive training for AR/VR tools and platforms",
+          icon: BookOpen,
+        },
+        {
+          title: "Custom Development",
+          description: "Personalized AR/VR solutions to meet unique needs",
+          icon: Briefcase,
+        },
+        {
+          title: "Platform Maintenance",
+          description: "Regular updates and performance enhancements",
+          icon: Tooltip,
+        },
+      ],
+    },
   },
 ];
 

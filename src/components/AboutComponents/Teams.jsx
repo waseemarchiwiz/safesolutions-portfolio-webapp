@@ -95,7 +95,7 @@ const Teams = () => {
       <div className="my-4 mt-28">
         <div className="max-w-5xl max-lg:max-w-2xl mx-auto">
           <div className="max-w-2xl mx-auto text-center">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
               <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
                 Our Team

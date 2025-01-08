@@ -113,18 +113,26 @@ const Careers = () => {
           >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="space-y-4">
-                <Field
-                  name="name"
-                  label="Full Name"
-                  type="text"
-                  as={CustomInput}
-                />
-                <Field
-                  name="email"
-                  label="Email"
-                  type="email"
-                  as={CustomInput}
-                />
+                <div className="flex flex-row justify-between  gap-10   ">
+                  <div className="w-[50%]">
+                    <Field
+                      name="name"
+                      label="Full Name"
+                      type="text"
+                      as={CustomInput}
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="w-[50%]">
+                    <Field
+                      name="email"
+                      label="Email"
+                      type="email"
+                      as={CustomInput}
+                    />
+                  </div>
+                </div>
+
                 <Field
                   name="phone"
                   label="Phone"
@@ -228,7 +236,7 @@ const Careers = () => {
         </div>
       </div>
       <WhySafe />
-      <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
@@ -271,7 +279,7 @@ const Careers = () => {
               {careersData.map((job, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
+                  className="bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
                 >
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {job.title}

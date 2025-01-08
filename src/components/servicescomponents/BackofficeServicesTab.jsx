@@ -87,7 +87,9 @@ const backofficeServices = [
 ];
 
 const ServiceCard = ({ icon, title, description, features }) => (
-  <div className="bg-[#F1F5F9] dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+  <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
+
+
     <div className="mb-4">{icon}</div>
     <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
       {title}
@@ -107,7 +109,7 @@ const ServiceCard = ({ icon, title, description, features }) => (
 );
 
 const BackofficeServicesTab = () => (
-  <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#18181B] py-16 px-4">
+  <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
     <div className="container mx-auto">
       {/* <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
@@ -130,10 +132,7 @@ const BackofficeServicesTab = () => (
         ))}
       </div>
       <div className="text-center mt-12">
-        <CustomButton
-          to={'/contact'}
-          label="Get Started"
-        />
+        <CustomButton to={"/contact"} label="Get Started" />
       </div>
     </div>
   </div>

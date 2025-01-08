@@ -25,7 +25,7 @@ const Header = () => {
     <header
       className={`fixed w-full z-[999] transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-lg"
+          ? "bg-gradient-to-r from-gray-900 via-blue-900  dark:bg-gradient-to-r dark:from-[#000000] dark:via-blue-[#000000] backdrop-blur-lg shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -56,7 +56,7 @@ const Header = () => {
                             item === "Home" ? "/" : `/${item.toLowerCase()}`
                           )
                             ? "text-blue-500 dark:text-white"
-                            : "text-gray-400 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                            : "text-white dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                         }`}
                       >
                         {item}
@@ -141,7 +141,7 @@ const Header = () => {
               </button>
             </div>
 
-            <nav className="p-4">
+            <nav className="p-4 bg-gray-300">
               <ul className="space-y-3">
                 {["Home", "About", "Services", "Careers", "Blogs"].map(
                   (item) => (

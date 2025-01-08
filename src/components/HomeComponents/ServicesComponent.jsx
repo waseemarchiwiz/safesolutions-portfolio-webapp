@@ -1,4 +1,3 @@
- 
 import React, { useState, useEffect } from "react";
 import { GiArtificialIntelligence } from "react-icons/gi";
 import { HoverEffect } from "../ui/card-hover-effect";
@@ -13,14 +12,14 @@ const ServicesComponent = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-[#f1f5f9] dark:bg-[#18181b]">
+    <div className="relative overflow-hidden bg-[#FFFFFF] dark:bg-black">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative container mx-auto px-4 py-24">
+      <div className="relative container mx-auto px-4 py-24  ">
         <div className="    mx-auto">
           {/* Header section */}
           <div className="space-y-6 text-center mb-16">
@@ -33,7 +32,7 @@ const ServicesComponent = () => {
 
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
               Transforming Ideas into
-              <span className="block mt-2 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
                 Digital Reality
               </span>
             </h2>

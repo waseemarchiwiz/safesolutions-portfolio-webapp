@@ -146,4 +146,12 @@ export const EasyApplyValidationSchema = Yup.object({
   resume: Yup.mixed().required("Resume is required"),
   experience: Yup.string().required("Experience Level is required"),
   message: Yup.string().required("Message is required"),
+  portfolioOrLink: Yup.mixed()
+    .test("portfolioOrLink", "Must be a valid URL or a PDF file", (value) => {
+      if (!value) return false; // Value is required
+      const isUrl = typeof value === "string" && /^(https?:\/\/).+/.test(value);
+      const isPdf = value instanceof File && value.type === "application/pdf";
+      return isUrl || isPdf;
+    })
+    .required("Portfolio or link is required"),
 });

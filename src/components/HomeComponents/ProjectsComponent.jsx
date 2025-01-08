@@ -29,7 +29,7 @@ const ProjectsComponent = ({ background }) => {
   };
 
   return (
-    <section className={`${background} p-16`}>
+    <section className={`${background} p-16 bg-[#FFFFFF] dark:bg-black`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">

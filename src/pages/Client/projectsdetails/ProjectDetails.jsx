@@ -29,12 +29,13 @@ const ProjectDetails = ({ data }) => {
           transition={{ duration: 0.8 }}
         >
           <div className="bg-white mt-32 rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-xl">
-            <div className="p-6 w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-xl">
+            <div className="p-6 w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900  rounded-t-xl">
               <div className="flex items-center justify-between">
                 <div className="text-white">
                   <h1 className="text-2xl">{data.name}</h1>
                   <p className="font-light text-[20px] md:text-[22px] leading-[50px] text-center w-auto">
-                    Version {data.version} | Last Updated: {data.lastupdated}
+                    {/* Version {data.version} |  */}
+                    Last Updated: {data.lastupdated}
                   </p>
                 </div>
               </div>
@@ -109,9 +110,13 @@ const ProjectDetails = ({ data }) => {
                         className: "w-6 h-6 text-blue-600",
                       })}
                     </div>
-                    <h3 className="text-xl font-semibold dark:text-white">{service.title}</h3>
+                    <h3 className="text-xl font-semibold dark:text-white">
+                      {service.title}
+                    </h3>
                   </div>
-                  <p className="text-gray-600  dark:text-white mb-4">{service.description}</p>
+                  <p className="text-gray-600  dark:text-white mb-4">
+                    {service.description}
+                  </p>
                   <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
                       <li
@@ -181,7 +186,9 @@ const ProjectDetails = ({ data }) => {
                       </div>
                       <h3 className="text-xl font-semibold">{item.title}</h3>
                     </div>
-                    <p className="text-gray-600 dark:text-white">{item.description}</p>
+                    <p className="text-gray-600 dark:text-white">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>

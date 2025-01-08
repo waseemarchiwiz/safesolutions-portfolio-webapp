@@ -1,17 +1,21 @@
 import React from "react";
 import CustomButton from "@/globals/CustomButton";
 import {
-  FaDraftingCompass,
-  FaPaintBrush,
-  FaRulerCombined,
   FaCity,
-  FaCubes,
   FaTree,
   FaLaptopCode,
   FaBuilding,
   FaCheck,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {
+  Check,
+  Handshake,
+  Proportions,
+  ScanQrCode,
+  SwitchCamera,
+  TvMinimal,
+} from "lucide-react";
 
 const architectureServices = [
   {
@@ -27,7 +31,7 @@ const architectureServices = [
     link: "https://www.archiwiz.com/services/bim-services",
   },
   {
-    icon: <FaDraftingCompass className="w-12 h-12 text-blue-500" />,
+    icon: <TvMinimal className="w-12 h-12 text-blue-500" />,
     title: "Visualization",
     description:
       "Turn designs into immersive experiences through still renders, 360 views, and virtual tours, enhancing engagement while saving costs.",
@@ -41,7 +45,7 @@ const architectureServices = [
     link: "https://www.archiwiz.com/services/visualization-services",
   },
   {
-    icon: <FaCubes className="w-12 h-12 text-yellow-500" />,
+    icon: <ScanQrCode className="w-12 h-12 text-yellow-500" />,
     title: "Scanning",
     description:
       "Leverage BIM’s advanced 3D modeling capabilities for precise representations of structures, combined with realistic renderings for client presentations.",
@@ -49,7 +53,7 @@ const architectureServices = [
     link: "https://www.archiwiz.com/services/scanning",
   },
   {
-    icon: <FaRulerCombined className="w-12 h-12 text-green-500" />,
+    icon: <Proportions className="w-12 h-12 text-green-500" />,
     title: "Landscape(yardvinyana)",
     description:
       "Complete landscape services to elevate your outdoor spaces with design and visualization expertise.",
@@ -71,7 +75,7 @@ const architectureServices = [
     link: "https://www.archiwiz.com/services/civil-works",
   },
   {
-    icon: <FaCheck className="w-12 h-12 text-green-500" />,
+    icon: <SwitchCamera className="w-12 h-12 text-green-500" />,
     title: "Photogrammetry & Videography",
     description:
       "Capture and showcase properties with high-quality videos, virtual tours, and drone footage.",
@@ -100,7 +104,7 @@ const architectureServices = [
     link: "https://www.archiwiz.com/services/drone-services",
   },
   {
-    icon: <FaCheck className="w-12 h-12 text-green-500" />,
+    icon: <Handshake className="w-12 h-12 text-green-500" />,
 
     title: "Vendor Management and Dealership",
     description:
@@ -132,8 +136,30 @@ const architectureServices = [
   },
 ];
 
+// const ServiceCard = ({ icon, title, description, features, link }) => (
+//   <div className="bg-white dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+//     <Link to={link} target="_blank">
+//       <div className="mb-4">{icon}</div>
+//       <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
+//         {title}
+//       </h3>
+//       <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
+//       <ul className="space-y-2">
+//         {features.map((feature, index) => (
+//           <li
+//             key={index}
+//             className="flex items-center text-gray-700 dark:text-gray-300"
+//           >
+//             <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
+//           </li>
+//         ))}
+//       </ul>
+//     </Link>
+//   </div>
+// );
+
 const ServiceCard = ({ icon, title, description, features, link }) => (
-  <div className="bg-white dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+  <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
     <Link to={link} target="_blank">
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
@@ -146,17 +172,24 @@ const ServiceCard = ({ icon, title, description, features, link }) => (
             key={index}
             className="flex items-center text-gray-700 dark:text-gray-300"
           >
-            <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
+            <Check className="w-5 h-5 mr-2 text-green-500" /> {feature}
           </li>
         ))}
       </ul>
+    </Link>
+    <Link
+      to={link}
+      target="_blank"
+      className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+      Learn More
     </Link>
   </div>
 );
 
 const Archetecture = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#18181B] py-16 px-4">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
       <div className="container mx-auto">
         {/* <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
