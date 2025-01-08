@@ -106,7 +106,7 @@ const Services = () => {
             <button
               key={index}
               onClick={() => handleTabClick(index)}
-              className={`px-6 py-2 mx-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+              className={`px-4 py-2 mx-2 text-sm   font-medium rounded-lg transition-all duration-300 ${
                 activeTab === index
                   ? "bg-blue-600 text-white shadow-lg"
                   : "bg-[#F1F5F9] text-gray-700 hover:bg-blue-200"

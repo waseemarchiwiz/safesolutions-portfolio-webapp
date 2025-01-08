@@ -132,7 +132,8 @@ const services = [
 ];
 
 const ServiceCard = ({ icon, title, description, features, link }) => (
-  <div className="bg-[#F1F5F9] dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+  <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
+   
     <Link to={link} target="_blank">
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
@@ -150,11 +151,18 @@ const ServiceCard = ({ icon, title, description, features, link }) => (
         ))}
       </ul>
     </Link>
+    <Link
+      to={link}
+      target="_blank"
+      className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+      Learn More
+    </Link>
   </div>
 );
 
 const ArchiwizConstruction = () => (
-  <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#18181B] py-16 px-4">
+  <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
     <div className="container mx-auto">
       {/* <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
