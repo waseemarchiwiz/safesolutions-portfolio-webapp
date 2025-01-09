@@ -14,6 +14,7 @@ import BackofficeServicesTab from "@/components/servicescomponents/BackofficeSer
 import SoftwareService from "../../components/servicescomponents/SoftwareServices";
 import Archetecture from "@/components/servicescomponents/Archetecture";
 import ArchiwizConstruction from "@/components/servicescomponents/ArchiwizConstruction";
+import ArchiwizBuild from "@/components/servicescomponents/ArchiwizBuild";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -34,6 +35,10 @@ const Services = () => {
     {
       title: "Archiwiz Construction",
       content: <ArchiwizConstruction />,
+    },
+    {
+      title: "Alpha build",
+      content: <ArchiwizBuild />,
     },
   ];
   const handleTabClick = (index) => {
