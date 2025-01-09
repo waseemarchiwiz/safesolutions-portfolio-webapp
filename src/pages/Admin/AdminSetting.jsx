@@ -1,193 +1,266 @@
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
-import React, { useEffect, useState } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { CustomInput } from "@/globals/CustomInput";
 import apiInstance from "../../../api-config";
+import { Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import * as Yup from "yup";
+import { Trash2, X, Pencil } from "lucide-react";
 
-const AdminSetting = () => {
-  // State for managing emails and the email currently being edited
-  const [emails, setEmails] = useState([]);
-  const [editingEmail, setEditingEmail] = useState(null);
+import { toast } from "react-toastify";
 
-  // Get the user token from localStorage for authorization
-  const userToken = localStorage.getItem("apiusertoken");
-
-  // Validation schema using Yup for the email field
-  const emailSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email format") // Email must be a valid format
-      .required("Email is required"), // Email is a required field
-  });
-
-  // Function to fetch the email data from the server
-  const fetchEmail = async () => {
-    try {
-      const response = await apiInstance.get("/get/email", {
-        headers: {
-          user_access_token: userToken, // Send user token for authentication
-        },
-      });
-      console.log(response, "email fetch");
-      setEmails(response?.data.data.email); // Set the fetched emails in the state
-    } catch (error) {
-      console.error(error); // Log any errors
-    }
-  };
-
-  // Function to handle form submission for adding/updating email
-  const handleSubmit = async (values, { resetForm }) => {
-    try {
-      const response = await apiInstance.post("/update/email", values, {
-        headers: {
-          "Content-Type": "application/json", // Set content type to JSON
-          user_access_token: userToken, // Send user token for authentication
-        },
-      });
-      fetchEmail();
-      resetForm(); // Reset the form after successful submission
-    } catch (error) {
-      console.error(error); // Log any errors
-    }
-    console.log(data, "data"); // Log the response data
-  };
-
-  // Log the current emails in the state
-  console.log(emails, "emailllls");
-
-  // Fetch the email list when the component is mounted or when handleSubmit is called
-  useEffect(() => {
-    fetchEmail();
-  }, [handleSubmit]);
-
-  // Function to handle editing of an email
-  const handleEdit = (emailToEdit) => {
-    setEditingEmail(emailToEdit); // Set the email being edited
-  };
-
-  // Function to handle deleting an email (currently commented out)
-  // const handleDelete = (emailToDelete) => {
-  //   setEmails(emails.filter((e) => e !== emailToDelete)); // Remove email from the list
-  // };
+const CustomModal = ({ isOpen, onClose, title, children }) => {
+  if (!isOpen) return null;
 
   return (
-    <div>
-      {/* Breadcrumb component */}
-      <div className="p-10">
-        <BreadCrumb page={"Setting"} />
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-lg w-full max-w-md mx-4 p-6 shadow-xl">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">{title}</h2>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        {children}
       </div>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto p-6">
-          {/* Card for email management */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Email Management
-              </h2>
+    </div>
+  );
+};
 
-              {/* Formik form for email input */}
-              <Formik
-                initialValues={{ email: editingEmail || "" }} // Set initial value for the form
-                validationSchema={emailSchema} // Apply validation schema
-                onSubmit={handleSubmit} // Handle form submission
-                enableReinitialize // Allow reinitialization of form values when editing
-              >
-                {({ isSubmitting,errors, touched }) => (
-                  <Form className="space-y-4">
-                    {/* Email input field */}
-                    <div className="relative">
-                      <Field
-                        type="email"
-                        name="email"
-                        placeholder="Enter email address"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                        {/* Email icon */}
+const AdminSetting = () => {
+  const userToken = localStorage.getItem("apiusertoken");
+  const [emails, setEmails] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState(null);
+
+  const emailSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+  });
+
+  const fetchData = async () => {
+    try {
+      const response = await apiInstance.get("get/email", {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
+      // setEmails(response.data?.data?.email);
+      setEmails(response.data?.data || "");
+      console.log(response, "all emails");
+    } catch (error) {
+      console.error("Error fetching emails:", error);
+    }
+  };
+  console.log(emails, "emails");
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await apiInstance.post("store/email", values, {
+        headers: {
+          "Content-Type": "application/json",
+          user_access_token: userToken,
+        },
+      });
+      resetForm();
+      fetchData();
+    } catch (error) {
+      console.error("Error adding email:", error);
+    }
+  };
+
+  const handleEdit = (email) => {
+    setSelectedEmail(email);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdate = async (values, { setSubmitting }) => {
+    try {
+      await apiInstance.put(`update/email/${selectedEmail.id}`, values, {
+        headers: {
+          "Content-Type": "application/json",
+          user_access_token: userToken,
+        },
+      });
+      setIsEditModalOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error("Error updating email:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (emailId) => {
+    console.log(emailId, "emailId");
+    if (window.confirm("Are you sure you want to delete this email?")) {
+      try {
+        await apiInstance.delete(`delete/email/${emailId}`, {
+          headers: {
+            user_access_token: userToken,
+          },
+        });
+        fetchData();
+        if (response.data.success === true) {
+          toast.success("Email deleted successfully!");
+        }
+      } catch (error) {
+        console.error("Error deleting email:", error);
+      }
+    }
+  };
+
+  return (
+    <div className="p-10">
+      <div>
+        <BreadCrumb page="Setting" />
+      </div>
+      <div className="container flex flex-col justify-center items-center">
+        <div className="w-[50%] mt-20">
+          <Formik
+            initialValues={{ email: "" }}
+            validationSchema={emailSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form className="space-y-6">
+                <Field
+                  name="email"
+                  label="Email"
+                  type="text"
+                  placeholder="Enter email address"
+                  as={CustomInput}
+                />
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-[#2170B7] px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <span className="absolute inset-y-0 left-0 w-[2px] bg-[#2170B7] transition-all group-hover:w-full group-active:bg-[#2170B7]"></span>
+                  <span className="relative text-sm font-medium text-white transition-colors">
+                    {isSubmitting ? (
+                      <div className="flex justify-center items-center">
                         <svg
-                          className="w-5 h-5"
+                          className="w-5 h-5 mr-2 animate-spin"
+                          xmlns="http://www.w3.org/2000/svg"
                           fill="none"
-                          stroke="currentColor"
                           viewBox="0 0 24 24"
+                          stroke="currentColor"
                         >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
                           <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 1116 0A8 8 0 014 12z"
+                          ></path>
                         </svg>
+                        Loading...
                       </div>
-                    </div>
-                    {/* Error message for email field */}
-                    {errors.email && touched.email && (
-                      <div className="text-red-500 text-sm mt-1">
-                        {errors.email}
-                      </div>
+                    ) : (
+                      "Submit"
                     )}
-                    {/* Submit button */}
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${
-                        isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                    >
-                      <span className="absolute inset-y-0 left-0 w-[2px] bg-[#2170B7] transition-all group-hover:w-full group-active:bg-[#2170B7]"></span>
-                      <span className="relative text-sm font-medium text-white transition-colors">
-                        {isSubmitting ? (
-                          <div className="flex justify-center items-center">
-                            <svg
-                              className="w-5 h-5 mr-2 animate-spin"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 1116 0A8 8 0 014 12z"
-                              ></path>
-                            </svg>
-                            Loading...
-                          </div>
-                        ) : editingEmail ? (
-                          "Update Email"
-                        ) : (
-                          "Add Email"
-                        )}
-                      </span>
-                    </button>
-                  </Form>
-                )}
-              </Formik>
+                  </span>
+                </button>
+              </Form>
+            )}
+          </Formik>
 
-              {/* Display the list of emails */}
-              {emails.length > 0 && (
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    Email List
-                  </h3>
-                  <div className="space-y-3">
-                    {/* Render the emails */}
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow duration-200">
-                      <span className="text-gray-700">{emails}</span>
-                    </div>
+          {/* Email List */}
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Email List</h2>
+            <div className="space-y-4">
+              {emails.map((email) => (
+                <div
+                  key={email.id}
+                  className="flex items-center justify-between p-4 bg-white rounded-lg shadow"
+                >
+                  <span>{email.email}</span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(email)}
+                      className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded"
+                    >
+                      <Pencil size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(email.id)}
+                      className="p-1 text-red-600 hover:bg-red-50 rounded"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Custom Edit Modal */}
+      <CustomModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        title="Edit Email"
+      >
+        <Formik
+          initialValues={{ email: selectedEmail?.email || "" }}
+          validationSchema={emailSchema}
+          onSubmit={handleUpdate}
+          enableReinitialize
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-6">
+              <Field
+                name="email"
+                label="Email"
+                type="text"
+                placeholder="Enter email address"
+                as={CustomInput}
+              />
+
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded"
+                >
+                  {isSubmitting ? "Updating..." : "Update"}
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </CustomModal>
     </div>
   );
 };
