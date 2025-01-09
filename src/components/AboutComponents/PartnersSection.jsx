@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import archiwiz from "../../assets/projectlogos/archiwizdark.png";
 import alphabuilt from "../../assets/projectlogos/alphabuilt.png";
 import lumsden from "../../assets/projectlogos/lumsdenlogo.webp";
+import archiwizbuild from "../../assets/projectlogos/ArchiWizBuild_jpg.jpg";
 const PartnersSection = () => {
   // Partner data with placeholder images
   const partners = [
@@ -20,6 +21,11 @@ const PartnersSection = () => {
       name: "Lumsden Trading",
       logo: lumsden,
       link: "https://lumsdentrading.com/",
+    },
+    {
+      name: "Archiwiz build",
+      logo: archiwizbuild,
+      link: "https://archiwizbuild-portfolio-app-prod-g5hdfzcxhucwcsa2.eastus-01.azurewebsites.net/",
     },
   ];
 

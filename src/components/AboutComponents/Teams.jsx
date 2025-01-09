@@ -14,45 +14,56 @@ import { FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const teamMembers = [
   {
-    name: "Hilal Ahmad",
-    role: "Full Stack Developer",
-    image: hilalpic,
+    name: "Lorem",
+    role: "Founder",
+    image: "https://placehold.co/600",
     linkedin: "https://www.linkedin.com/in/hilal-ahmad-13a06b246/",
     github: "https://github.com/hilalahmad",
     twitter: "https://twitter.com/hilalahmad",
   },
   {
-    name: "Kaleem ullah Khan",
-    role: "MERN Stack Developer",
-    image: kaleempic,
-    linkedin: "https://www.linkedin.com/in/kaleemullahkhanreactjs/",
-    github: "https://github.com/kaleemullahkhan",
-    twitter: "https://twitter.com/kaleemullahkhan",
+    name: "Lorem",
+    role: "Co-Founder",
+    image: "https://placehold.co/600",
+    linkedin: "https://www.linkedin.com",
+    github: "https://github.com",
+    twitter: "https://twitter.com",
   },
   {
-    name: "Adnan Khan",
-    role: "Junior Full Stack Developer",
-    image: adnanPic,
-    linkedin: "https://linkedin.com/in/adnankhan",
-    github: "https://github.com/adnankhan",
-    twitter: "https://twitter.com/adnankhan",
+    name: "Lorem",
+    role: "Archiwiz Stakeholder",
+    image: "https://placehold.co/600",
+
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
+    twitter: "https://twitter.com",
   },
 
   {
-    name: "Asad ullah",
-    role: "Junior Full Stack Developer",
-    image: asadpic,
-    linkedin: "https://www.linkedin.com/in/asad-ullah-97521b260/",
-    github: "https://github.com/AsadUllah077",
-    twitter: "https://twitter.com/asadullah",
+    name: "Lorem",
+    role: "Alphabuilt CEO",
+    image: "https://placehold.co/600",
+    linkedin: "https://www.linkedin.com ",
+    github: "https://github.com ",
+    twitter: "https://twitter.com ",
   },
   {
-    name: "Muhammad Junaid",
-    role: "Junior Python  Developer",
-    image: junaidPic, // Updated for image consistency
-    linkedin: "https://linkedin.com/in/waseemkhan-backend",
-    github: "https://github.com/waseemkhan-backend",
-    twitter: "https://twitter.com/waseemkhan-backend",
+    name: "Lorem",
+    role: "Lumsde Trading CEO",
+    image: "https://placehold.co/600",
+    // Updated for image consistency
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
+    twitter: "https://twitter.com",
+  },
+  {
+    name: "Lorme",
+    role: "Safe Solution CEO",
+    image: "https://placehold.co/600",
+    // Updated for image consistency
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
+    twitter: "https://twitter.com",
   },
 ];
 

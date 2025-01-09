@@ -14,14 +14,24 @@ import { toast } from "react-toastify";
 import WhySafe from "@/components/CareerComponents/WhySafe";
 
 const Careers = () => {
+  const [emails, setEmails] = useState([]);
+  // const [selectEmail, setSelectedEmail] = useState("");
   const [careersData, setCareersData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedJob, setSelectedJob] = useState(""); // Loader state to track data fetching
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [selectedJob, setSelectedJob] = useState(""); // Loader state to track data fetching
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [portfolioType, setPortfolioType] = useState("url");
+  // const [portfolioUrl, setPortfolioUrl] = useState("");
+  // const [portfolioFile, setPortfolioFile] = useState(null);
+
   // Function to fetch career data from API
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
+  // State to toggle between URL and file input
 
+  // console.log(portfolioFile, portfolioUrl, "url and portfolio");
+
+  //fetching careers
   const fetchCareers = async () => {
     try {
       const response = await axios.get(`${userUrl}/get/careers`, {
@@ -43,152 +53,274 @@ const Careers = () => {
     }
   };
 
+  //fetch emails
+  const fetchEmails = async () => {
+    try {
+      const response = await axios.get(`${userUrl}/get/emails`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
+      console.log(response?.data?.emails, "emailsss");
+      if (response?.data?.emails?.length > 0) {
+        setEmails(response?.data?.emails);
+      } else {
+        setEmails([]);
+      }
+    } catch (error) {
+      console.error("Error fetching emails:", error);
+    }
+  };
+
   // Fetch careers when the component mounts
   useEffect(() => {
     fetchCareers();
+    fetchEmails(); // Fetch emails when the component mounts
   }, []);
+  // Handle file upload
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file && file.type === "application/pdf") {
+  //     setPortfolioFile(file);
+  //     onPortfolioChange({ type: "file", value: file });
+  //   } else {
+  //     alert("Please upload a PDF file");
+  //     e.target.value = "";
+  //   }
+  // };
 
-  const handleApply = (job) => {
-    setSelectedJob(job); // Update selected job for modal
-    setModalOpen(true); // Open the modal
-  };
+  // Handle URL change
+  // const handleUrlChange = (e) => {
+  //   setPortfolioUrl(e.target.value);
+  //   onPortfolioChange({ type: "url", value: e.target.value });
+  // };
 
-  const handleSubmit = async (values) => {
-    console.log(values, "Submitted Values");
-    // TODO: Send the form data to the server for easy apply
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("email", values.email);
-    formData.append("phone", values.phone);
-    formData.append("message", values.message);
-    if (values.resume) {
-      formData.append("file", values.resume);
-    }
-    formData.append("experience", values.experience);
-    try {
-      const response = await axios.post(
-        "https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/api/user/easy/apply",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            api_token: api_token,
-          },
-        }
-      );
-      console.log(response, "response easy apply");
+  // Handle type change without clearing values
+  // const handlePortfolioTypeChange = (e) => {
+  //   setPortfolioType(e.target.value);
+  //   // Notify parent component of current value based on new type
+  //   if (e.target.value === "url") {
+  //     onPortfolioChange({ type: "url", value: portfolioUrl });
+  //   } else {
+  //     onPortfolioChange({ type: "file", value: portfolioFile });
+  //   }
+  // };
 
-      if (response?.data?.success) {
-        toast.success(response?.data?.message);
-        setModalOpen(false); // Close the modal after submission
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleApply = (job) => {
+  //   setSelectedJob(job); // Update selected job for modal
+  //   setModalOpen(true); // Open the modal
+  // };
 
-  const EditModal = () => {
-    if (!modalOpen || !selectedJob) return null;
+  // const handleSubmit = async (values) => {
+  //   console.log(values, "shdgsjdg");
 
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white dark:bg-[#18181b]   p-8 rounded-lg w-full max-w-[50%]">
-          <h2 className="text-2xl mb-4">{selectedJob.title}</h2>
+  //   console.log(values, "Submitted Values");
+  //   // TODO: Send the form data to the server for easy apply
+  //   const formData = new FormData();
+  //   formData.append("name", values.name);
+  //   formData.append("email", values.email);
+  //   formData.append("phone", values.phone);
+  //   formData.append("message", values.message);
+  //   if (values.resume) {
+  //     formData.append("file", values.resume);
+  //   }
 
-          {/* Formik for submitting resume and details */}
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              phone: "",
-              resume: null, // Updated to handle file upload
-              experience: "",
-              message: "",
-            }}
-            onSubmit={(values) => {
-              handleSubmit(values); // Correctly pass the values
-              setModalOpen(false); // Close the modal after submission
-            }}
-            validationSchema={EasyApplyValidationSchema}
-          >
-            {({ isSubmitting, setFieldValue }) => (
-              <Form className="space-y-4">
-                <div className="flex flex-row justify-between  gap-10   ">
-                  <div className="w-[50%]">
-                    <Field
-                      name="name"
-                      label="Full Name"
-                      type="text"
-                      as={CustomInput}
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="w-[50%]">
-                    <Field
-                      name="email"
-                      label="Email"
-                      type="email"
-                      as={CustomInput}
-                    />
-                  </div>
-                </div>
+  //   formData.append("experience", values.experience);
 
-                <Field
-                  name="phone"
-                  label="Phone"
-                  type="number"
-                  as={CustomInput}
-                />
-                <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Upload CV
-                  </label>
-                  <input
-                    name="resume"
-                    type="file"
-                    className="border rounded px-3 py-2 w-full"
-                    onChange={(event) =>
-                      setFieldValue("resume", event.currentTarget.files[0])
-                    }
-                  />
-                </div>
-                <Field
-                  name="experience"
-                  label="Experience Level"
-                  type="text"
-                  as={CustomInput}
-                />
-                <Field
-                  name="message"
-                  label="Message"
-                  isTextarea={true}
-                  rows="4"
-                  as={CustomInput}
-                />
+  //   try {
+  //     const response = await axios.post(
+  //       "https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/api/user/easy/apply",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           api_token: api_token,
+  //         },
+  //       }
+  //     );
+  //     console.log(response, "response easy apply");
 
-                <div className="flex justify-end space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setModalOpen(false)}
-                    className="px-4 py-2 bg-gray-200 rounded dark:text-black"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-4 py-2 bg-blue-500 text-white   rounded"
-                  >
-                    {isSubmitting ? "Submitting" : "Submit"}
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
-    );
-  };
+  //     if (response?.data?.success) {
+  //       toast.success(response?.data?.message);
+  //       setModalOpen(false); // Close the modal after submission
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const ApplyModal = () => {
+  //   if (!modalOpen || !selectedJob) return null;
+
+  //   return (
+  //     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  //       <div className="bg-white dark:bg-[#18181b]   p-8 rounded-lg w-full max-w-[50%]">
+  //         <h2 className="text-2xl mb-4">{selectedJob.title}</h2>
+
+  //         <div className="my-4 mt-1  ">
+  //           <select className="mt-1 font-sans block w-full p-2 bg-[#f2f5f8] dark:bg-gray-800 text-black dark:text-white border border-gray-300 rounded-md">
+  //             <option value="">Select Email</option>
+  //             {emails &&
+  //               emails.length > 0 &&
+  //               emails.map((item, index) => {
+  //                 return (
+  //                   <option key={index} value={item.email}>
+  //                     {item.email}
+  //                   </option>
+  //                 );
+  //               })}
+  //           </select>
+  //         </div>
+
+  //         {/* Formik for submitting resume and details */}
+  //         <Formik
+  //           initialValues={{
+  //             name: "",
+  //             email: "",
+  //             phone: "",
+  //             resume: null, // Updated to handle file upload
+  //             experience: "",
+  //             message: "",
+  //           }}
+  //           onSubmit={handleSubmit}
+  //           validationSchema={EasyApplyValidationSchema}
+  //         >
+  //           {({ isSubmitting, setFieldValue }) => (
+  //             <Form className="space-y-4">
+  //               <div className="flex flex-row justify-between  gap-10   ">
+  //                 <div className="w-[50%]">
+  //                   <Field
+  //                     name="name"
+  //                     label="Full Name"
+  //                     type="text"
+  //                     as={CustomInput}
+  //                     className="w-full"
+  //                   />
+  //                 </div>
+  //                 <div className="w-[50%]">
+  //                   <Field
+  //                     name="email"
+  //                     label="Email"
+  //                     type="email"
+  //                     as={CustomInput}
+  //                   />
+  //                 </div>
+  //               </div>
+
+  //               {/* phone and experience in one roe */}
+  //               <div className="flex flex-row justify-between  gap-10   ">
+  //                 <div className="w-[50%]">
+  //                   <Field
+  //                     name="phone"
+  //                     label="Phone"
+  //                     type="number"
+  //                     as={CustomInput}
+  //                   />
+  //                 </div>
+  //                 <div className="w-[50%]">
+  //                   <Field
+  //                     name="experience"
+  //                     label="Experience Level"
+  //                     type="text"
+  //                     as={CustomInput}
+  //                   />
+  //                 </div>
+  //               </div>
+
+  //               {/* for uplaoding a resume and portfolio  */}
+  //               <div className="flex flex-row justify-between  gap-10   ">
+  //                 <div className="w-[50%]">
+  //                   <label className="block text-gray-700 text-sm font-bold mb-2">
+  //                     Upload CV
+  //                   </label>
+  //                   <input
+  //                     name="resume"
+  //                     type="file"
+  //                     className="border rounded px-3 py-2 w-full"
+  //                     onChange={(event) =>
+  //                       setFieldValue("resume", event.currentTarget.files[0])
+  //                     }
+  //                   />
+  //                 </div>
+
+  //                 <div className="w-[50%] bg-white shadow-lg rounded-lg p-6">
+  //                   <label className="block text-gray-700 text-lg font-semibold mb-4">
+  //                     Portfolio or Link
+  //                   </label>
+
+  //                   {/* Dropdown to choose between URL or file */}
+  //                   <div className="mb-4">
+  //                     <select
+  //                       className="block w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //                       value={portfolioType}
+  //                       onChange={handlePortfolioTypeChange}
+  //                     >
+  //                       <option value="url">Portfolio URL</option>
+  //                       <option value="file">Upload PDF</option>
+  //                     </select>
+  //                   </div>
+  //                   {portfolioType === "url" ? (
+  //                     <div>
+  //                       <input
+  //                         name="portfolio"
+  //                         type="url"
+  //                         className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+  //                         placeholder="Enter your portfolio URL"
+  //                         value={portfolioUrl}
+  //                         onChange={handleUrlChange}
+  //                       />
+  //                     </div>
+  //                   ) : (
+  //                     <div>
+  //                       <input
+  //                         name="portfolioFile"
+  //                         type="file"
+  //                         accept=".pdf"
+  //                         className="w-full px-3 py-2 border rounded file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+  //                         onChange={handleFileChange}
+  //                       />
+  //                       {portfolioFile && (
+  //                         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+  //                           Selected file: {portfolioFile.name}
+  //                         </p>
+  //                       )}
+  //                     </div>
+  //                   )}
+  //                 </div>
+  //               </div>
+
+  //               <Field
+  //                 name="message"
+  //                 label="Message"
+  //                 isTextarea={true}
+  //                 rows="4"
+  //                 as={CustomInput}
+  //               />
+
+  //               <div className="flex justify-end space-x-2">
+  //                 <button
+  //                   type="button"
+  //                   onClick={() => setModalOpen(false)}
+  //                   className="px-4 py-2 bg-gray-200 rounded dark:text-black"
+  //                 >
+  //                   Cancel
+  //                 </button>
+  //                 <button
+  //                   type="submit"
+  //                   disabled={isSubmitting}
+  //                   className="px-4 py-2 bg-blue-500 text-white   rounded"
+  //                 >
+  //                   {isSubmitting ? "Submitting" : "Submit"}
+  //                 </button>
+  //               </div>
+  //             </Form>
+  //           )}
+  //         </Formik>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+
   return (
     <div>
       {/* Hero Section */}
@@ -302,9 +434,9 @@ const Careers = () => {
                   <div className="mt-4">
                     <CustomButton
                       label="Apply Now"
-                      // to={job.link}
-                      // target="_blank"
-                      handleClick={() => handleApply(job)}
+                      to={job.link}
+                      target="_blank"
+                      // handleClick={() => handleApply(job)}
                     />
                   </div>
                 </div>
@@ -314,7 +446,7 @@ const Careers = () => {
         </div>
       </div>
       {/* check condition if model open show the form with formik  */}
-      <EditModal />
+      {/* <ApplyModal /> */}
       <ScrollToTop />
     </div>
   );

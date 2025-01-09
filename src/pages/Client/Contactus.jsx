@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 // import about from "../../src/assets/about.webp";
 import CustomButton from "../../globals/CustomButton";
@@ -11,6 +11,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Contactus = () => {
+  const [emails, setEmails] = useState([]);
+  const [selectEmail, setSelectedEmail] = useState("");
   const initialValues = {
     name: "",
     subject: "",
@@ -19,17 +21,48 @@ const Contactus = () => {
   };
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
-  console.log(api_token);
+
+  //fetch emails
+  const fetchEmails = async () => {
+    try {
+      const response = await axios.get(`${userUrl}/get/emails`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
+      console.log(response?.data?.emails, "emailsss");
+      if (response?.data?.emails?.length > 0) {
+        setEmails(response?.data?.emails);
+      } else {
+        setEmails([]);
+      }
+    } catch (error) {
+      console.error("Error fetching emails:", error);
+    }
+  };
+  console.log(emails, "eeee");
+  useEffect(() => {
+    // fetch emails when component mounts
+    fetchEmails();
+  }, []);
+
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log(values);
 
     try {
-      const response = await axios.post(`${userUrl}/contact`, values, {
-        headers: {
-          "Content-Type": "application/json",
-          api_token: api_token,
+      const response = await axios.post(
+        `${userUrl}/contact`,
+        {
+          ...values, // Include all values from the form
+          sender_email: selectEmail, // Add the selected email to the request body
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            api_token: api_token,
+          },
+        }
+      );
       if (response?.data?.success) {
         toast.success(response?.data?.message || "message sent successfully");
         resetForm();
@@ -40,6 +73,7 @@ const Contactus = () => {
       console.log(response);
     } catch (error) {}
   };
+  console.log(selectEmail, "selectemail");
   return (
     <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200">
       <div className="relative h-[80vh] overflow-hidden">
@@ -89,6 +123,27 @@ const Contactus = () => {
               Have a specific inquiry or looking to explore new opportunities?
               Our experienced team is ready to engage with you.
             </p>
+
+            <div className="mt-10 w-full">
+              <select
+                onChange={(e) => {
+                  console.log("Selected email:", e.target.value);
+                  setSelectedEmail(e.target.value);
+                }}
+                className="mt-1 font-sans block w-full p-2 bg-[#f2f5f8] dark:bg-gray-800 text-black dark:text-white border border-gray-300 rounded-md"
+              >
+                <option value="">Select your preferred Email</option>
+
+                {emails &&
+                  emails.length > 0 &&
+                  emails.map((item, index) => (
+                    <option key={index} value={item.email}>
+                      {item.email}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
             <Formik
               initialValues={initialValues}
               validationSchema={contactValidationSchema}
@@ -156,7 +211,7 @@ const Contactus = () => {
               )}
             </Formik>
 
-            <ul className="mt-4 flex flex-wrap justify-center gap-6">
+            {/* <ul className="mt-4 flex flex-wrap justify-center gap-6">
               <li className="flex items-center text-blue-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +246,7 @@ const Contactus = () => {
                   <strong>+158 996 888</strong>
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </div>
           <div className="z-10 relative h-full max-md:min-h-[350px]">
             {/* <iframe
