@@ -141,7 +141,7 @@ const Header = () => {
               </button>
             </div>
 
-            <nav className="p-4 bg-gray-300">
+            <nav className="p-4  ">
               <ul className="space-y-3">
                 {["Home", "About", "Services", "Careers", "Blogs"].map(
                   (item) => (
