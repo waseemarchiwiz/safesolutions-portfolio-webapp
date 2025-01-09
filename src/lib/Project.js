@@ -6,14 +6,6 @@ import {
   HelpCircle,
   Briefcase,
   BookOpen,
-  Database,
-  Code,
-  Globe,
-  Search,
-  Layout,
-  Cpu,
-  Glasses,
-  Box,
   Building,
   Calculator,
   Archive,
@@ -35,6 +27,7 @@ import digitalPic from "../assets/digitaltwin.webp";
 import { FaCube, FaTools } from "react-icons/fa";
 import { GiVrHeadset } from "react-icons/gi";
 import { Tooltip } from "recharts";
+import arvrImage from "../assets/Ar-vr.jpg";
 
 export const projects = [
   {
@@ -202,22 +195,109 @@ export const projects = [
     },
   },
 
-  {
-    name: "Precision Health",
-    description:
-      "Medical Precision gives information about medical health and how to maintain it.",
-    link: "https://orange-ocean-0cfaffb1e.5.azurestaticapps.net/",
-    img: precision,
-    type: "external", // Flag for external link projects
-  },
+  // {
+  //   name: "Precision Health",
+  //   description:
+  //     "Medical Precision gives information about medical health and how to maintain it.",
+  //   link: "https://orange-ocean-0cfaffb1e.5.azurestaticapps.net/",
+  //   img: precision,
+  //   type: "external", // Flag for external link projects
+  // },
   {
     name: "Medical Nate",
     description:
-      "Medical Precision gives information about medical health and how to maintain it.",
-    link: "https://medicalkp-hcffechccfexazfb.eastus-01.azurewebsites.net/",
+      "Doctor portal for hospital management to view patient information, add notes, and prescriptions",
+    route: "/medical-nate",
     img: nate,
-    type: "external",
+    version: "2.0.1",
+    lastupdated: "2024-12-23",
+    type: "detailed", // Flag for detailed project view
+    tabs: {
+      services: [
+        {
+          title: "Patient Information",
+          description: "Access and manage detailed patient information",
+          features: [
+            "Patient Profile",
+            "Medical History",
+            "Lab Results",
+            "MRI/EEG Scans",
+            "Prescription Records",
+          ],
+          icon: BarChart3,
+        },
+        {
+          title: "Patient Notes & Prescriptions",
+          description:
+            "Add and manage notes, prescriptions, and medical recommendations",
+          features: [
+            "Add Notes",
+            "Add Prescription",
+            "View Medical History",
+            "Patient Recommendations",
+          ],
+          icon: Users,
+        },
+        {
+          title: "Appointments Management",
+          description: "Schedule and manage patient appointments",
+          features: [
+            "Appointment Scheduling",
+            "Follow-up Reminders",
+            "Appointment History",
+          ],
+          icon: Package,
+        },
+        {
+          title: "Reports & Analytics",
+          description: "Access patient health reports and analytics",
+          features: ["Medical Reports", "Lab Analysis", "Health Trends"],
+          icon: Phone,
+        },
+      ],
+      projectDetails: [
+        {
+          name: "Nate Doctor Portal",
+          version: "1.0.0",
+          lastUpdated: "2025-01-09",
+          deploymentType: "Cloud-based",
+          supportHours: "24/7",
+        },
+      ],
+      support: [
+        {
+          title: "Technical Support",
+          description: "24/7 technical support and assistance",
+          icon: HelpCircle,
+        },
+        {
+          title: "Customer Support",
+          description: "High-quality customer support and resolutions",
+          icon: HelpCircle,
+        },
+        {
+          title: "Maintenance & Updates",
+          description: "Regular software updates and maintenance",
+          icon: Briefcase,
+        },
+        {
+          title: "Training & Certification",
+          description:
+            "Access to industry-specific training and certifications",
+          icon: BookOpen,
+        },
+      ],
+    },
   },
+
+  // {
+  //   name: "Medical Nate",
+  //   description:
+  //     "Medical Precision gives information about medical health and how to maintain it.",
+  //   link: "https://medicalkp-hcffechccfexazfb.eastus-01.azurewebsites.net/",
+  //   img: nate,
+  //   type: "external",
+  // },
   {
     name: "Lumsden Trading",
     description: "Trading platform with innovative solutions.",
@@ -322,7 +402,7 @@ export const projects = [
     description:
       "Innovative augmented and virtual reality solutions for immersive experiences across diverse industries.",
     route: "/ar-vr",
-    img: archiwizfront,
+    img: arvrImage,
     type: "detailed",
     tabs: {
       services: [
