@@ -32,7 +32,7 @@ const ServicesComponent = () => {
 
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
               Transforming Ideas into
-              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
+              <span className="block py-5 mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
                 Digital Reality
               </span>
             </h2>

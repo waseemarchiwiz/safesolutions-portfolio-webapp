@@ -98,7 +98,7 @@ const AboutComp = () => {
 
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
               Transforming Business Through
-              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
+              <span className="block py-10 mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
                 Digital Innovation
               </span>
             </h2>
