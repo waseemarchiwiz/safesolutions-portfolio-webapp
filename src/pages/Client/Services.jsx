@@ -106,15 +106,15 @@ const Services = () => {
             </p>
           </div>
         </div>
-        <div className="tabs flex flex-wrap justify-center mb-8   p-4">
+        <div className="tabs flex flex-wrap justify-center gap-4 mb-8 p-4">
           {tabs.map((tab, index) => (
             <button
               key={index}
               onClick={() => handleTabClick(index)}
-              className={`px-4 py-2 mx-2 text-sm   font-medium rounded-lg transition-all duration-300 ${
+              className={`w-full sm:w-auto px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
                 activeTab === index
-                  ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-[#FFFFFF] text-gray-700 hover:bg-blue-200"
+                  ? "bg-blue-600 text-white text-[20px] shadow-lg"
+                  : "bg-white text-gray-700  hover:bg-blue-200"
               }`}
             >
               {tab.title}
