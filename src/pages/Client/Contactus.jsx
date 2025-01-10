@@ -138,7 +138,7 @@ const Contactus = () => {
                   emails.length > 0 &&
                   emails.map((item, index) => (
                     <option key={index} value={item.email}>
-                      {item.email}
+                      {item.name}
                     </option>
                   ))}
               </select>
