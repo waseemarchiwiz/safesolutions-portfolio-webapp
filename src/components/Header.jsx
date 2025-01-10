@@ -25,7 +25,7 @@ const Header = () => {
     <header
       className={`fixed w-full z-[999] transition-all duration-300 ${
         scrolled
-          ? "bg-gradient-to-r from-gray-900 via-blue-900  dark:bg-gradient-to-r dark:from-[#000000] dark:via-blue-[#000000] backdrop-blur-lg shadow-lg"
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -56,7 +56,7 @@ const Header = () => {
                             item === "Home" ? "/" : `/${item.toLowerCase()}`
                           )
                             ? "text-blue-500 dark:text-white"
-                            : "text-white dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                            : "text-gray-400 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                         }`}
                       >
                         {item}
@@ -118,7 +118,7 @@ const Header = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm md:hidden">
-          <div className="fixed top-0 right-0 w-[300px] h-full bg-white dark:bg-gray-900 shadow-2xl transition-transform">
+          <div className="fixed top-0 right-0 w-[300px] h-full bg-gray-300 dark:bg-black shadow-2xl transition-transform">
             <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
               <img className="h-12 w-auto" src={logo} alt="safesolution" />
               <button
@@ -141,7 +141,7 @@ const Header = () => {
               </button>
             </div>
 
-            <nav className="p-4  ">
+            <nav className="p-4 bg-gray-300 dark:bg-black">
               <ul className="space-y-3">
                 {["Home", "About", "Services", "Careers", "Blogs"].map(
                   (item) => (

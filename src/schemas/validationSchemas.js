@@ -146,12 +146,24 @@ export const EasyApplyValidationSchema = Yup.object({
   resume: Yup.mixed().required("Resume is required"),
   experience: Yup.string().required("Experience Level is required"),
   message: Yup.string().required("Message is required"),
-  portfolioOrLink: Yup.mixed()
-    .test("portfolioOrLink", "Must be a valid URL or a PDF file", (value) => {
-      if (!value) return false; // Value is required
-      const isUrl = typeof value === "string" && /^(https?:\/\/).+/.test(value);
-      const isPdf = value instanceof File && value.type === "application/pdf";
-      return isUrl || isPdf;
-    })
-    .required("Portfolio or link is required"),
+  portfolioType: Yup.string().required("Please select portfolio type"),
+  portfolioUrl: Yup.string().when('portfolioType', {
+    is: 'url',
+    then: () => Yup.string().url("Please enter a valid URL").required("Portfolio URL is required"),
+    otherwise: () => Yup.string().notRequired(),
+  }),
+  portfolioFile: Yup.mixed().when('portfolioType', {
+    is: 'file',
+    then: () => Yup.mixed().required("Portfolio file is required"),
+    otherwise: () => Yup.mixed().notRequired(),
+  }),
+});
+export const emailSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  name: Yup.string()
+    .required("Company Name is required")
+    .min(2, "Company Name must be at least 2 characters")
+    .max(50, "Company Name must not exceed 50 characters"),
 });
