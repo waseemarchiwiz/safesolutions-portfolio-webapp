@@ -86,11 +86,49 @@ const BlogDetails = ({ data }) => {
             Published on: {blogData.date} | Category: {blogData.category}
           </p>
           <h2 className="text-black dark:text-white text-2xl font-bold mt-5">
-            {blogData.title}
+            {blogData.article.title}
           </h2>
           <p className="text-black dark:text-white text-lg mt-4">
-            {blogData.description}
+            {blogData.article.introduction.summary}
           </p>
+        </div>
+        {/* Blog Body */}
+        <div>
+          <h1 className="text-[26px]">{blogData.article.sec1.title}</h1>
+          <h1>{blogData.article.sec1.content}</h1>
+        </div>
+        <div>
+          <h1 className="text-[26px]">{blogData.article.sec2.title}</h1>
+          {blogData.article.sec2.services.map((item, index) => (
+            <div key={index}>
+              <h2>{item.name}</h2>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1 className="text-[26px]">{blogData.article.sec3.title}</h1>
+          {blogData.article.sec3.benefits.map((item, index) => (
+            <div key={index}>
+              <h2>{item.name}</h2>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1 className="text-[26px]">{blogData.article.sec4.title}</h1>
+          {blogData.article.sec4.cases.map((item, index) => (
+            <div key={index}>
+              <h2>{item.location}</h2>
+              <h2>{item.project}</h2>
+
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1 className="text-[26px]">Conclusion</h1>
+          <p>{blogData.article.conclusion}</p>
         </div>
       </div>
     </div>

@@ -38,33 +38,6 @@ const teamMembers = [
     github: "https://github.com",
     twitter: "https://twitter.com",
   },
-
-  {
-    name: "Lorem",
-    role: "Alphabuilt CEO",
-    image: "https://placehold.co/600",
-    linkedin: "https://www.linkedin.com ",
-    github: "https://github.com ",
-    twitter: "https://twitter.com ",
-  },
-  {
-    name: "Lorem",
-    role: "Lumsde Trading CEO",
-    image: "https://placehold.co/600",
-    // Updated for image consistency
-    linkedin: "https://linkedin.com",
-    github: "https://github.com",
-    twitter: "https://twitter.com",
-  },
-  {
-    name: "Lorme",
-    role: "Safe Solution CEO",
-    image: "https://placehold.co/600",
-    // Updated for image consistency
-    linkedin: "https://linkedin.com",
-    github: "https://github.com",
-    twitter: "https://twitter.com",
-  },
 ];
 
 const Teams = () => {
@@ -113,9 +86,9 @@ const Teams = () => {
               </span>
             </div>
             <p className="text-gray-600 dark:text-white text-[16px] mt-4 leading-relaxed">
-              Veniam proident aute magna anim excepteur et ex consectetur velit
-              ullamco veniam minim aute sit. Ullamco nisi enim ipsum irure
-              laboris ad ut. Esse cupidatat deserunt magna aute.
+              Great teams are built on shared goals and a sense of purpose. When
+              everyone is aligned with a clear mission, their combined efforts
+              become more impactful
             </p>
           </div>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center mt-12">
