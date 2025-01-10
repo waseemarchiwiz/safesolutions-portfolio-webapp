@@ -16,8 +16,8 @@ const teamMembers = [
     role: "Founder",
     image: founder,
     linkedin: "https://www.linkedin.com/in/allauddin-khan-826aa7289/",
-    github: "https://github.com/hilalahmad",
-    twitter: "https://twitter.com/hilalahmad",
+    github: "https://github.com/ ",
+    twitter: "https://twitter.com/",
   },
   {
     name: "Dr Ghanimullah",
