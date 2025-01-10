@@ -5,9 +5,10 @@ import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Trash2, X, Pencil } from "lucide-react";
-
 import { toast } from "react-toastify";
+import { emailSchema } from "@/schemas/validationSchemas";
 
+// ... CustomModal component remains the same ...
 const CustomModal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
@@ -42,12 +43,6 @@ const AdminSetting = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState(null);
 
-  const emailSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email format")
-      .required("Email is required"),
-  });
-
   const fetchData = async () => {
     try {
       const response = await apiInstance.get("get/email", {
@@ -55,19 +50,19 @@ const AdminSetting = () => {
           user_access_token: userToken,
         },
       });
-      // setEmails(response.data?.data?.email);
       setEmails(response.data?.data || "");
-      console.log(response, "all emails");
     } catch (error) {
       console.error("Error fetching emails:", error);
     }
   };
-  console.log(emails, "emails");
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const handleSubmit = async (values, { resetForm }) => {
+    console.log(values, "valuees");
+
     try {
       await apiInstance.post("store/email", values, {
         headers: {
@@ -77,8 +72,10 @@ const AdminSetting = () => {
       });
       resetForm();
       fetchData();
+      toast.success("Email added successfully!");
     } catch (error) {
       console.error("Error adding email:", error);
+      toast.error("Failed to add email");
     }
   };
 
@@ -97,28 +94,30 @@ const AdminSetting = () => {
       });
       setIsEditModalOpen(false);
       fetchData();
+      toast.success("Email updated successfully!");
     } catch (error) {
       console.error("Error updating email:", error);
+      toast.error("Failed to update email");
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleDelete = async (emailId) => {
-    console.log(emailId, "emailId");
     if (window.confirm("Are you sure you want to delete this email?")) {
       try {
-        await apiInstance.delete(`delete/email/${emailId}`, {
+        const response = await apiInstance.delete(`delete/email/${emailId}`, {
           headers: {
             user_access_token: userToken,
           },
         });
-        fetchData();
         if (response.data.success === true) {
+          fetchData();
           toast.success("Email deleted successfully!");
         }
       } catch (error) {
         console.error("Error deleting email:", error);
+        toast.error("Failed to delete email");
       }
     }
   };
@@ -131,7 +130,7 @@ const AdminSetting = () => {
       <div className="container flex flex-col justify-center items-center">
         <div className="w-[50%] mt-20">
           <Formik
-            initialValues={{ email: "" }}
+            initialValues={{ email: "", name: "" }}
             validationSchema={emailSchema}
             onSubmit={handleSubmit}
           >
@@ -142,6 +141,14 @@ const AdminSetting = () => {
                   label="Email"
                   type="text"
                   placeholder="Enter email address"
+                  as={CustomInput}
+                />
+
+                <Field
+                  name="name"
+                  label="Company Name"
+                  type="text"
+                  placeholder="Enter company name"
                   as={CustomInput}
                 />
 
@@ -197,7 +204,10 @@ const AdminSetting = () => {
                   key={email.id}
                   className="flex items-center justify-between p-4 bg-white rounded-lg shadow"
                 >
-                  <span>{email.email}</span>
+                  <div>
+                    <p className="font-medium">{email.email}</p>
+                    <p className="text-sm text-gray-600">{email.companyName}</p>
+                  </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleEdit(email)}
@@ -226,7 +236,10 @@ const AdminSetting = () => {
         title="Edit Email"
       >
         <Formik
-          initialValues={{ email: selectedEmail?.email || "" }}
+          initialValues={{
+            email: selectedEmail?.email || "",
+            companyName: selectedEmail?.companyName || "",
+          }}
           validationSchema={emailSchema}
           onSubmit={handleUpdate}
           enableReinitialize
@@ -238,6 +251,14 @@ const AdminSetting = () => {
                 label="Email"
                 type="text"
                 placeholder="Enter email address"
+                as={CustomInput}
+              />
+
+              <Field
+                name="companyName"
+                label="Company Name"
+                type="text"
+                placeholder="Enter company name"
                 as={CustomInput}
               />
 
