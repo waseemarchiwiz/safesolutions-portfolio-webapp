@@ -4,37 +4,35 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Lottie from "lottie-react";
 import loaderAnimation from "../../assets/lottie/loadanimate.json";
-import hilalpic from "../../assets/teamsImages/hilal.jpg";
-import kaleempic from "../../assets/teamsImages/kaleem.jpg";
-import asadpic from "../../assets/teamsImages/asadullah.jpg";
-import adnanPic from "../../assets/teamsImages/adnan.jpeg";
-import junaidPic from "../../assets/teamsImages/junaid.jpeg";
 
 import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import founder from "../../assets/teamsImages/founder.jpg";
+import cofounder from "../../assets/teamsImages/cofounder.jpg";
+import projmanage from "../../assets/teamsImages/projmanage.png";
 
 const teamMembers = [
   {
-    name: "Lorem",
+    name: "Dr Allaudin khan",
     role: "Founder",
-    image: "https://placehold.co/600",
-    linkedin: "https://www.linkedin.com/in/hilal-ahmad-13a06b246/",
+    image: founder,
+    linkedin: "https://www.linkedin.com/in/allauddin-khan-826aa7289/",
     github: "https://github.com/hilalahmad",
     twitter: "https://twitter.com/hilalahmad",
   },
   {
-    name: "Lorem",
+    name: "Dr Ghanimullah",
     role: "Co-Founder",
-    image: "https://placehold.co/600",
-    linkedin: "https://www.linkedin.com",
+    image: cofounder,
+    linkedin: "https://www.linkedin.com/in/ghanim-ullah-58728530/",
     github: "https://github.com",
     twitter: "https://twitter.com",
   },
   {
-    name: "Lorem",
-    role: "Archiwiz Stakeholder",
-    image: "https://placehold.co/600",
+    name: "Hassan Mustafa",
+    role: "Technical Lead/Project Management Archiwiz",
+    image: projmanage,
 
-    linkedin: "https://linkedin.com",
+    linkedin: "https://www.linkedin.com/in/hassan-mustafa-04b1b31b/",
     github: "https://github.com",
     twitter: "https://twitter.com",
   },
