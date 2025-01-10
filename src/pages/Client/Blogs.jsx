@@ -6,8 +6,10 @@ import ScrollToTop from "@/globals/ScrollToTop";
 import { blogPosts } from "../../lib/Blog";
 import hero from "../../assets/hero.png";
 
+
 const BlogPage = () => {
   const navigate = useNavigate();
+  console.log(blogPosts, "blog posts");
 
   const categories = ["All", "Architecture", "Construction", "Safety"];
 
@@ -105,13 +107,13 @@ const BlogPage = () => {
               />
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-                  {post.title}
+                  {post.article.title}
                 </h2>
                 <div className="text-gray-500 text-sm mt-2 dark:text-white">
                   <span>{post.date}</span> | <span>{post.category}</span>
                 </div>
                 <p className="text-gray-600 mt-4 dark:text-white">
-                  {post.description}
+                  {post.article.introduction.summary}
                 </p>
 
                 <CustomButton
