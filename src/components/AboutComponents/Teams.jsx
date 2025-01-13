@@ -4,37 +4,35 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Lottie from "lottie-react";
 import loaderAnimation from "../../assets/lottie/loadanimate.json";
-import hilalpic from "../../assets/teamsImages/hilal.jpg";
-import kaleempic from "../../assets/teamsImages/kaleem.jpg";
-import asadpic from "../../assets/teamsImages/asadullah.jpg";
-import adnanPic from "../../assets/teamsImages/adnan.jpeg";
-import junaidPic from "../../assets/teamsImages/junaid.jpeg";
 
 import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import founder from "../../assets/teamsImages/founder.jpg";
+import cofounder from "../../assets/teamsImages/cofounder.jpg";
+import projmanage from "../../assets/teamsImages/projmanage.png";
 
 const teamMembers = [
   {
-    name: "Lorem",
+    name: "Dr Allaudin khan",
     role: "Founder",
-    image: "https://placehold.co/600",
-    linkedin: "https://www.linkedin.com/in/hilal-ahmad-13a06b246/",
-    github: "https://github.com/hilalahmad",
-    twitter: "https://twitter.com/hilalahmad",
+    image: founder,
+    linkedin: "https://www.linkedin.com/in/allauddin-khan-826aa7289/",
+    github: "https://github.com/ ",
+    twitter: "https://twitter.com/",
   },
   {
-    name: "Lorem",
+    name: "Dr Ghanimullah",
     role: "Co-Founder",
-    image: "https://placehold.co/600",
-    linkedin: "https://www.linkedin.com",
+    image: cofounder,
+    linkedin: "https://www.linkedin.com/in/ghanim-ullah-58728530/",
     github: "https://github.com",
     twitter: "https://twitter.com",
   },
   {
-    name: "Lorem",
-    role: "Archiwiz Stakeholder",
-    image: "https://placehold.co/600",
+    name: "Hassan Mustafa",
+    role: "Technical Lead/Project Management Archiwiz",
+    image: projmanage,
 
-    linkedin: "https://linkedin.com",
+    linkedin: "https://www.linkedin.com/in/hassan-mustafa-04b1b31b/",
     github: "https://github.com",
     twitter: "https://twitter.com",
   },
@@ -76,22 +74,20 @@ const Teams = () => {
 
   return (
     <div>
-      <div className="my-4 mt-28">
+      <div className="my-4  ">
         <div className="max-w-5xl max-lg:max-w-2xl mx-auto">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                Our Team
-              </span>
-            </div>
-            <p className="text-gray-600 dark:text-white text-[16px] mt-4 leading-relaxed">
-              Great teams are built on shared goals and a sense of purpose. When
-              everyone is aligned with a clear mission, their combined efforts
-              become more impactful
-            </p>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+            <span className="text-purple-600 dark:text-white text-sm font-medium">
+              Our Teams
+            </span>
           </div>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center mt-12">
+          <p className="font-light text-[20px] md:text-[26px] leading-[50px] text-center">
+          Great teams are built on shared goals and a sense of purpose. When everyone is aligned with a clear mission, their combined efforts become more impactful
+          </p>
+        </div>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center  my-20">
             {teamMembers.map((member) => (
               <div
                 key={member.name}
@@ -99,7 +95,7 @@ const Teams = () => {
               >
                 <img
                   src={member.image}
-                  className="w-full h-60 object-contain object-top bg-gray-200"
+                  className="w-full  h-ful object-cover  object-top "
                   alt={member.name}
                 />
                 <div className="p-4">

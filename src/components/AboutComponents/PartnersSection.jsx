@@ -70,7 +70,7 @@ const PartnersSection = () => {
 
   return (
     <section className="bg-[#452484] py-16 overflow-hidden mt-10">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 my-20">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
