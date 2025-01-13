@@ -1,4 +1,3 @@
-
 import { cn } from "../../lib/utils";
 import React, {
   createContext,
@@ -10,11 +9,7 @@ import React, {
 
 const MouseEnterContext = createContext(undefined);
 
-export const CardContainer = ({
-  children,
-  className,
-  containerClassName
-}) => {
+export const CardContainer = ({ children, className, containerClassName }) => {
   const containerRef = useRef(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
@@ -38,12 +33,13 @@ export const CardContainer = ({
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
   return (
-    (<MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
+    <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn("flex items-center justify-center", containerClassName)}
         style={{
           perspective: "1000px",
-        }}>
+        }}
+      >
         <div
           ref={containerRef}
           onMouseEnter={handleMouseEnter}
@@ -55,26 +51,25 @@ export const CardContainer = ({
           )}
           style={{
             transformStyle: "preserve-3d",
-          }}>
+          }}
+        >
           {children}
         </div>
       </div>
-    </MouseEnterContext.Provider>)
+    </MouseEnterContext.Provider>
   );
 };
 
-export const CardBody = ({
-  children,
-  className
-}) => {
+export const CardBody = ({ children, className }) => {
   return (
-    (<div
+    <div
       className={cn(
         "h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]",
         className
-      )}>
+      )}
+    >
       {children}
-    </div>)
+    </div>
   );
 };
 
@@ -107,12 +102,13 @@ export const CardItem = ({
   };
 
   return (
-    (<Tag
+    <Tag
       ref={ref}
       className={cn("w-fit transition duration-200 ease-linear", className)}
-      {...rest}>
+      {...rest}
+    >
       {children}
-    </Tag>)
+    </Tag>
   );
 };
 
