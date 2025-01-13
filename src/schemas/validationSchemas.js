@@ -1,28 +1,63 @@
 import * as Yup from "yup";
-export const blogValidationSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  category: Yup.string().required("Category is required"),
-  tags: Yup.array()
-    .of(Yup.string().required("Tag cannot be empty"))
-    .min(1, "At least one tag is required")
-    .required("Tags are required"), // For multiple tags input
-  image: Yup.mixed()
-    .required("Image is required")
-    .test(
-      "fileSize",
-      "File size is too large",
-      (value) => value && value.size <= 5000000 // 5MB limit
-    )
-    .test(
-      "fileType",
-      "Unsupported file type",
-      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
-    ),
-  description: Yup.string()
-    .required("Description is required")
-    .min(50, "Description must be at least 50 characters"),
-});
+// export const blogValidationSchema = Yup.object().shape({
+//   title: Yup.string().required("Title is required"),
+//   category: Yup.string().required("Category is required"),
+//   tags: Yup.array()
+//     .of(Yup.string().required("Tag cannot be empty"))
+//     .min(1, "At least one tag is required")
+//     .required("Tags are required"), // For multiple tags input
+//   image: Yup.mixed()
+//     .required("Image is required")
+//     .test(
+//       "fileSize",
+//       "File size is too large",
+//       (value) => value && value.size <= 5000000 // 5MB limit
+//     )
+//     .test(
+//       "fileType",
+//       "Unsupported file type",
+//       (value) => value && ["image/jpeg", "image/png"].includes(value.type)
+//     ),
+//   description: Yup.string()
+//     .required("Description is required")
+//     .min(50, "Description must be at least 50 characters"),
+// });
 
+
+
+export const blogValidationSchema = Yup.object().shape({
+  title: Yup.string()
+    .required("Title is required")
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must not exceed 100 characters"),
+
+  shortDescription: Yup.string()
+    .required("Short description is required")
+    .min(10, "Short description must be at least 10 characters")
+    .max(200, "Short description must not exceed 200 characters"),
+
+  description: Yup.string()
+    .required("Content is required")
+    .min(50, "Content must be at least 50 characters"),
+
+  images: Yup.array()
+    .of(
+      Yup.mixed()
+        .test(
+          "fileSize",
+          "File size is too large",
+          (value) => value && value.size <= 5000000 // 5MB limit
+        )
+        .test(
+          "fileType",
+          "Unsupported file type",
+          (value) => value && ["image/jpeg", "image/png"].includes(value.type)
+        )
+    )
+    .min(1, "At least one image is required")
+    .max(5, "Maximum 5 images allowed")
+    .required("At least one image is required"),
+});
 export const jobOpeningSchema = Yup.object().shape({
   title: Yup.string()
     .required("Job title is required")
@@ -147,13 +182,16 @@ export const EasyApplyValidationSchema = Yup.object({
   experience: Yup.string().required("Experience Level is required"),
   message: Yup.string().required("Message is required"),
   portfolioType: Yup.string().required("Please select portfolio type"),
-  portfolioUrl: Yup.string().when('portfolioType', {
-    is: 'url',
-    then: () => Yup.string().url("Please enter a valid URL").required("Portfolio URL is required"),
+  portfolioUrl: Yup.string().when("portfolioType", {
+    is: "url",
+    then: () =>
+      Yup.string()
+        .url("Please enter a valid URL")
+        .required("Portfolio URL is required"),
     otherwise: () => Yup.string().notRequired(),
   }),
-  portfolioFile: Yup.mixed().when('portfolioType', {
-    is: 'file',
+  portfolioFile: Yup.mixed().when("portfolioType", {
+    is: "file",
     then: () => Yup.mixed().required("Portfolio file is required"),
     otherwise: () => Yup.mixed().notRequired(),
   }),
