@@ -19,12 +19,12 @@ const About = () => {
   const navigate = useNavigate();
   const achievements = [
     {
-      number: "2+",
+      number: "5+",
       label: "Years Experience",
       icon: <Building className="w-6 h-6" />,
     },
     {
-      number: "+10",
+      number: "+100",
       label: "Projects Completed",
       icon: <Gitlab className="w-6 h-6" />,
     },

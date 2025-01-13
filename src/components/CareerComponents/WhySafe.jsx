@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../globals/CustomButton";
+import careers from "../../assets/careers.jpg";
 
 const WhySafe = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +60,7 @@ const WhySafe = () => {
             <div className="relative rounded-2xl overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
-                src="https://readymadeui.com/cardImg.webp"
+                src={careers}
                 alt="About SafeSolution"
                 className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-500"
               />
@@ -69,7 +70,7 @@ const WhySafe = () => {
                 <div className="grid grid-cols-3 gap-4 text-white">
                   <div>
                     <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                      10+
+                      5+
                     </div>
                     <div className="text-sm text-gray-300">
                       Years Experience
@@ -77,7 +78,7 @@ const WhySafe = () => {
                   </div>
                   <div>
                     <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                      500+
+                      100+
                     </div>
                     <div className="text-sm text-gray-300">Projects Done</div>
                   </div>
