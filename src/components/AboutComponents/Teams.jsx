@@ -74,22 +74,20 @@ const Teams = () => {
 
   return (
     <div>
-      <div className="my-4 mt-28">
+      <div className="my-4  ">
         <div className="max-w-5xl max-lg:max-w-2xl mx-auto">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                Our Team
-              </span>
-            </div>
-            <p className="text-gray-600 dark:text-white text-[16px] mt-4 leading-relaxed">
-              Great teams are built on shared goals and a sense of purpose. When
-              everyone is aligned with a clear mission, their combined efforts
-              become more impactful
-            </p>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+            <span className="text-purple-600 dark:text-white text-sm font-medium">
+              Our Teams
+            </span>
           </div>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center mt-12">
+          <p className="font-light text-[20px] md:text-[26px] leading-[50px] text-center">
+          Great teams are built on shared goals and a sense of purpose. When everyone is aligned with a clear mission, their combined efforts become more impactful
+          </p>
+        </div>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center  my-20">
             {teamMembers.map((member) => (
               <div
                 key={member.name}
@@ -97,7 +95,7 @@ const Teams = () => {
               >
                 <img
                   src={member.image}
-                  className="w-full h-60 object-contain object-top bg-gray-200"
+                  className="w-full  h-ful object-cover  object-top "
                   alt={member.name}
                 />
                 <div className="p-4">
