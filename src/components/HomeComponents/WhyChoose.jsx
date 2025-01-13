@@ -1,5 +1,8 @@
 import React from "react";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
+import innovative from "../../assets/whychoose/innovative.gif";
+import scalable from "../../assets/whychoose/scalable.gif";
+import seamless from "../../assets/whychoose/seamless.gif";
 
 export default function WhyChoose() {
   const cardData = [
@@ -7,25 +10,22 @@ export default function WhyChoose() {
       title: "Innovative Solutions",
       description:
         "Explore cutting-edge technology designed to optimize your business processes.",
-      image:
-        "https://media.gettyimages.com/id/1478316499/photo/innovation-new-concept-ideas-with-innovations-hand-in-hand-with-future-lamp-technology-and.jpg?s=170667a&w=gi&k=20&c=_qcgU5wgEnqXqKa-t_NlLAtPCbbP3XesPpFXhbmNERQ=",
-      link: "https://example.com/solutions",
+      image: innovative,
+      // link: "https://example.com/solutions",
     },
     {
       title: "Seamless Operations",
       description:
         "Ensure smooth business workflows with our expert back-office support.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSsLx3Vlqq0WD3TOeA65nmEdsbtTEapa_kpA&s",
-      link: "https://example.com/operations",
+      image: seamless,
+      // link: "https://example.com/operations",
     },
     {
       title: "Scalable Growth",
       description:
         "Empower your enterprise with scalable and sustainable solutions.",
-      image:
-        "https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=2560&auto=format&fit=crop",
-      link: "https://example.com/growth",
+      image: scalable,
+      // link: "https://example.com/growth",
     },
   ];
 
