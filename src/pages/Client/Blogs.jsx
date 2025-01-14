@@ -1,54 +1,45 @@
-import React, { useState } from "react";
+ 
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
+import loaderAnimation from "../../assets/lottie/loadanimate.json";
+import Lottie from "lottie-react";
+import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "@/globals/CustomButton";
-import { useNavigate } from "react-router-dom";
 import ScrollToTop from "@/globals/ScrollToTop";
-import { blogPosts } from "../../lib/Blog";
-import hero from "../../assets/hero.png";
-import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
 
-const BlogPage = () => {
+const Blogs = () => {
+  const [blogData, setBlogData] = useState([]);
+  const [loading, setLoading] = useState(true); // Loader state
   const navigate = useNavigate();
-  console.log(blogPosts, "blog posts");
+  const userUrl = import.meta.env.VITE_USER_URL;
+  const api_token = import.meta.env.VITE_API_TOKEN;
 
-  const categories = ["All", "Architecture", "Construction", "Safety"];
-
-  // State for pagination and category filtering
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const postsPerPage = 3;
-
-  // Filtered blog posts based on category
-  const filteredPosts =
-    selectedCategory === "All"
-      ? blogPosts
-      : blogPosts.filter((post) => post.category === selectedCategory);
-
-  // Pagination logic
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const selectedPosts = filteredPosts.slice(
-    startIndex,
-    startIndex + postsPerPage
-  );
-  // Change category handler
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
-  // Change page handler
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true); // Set loading to true before fetching
+      const response = await axios.get(`${userUrl}/get/blog`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
+      if (response?.data.succes === true && response?.data.blogs.length > 0) {
+        setBlogData(response?.data?.blogs);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
   };
 
-  const latestNews = blogPosts
-    .slice()
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 3);
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
   return (
-    <div className="bg-[#FFFFFF] dark:bg-black ">
-      <div className="relative h-[90vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+    <div>
+      <div className="  h-[90vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         {/* Animated grid background */}
         <div
           className="absolute inset-0 overflow-hidden hidden sm:block"
@@ -60,10 +51,11 @@ const BlogPage = () => {
           }}
         />
 
-        {/* Enhanced glowing orbs with better blend modes */}
+        {/* Enhanced glowing orbs */}
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+
         <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
           {/* Tech decorations */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -97,28 +89,28 @@ const BlogPage = () => {
                 <span className="text-white/90">Our Blogs</span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="text-white">
-                  Insights and Ideas to Elevate Your{" "}
-                </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-                  Blogging Journey
-                </span>
-              </h1>
+              <div className="space-y-4">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  <span className="text-white">
+                    Insights and Ideas to Elevate Your{" "}
+                  </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                    Blogging Journey
+                  </span>
+                </h1>
 
-              <p className="text-xl text-white/80 max-w-xl">
-                Join our team and be part of an inspiring journey. Explore
-                opportunities to grow, learn, and make an impact.
-              </p>
-
-              {/* Service cards */}
+                <p className="text-xl text-white/80 max-w-xl">
+                  Join our team and be part of an inspiring journey. Explore
+                  opportunities to grow, learn, and make an impact.
+                </p>
+              </div>
             </motion.div>
 
-            {/* Right content - 3D Grid */}
+            {/* Right content - Carousel */}
           </div>
         </div>
 
-        {/* Add some CSS animations */}
+        {/* Animations */}
         <style jsx>{`
           @keyframes moveUpDown {
             0%,
@@ -140,156 +132,64 @@ const BlogPage = () => {
           }
         `}</style>
       </div>
-      <div className="container bg-[#FFFFFF] dark:bg-black  mx-auto w-[75%] grid grid-cols-1 lg:grid-cols-3 gap-16 mt-20">
-        {/* Main Content */}
-        <div className="lg:col-span-2 bg-[#FFFFFF] dark:bg-black ">
-          {/* Blog Posts */}
-          {selectedPosts.map((post, index) => (
-            <div
-              key={post?.id}
-              className="bg-[#FFFFFF] dark:bg-black  shadow-md  overflow-hidden mb-6"
-            >
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-[30em] object-cover"
+
+      {/* Blog Section */}
+      <div className="bg-white dark:bg-black">
+        <div className="max-w-6xl mx-auto p-4">
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[300px]">
+              <Lottie
+                animationData={loaderAnimation}
+                loop={true}
+                style={{ width: "50px", height: "50px" }}
               />
-              <div className="p-6">
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-                  {post.article.title}
-                </h2>
-                <div className="text-gray-500 text-sm mt-2 dark:text-white">
-                  <span>{post.date}</span> | <span>{post.category}</span>
-                </div>
-                <p className="text-gray-600 mt-4 dark:text-white">
-                  {post.article.introduction.summary}
-                </p>
-
-                <CustomButton
-                  label="Read More"
-                  className="mt-4"
-                  handleClick={() => navigate(`/blog/${post.id}`)}
-                />
-              </div>
             </div>
-          ))}
-
-          {/* Pagination Controls */}
-          <div className="flex justify-center items-center mt-4">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                className={`mx-1 px-4 py-2 rounded ${
-                  currentPage === index + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          ) : (
+            <>
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 mt-10">
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                    Latest Blogs
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
+                {blogData.map((blog) => (
+                  <div
+                    key={blog.slug}
+                    className="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group"
+                  >
+                    <img
+                      src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${blog.images[0].image}`}
+                      alt={blog.images[0].image}
+                      className="w-full h-96 object-cover"
+                    />
+                    <div className="p-6 absolute bottom-0 left-0 right-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-90">
+                      <span className="text-sm block text-white mb-2">
+                        {new Date(blog.createdAt).toISOString().split("T")[0]}
+                      </span>
+                      <h3 className="text-xl font-bold text-white">
+                        {blog.shortDescription}
+                      </h3>
+                      <div className="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
+                        <CustomButton
+                          label="Read More"
+                          className="mt-4"
+                          handleClick={() => navigate(`/blog/${blog.slug}`)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-
-        {/* Sidebar */}
-        <aside
-          style={{
-            marginTop: "5px",
-          }}
-        >
-          {/* <div class="flex lg:ml-auto max-lg:w-full">
-            <div class="flex xl:w-80 max-xl:w-full bg-gray-100 dark:bg-[#18181b] dark:text-white px-4 py-3 rounded outline outline-transparent border focus-within:border-blue-600 focus-within:bg-transparent transition-all">
-              <input
-                type="text"
-                placeholder="Search something..."
-                class="w-full text-sm bg-transparent rounded outline-none pr-2"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 192.904 192.904"
-                width="16px"
-                class="cursor-pointer fill-gray-400 hover:fill-[#4f46e5]"
-              >
-                <path d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"></path>
-              </svg>
-            </div>
-          </div> */}
-
-          {/* Categories */}
-          <div className="bg-[#FFFFFF] dark:bg-black dark:text-white    w-[70%]  mb-6   ml-1">
-            <h3 className="text-lg hover:text-[#4f46e5] dark:text-white tracking-wide  mb-4">
-              Categories
-            </h3>
-            <ul className="space-y-1">
-              {categories.map((cat, idx) => (
-                <div className="flex flex-row w-full justify-between border-b border-s-gray-100">
-                  <li
-                    key={idx}
-                    className={`cursor-pointer  py-3 dark:text-white   text-gray-500 hover:text-[#4f46e5] ${
-                      selectedCategory === cat ? "" : ""
-                    }`}
-                    onClick={() => handleCategoryChange(cat)}
-                  >
-                    {cat}
-                  </li>
-                  {/* <h3 className="  text-gray-500 dark:text-white hover:text-[#216eb5]  mb-4">
-                   
-                  </h3> */}
-                </div>
-              ))}
-            </ul>
-          </div>
-
-          {/* Latest News */}
-          <div className="bg-[#FFFFFF] dark:bg-black   ml-1  rounded-md mb-6">
-            <h3 className="text-xl hover:text-[#4f46e5]  tracking-wide   dark:text-white  mb-4">
-              Latest News
-            </h3>
-            {latestNews.map((news, idx) => (
-              <div className="flex gap-4 mt-5">
-                <div>
-                  <img
-                    src={news.image}
-                    alt={news.title}
-                    className="w-[150px] h-[90px] object-cover rounded-md"
-                  />
-                </div>
-                <div key={idx} className="mb-4 ">
-                  <h4 className="text-[#4f46e5] dark:text-white hover:underline">
-                    {news.title}
-                  </h4>
-                  <span className="text-sm text-gray-500 dark:text-white">
-                    {news.date}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Tags */}
-          <div className="bg-[#FFFFFF] dark:bg-black   p-4 rounded-md">
-            {/* <h3 className="text-lg font-semibold dark:text-white mb-4">
-              Tags Cloud
-            </h3> */}
-            {/* <div className="flex flex-wrap gap-2 ">
-              {["Buildings", "Architectural", "Interior", "Construction"].map(
-                (tag, idx) => (
-                  <span
-                    key={idx}
-                    className="text-sm bg-gray-200 dark:bg-[#18181b]  hover:bg-[#4f46e5] px-3 py-1 rounded cursor-pointer hover:text-white  "
-                  >
-                    {tag}
-                  </span>
-                )
-              )}
-            </div> */}
-          </div>
-        </aside>
       </div>
       <ScrollToTop />
     </div>
   );
 };
 
-export default BlogPage;
+export default Blogs;

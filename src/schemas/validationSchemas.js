@@ -23,8 +23,6 @@ import * as Yup from "yup";
 //     .min(50, "Description must be at least 50 characters"),
 // });
 
-
-
 export const blogValidationSchema = Yup.object().shape({
   title: Yup.string()
     .required("Title is required")
@@ -46,7 +44,7 @@ export const blogValidationSchema = Yup.object().shape({
         .test(
           "fileSize",
           "File size is too large",
-          (value) => value && value.size <= 5000000 // 5MB limit
+          (value) => value && value.size <= 10000000 // 5MB limit
         )
         .test(
           "fileType",

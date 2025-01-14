@@ -6,6 +6,7 @@ import ErrorPage from "@/pages/ErrorPage";
 import Project from "@/pages/Client/projectsdetails/Project";
 import Blog from "@/pages/Client/BlogDetails/Blogs";
 import AdminSetting from "@/pages/Admin/AdminSetting";
+import BlogsDetails from "@/pages/Client/BlogsDetails";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -179,14 +180,25 @@ const CustomRoutes = () => {
             </Suspense>
           ),
         },
+        // {
+        //   path: "blog/:id",
+        //   element: (
+        //     <Suspense fallback={<LoadingPage />}>
+        //       <Blog />
+        //     </Suspense>
+        //   ),
+        // },
+      
         {
-          path: "blog/:id",
+          path: "blog/:slug",
           element: (
             <Suspense fallback={<LoadingPage />}>
-              <Blog />
+              <BlogsDetails />
             </Suspense>
           ),
         },
+        
+        
         {
           path: "blogs",
           element: (
