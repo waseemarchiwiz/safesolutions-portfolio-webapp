@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronRight, ChevronLeft, Code2, Cpu, Globe2 } from "lucide-react";
 import axios from "axios";
+import ScrollToTop from "@/globals/ScrollToTop";
 
 const BlogsDetails = () => {
   const { slug } = useParams();
@@ -167,7 +168,7 @@ const BlogsDetails = () => {
         `}</style>
       </div>
 
-      <div className="w-full bg-white py-16">
+      <div className="w-full bg-white dark:bg-black py-16">
         <div className="container mx-auto px-4">
           <div
             initial={{ opacity: 0, y: 20 }}
@@ -222,9 +223,9 @@ const BlogsDetails = () => {
                 ))}
               </div>
             </div>
-            <div className=" mt-5  space-y-5">
-              <h1 className="mt-3">{blogData?.title}</h1>
-              <h1>{blogData?.shortDescription}</h1>
+            <div className=" mt-5  space-y-10">
+              <h1 className="mt-20 text-5xl" >{blogData?.title}</h1>
+              <h1 className="text-2xl" >{blogData?.shortDescription}</h1>
               <p
                 dangerouslySetInnerHTML={{ __html: blogData?.description }}
               ></p>
@@ -232,6 +233,7 @@ const BlogsDetails = () => {
           </div>
         </div>
       </div>
+      <ScrollToTop />
     </>
   );
 };
