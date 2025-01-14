@@ -175,9 +175,7 @@ const Footer = () => {
                 Plot No. 103-104 A, Hayatabad, Peshawar
               </p>
 
-              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                info@archiwiz.com
-              </p>
+              
 
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-6 space-y-4 text-[16px]">
                 3rd Floor, Paris Business Center Block A Soan Gardens
@@ -192,7 +190,10 @@ const Footer = () => {
                 Near Old Airport, Rawalpindi
               </p>
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-5">
-                phone: 051-5739378
+              Email:info@safesolutionsconsultants.com
+              </p>
+              <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200  ">
+                phone: 813-683-7889
               </p>
             </div>
 
@@ -201,7 +202,7 @@ const Footer = () => {
                 Office hours
               </p>
               <p className="mt-6  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Monday - Friday: 10:00 AM - 6:00 PM
+                Monday - Friday: 04:00 AM - 01:00 PM
               </p>
               <p className=" text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 Saturday: Closed
@@ -210,7 +211,7 @@ const Footer = () => {
                 Sunday: Closed
               </p>
               <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Available 24/7 for online inquiries at safesolution@archiwiz.com
+                Available 24/7 for online inquiries at info@safesolutionsconsultants.com
               </p>
             </div>
           </div>
