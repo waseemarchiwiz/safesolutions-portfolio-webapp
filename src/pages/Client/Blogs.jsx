@@ -1,5 +1,3 @@
- 
-
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -136,12 +134,17 @@ const Blogs = () => {
           }
         `}</style>
       </div>
-      <div class="bg-white font-sans">
+      <div class="bg-white dark:bg-black  ">
         <div class="max-w-6xl mx-auto p-4">
-          <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-gray-800 inline-block relative after:absolute after:w-4/6 after:h-1 after:left-0 after:right-0 after:-bottom-4 after:mx-auto after:bg-pink-400 after:rounded-lg-full">
-              LATEST BLOGS
-            </h2>
+          <div class="text-center mt-10">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                  Latest Blogs
+                </span>
+              </div>
+            </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
             {blogData &&
@@ -153,11 +156,11 @@ const Blogs = () => {
                       alt={blog.images[0].image}
                       class="w-full h-96 object-cover"
                     />
-                    <div class="p-6 absolute bottom-0 left-0 right-0 bg-pink-200 opacity-90">
-                      <span class="text-sm block text-gray-800 mb-2">
-                        {blog.createdAt}
+                    <div class="p-6 absolute bottom-0 left-0 right-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-90">
+                      <span class="text-sm block text-white mb-2">
+                        {new Date(blog.createdAt).toISOString().split("T")[0]}
                       </span>
-                      <h3 class="text-xl font-bold text-gray-800">
+                      <h3 class="text-xl font-bold  text-white">
                         {blog.shortDescription}
                       </h3>
                       <div class="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
