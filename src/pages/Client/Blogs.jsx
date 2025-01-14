@@ -1,3 +1,4 @@
+ 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -5,36 +6,32 @@ import loaderAnimation from "../../assets/lottie/loadanimate.json";
 import Lottie from "lottie-react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "@/globals/CustomButton";
+import ScrollToTop from "@/globals/ScrollToTop";
 
 const Blogs = () => {
   const [blogData, setBlogData] = useState([]);
+  const [loading, setLoading] = useState(true); // Loader state
   const navigate = useNavigate();
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        `${userUrl}/get/blog`, // Ensure userUrl is properly defined
-        {
-          headers: {
-            api_token: api_token, // Replace api_token with the actual token variable
-          },
-        }
-      );
-      console.log(response, "response");
-
+      setLoading(true); // Set loading to true before fetching
+      const response = await axios.get(`${userUrl}/get/blog`, {
+        headers: {
+          api_token: api_token,
+        },
+      });
       if (response?.data.succes === true && response?.data.blogs.length > 0) {
         setBlogData(response?.data?.blogs);
       }
-
-      console.log(response.data, "response");
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
-
-  console.log(blogData, "blogData");
 
   useEffect(() => {
     fetchBlogs();
@@ -42,7 +39,7 @@ const Blogs = () => {
 
   return (
     <div>
-      <div className="relative h-[90vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+      <div className="  h-[90vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         {/* Animated grid background */}
         <div
           className="absolute inset-0 overflow-hidden hidden sm:block"
@@ -54,10 +51,11 @@ const Blogs = () => {
           }}
         />
 
-        {/* Enhanced glowing orbs with better blend modes */}
+        {/* Enhanced glowing orbs */}
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+
         <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
           {/* Tech decorations */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -91,28 +89,28 @@ const Blogs = () => {
                 <span className="text-white/90">Our Blogs</span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="text-white">
-                  Insights and Ideas to Elevate Your{" "}
-                </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-                  Blogging Journey
-                </span>
-              </h1>
+              <div className="space-y-4">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  <span className="text-white">
+                    Insights and Ideas to Elevate Your{" "}
+                  </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                    Blogging Journey
+                  </span>
+                </h1>
 
-              <p className="text-xl text-white/80 max-w-xl">
-                Join our team and be part of an inspiring journey. Explore
-                opportunities to grow, learn, and make an impact.
-              </p>
-
-              {/* Service cards */}
+                <p className="text-xl text-white/80 max-w-xl">
+                  Join our team and be part of an inspiring journey. Explore
+                  opportunities to grow, learn, and make an impact.
+                </p>
+              </div>
             </motion.div>
 
-            {/* Right content - 3D Grid */}
+            {/* Right content - Carousel */}
           </div>
         </div>
 
-        {/* Add some CSS animations */}
+        {/* Animations */}
         <style jsx>{`
           @keyframes moveUpDown {
             0%,
@@ -134,36 +132,47 @@ const Blogs = () => {
           }
         `}</style>
       </div>
-      <div class="bg-white dark:bg-black  ">
-        <div class="max-w-6xl mx-auto p-4">
-          <div class="text-center mt-10">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-                <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                  Latest Blogs
-                </span>
-              </div>
+
+      {/* Blog Section */}
+      <div className="bg-white dark:bg-black">
+        <div className="max-w-6xl mx-auto p-4">
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[300px]">
+              <Lottie
+                animationData={loaderAnimation}
+                loop={true}
+                style={{ width: "50px", height: "50px" }}
+              />
             </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
-            {blogData &&
-              blogData.map((blog) => {
-                return (
-                  <div class="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group">
+          ) : (
+            <>
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 mt-10">
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+                    Latest Blogs
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
+                {blogData.map((blog) => (
+                  <div
+                    key={blog.slug}
+                    className="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group"
+                  >
                     <img
                       src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${blog.images[0].image}`}
                       alt={blog.images[0].image}
-                      class="w-full h-96 object-cover"
+                      className="w-full h-96 object-cover"
                     />
-                    <div class="p-6 absolute bottom-0 left-0 right-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-90">
-                      <span class="text-sm block text-white mb-2">
+                    <div className="p-6 absolute bottom-0 left-0 right-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-90">
+                      <span className="text-sm block text-white mb-2">
                         {new Date(blog.createdAt).toISOString().split("T")[0]}
                       </span>
-                      <h3 class="text-xl font-bold  text-white">
+                      <h3 className="text-xl font-bold text-white">
                         {blog.shortDescription}
                       </h3>
-                      <div class="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
+                      <div className="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
                         <CustomButton
                           label="Read More"
                           className="mt-4"
@@ -172,13 +181,13 @@ const Blogs = () => {
                       </div>
                     </div>
                   </div>
-                );
-              })}
-          </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
-
-      <div></div>
+      <ScrollToTop />
     </div>
   );
 };
