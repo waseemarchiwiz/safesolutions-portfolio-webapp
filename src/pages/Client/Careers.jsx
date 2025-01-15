@@ -6,7 +6,7 @@ import ScrollToTop from "../../globals/ScrollToTop";
 import axios from "axios";
 import Lottie from "lottie-react";
 import loaderAnimation from "../../assets/lottie/loadanimate.json"; // Path to your Lottie JSON file
- 
+
 import { toast } from "react-toastify";
 import WhySafe from "@/components/CareerComponents/WhySafe";
 

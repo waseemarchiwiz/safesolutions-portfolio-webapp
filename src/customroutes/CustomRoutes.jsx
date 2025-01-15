@@ -4,7 +4,7 @@ import LoadingPage from "../pages/LoadingPage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import ErrorPage from "@/pages/ErrorPage";
 import Project from "@/pages/Client/projectsdetails/Project";
-import Blog from "@/pages/Client/BlogDetails/Blogs";
+
 import AdminSetting from "@/pages/Admin/AdminSetting";
 import BlogsDetails from "@/pages/Client/BlogsDetails";
 
@@ -19,9 +19,6 @@ const Services = React.lazy(() => import("../pages/Client/Services"));
 const BlogsPage = React.lazy(() => import("../pages/Client/Blogs"));
 const Careers = React.lazy(() => import("../pages/Client/Careers"));
 const Contactus = React.lazy(() => import("../pages/Client/Contactus"));
-const BlogDetails = React.lazy(() =>
-  import("../pages/Client/BlogDetails/BlogDetails")
-);
 
 // Lazy loading for admin pages
 const AdminBlogs = React.lazy(() => import("../pages/Admin/AdminBlogs"));
@@ -180,25 +177,7 @@ const CustomRoutes = () => {
             </Suspense>
           ),
         },
-        // {
-        //   path: "blog/:id",
-        //   element: (
-        //     <Suspense fallback={<LoadingPage />}>
-        //       <Blog />
-        //     </Suspense>
-        //   ),
-        // },
-      
-        {
-          path: "blog/:slug",
-          element: (
-            <Suspense fallback={<LoadingPage />}>
-              <BlogsDetails />
-            </Suspense>
-          ),
-        },
-        
-        
+
         {
           path: "blogs",
           element: (
@@ -207,6 +186,16 @@ const CustomRoutes = () => {
             </Suspense>
           ),
         },
+
+        {
+          path: "blog/:slug",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <BlogsDetails />
+            </Suspense>
+          ),
+        },
+
         {
           path: "/project/:project",
           element: (
