@@ -1,4 +1,3 @@
- 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -135,6 +134,14 @@ const Blogs = () => {
 
       {/* Blog Section */}
       <div className="bg-white dark:bg-black">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 mt-10">
+            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+            <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
+              Latest Blogs
+            </span>
+          </div>
+        </div>
         <div className="max-w-6xl mx-auto p-4">
           {loading ? (
             <div className="flex justify-center items-center min-h-[300px]">
@@ -144,16 +151,8 @@ const Blogs = () => {
                 style={{ width: "50px", height: "50px" }}
               />
             </div>
-          ) : (
+          ) : blogData.length > 0 ? (
             <>
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 mt-10">
-                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-                  <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                    Latest Blogs
-                  </span>
-                </div>
-              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
                 {blogData.map((blog) => (
                   <div
@@ -184,9 +183,16 @@ const Blogs = () => {
                 ))}
               </div>
             </>
+          ) : (
+            <div className="flex justify-center items-center min-h-[300px]">
+              <p className="text-lg font-semibold text-gray-500">
+                Nothing to show
+              </p>
+            </div>
           )}
         </div>
       </div>
+
       <ScrollToTop />
     </div>
   );
