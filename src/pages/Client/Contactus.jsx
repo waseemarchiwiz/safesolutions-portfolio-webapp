@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-// import about from "../../src/assets/about.webp";
 import CustomButton from "../../globals/CustomButton";
 import ScrollToTop from "../../globals/ScrollToTop";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+
 import { CustomInput } from "@/globals/CustomInput";
 import { contactValidationSchema } from "@/schemas/validationSchemas";
 import axios from "axios";
@@ -301,14 +300,8 @@ const Contactus = () => {
             </ul> */}
           </div>
           <div className="z-10 relative h-full max-md:min-h-[350px]">
-            {/* <iframe
-              src="https://maps.app.goo.gl/MN5L1Mz3aJ7ZBmsE8"
-              className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
-              frameBorder={0}
-              allowFullScreen
-            /> */}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.9338834705823!2d71.42091651231424!3d33.9942319730671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d91053fa827467%3A0xfa6672cfa90d9eae!2s103%20Industrial%20Estate%20Rd%2C%20Hayatabad%2C%20Peshawar%2C%20Khyber%20Pakhtunkhwa%2C%20Pakistan!5e0!3m2!1sen!2s!4v1733482280218!5m2!1sen!2s"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3523.017166976897!2d-82.4013096878559!3d27.99337117591978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c5a705cc0d59%3A0x2f450356ee611c06!2s5187%20Shadowlawn%20Ave%2C%20Tampa%2C%20FL%2033610%2C%20USA!5e0!3m2!1sen!2s!4v1736933560082!5m2!1sen!2s"
               className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
               allowfullscreen=""
               loading="lazy"
