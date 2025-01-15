@@ -52,7 +52,7 @@ const Teams = () => {
           api_token: api_token,
         },
       });
-      console.log(response, "Teams Member Data response");
+      console.log(response, "Teamss Member Data response");
 
       if (response?.data?.succes) {
         setTeamsMemberData(response?.data?.Teams, "teams member data");
@@ -90,13 +90,13 @@ const Teams = () => {
             </p>
           </div>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-md:justify-center  my-20">
-            {teamMembers.map((member) => (
+            {teamsMemberData?.map((member) => (
               <div
                 key={member.name}
                 className="border rounded-md overflow-hidden max-md:max-w-[300px]"
               >
                 <img
-                  src={member.image}
+                  src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${member.image}`}
                   className="w-full  h-ful object-cover  object-top "
                   alt={member.name}
                 />
