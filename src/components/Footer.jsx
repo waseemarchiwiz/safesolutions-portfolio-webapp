@@ -175,8 +175,6 @@ const Footer = () => {
                 Plot No. 103-104 A, Hayatabad, Peshawar
               </p>
 
-              
-
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-6 space-y-4 text-[16px]">
                 3rd Floor, Paris Business Center Block A Soan Gardens
               </p>
@@ -190,7 +188,7 @@ const Footer = () => {
                 Near Old Airport, Rawalpindi
               </p>
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-5">
-              Email:info@safesolutionsconsultants.com
+                Email:info@safesolutionsconsultants.com
               </p>
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200  ">
                 phone: 813-683-7889
@@ -202,16 +200,22 @@ const Footer = () => {
                 Office hours
               </p>
               <p className="mt-6  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Monday - Friday: 04:00 AM - 01:00 PM
+                <span className="font-medium">Pak Time:</span> 09:00 AM - 01:00
+                AM
               </p>
-              <p className=" text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Saturday: Closed
+              <p className=" mt-1 text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                <span className="font-medium">US Time:</span> 11:00 PM - 03:00
+                PM
               </p>
               <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Sunday: Closed
+                Saturday: closed
+              </p>
+              <p className="  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
+                Suday: closed
               </p>
               <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
-                Available 24/7 for online inquiries at info@safesolutionsconsultants.com
+                Available 24/7 for online inquiries at
+                info@safesolutionsconsultants.com
               </p>
             </div>
           </div>
