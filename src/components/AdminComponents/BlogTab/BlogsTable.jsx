@@ -163,9 +163,9 @@ export const BlogsTable = () => {
     };
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-8 rounded-lg w-full max-w-2xl my-8">
-          <div className="flex justify-between items-center mb-6">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
+        <div className="bg-white dark:bg-[#18181b] p-8 rounded-lg w-full max-w-[90%] md:max-w-[50%] overflow-y-auto max-h-[90vh] z-50     ">
+          <div className="flex justify-between items-center mb-6  ">
             <h2 className="text-2xl font-semibold">Edit Blog</h2>
             <button
               onClick={() => {
@@ -189,7 +189,7 @@ export const BlogsTable = () => {
             onSubmit={handleUpdate}
           >
             {({ isSubmitting, setFieldValue, values }) => (
-              <Form className="space-y-6">
+              <Form className="space-y-6  ">
                 <div>
                   <Field
                     name="title"
@@ -325,7 +325,7 @@ export const BlogsTable = () => {
   const handleDelete = async (row) => {
     console.log(row, "delete");
     const isConfirmed = window.confirm(
-      `Are you sure you want to delete the job posting "${row.title}"?`
+      `Are you sure you want to delete the Blog "${row.title}"?`
     );
     if (!isConfirmed) return;
     try {
@@ -334,13 +334,11 @@ export const BlogsTable = () => {
           user_access_token: userToken,
         },
       });
-      setBlogData((prevBlog) =>
-        prevBlog.filter((blog) => blog.id !== row.id)
-      );
-      toast.success("Job posting deleted successfully!");
+      setBlogData((prevBlog) => prevBlog.filter((blog) => blog.id !== row.id));
+      toast.success("Blog deleted successfully!");
     } catch (error) {
       console.error("Delete error:", error);
-      toast.error("Failed to delete job posting");
+      toast.error("Failed to delete Blog");
     }
   };
 
