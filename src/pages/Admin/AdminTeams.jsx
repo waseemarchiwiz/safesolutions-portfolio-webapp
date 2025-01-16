@@ -38,6 +38,3 @@ const AdminTeams = () => {
 };
 
 export default AdminTeams;
-
- 
-

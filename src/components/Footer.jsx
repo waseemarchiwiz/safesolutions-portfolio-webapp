@@ -5,12 +5,12 @@ import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="">
-      <footer className=" bg-[#FFFFFF] dark:bg-black">
+    <div>
+      <footer className=" bg-[#FFFFFF] dark:bg-black  ">
         <div className=" container mx-auto  px-4 space-y-8  py-16 sm:px-6 lg:space-y-16 lg:px-8">
-          <div className="sm:flex sm:items-center sm:justify-between">
+          <div className="sm:flex sm:items-center sm:justify-between cursor-pointer">
             <div className="text-teal-600 dark:text-teal-300">
-              <Link to="/home">
+              <Link to="/">
                 <img className="h-24 w-24" src={logo} alt="safesolution" />
               </Link>
             </div>
@@ -85,7 +85,7 @@ const Footer = () => {
           </div>
 
           <div className="grid grid-cols-1   gap-8 border-t border-slate-950 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16 dark:border-gray-800">
-            <div>
+            <div className="cursor-pointer">
               <p className="font-medium  text-gray-900 dark:text-white">
                 Services
               </p>
@@ -165,7 +165,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div>
+            <div className="cursor-pointer">
               <p className="font-medium text-gray-900 dark:text-white">
                 Contact us
               </p>
@@ -188,14 +188,17 @@ const Footer = () => {
                 Near Old Airport, Rawalpindi
               </p>
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200 mt-5">
-                Email:info@safesolutionsconsultants.com
+                {/* Email:info@safesolutionsconsultants.com */}
+                <a href="mailto:info@safesolutionsconsultants.com">
+                  Email: info@safesolutionsconsultants.com
+                </a>
               </p>
               <p className="text-gray-700 transition hover:opacity-75 dark:text-gray-200  ">
-                phone: 813-683-7889
+                <Link to="tel:8136837889">Phone: 813-683-7889</Link>
               </p>
             </div>
 
-            <div>
+            <div className="cursor-pointer">
               <p className="font-medium text-gray-900 dark:text-white">
                 Office hours
               </p>
@@ -215,7 +218,9 @@ const Footer = () => {
               </p>
               <p className="mt-2  text-gray-700 transition hover:opacity-75 dark:text-gray-200">
                 Available 24/7 for online inquiries at
-                info@safesolutionsconsultants.com
+                <a href="mailto:info@safesolutionsconsultants.com">
+                  Email: info@safesolutionsconsultants.com
+                </a>
               </p>
             </div>
           </div>

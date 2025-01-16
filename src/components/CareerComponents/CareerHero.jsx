@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
 const CareerHero = () => {
   return (
-    <div className="relative h-[90vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+    <div className="relative min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       {/* Animated grid background */}
       <div
         className="absolute inset-0 overflow-hidden hidden sm:block"

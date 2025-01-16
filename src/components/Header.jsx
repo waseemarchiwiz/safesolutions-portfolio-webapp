@@ -24,9 +24,7 @@ const Header = () => {
   return (
     <header
       className={`fixed w-full z-[999] transition-all duration-300 ${
-        scrolled
-          ? "bg-gradient-to-r from-gray-900 via-blue-900 dark:bg-gradient-to-r dark:from-[#000000] dark:via-blue-[#000000] "
-          : "  dark:bg-black"
+        scrolled ? " bg-blue-900   " : "  "
       }`}
     >
       <div className="container mx-auto px-4">
@@ -118,7 +116,7 @@ const Header = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm md:hidden">
-          <div className="fixed top-0 right-0 w-[300px] h-full bg-gray-300 dark:bg-black shadow-2xl transition-transform">
+          <div className="fixed top-0 right-0 w-[300px] h-full bg-blue-900 dark:bg-black shadow-2xl transition-transform">
             <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
               <img className="h-12 w-auto" src={logo} alt="safesolution" />
               <button
@@ -126,7 +124,7 @@ const Header = () => {
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <svg
-                  className="w-6 h-6 text-gray-700 dark:text-gray-300"
+                  className="w-6 h-6 text-white  dark:text-gray-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -141,7 +139,7 @@ const Header = () => {
               </button>
             </div>
 
-            <nav className="p-4 bg-gray-300 dark:bg-black">
+            <nav className="p-4 bg-blue-900 dark:bg-black">
               <ul className="space-y-3">
                 {["Home", "About", "Services", "Careers", "Blogs"].map(
                   (item) => (
@@ -153,7 +151,7 @@ const Header = () => {
                             item === "Home" ? "/" : `/${item.toLowerCase()}`
                           )
                             ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                            : "text-white dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                         }`}
                         onClick={() => setMenuOpen(false)}
                       >
@@ -182,14 +180,14 @@ const Header = () => {
                   {dark ? (
                     <>
                       <IoSunny className="w-5 h-5 text-yellow-500" />
-                      <span className="text-gray-700 dark:text-gray-300">
+                      <span className="text-white dark:text-gray-300">
                         Light Mode
                       </span>
                     </>
                   ) : (
                     <>
-                      <IoMoon className="w-5 h-5 text-gray-700" />
-                      <span className="text-gray-700 dark:text-gray-300">
+                      <IoMoon className="w-5 h-5 text-white" />
+                      <span className="text-white dark:text-gray-300">
                         Dark Mode
                       </span>
                     </>

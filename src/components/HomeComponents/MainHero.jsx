@@ -18,7 +18,7 @@ const MainHero = () => {
 
   return (
     <>
-      <div className="relative min-h-screen flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+      <div className="relative min-h-screen flex items-center   bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         {/* Animated grid background */}
         <div
           className="absolute inset-0 overflow-hidden hidden sm:block"

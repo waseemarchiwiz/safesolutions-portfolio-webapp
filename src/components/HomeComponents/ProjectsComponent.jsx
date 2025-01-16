@@ -56,6 +56,8 @@ const ProjectsComponent = ({ background }) => {
               delay: 3000,
               direction: "backward",
               stopOnFocusIn: true,
+              stopOnMouseEnter: true,
+              stopOnInteraction: true,
             }),
           ]}
           className="w-full mx-auto mt-10"

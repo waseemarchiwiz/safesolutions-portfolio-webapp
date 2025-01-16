@@ -4,6 +4,7 @@ import archiwiz from "../../assets/projectlogos/archiwizdark.png";
 import alphabuilt from "../../assets/projectlogos/alphabuilt.png";
 import lumsden from "../../assets/projectlogos/lumsdenlogo.webp";
 import archiwizbuild from "../../assets/projectlogos/ArchiWizBuild_jpg.jpg";
+
 const PartnersSection = () => {
   // Partner data with placeholder images
   const partners = [
@@ -23,7 +24,7 @@ const PartnersSection = () => {
       link: "https://lumsdentrading.com/",
     },
     {
-      name: "Archiwiz build",
+      name: "Archiwiz Build",
       logo: archiwizbuild,
       link: "https://archiwizbuild-portfolio-app-prod-g5hdfzcxhucwcsa2.eastus-01.azurewebsites.net/",
     },
@@ -61,6 +62,7 @@ const PartnersSection = () => {
     hover: {
       scale: 1.1,
       rotate: 5,
+      boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.15)", // Added shadow on hover
       transition: {
         type: "spring",
         stiffness: 300,
@@ -69,18 +71,50 @@ const PartnersSection = () => {
   };
 
   return (
-    <section className="bg-[#452484] py-16 overflow-hidden mt-10">
-      <div className="container mx-auto px-4 my-20">
+    <section className="relative bg-gradient-to-r from-purple-700 to-indigo-800 overflow-hidden mt-16 py-16">
+      {/* Background Decorations */}
+      <div
+        className="absolute inset-0 overflow-hidden hidden sm:block"
+        style={{
+          backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
+                     linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
+          backgroundSize: "50px 50px",
+          opacity: 0.2,
+        }}
+      />
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+
+      {/* Tech Decorations */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: 0.1,
+              animation: `moveUpDown ${5 + Math.random() * 5}s linear infinite`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Content Section */}
+      <div className="relative w-full container mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-4xl font-extrabold text-white mb-4 tracking-wide">
             Our Trusted Partners
           </h2>
-          <p className="text-white max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             We collaborate with industry leaders to deliver exceptional value
             and innovation.
           </p>
@@ -90,7 +124,7 @@ const PartnersSection = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-wrap justify-center items-center gap-12"
+          className="flex flex-wrap justify-center gap-16"
         >
           {partners.map((partner, index) => (
             <motion.a
@@ -100,12 +134,12 @@ const PartnersSection = () => {
               rel="noopener noreferrer"
               variants={logoVariants}
               whileHover="hover"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center  rounded-lg p-4 transition-transform duration-300 transform hover:scale-105"
             >
               <motion.img
                 src={partner.logo}
                 alt={`${partner.name} logo`}
-                className="h-20 w-auto max-w-[220px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                className="h-24 w-auto max-w-[220px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
               />
             </motion.a>
           ))}
