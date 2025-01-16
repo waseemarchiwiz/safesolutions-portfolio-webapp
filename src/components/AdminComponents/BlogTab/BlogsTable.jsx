@@ -7,6 +7,16 @@ import { CustomInput } from "@/globals/CustomInput";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Editor } from "@tinymce/tinymce-react";
 
+// Constants
+const MAX_IMAGES = 5;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_FILE_TYPES = [
+  "image/jpg",
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+];
+
 export const BlogsTable = () => {
   const [blogData, setBlogData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -24,21 +34,6 @@ export const BlogsTable = () => {
     description: Yup.string()
       .required("Content is required")
       .min(50, "Content must be at least 50 characters"),
-    images: Yup.array()
-      .of(
-        Yup.mixed()
-          .test("fileSize", "File too large", (value) =>
-            value ? value.size <= 5000000 : true
-          )
-          .test("fileFormat", "Unsupported file type", (value) =>
-            value
-              ? ["image/jpg", "image/jpeg", "image/png", "image/gif"].includes(
-                  value.type
-                )
-              : true
-          )
-      )
-      .nullable(),
   });
 
   const headers = ["ID", "Title", "Short Description"];
@@ -77,7 +72,12 @@ export const BlogsTable = () => {
         title: completeBlogData?.title,
         shortDescription: completeBlogData?.shortDescription,
         description: completeBlogData?.description,
-        images: completeBlogData?.images || [],
+        images:
+          completeBlogData?.images?.map((img) => ({
+            id: img.id,
+            image: img.image,
+            isExisting: true,
+          })) || [],
       });
       setOpenModal(true);
     } else {
@@ -85,8 +85,7 @@ export const BlogsTable = () => {
     }
   };
 
-  const handleUpdate = async (values) => {
-    return;
+  const handleUpdate = async (values, { setSubmitting }) => {
     try {
       const formData = new FormData();
       formData.append("id", selectedBlog.id);
@@ -94,13 +93,16 @@ export const BlogsTable = () => {
       formData.append("shortDescription", values.shortDescription);
       formData.append("description", values.description);
 
+      // Handle images
       values.images.forEach((image, index) => {
         if (image.file) {
           formData.append(`images[${index}]`, image.file);
+        } else if (image.isExisting) {
+          formData.append(`existingImages[${index}]`, image.image);
         }
       });
 
-      await apiInstance.post("/update/blog", formData, {
+      await apiInstance.put(`/update/blog/${selectedBlog.id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           user_access_token: userToken,
@@ -109,35 +111,73 @@ export const BlogsTable = () => {
 
       toast.success("Blog updated successfully");
       setOpenModal(false);
+      setSelectedBlog(null);
       fetchData();
     } catch (error) {
       console.error("Error updating blog:", error);
       toast.error("Failed to update blog");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const EditModal = () => {
     if (!openModal || !selectedBlog) return null;
 
-    const handleImageChange = (e, setFieldValue) => {
-      const files = Array.from(e.target.files);
+    const validateImage = (file) => {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error("File too large");
+        return false;
+      }
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        toast.error("Unsupported file type");
+        return false;
+      }
+      return true;
+    };
+
+    const handleImageChange = (e, setFieldValue, currentImages) => {
+      const files = Array.from(e.target.files).filter(validateImage);
+
+      if (currentImages.length + files.length > MAX_IMAGES) {
+        toast.error(`Maximum ${MAX_IMAGES} images allowed`);
+        return;
+      }
+
       const newImages = files.map((file) => ({
         id: Math.random(),
         image: URL.createObjectURL(file),
         file,
       }));
-      setFieldValue("images", [...selectedBlog.images, ...newImages]);
+
+      setFieldValue("images", [...currentImages, ...newImages]);
     };
 
-    const removeImage = (index, setFieldValue) => {
-      const updatedImages = selectedBlog.images.filter((_, i) => i !== index);
+    const removeImage = (index, setFieldValue, values) => {
+      const updatedImages = [...values.images];
+      if (updatedImages[index]?.file) {
+        URL.revokeObjectURL(updatedImages[index].image);
+      }
+      updatedImages.splice(index, 1);
       setFieldValue("images", updatedImages);
     };
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-8 rounded-lg w-full max-w-[50%]">
-          <h2 className="text-2xl mb-4">Edit Blog</h2>
+        <div className="bg-white p-8 rounded-lg w-full max-w-2xl my-8">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold">Edit Blog</h2>
+            <button
+              onClick={() => {
+                setOpenModal(false);
+                setSelectedBlog(null);
+              }}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              ×
+            </button>
+          </div>
+
           <Formik
             initialValues={{
               title: selectedBlog?.title || "",
@@ -185,42 +225,43 @@ export const BlogsTable = () => {
 
                 <div>
                   <label className="block text-sm text-gray-700">
-                    Images (Max 5)
+                    Images (Max {MAX_IMAGES})
                   </label>
                   <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
                     {values.images.map((image, index) => (
-                      <div key={index} className="relative">
+                      <div key={image.id} className="relative group">
                         <img
-                          src={image.file ? image.image : image}
+                          src={
+                            image.file
+                              ? image.image
+                              : `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${image.image}`
+                          }
                           alt={`Preview ${index + 1}`}
                           className="w-32 h-32 object-cover rounded-md"
                         />
-                        <div>
-                        src={image.file ? image.image : image}
-
-                        </div>
                         <button
                           type="button"
-                          onClick={() => removeImage(index, setFieldValue)}
-                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                          onClick={() =>
+                            removeImage(index, setFieldValue, values)
+                          }
+                          className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                         >
-                          X
+                          ×
                         </button>
                       </div>
                     ))}
                   </div>
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/jpeg,image/png"
-                    onChange={(e) => handleImageChange(e, setFieldValue)}
-                    className="mt-1 block w-full p-2 bg-[#f0f1f2] text-black border border-gray-300 rounded-md"
-                  />
-                  <ErrorMessage
-                    name="images"
-                    component="div"
-                    className="text-red-500 text-xs mt-1"
-                  />
+                  {values.images.length < MAX_IMAGES && (
+                    <input
+                      type="file"
+                      multiple
+                      accept={ALLOWED_FILE_TYPES.join(",")}
+                      onChange={(e) =>
+                        handleImageChange(e, setFieldValue, values.images)
+                      }
+                      className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    />
+                  )}
                 </div>
 
                 <div>
@@ -252,25 +293,25 @@ export const BlogsTable = () => {
                   />
                 </div>
 
-                <div className="flex justify-end space-x-4">
+                <div className="flex justify-end space-x-4 pt-4">
                   <button
                     type="button"
                     onClick={() => {
                       setOpenModal(false);
                       setSelectedBlog(null);
                     }}
-                    className="px-4 py-2 bg-gray-200 rounded"
+                    className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+                    className={`px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 ${
                       isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
-                    {isSubmitting ? "Submitting..." : "Submit"}
+                    {isSubmitting ? "Updating..." : "Update Blog"}
                   </button>
                 </div>
               </Form>
@@ -288,3 +329,5 @@ export const BlogsTable = () => {
     </div>
   );
 };
+
+export default BlogsTable;
