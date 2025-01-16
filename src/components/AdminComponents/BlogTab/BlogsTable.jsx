@@ -322,9 +322,36 @@ export const BlogsTable = () => {
     );
   };
 
+  const handleDelete = async (row) => {
+    console.log(row, "delete");
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete the job posting "${row.title}"?`
+    );
+    if (!isConfirmed) return;
+    try {
+      await apiInstance.delete(`/delete/blog/${row.id}`, {
+        headers: {
+          user_access_token: userToken,
+        },
+      });
+      setBlogData((prevBlog) =>
+        prevBlog.filter((blog) => blog.id !== row.id)
+      );
+      toast.success("Job posting deleted successfully!");
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Failed to delete job posting");
+    }
+  };
+
   return (
     <div>
-      <CustomTable headers={headers} data={data} onEdit={handleEdit} />
+      <CustomTable
+        headers={headers}
+        data={data}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
       {EditModal()}
     </div>
   );
