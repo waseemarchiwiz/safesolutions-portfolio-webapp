@@ -96,7 +96,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    Web Development
+                    Custom Development
                   </Link>
                 </li>
 
@@ -105,7 +105,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    App Development
+                    Backoffice Support
                   </Link>
                 </li>
 
@@ -114,7 +114,7 @@ const Footer = () => {
                     // href="#"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    AR/VR
+                    Archetecture and Design
                   </Link>
                 </li>
 

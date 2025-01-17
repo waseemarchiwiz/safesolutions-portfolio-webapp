@@ -73,10 +73,7 @@ const AboutHero = () => {
                 onClick={() => navigate("/contact")}
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
-                <div className="relative px-8 py-3 bg-gray-900 rounded-lg leading-none flex items-center">
-                  <span className="text-white">Start Building</span>
-                  <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
+                
               </button>
             </div>
 
