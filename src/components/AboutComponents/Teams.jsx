@@ -252,7 +252,7 @@ const Teams = () => {
               <div
                 className="relative bg-white dark:bg-black rounded-2xl p-8 transition-all duration-300 
                              hover:-translate-y-2 overflow-hidden
-                              border-2  hover:shadow-lg hover:shadow-slate-500   duration-300
+                              border-2  hover:shadow-lg hover:shadow-slate-500  
                             "
               >
                 {/* Decorative Background Elements */}
