@@ -392,7 +392,7 @@ export const projects = [
   {
     name: "Archiwiz Build",
     description: "We bring your ideal home to life from concept tp completion.",
-    link: "https://archiwizbuild.com/",
+    link: "https://archiwizbuild.com",
     img: archiwizbuild,
     type: "external",
   },

@@ -93,14 +93,15 @@ export const BlogsTable = () => {
       formData.append("shortDescription", values.shortDescription);
       formData.append("description", values.description);
 
-      // Handle images
+      // Handle images - only append new images if they exist
       values.images.forEach((image, index) => {
         if (image.file) {
-          formData.append(`images[${index}]`, image.file);
-        } else if (image.isExisting) {
-          formData.append(`existingImages[${index}]`, image.image);
+          formData.append(`image[${index}]`, image.file);
         }
       });
+
+      // Add a flag to indicate if we're replacing all images
+      // formData.append("replaceAllImages", "true");
 
       await apiInstance.put(`/update/blog/${selectedBlog.id}`, formData, {
         headers: {
@@ -139,18 +140,27 @@ export const BlogsTable = () => {
     const handleImageChange = (e, setFieldValue, currentImages) => {
       const files = Array.from(e.target.files).filter(validateImage);
 
-      if (currentImages.length + files.length > MAX_IMAGES) {
+      if (files.length > MAX_IMAGES) {
         toast.error(`Maximum ${MAX_IMAGES} images allowed`);
         return;
       }
 
+      // Clear existing URLs if any were created
+      currentImages.forEach((image) => {
+        if (image.file) {
+          URL.revokeObjectURL(image.image);
+        }
+      });
+
+      // Replace all existing images with new ones
       const newImages = files.map((file) => ({
-        id: Math.random(),
+        // id: Math.random(),
         image: URL.createObjectURL(file),
         file,
       }));
 
-      setFieldValue("images", [...currentImages, ...newImages]);
+      setFieldValue("image", newImages);
+      // toast.info("New images will replace all existing images");
     };
 
     const removeImage = (index, setFieldValue, values) => {
@@ -189,7 +199,7 @@ export const BlogsTable = () => {
             onSubmit={handleUpdate}
           >
             {({ isSubmitting, setFieldValue, values }) => (
-              <Form className="space-y-6  ">
+              <Form className="space-y-6">
                 <div>
                   <Field
                     name="title"
@@ -251,16 +261,19 @@ export const BlogsTable = () => {
                       </div>
                     ))}
                   </div>
-                  {values.images.length < MAX_IMAGES && (
-                    <input
-                      type="file"
-                      multiple
-                      accept={ALLOWED_FILE_TYPES.join(",")}
-                      onChange={(e) =>
-                        handleImageChange(e, setFieldValue, values.images)
-                      }
-                      className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                    />
+                  <input
+                    type="file"
+                    multiple
+                    accept={ALLOWED_FILE_TYPES.join(",")}
+                    onChange={(e) =>
+                      handleImageChange(e, setFieldValue, values.images)
+                    }
+                    className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                  {values.images.length > 0 && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      Note: Adding new images will replace all existing images
+                    </p>
                   )}
                 </div>
 
