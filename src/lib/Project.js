@@ -18,7 +18,7 @@ import {
 
 // Import images
 import erpimage from "../assets/erp.webp";
-import precision from "../assets/precision.png";
+import archiwizbuild from "../assets/archiwizbuild.png";
 import nate from "../assets/nate.png";
 import archiwiz from "../assets/portal.png";
 import lumsden from "../assets/lumsden.png";
@@ -195,14 +195,6 @@ export const projects = [
     },
   },
 
-  // {
-  //   name: "Precision Health",
-  //   description:
-  //     "Medical Precision gives information about medical health and how to maintain it.",
-  //   link: "https://orange-ocean-0cfaffb1e.5.azurestaticapps.net/",
-  //   img: precision,
-  //   type: "external", // Flag for external link projects
-  // },
   {
     name: "Medical Nate",
     description:
@@ -396,6 +388,13 @@ export const projects = [
         },
       ],
     },
+  },
+  {
+    name: "Archiwiz Build",
+    description: "We bring your ideal home to life from concept tp completion.",
+    link: "https://archiwizbuild.com/",
+    img: archiwizbuild,
+    type: "external",
   },
   {
     name: "AR/VR Solutions",
