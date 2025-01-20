@@ -1,23 +1,25 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Animation library for smooth transitions
 import {
   ArrowRight,
   CheckCircle2,
   Users,
   Building,
   Gitlab,
-} from "lucide-react";
-import ProjectsComponent from "@/components/HomeComponents/ProjectsComponent";
-import Teams from "@/components/AboutComponents/Teams";
-import PartnersSection from "@/components/AboutComponents/PartnersSection";
-import ScrollToTop from "@/globals/ScrollToTop";
-import { useNavigate } from "react-router-dom";
-import CustomButton from "@/globals/CustomButton";
-import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
-import AboutHero from "@/components/AboutComponents/AboutHero";
+} from "lucide-react"; // Icon set for adding visual elements
+import ProjectsComponent from "@/components/HomeComponents/ProjectsComponent"; // Custom Projects Component
+import Teams from "@/components/AboutComponents/Teams"; // Teams section component
+import PartnersSection from "@/components/AboutComponents/PartnersSection"; // Partners section component
+import ScrollToTop from "@/globals/ScrollToTop"; // Scroll to top button
+import { useNavigate } from "react-router-dom"; // Hook for navigation within the app
+
+import AboutHero from "@/components/AboutComponents/AboutHero"; // Hero section for the About page
+import NumberTicker from "../../components/ui/number-ticker"; // Animated number counter component
 
 const About = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // React Router navigation hook
+
+  // Achievements data with icons and labels
   const achievements = [
     {
       number: "5+",
@@ -36,15 +38,17 @@ const About = () => {
     },
   ];
 
+  // Features list to highlight company strengths
   const features = [
-    "Expert development team",
-    "Innovative solutions",
-    "24/7 Support",
-    "Custom-tailored approach",
+    "Dedicated team with proven expertise",
+    "Cutting-edge technology integration",
+    "Round-the-clock customer assistance",
+    "Solutions designed to meet your unique needs",
   ];
 
   return (
     <>
+      {/* Hero Section */}
       <AboutHero />
       <div className="bg-[#FFFFFF] dark:bg-black dark:text-white">
         {/* Achievements Section */}
@@ -57,10 +61,15 @@ const About = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex flex-col items-center p-8  bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 "
+                  className="flex flex-col items-center p-8 gap-5  bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 "
                 >
-                  <div className="text-purple-500 mb-4">{item.icon}</div>
-                  <h3 className="text-4xl font-bold mb-2">{item.number}</h3>
+                  {/* Achievement Icon */}
+                  <div className="text-purple-500  ">{item.icon}</div>
+                  {/* Animated Number Display */}
+                  <h3 className="whitespace-pre-wrap text-6xl font-medium tracking-tighter text-black dark:text-white  ">
+                    <NumberTicker value={item.number} />
+                  </h3>
+                  {/* Achievement Label */}
                   <p className="text-gray-600 dark:text-gray-400">
                     {item.label}
                   </p>
@@ -70,14 +79,16 @@ const About = () => {
           </div>
         </div>
 
-        {/* Enhanced Our Story Section */}
+        {/* Our Story Section */}
         <div className="container mx-auto px-6 py-24">
           <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Text Content with Animation */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
+              {/* Section Header */}
               <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 mb-6">
                 <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
                 <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
@@ -85,10 +96,12 @@ const About = () => {
                 </span>
               </div>
 
+              {/* Title */}
               <h2 className="text-3xl md:text-4xl font-bold mb-6 dark:text-white">
                 Leading the Way in Digital Innovation
               </h2>
 
+              {/* Description */}
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Safe Solutions Consultants specializes in delivering expert
                 back-office solutions tailored to the unique needs of industries
@@ -96,6 +109,7 @@ const About = () => {
                 healthcare.
               </p>
 
+              {/* Features List with Animation */}
               <div className="grid grid-cols-2 gap-4">
                 {features.map((feature, index) => (
                   <motion.div
@@ -114,12 +128,14 @@ const About = () => {
               </div>
             </motion.div>
 
+            {/* Image with Floating Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               className="relative"
             >
+              {/* Main Image */}
               <div className="aspect-square rounded-2xl overflow-hidden">
                 <img
                   src="https://img.freepik.com/free-photo/top-view-unrecognizable-hacker-performing-cyberattack-night_1098-18706.jpg?semt=ais_hybrid"
@@ -129,7 +145,7 @@ const About = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-transparent" />
               </div>
 
-              {/* Floating card */}
+              {/* Floating Card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -137,9 +153,11 @@ const About = () => {
                 className="absolute -bottom-6 -left-6 bg-white dark:bg-[#27272A] p-6 rounded-xl shadow-xl"
               >
                 <div className="flex items-center gap-4">
+                  {/* Icon */}
                   <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center">
                     <Users className="w-6 h-6 text-purple-500" />
                   </div>
+                  {/* Client Information */}
                   <div>
                     <h4 className="font-bold text-xl mb-1">10+</h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -152,7 +170,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* Keep your existing components */}
+        {/* Other Components */}
         <ProjectsComponent />
         <Teams />
         <PartnersSection />

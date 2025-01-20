@@ -26,7 +26,7 @@ const PartnersSection = () => {
     {
       name: "Archiwiz Build",
       logo: archiwizbuild,
-      link: "https://archiwizbuild-portfolio-app-prod-g5hdfzcxhucwcsa2.eastus-01.azurewebsites.net/",
+      link: "https://archiwizbuild.com/",
     },
   ];
 
