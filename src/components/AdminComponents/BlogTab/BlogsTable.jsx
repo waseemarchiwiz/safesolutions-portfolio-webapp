@@ -7,7 +7,7 @@ import { CustomInput } from "@/globals/CustomInput";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { Editor } from "@tinymce/tinymce-react";
 
-// Constants
+// Constants for image handling
 const MAX_IMAGES = 5;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = [
@@ -34,6 +34,7 @@ export const BlogsTable = () => {
     description: Yup.string()
       .required("Content is required")
       .min(50, "Content must be at least 50 characters"),
+    images: Yup.array()
   });
 
   const headers = ["ID", "Title", "Short Description"];
@@ -72,12 +73,11 @@ export const BlogsTable = () => {
         title: completeBlogData?.title,
         shortDescription: completeBlogData?.shortDescription,
         description: completeBlogData?.description,
-        images:
-          completeBlogData?.images?.map((img) => ({
-            id: img.id,
-            image: img.image,
-            isExisting: true,
-          })) || [],
+        images: completeBlogData?.images?.map((img) => ({
+          id: img.id,
+          image: img.image,
+          isExisting: true,
+        })) || [],
       });
       setOpenModal(true);
     } else {
@@ -92,31 +92,64 @@ export const BlogsTable = () => {
       formData.append("title", values.title);
       formData.append("shortDescription", values.shortDescription);
       formData.append("description", values.description);
-
-      // Handle images - only append new images if they exist
-      values.images.forEach((image, index) => {
-        if (image.file) {
-          formData.append(`image[${index}]`, image.file);
+  
+      // Handle images
+      if (values.images && values.images.length > 0) {
+        // Handle new images
+        const newImages = values.images.filter(img => !img.isExisting);
+        console.log('New images to upload:', newImages);
+  
+        newImages.forEach((image, index) => {
+          if (image.file) {
+            // Use 'image' as the field name to match backend expectation
+            formData.append('image', image.file);
+          }
+        });
+  
+        // Handle existing images
+        const existingImages = values.images.filter(img => img.isExisting);
+        console.log('Existing images:', existingImages);
+        
+        if (existingImages.length > 0) {
+          formData.append('existingImageIds', JSON.stringify(existingImages.map(img => img.id)));
         }
-      });
-
-      // Add a flag to indicate if we're replacing all images
-      // formData.append("replaceAllImages", "true");
-
-      await apiInstance.put(`/update/blog/${selectedBlog.id}`, formData, {
+      }
+  
+      // Debug FormData contents
+      console.log('FormData contents:');
+      for (let pair of formData.entries()) {
+        if (pair[1] instanceof File) {
+          console.log(pair[0] + ': File -', pair[1].name, pair[1].size, 'bytes');
+        } else {
+          console.log(pair[0] + ':', pair[1]);
+        }
+      }
+  
+      const response = await apiInstance.put(`/update/blog/${selectedBlog.id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           user_access_token: userToken,
         },
       });
-
-      toast.success("Blog updated successfully");
-      setOpenModal(false);
-      setSelectedBlog(null);
-      fetchData();
+  
+      if (response.status === 200) {
+        toast.success("Blog updated successfully");
+        setOpenModal(false);
+        setSelectedBlog(null);
+        fetchData();
+      } else {
+        throw new Error("Update failed");
+      }
     } catch (error) {
       console.error("Error updating blog:", error);
-      toast.error("Failed to update blog");
+      if (error.response) {
+        console.log('Error response:', {
+          status: error.response.status,
+          data: error.response.data,
+          headers: error.response.headers
+        });
+      }
+      toast.error(error.response?.data?.message || "Failed to update blog");
     } finally {
       setSubmitting(false);
     }
@@ -127,11 +160,11 @@ export const BlogsTable = () => {
 
     const validateImage = (file) => {
       if (file.size > MAX_FILE_SIZE) {
-        toast.error("File too large");
+        toast.error(`File size must be less than ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
         return false;
       }
       if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        toast.error("Unsupported file type");
+        toast.error("Unsupported file type. Please use JPG, PNG, or GIF");
         return false;
       }
       return true;
@@ -140,27 +173,30 @@ export const BlogsTable = () => {
     const handleImageChange = (e, setFieldValue, currentImages) => {
       const files = Array.from(e.target.files).filter(validateImage);
 
-      if (files.length > MAX_IMAGES) {
+      if (files.length === 0) return;
+
+      if (files.length + (currentImages?.length || 0) > MAX_IMAGES) {
         toast.error(`Maximum ${MAX_IMAGES} images allowed`);
         return;
       }
 
-      // Clear existing URLs if any were created
+      // Revoke any existing temporary URLs
       currentImages.forEach((image) => {
         if (image.file) {
           URL.revokeObjectURL(image.image);
         }
       });
 
-      // Replace all existing images with new ones
+      // Create new image objects
       const newImages = files.map((file) => ({
-        // id: Math.random(),
+        id: Math.random().toString(),
         image: URL.createObjectURL(file),
-        file,
+        file: file,
+        isNew: true
       }));
 
-      setFieldValue("image", newImages);
-      // toast.info("New images will replace all existing images");
+      // Replace all images with new ones
+      setFieldValue("images", newImages);
     };
 
     const removeImage = (index, setFieldValue, values) => {
@@ -173,9 +209,9 @@ export const BlogsTable = () => {
     };
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
-        <div className="bg-white dark:bg-[#18181b] p-8 rounded-lg w-full max-w-[90%] md:max-w-[50%] overflow-y-auto max-h-[90vh] z-50     ">
-          <div className="flex justify-between items-center mb-6  ">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="bg-white dark:bg-[#18181b] p-8 rounded-lg w-full max-w-[90%] md:max-w-[50%] overflow-y-auto max-h-[90vh] z-50">
+          <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">Edit Blog</h2>
             <button
               onClick={() => {
@@ -193,7 +229,7 @@ export const BlogsTable = () => {
               title: selectedBlog?.title || "",
               shortDescription: selectedBlog.shortDescription || "",
               description: selectedBlog.description || "",
-              images: selectedBlog.images || [],
+              images: selectedBlog.images || []
             }}
             validationSchema={editBlogValidationSchema}
             onSubmit={handleUpdate}
@@ -239,21 +275,19 @@ export const BlogsTable = () => {
                   </label>
                   <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
                     {values.images.map((image, index) => (
-                      <div key={image.id} className="relative group">
+                      <div key={image.id || index} className="relative group">
                         <img
                           src={
                             image.file
-                              ? image.image
-                              : `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${image.image}`
+                              ? image.image // Use the local URL for new files
+                              : `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${image.image}` // Use the server URL for existing images
                           }
                           alt={`Preview ${index + 1}`}
                           className="w-32 h-32 object-cover rounded-md"
                         />
                         <button
                           type="button"
-                          onClick={() =>
-                            removeImage(index, setFieldValue, values)
-                          }
+                          onClick={() => removeImage(index, setFieldValue, values)}
                           className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           ×
@@ -265,16 +299,9 @@ export const BlogsTable = () => {
                     type="file"
                     multiple
                     accept={ALLOWED_FILE_TYPES.join(",")}
-                    onChange={(e) =>
-                      handleImageChange(e, setFieldValue, values.images)
-                    }
+                    onChange={(e) => handleImageChange(e, setFieldValue, values.images)}
                     className="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
-                  {values.images.length > 0 && (
-                    <p className="text-sm text-gray-500 mt-2">
-                      Note: Adding new images will replace all existing images
-                    </p>
-                  )}
                 </div>
 
                 <div>
@@ -336,11 +363,11 @@ export const BlogsTable = () => {
   };
 
   const handleDelete = async (row) => {
-    console.log(row, "delete");
     const isConfirmed = window.confirm(
       `Are you sure you want to delete the Blog "${row.title}"?`
     );
     if (!isConfirmed) return;
+    
     try {
       await apiInstance.delete(`/delete/blog/${row.id}`, {
         headers: {
