@@ -226,8 +226,8 @@ const Teams = () => {
     <div className="min-h-[95vh]  bg-white dark:bg-black py-24">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
-        <div className="max-w-3xl mx-auto text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-gray-800 shadow-md mb-6">
+        <div className="max-w-6xl mx-auto text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-black shadow-md mb-6">
             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent font-semibold">
               Meet Our Team
@@ -238,7 +238,8 @@ const Teams = () => {
             The Minds Behind Our Vision
           </h2> */}
 
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+
+          <p className="text-lg text-slate-600 dark:text-white  text-[20px] md:text-[26px] leading-normal text-center    ">
             Great teams are built on shared goals and a sense of purpose. When
             everyone is aligned with a clear mission, their combined efforts
             become more impactful.

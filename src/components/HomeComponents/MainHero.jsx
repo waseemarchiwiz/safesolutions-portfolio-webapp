@@ -79,9 +79,9 @@ const MainHero = () => {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+              <h1 className="text-3xl    md:text-6xl lg:text-7xl font-bold tracking-tight">
                 We Build
-                <span className="block py-10 mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                <span className="block py-2 mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
                   Digital Future
                 </span>
               </h1>

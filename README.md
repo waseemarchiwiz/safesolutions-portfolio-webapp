@@ -34,7 +34,7 @@ SafeSolutionDemo is a React-based web application designed with an emphasis on m
 - Dynamic UI components using `Radix UI`, `Swiper`, and `Framer Motion`
 - Interactive charts with `Recharts`
 - Toast notifications with `React Toastify`
-- Smooth animations powered by `GSAP` and `Lottie`
+- Smooth animations powered by `Lottie`
 - Lightweight, fast, and optimized for modern browsers
 
 ---

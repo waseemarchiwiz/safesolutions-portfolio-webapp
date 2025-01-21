@@ -7,6 +7,7 @@ import Project from "@/pages/Client/projectsdetails/Project";
 
 import AdminSetting from "@/pages/Admin/AdminSetting";
 import BlogsDetails from "@/pages/Client/BlogsDetails";
+import Setting from '../pages/Admin/Setting'
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -124,6 +125,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <AdminSetting />
+            </Suspense>
+          ),
+        },
+        {
+          path: "settings1",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <Setting />
             </Suspense>
           ),
         },

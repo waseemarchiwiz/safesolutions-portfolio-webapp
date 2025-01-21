@@ -32,12 +32,12 @@ const ServicesComponent = () => {
 
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
               Transforming Ideas into
-              <span className="block py-5 mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
+              <span className="block py-3   bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
                 Digital Reality
               </span>
             </h2>
 
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-slate-600  dark:text-white text-[20px] md:text-[26px] leading-relaxed  text-center      w-auto">
               Our services include Medical Billing and Coding, Web Development
               and Cloud Services, BIM services and Visualization services, and
               FINTECH. We provide robust, proactive and effective management of
