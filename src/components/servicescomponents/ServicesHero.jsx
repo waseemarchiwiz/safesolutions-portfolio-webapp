@@ -54,10 +54,10 @@ const ServicesHero = () => {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                Turning Concepts into
+              <h1 className="text-3xl    md:text-6xl lg:text-7xl font-bold tracking-tight">
+                Turning Concepts{" "}
                 <span className="block py-3 mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  Creations
+                  Into Creations
                 </span>
               </h1>
 

@@ -9,26 +9,21 @@ const AboutComp = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-slate-900">
+    <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
       {/* Animated background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-        {/* Animated particles */}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-white/10 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 6}px`,
-              height: `${Math.random() * 6}px`,
-              animationDuration: `${3 + Math.random() * 3}s`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          />
-        ))}
-      </div>
+      <div
+        className="absolute inset-0 overflow-hidden hidden sm:block"
+        style={{
+          backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
+                       linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
+          backgroundSize: "50px 50px",
+          opacity: 0.2,
+        }}
+      />
 
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
       {/* Main content */}
       <div className="relative min-h-[600px] container     mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
         {/* Left side - Image */}
@@ -96,10 +91,10 @@ const AboutComp = () => {
               <span className="text-white/80 text-sm">About SafeSolution</span>
             </div>
 
-            <h2 className="text-4xl lg:text-5xl font-bold text-white">
-              Transforming Business Through
-              <span className="block py-10 mt-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
-                Digital Innovation
+            <h2 className="text-4xl lg:text-5xl font-bold text-white leading-normal">
+              Driving Excellence{" "}
+              <span className="block py-2 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent">
+                Through Digital Solutions
               </span>
             </h2>
 

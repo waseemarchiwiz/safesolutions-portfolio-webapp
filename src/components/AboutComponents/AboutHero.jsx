@@ -55,9 +55,9 @@ const AboutHero = () => {
 
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                Transforming Ideas into
+                Transforming Ideas {" "}  
                 <span className="block py-3 mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  Digital Reality
+                  Into Digital Reality
                 </span>
               </h1>
 
@@ -73,7 +73,6 @@ const AboutHero = () => {
                 onClick={() => navigate("/contact")}
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
-                
               </button>
             </div>
 

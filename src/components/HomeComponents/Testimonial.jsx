@@ -125,7 +125,7 @@ const Testimonial = () => {
       <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
 
       <div className="max-w-6xl mx-auto relative  ">
-        <div className="text-center mb-16 transform transition-all duration-500 hover:scale-105">
+        <div className="text-center mb-16  ">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
             <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
             <span className="text-purple-600 dark:text-white text-sm font-medium">
@@ -133,7 +133,7 @@ const Testimonial = () => {
             </span>
           </div>
 
-          <p className="text-lg text-gray-600 dark:text-white max-w-2xl mx-auto mt-7">
+          <p className="text-slate-600 p-5 dark:text-white text-[20px] md:text-[26px] leading-normal  text-center      w-auto">
             Discover why businesses trust us to deliver exceptional results and
             drive their success forward.
           </p>

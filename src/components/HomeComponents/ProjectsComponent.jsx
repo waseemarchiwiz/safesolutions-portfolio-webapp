@@ -38,7 +38,7 @@ const ProjectsComponent = ({ background }) => {
               Our Projects
             </span>
           </div>
-          <p className="font-light text-[20px] md:text-[26px] leading-[50px] text-center">
+          <p className="text-slate-600  p-7 dark:text-white text-[20px] md:text-[26px] leading-normal  text-center      w-auto">
             At Safe Solution, we pride ourselves on delivering impactful
             solutions tailored to our clients' unique needs. With a focus on
             innovation, precision, and excellence, we have successfully
