@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply font-['Oswald']  bg-[#FFFFFF];
+  @apply font-['Poppins']  bg-[#FFFFFF];
 }
 
 h1 {
-  @apply font-['Oswald'];
+  @apply font-['Poppins'];
 }
 
 ::-webkit-scrollbar {
