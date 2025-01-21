@@ -36,7 +36,8 @@ const items = [
   { title: "Testimonials", url: "/admin/testimonials", icon: FaQuoteLeft },
   { title: "Faqs", url: "/admin/faqs", icon: FaIdCard },
   // { title: "Services", url: "/admin/services", icon: FaServicestack },
-  { title: "Setings", url: "/admin/settings", icon: Settings },
+  // { title: "Setings", url: "/admin/settings", icon: Settings },
+  { title: "Setings", url: "/admin/settings1", icon: Settings },
 ];
 
 export function AppSidebar() {

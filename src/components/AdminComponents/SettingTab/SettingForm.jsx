@@ -14,18 +14,22 @@ const SettingForm = () => {
     console.log(values, "valuees");
 
     try {
-      await apiInstance.post("store/email", values, {
+      const response = await apiInstance.post("store/email", values, {
         headers: {
           "Content-Type": "application/json",
           user_access_token: userToken,
         },
       });
+
       resetForm();
       fetchData();
-      toast.success("Email added successfully!");
+      if (response.success === true) {
+        toast.success("Email added successfully!");
+      }
+      // toast.success("Email added successfully!");
     } catch (error) {
       console.error("Error adding email:", error);
-      toast.error("Failed to add email");
+      // toast.error("Failed to add email");
     }
   };
 

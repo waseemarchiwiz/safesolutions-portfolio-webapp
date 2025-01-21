@@ -75,7 +75,7 @@ const AdminSetting = () => {
       toast.success("Email added successfully!");
     } catch (error) {
       console.error("Error adding email:", error);
-      toast.error("Failed to add email");
+      // toast.error("Failed to add email");
     }
   };
 
@@ -85,6 +85,8 @@ const AdminSetting = () => {
   };
 
   const handleUpdate = async (values, { setSubmitting }) => {
+    
+
     try {
       await apiInstance.put(`update/email/${selectedEmail.id}`, values, {
         headers: {
