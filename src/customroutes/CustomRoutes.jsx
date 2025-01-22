@@ -7,7 +7,8 @@ import Project from "@/pages/Client/projectsdetails/Project";
 
 import AdminSetting from "@/pages/Admin/AdminSetting";
 import BlogsDetails from "@/pages/Client/BlogsDetails";
-import Setting from '../pages/Admin/Setting'
+import Setting from "../pages/Admin/Setting";
+import SoftwareDetails from "@/pages/Client/softwaredetails/SoftwareDetails";
 
 // Lazy loading for layouts
 const ClientLayout = React.lazy(() => import("../layout/Layout"));
@@ -210,6 +211,14 @@ const CustomRoutes = () => {
           element: (
             <Suspense fallback={<LoadingPage />}>
               <Project />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/software/:id",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <SoftwareDetails />
             </Suspense>
           ),
         },

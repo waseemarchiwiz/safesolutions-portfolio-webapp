@@ -42,8 +42,8 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <nav className="flex items-center gap-2">
-              <ul className="flex items-center gap-8">
+            <nav className="flex items-center justify-center gap-2  ">
+              <ul className="flex items-center gap-5">
                 {["Home", "About", "Services", "Careers", "Blogs"].map(
                   (item) => (
                     <li key={item}>
@@ -69,11 +69,11 @@ const Header = () => {
                 )}
               </ul>
 
-              <div className="flex items-center gap-4 pl-8 border-l border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-4 ml-3 pl-8 border-l border-gray-200 dark:border-gray-700">
                 <CustomButton
                   label="Contact us"
                   to="/contact"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                  className="bg-blue-500 mt-2 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
                 />
 
                 <button
