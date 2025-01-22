@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StarIcon, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Testimonial = () => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -93,6 +94,21 @@ const Testimonial = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, testimonials.length]);
 
+  const headerVariants = {
+    hidden: {
+      opacity: 0,
+      y: -50,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+  };
+
   const renderStars = (rating) => {
     return [...Array(rating)].map((_, index) => (
       <StarIcon
@@ -124,8 +140,15 @@ const Testimonial = () => {
       <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
       <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
 
-      <div className="max-w-6xl mx-auto relative  ">
-        <div className="text-center mb-16  ">
+      {/* <motion.div className="max-w-6xl mx-auto relative  "> */}
+      <motion.div
+        className="max-w-6xl mx-auto relative  "
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={headerVariants}
+      >
+        <div className="text-center mb-16  " variants={headerVariants}>
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
             <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
             <span className="text-purple-600 dark:text-white text-sm font-medium">
@@ -243,7 +266,7 @@ const Testimonial = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
