@@ -223,36 +223,36 @@ export const projects = [
     title: "Artificial Intelligence",
     description:
       "Leverage cutting-edge AI technologies to automate processes, gain insights, and create intelligent solutions that drive business growth.",
-    link: "https://stripe.com",
+    // link: "https://stripe.com",
   },
   {
-    title: "Web Development",
+    title: "Archetecture and Design",
     description:
       "Create stunning, responsive, and high-performance web applications using modern frameworks and best practices in development.",
-    link: "https://netflix.com",
+    // link: "https://netflix.com",
   },
   {
     title: "ERP Management",
     description:
       "Streamline your business operations with comprehensive ERP solutions that integrate all aspects of your enterprise.",
-    link: "https://google.com",
+    // link: "https://google.com",
   },
   {
     title: "DevOps",
     description:
       "Implement efficient CI/CD pipelines and automation tools to accelerate development and ensure reliable deployments.",
-    link: "https://meta.com",
+    // link: "https://meta.com",
   },
   {
     title: "IoT App Development",
     description:
       "Build connected solutions that bridge the physical and digital worlds, enabling smart automation and data-driven decisions.",
-    link: "https://amazon.com",
+    // link: "https://amazon.com",
   },
   {
-    title: "AR/VR Development",
+    title: "Backoffice support",
     description:
       "Create immersive experiences and virtual environments that revolutionize training, entertainment, and customer engagement.",
-    link: "https://microsoft.com",
+    // link: "https://microsoft.com",
   },
 ];
