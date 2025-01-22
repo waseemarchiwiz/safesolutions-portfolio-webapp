@@ -147,7 +147,7 @@ const ServicesComponent = () => {
               {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="border-r border-t border-slate-200 dark:border-slate-800"
+                  // className="border-r border-t border-slate-200 dark:border-slate-800"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.1 }}
