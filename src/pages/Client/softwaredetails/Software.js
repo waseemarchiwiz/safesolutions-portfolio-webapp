@@ -12,7 +12,7 @@ import {
 export const Software = [
   {
     id: "1",
-    icon: CodeIcon, // Store the reference to the component
+    icon: CodeIcon, // Reference to the icon component
     title: "Web Development",
     description:
       "Custom web solutions tailored to your business needs, using modern technologies and responsive design.",
@@ -20,39 +20,80 @@ export const Software = [
       "Full-stack Development",
       "Responsive Design",
       "Performance Optimization",
+      "SEO-friendly Websites",
+      "E-commerce Platforms",
     ],
+    details: {
+      overview:
+        "We specialize in building modern, scalable, and user-friendly websites that help your business grow. Whether it's a simple landing page or a complex web application, we ensure top-notch quality.",
+      technologies: ["React", "Next.js", "Node.js", "MongoDB", "GraphQL"],
+      industriesServed: ["E-commerce", "Healthcare", "Education", "Startups"],
+    },
   },
   {
     id: "2",
     icon: PaletteIcon,
-    title: "UI/UX Design",
+    title: "Artificial Intelligence",
     description:
-      "Creating intuitive and engaging user interfaces that enhance user experience and drive conversion.",
-    features: ["User Research", "Wireframing", "Interactive Prototypes"],
+      "Harness the power of AI to automate processes, gain insights, and drive innovation in your business.",
+    features: [
+      "Machine Learning Models",
+      "Natural Language Processing",
+      "Predictive Analytics",
+      "Computer Vision",
+      "Custom AI Solutions",
+    ],
+    details: {
+      overview:
+        "We develop AI-driven solutions that empower your business to make data-driven decisions, automate repetitive tasks, and create personalized user experiences.",
+      technologies: ["TensorFlow", "PyTorch", "OpenAI", "AWS SageMaker"],
+      useCases: [
+        "Chatbots and Virtual Assistants",
+        "Fraud Detection",
+        "Customer Segmentation",
+        "Image Recognition",
+      ],
+    },
   },
   {
     id: "3",
     icon: Rocket,
-    title: "Digital Strategy",
+    title: "Game Development",
     description:
-      "Comprehensive digital transformation strategies to help your business grow and adapt in the digital landscape.",
+      "End-to-end game development services to create immersive and engaging gaming experiences.",
     features: [
-      "Business Analysis",
-      "Technology Consulting",
-      "Digital Roadmapping",
+      "2D/3D Game Design",
+      "Cross-platform Development",
+      "Multiplayer Integration",
+      "UI/UX for Games",
+      "AR/VR Game Experiences",
     ],
+    details: {
+      overview:
+        "From concept to deployment, we bring your game ideas to life with state-of-the-art technology and stunning visuals, ensuring an engaging experience for your audience.",
+      technologies: ["Unity", "Unreal Engine", "C#", "Blender", "Photon"],
+      gameTypes: ["Action", "Adventure", "Simulation", "Educational Games"],
+    },
   },
   {
     id: "4",
     icon: ShieldCheckIcon,
-    title: "Cybersecurity Services",
+    title: "App Development",
     description:
-      "Protect your digital assets with advanced security solutions and risk management strategies.",
+      "Build secure, scalable, and feature-rich mobile applications tailored to your needs.",
     features: [
-      "Risk Assessment",
-      "Data Protection",
-      "Threat Monitoring & Response",
+      "iOS and Android Development",
+      "Cross-platform Apps",
+      "UI/UX for Mobile Apps",
+      "App Security Features",
+      "Push Notifications",
     ],
+    details: {
+      overview:
+        "Our app development services include native and cross-platform solutions that deliver seamless performance and intuitive interfaces.",
+      technologies: ["Flutter", "React Native", "Swift", "Kotlin", "Firebase"],
+      industriesServed: ["Healthcare", "Finance", "Logistics", "Retail"],
+    },
   },
   {
     id: "5",
@@ -60,36 +101,114 @@ export const Software = [
     title: "Cloud Solutions",
     description:
       "Scalable and secure cloud infrastructure to streamline your business operations.",
-    features: ["Cloud Migration", "Serverless Computing", "Data Backups"],
+    features: [
+      "Cloud Migration",
+      "Serverless Computing",
+      "Data Backups",
+      "Disaster Recovery",
+      "Cloud Security",
+    ],
+    details: {
+      overview:
+        "Leverage the power of the cloud to reduce costs, enhance scalability, and improve business continuity.",
+      technologies: ["AWS", "Google Cloud", "Azure", "DigitalOcean"],
+      industriesServed: [
+        "Cloud Architecture Design",
+        "Hybrid Cloud Solutions",
+        "Database Management",
+        "DevOps in the Cloud",
+      ],
+    },
   },
   {
     id: "6",
-    icon: ChartPieIcon,
-    title: "Data Analytics",
-    description:
-      "Harness the power of data with actionable insights and advanced analytics tools.",
-    features: ["Data Visualization", "Predictive Analytics", "Big Data"],
-  },
-  {
-    id: "7",
     icon: ServerIcon,
     title: "DevOps Services",
     description:
       "Accelerate your software development lifecycle with continuous integration and delivery solutions.",
-    features: ["CI/CD Pipeline", "Infrastructure Automation", "Monitoring"],
-  },
-  {
-    id: "8",
-    icon: GlobeIcon,
-    title: "SEO & Digital Marketing",
-    description:
-      "Increase your online visibility and drive organic traffic with proven SEO and marketing strategies.",
     features: [
-      "SEO Optimization",
-      "Social Media Marketing",
-      "Content Creation",
+      "CI/CD Pipeline Setup",
+      "Infrastructure Automation",
+      "Monitoring and Logging",
+      "Configuration Management",
+      "Containerization (Docker/Kubernetes)",
     ],
+    details: {
+      overview:
+        "Our DevOps services ensure smooth collaboration between development and operations, enabling faster and more reliable software delivery.",
+      technologies: [
+        "Jenkins",
+        "GitHub Actions",
+        "Terraform",
+        "Ansible",
+        "Kubernetes",
+        "Docker",
+      ],
+      industriesServed: [
+        "Reduced Time to Market",
+        "Improved Code Quality",
+        "Streamlined Deployment",
+        "Enhanced Scalability",
+      ],
+    },
   },
 ];
 
- 
+// {
+//   id: "5",
+//   icon: DatabaseIcon,
+//   title: "Cloud Solutions",
+//   description:
+//     "Scalable and secure cloud infrastructure to streamline your business operations.",
+//   features: [
+//     "Cloud Migration",
+//     "Serverless Computing",
+//     "Data Backups",
+//     "Disaster Recovery",
+//     "Cloud Security",
+//   ],
+//   details: {
+//     overview:
+//       "Leverage the power of the cloud to reduce costs, enhance scalability, and improve business continuity.",
+//     cloudProviders: ["AWS", "Google Cloud", "Azure", "DigitalOcean"],
+//     servicesOffered: [
+//       "Cloud Architecture Design",
+//       "Hybrid Cloud Solutions",
+//       "Database Management",
+//       "DevOps in the Cloud",
+//     ],
+//   },
+// },
+
+// {
+//   id: "6",
+//   icon: ServerIcon,
+//   title: "DevOps Services",
+//   description:
+//     "Accelerate your software development lifecycle with continuous integration and delivery solutions.",
+//   features: [
+//     "CI/CD Pipeline Setup",
+//     "Infrastructure Automation",
+//     "Monitoring and Logging",
+//     "Configuration Management",
+//     "Containerization (Docker/Kubernetes)",
+//   ],
+//   details: {
+//     overview:
+//       "Our DevOps services ensure smooth collaboration between development and operations, enabling faster and more reliable software delivery.",
+//     tools: [
+//       "Jenkins",
+//       "GitHub Actions",
+//       "Terraform",
+//       "Ansible",
+//       "Kubernetes",
+//       "Docker",
+//     ],
+//     benefits: [
+//       "Reduced Time to Market",
+//       "Improved Code Quality",
+//       "Streamlined Deployment",
+//       "Enhanced Scalability",
+//     ],
+//   },
+// },
