@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Software } from "./Software";
 import { useParams, Link } from "react-router-dom";

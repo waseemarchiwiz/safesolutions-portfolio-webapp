@@ -1,11 +1,9 @@
-import CustomTable from "@/globals/CustomTable";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
-import { React, useEffect, useState } from "react";
+
+
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { teamMemberValidationSchema } from "@/schemas/validationSchemas";
-import { CustomInput } from "@/globals/CustomInput";
-import { Formik, Form, Field } from "formik";
+import CustomTable from "@/globals/CustomTable";
+import EditTeamModal from "./EditTeamModal";
 import apiInstance from "../../../../api-config";
 
 export const TeamsTable = () => {
@@ -13,9 +11,6 @@ export const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const userToken = localStorage.getItem("apiusertoken");
-  const [previewImage, setPreviewImage] = useState(null);
-
-  console.log("token2121", userToken);
 
   const fetchData = async () => {
     try {
@@ -39,16 +34,41 @@ export const TeamsTable = () => {
     fetchData();
   }, []);
 
+  const handleEdit = (row) => {
+    setSelectedTeam(row);
+    setIsEditModalOpen(true);
+    setPreviewImage(selectedTeam.Image.props.src);
+  };
+
+  const handleDelete = async (row) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete the team member "${row.name}"?`
+    );
+    if (!isConfirmed) return;
+
+    try {
+      await apiInstance.delete(`/delete/team/${row?.id}`, {
+        headers: { user_access_token: userToken },
+      });
+      setTeamsData((prevTeams) =>
+        prevTeams.filter((team) => team.id !== row.id)
+      );
+      toast.success("Team member deleted successfully!");
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Failed to delete team member");
+    }
+  };
+
   const headers = [
-    "id",
+    "ID",
     "Image",
     "Name",
     "Role",
-    "Github Url",
-    "LinkedIn Url",
-    "Twitter Url",
+    "Github",
+    "LinkedIn",
+    "Twitter",
   ];
-
   const data = teamsData.map((team) => ({
     id: team.id,
     Image: (
@@ -66,210 +86,6 @@ export const TeamsTable = () => {
     twitter: team.twitter,
   }));
 
-  const handleEdit = (row) => {
-    setSelectedTeam({
-      ...row,
-      githubLink: row.githubUrl,
-      linkedInLink: row.linkedin,
-      twitterLink: row.twitter,
-    });
-    setPreviewImage(selectedTeam.Image.props.src);
-    setIsEditModalOpen(true);
-  };
-  console.log(previewImage, "previ");
-  const handleDelete = async (row) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete the team member "${row.name}"?`
-    );
-
-    if (!isConfirmed) return;
-
-    try {
-      await apiInstance.delete(`/delete/team/${row?.id}`, {
-        headers: {
-          user_access_token: userToken,
-        },
-      });
-      setTeamsData((prevTeams) =>
-        prevTeams.filter((team) => team.id !== row.id)
-      );
-      toast.success("Team member deleted successfully!");
-    } catch (error) {
-      console.error("Delete error:", error);
-      toast.error("Failed to delete team member");
-    }
-  };
-
-  const handleUpdate = async (values, { setSubmitting }) => {
-    try {
-      setSubmitting(true); // Set Formik's submitting state to true
-
-      const formData = new FormData();
-
-      formData.append("name", values.name);
-      formData.append("role", values.role);
-      formData.append("github", values.githubLink);
-      formData.append("linkedin", values.linkedInLink);
-      formData.append("twitter", values.twitterLink);
-
-      if (values.image instanceof File) {
-        formData.append("image", values.image);
-      }
-
-      const response = await apiInstance.put(
-        `/update/team/${selectedTeam.id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            user_access_token: userToken,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        toast.success("Team member updated successfully!");
-
-        setTeamsData((prevTeams) =>
-          prevTeams.map((team) =>
-            team.id === selectedTeam.id
-              ? {
-                  ...team,
-                  name: values.name,
-                  role: values.role,
-                  github: values.githubLink,
-                  linkedin: values.linkedInLink,
-                  twitter: values.twitterLink,
-                  image: response.data.updatedTeam?.image || team.image,
-                }
-              : team
-          )
-        );
-
-        setIsEditModalOpen(false);
-      } else {
-        throw new Error(
-          response.data.message || "Failed to update team member"
-        );
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-      toast.error(error.message || "An error occurred while updating");
-    } finally {
-      setSubmitting(false); // Make sure to set submitting to false in finally block
-    }
-  };
-
-  // setPreviewImage(selectedTeam.Image.props.src)
-  // console.log(previewImage,"previewImage");
-  const EditModal = () => {
-    if (!isEditModalOpen || !selectedTeam) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 overflow-scroll ">
-        <div className="bg-white p-8 rounded-lg w-full max-w-[50%] overflow-scroll">
-          <h2 className="text-2xl mb-4">Edit Team Member</h2>
-          <Formik
-            initialValues={{
-              name: selectedTeam.name || "",
-              role: selectedTeam.role || "",
-              image: previewImage,
-              githubLink: selectedTeam.githubLink || "",
-              linkedInLink: selectedTeam.linkedInLink || "",
-              twitterLink: selectedTeam.twitterLink || "",
-            }}
-            validationSchema={teamMemberValidationSchema}
-            onSubmit={handleUpdate}
-            enableReinitialize
-          >
-            {({ isSubmitting, setFieldValue, errors, touched }) => (
-              <Form className="space-y-4">
-                <Field
-                  name="name"
-                  label="Name"
-                  type="text"
-                  as={CustomInput}
-                  error={touched.name && errors.name}
-                />
-                <Field
-                  name="role"
-                  label="Role"
-                  as={CustomInput}
-                  error={touched.role && errors.role}
-                />
-
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Image
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(event) => {
-                      const file = event.currentTarget.files[0];
-                      setFieldValue("image", file);
-                    }}
-                    className="mt-1 block w-full p-2 border rounded-md"
-                  />
-                  {previewImage && (
-                    <img
-                      src={previewImage}
-                      alt={selectedTeam.name}
-                      width={200}
-                    />
-                  )}
-                  {errors.image && touched.image && (
-                    <p className="text-red-500 text-xs">{errors.image}</p>
-                  )}
-                </div>
-
-                <Field
-                  name="githubLink"
-                  label="Github URL"
-                  type="text"
-                  as={CustomInput}
-                  error={touched.githubLink && errors.githubLink}
-                />
-                <Field
-                  name="twitterLink"
-                  label="Twitter URL"
-                  type="text"
-                  as={CustomInput}
-                  error={touched.twitterLink && errors.twitterLink}
-                />
-                <Field
-                  name="linkedInLink"
-                  label="LinkedIn URL"
-                  type="text"
-                  as={CustomInput}
-                  error={touched.linkedInLink && errors.linkedInLink}
-                />
-
-                <div className="flex justify-end space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsEditModalOpen(false)}
-                    className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                    disabled={isSubmitting}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? "Updating..." : "Update"}
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <CustomTable
@@ -279,7 +95,13 @@ export const TeamsTable = () => {
         onDelete={handleDelete}
         itemsPerPage={5}
       />
-      <EditModal />
+      {isEditModalOpen && (
+        <EditTeamModal
+          team={selectedTeam}
+          onClose={() => setIsEditModalOpen(false)}
+          onUpdate={fetchData}
+        />
+      )}
     </>
   );
 };
