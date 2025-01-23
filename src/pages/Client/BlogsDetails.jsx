@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ChevronRight, ChevronLeft, Code2, Cpu, Globe2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import axios from "axios";
 import ScrollToTop from "@/globals/ScrollToTop";
+import loaderAnimation from "../../assets/lottie/loadanimate.json";
+import Lottie from "lottie-react";
 
 const BlogsDetails = () => {
   const { slug } = useParams();
@@ -21,8 +23,6 @@ const BlogsDetails = () => {
       });
 
       setBlog(response?.data.blog);
-
-      // console.log(response, "response");
     } catch (error) {
       console.error("Error fetching blog details:", error);
     }
@@ -30,50 +30,33 @@ const BlogsDetails = () => {
 
   useEffect(() => {
     fetchBlogDetails();
-  }, []);
+  }, [slug]);
 
-  console.log(blogData, "this is blog details");
-  const images = blogData?.images;
-  console.log(images, "images");
-
-  // const { title, description, shortDescription, category, tags, images } = blogData;
-
-  // Sample carousel data - replace with actual blog images
-  const slides = [
-    {
-      image: "/api/placeholder/800/400",
-      title: "Getting Started with Web Development",
-      shortDescription: "Begin your journey into the world of web development",
-      description:
-        "Learn the fundamentals of HTML, CSS, and JavaScript to build modern web applications.",
-    },
-    {
-      image: "/api/placeholder/800/400",
-      title: "Mastering React Hooks",
-      shortDescription: "Deep dive into React's powerful hooks system",
-      description:
-        "Understand how to use useState, useEffect, and custom hooks effectively.",
-    },
-    {
-      image: "/api/placeholder/800/400",
-      title: "Modern CSS Techniques",
-      shortDescription: "Explore advanced CSS features",
-      description:
-        "Master modern CSS features including Grid, Flexbox, and CSS Variables.",
-    },
-  ];
+  const images = blogData?.images || [];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
+
+  if (!blogData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Lottie
+          animationData={loaderAnimation}
+          loop={true}
+          style={{ width: "50px", height: "50px" }}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section (Kept from previous implementation) */}
       <div className="  min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         {/* Animated grid background */}
         <div
@@ -170,67 +153,86 @@ const BlogsDetails = () => {
 
       <div className="w-full bg-white dark:bg-black py-16">
         <div className="container mx-auto px-4">
-          <div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-5xl mx-auto"
           >
-            <div className="relative h-[500px] rounded-lg overflow-hidden shadow-2xl">
-              {images?.map((slide, index) => (
-                <div
-                  key={index}
-                  className={`absolute w-full h-full transition-all duration-500 ease-in-out transform ${
-                    index === currentSlide
-                      ? "translate-x-0"
-                      : "translate-x-full"
-                  }`}
-                  style={{ left: index === currentSlide ? "0%" : "100%" }}
-                >
-                  <img
-                    // src={slide.image}
-                    src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${slide.image}`}
-                    alt={slide.title}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
+            {/* Image Carousel */}
+            {images.length > 0 && (
+              <div className="relative h-[500px] rounded-lg overflow-hidden   mb-12">
+                <AnimatePresence>
+                  {images.map(
+                    (slide, index) =>
+                      index === currentSlide && (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: 300 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -300 }}
+                          transition={{
+                            type: "tween",
+                            duration: 0.5,
+                          }}
+                          className="absolute w-full h-full"
+                        >
+                          <img
+                            src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${slide.image}`}
+                            alt={blogData.title}
+                            className="w-full h-full object-contain"
+                          />
+                        </motion.div>
+                      )
+                  )}
+                </AnimatePresence>
 
-              {/* Navigation buttons */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
+                {/* Navigation buttons */}
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevSlide}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors z-10"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors z-10"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
 
-              {/* Slide indicators */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentSlide ? "bg-white" : "bg-white/50"
-                    }`}
-                  />
-                ))}
+                    {/* Slide indicators */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+                      {images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentSlide(index)}
+                          className={`w-3 h-3 rounded-full transition-colors ${
+                            index === currentSlide ? "bg-white" : "bg-white/50"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
+            )}
+
+            {/* Blog Content */}
+            <div className="prose dark:prose-invert max-w-none">
+              <h1 className="text-4xl font-bold mb-4">{blogData.title}</h1>
+              <h2 className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+                {blogData.shortDescription}
+              </h2>
+
+              <div
+                className="text-lg leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: blogData.description }}
+              />
             </div>
-            <div className=" mt-5  space-y-10">
-              <h1 className="mt-20 text-5xl">{blogData?.title}</h1>
-              <h1 className="text-2xl">{blogData?.shortDescription}</h1>
-              <p
-                dangerouslySetInnerHTML={{ __html: blogData?.description }}
-              ></p>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       <ScrollToTop />
