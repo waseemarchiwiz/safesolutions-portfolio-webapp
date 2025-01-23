@@ -1,61 +1,24 @@
 import React from "react";
 import { Software } from "./Software";
 import { useParams, Link } from "react-router-dom";
-import { Check } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollToTop from "@/globals/ScrollToTop";
+import CustomButton from "@/globals/CustomButton";
+
 const SoftwareDetails = () => {
-  const { id } = useParams(); // Call useParams to retrieve route parameters
-
-  // Convert id to a number if necessary, as it might be a string from the URL
+  const { id } = useParams();
   const softwareService = Software.find((software) => software.id === id);
-
-  console.log(softwareService, "softwareService");
 
   if (!softwareService)
     return <div className="text-center py-12">No service found</div>;
 
   return (
     <>
-      <div className="  min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
-        {/* Animated grid background */}
-        <div
-          className="absolute inset-0 overflow-hidden hidden sm:block"
-          style={{
-            backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
-                         linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
-            backgroundSize: "50px 50px",
-            opacity: 0.2,
-          }}
-        />
-
-        {/* Enhanced glowing orbs */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-
+      {/* Hero Section (Kept from previous implementation) */}
+      <div className="min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-          {/* Tech decorations */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  opacity: 0.1,
-                  animation: `moveUpDown ${
-                    5 + Math.random() * 5
-                  }s linear infinite`,
-                  animationDelay: `${Math.random() * 5}s`,
-                }}
-              />
-            ))}
-          </div>
-
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left content */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -69,97 +32,128 @@ const SoftwareDetails = () => {
 
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                  <span className="text-white">Turning Concepts </span>
+                  <span className="text-white">{softwareService.title} </span>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                    Into Creations
+                    Services
                   </span>
                 </h1>
 
                 <p className="text-xl text-white/80 max-w-xl">
-                  Safe Solution simplifies the challenges of digital
-                  transformation, providing you with innovative tools to
-                  navigate the industry effortlessly.
+                  {softwareService.description}
                 </p>
               </div>
             </motion.div>
 
-            {/* Right content - Carousel */}
+            {/* Optional: Add service icon or illustration */}
+            <div className="hidden lg:flex justify-center items-center">
+              <softwareService.icon
+                className="w-64 h-64 text-white/20 opacity-30"
+                strokeWidth={1}
+              />
+            </div>
           </div>
         </div>
-
-        {/* Animations */}
-        <style jsx>{`
-          @keyframes moveUpDown {
-            0%,
-            100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(100px);
-            }
-          }
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-20px);
-            }
-          }
-        `}</style>
       </div>
-      <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-6 ">
-        <div className="container mx-auto max-w-3xl ">
-          <div className="flex justify-between items-center mb-6">
-            {/* <Link
-              to="/software"
-              className="text-blue-500 hover:underline text-lg cursor-pointer"
-            >
-              ← Back to Services
-            </Link> */}
-          </div>
 
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            {/* Software Title */}
-            <h1 className="text-3xl font-bold mb-4 dark:text-white text-gray-800">
-              {softwareService.title}
-            </h1>
+      {/* Detailed Service Information */}
+      <div className="bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Overview Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+              Service Overview
+            </h2>
+            <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                {softwareService.details.overview}
+              </p>
+            </div>
+          </section>
 
-            {/* Software Description */}
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-              {softwareService.description}
-            </p>
+          {/* Features Grid */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+              Key Features
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {softwareService.features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-6 flex items-center"
+                >
+                  <Check className="w-6 h-6 text-green-500 mr-4 flex-shrink-0" />
+                  <span className="text-gray-800 dark:text-white text-lg">
+                    {feature}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </section>
 
-            {/* Software Features */}
-            <div>
-              <h2 className="text-xl font-semibold mb-4 dark:text-white text-gray-800">
-                Key Features:
-              </h2>
-              <ul className="space-y-2">
-                {softwareService.features.map((feature, index) => (
-                  <li
+          {/* Technologies Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+              Technologies We Use
+            </h2>
+            <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
+              <div className="flex flex-wrap gap-4">
+                {softwareService.details.technologies.map((tech, index) => (
+                  <span
                     key={index}
-                    className="flex items-center text-gray-700 dark:text-gray-300"
+                    className="bg-blue-50 dark:bg-gray-700 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium"
                   >
-                    <Check className="w-5 h-5 mr-2 text-green-500" /> {feature}
-                  </li>
+                    {tech}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
+          </section>
 
-            {/* Contact Button */}
-            <div className="text-center mt-8">
-              <Link
-                to="/contact"
-                className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
-              >
-                Contact Us for More Info
-              </Link>
+          {/* Use Cases or Industries Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+              {softwareService.details.useCases
+                ? "Use Cases"
+                : "Industries Served"}
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {(
+                softwareService.details.useCases ||
+                softwareService.details.industriesServed
+              ).map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-[#FFFFFF] dark:bg-black rounded-lg p-6 border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 flex items-center"
+                >
+                  <ArrowRight className="w-5 h-5 text-blue-500 mr-4 flex-shrink-0" />
+                  <span className="text-gray-800 dark:text-white text-lg">
+                    {item}
+                  </span>
+                </motion.div>
+              ))}
             </div>
+          </section>
+
+          {/* Call to Action */}
+          <div className="text-center">
+            <CustomButton
+              to="/contact"
+              label="Discuss your project"
+              // className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+            >
+              Discuss Your Project
+              <ArrowRight className="ml-3 -mr-1 h-5 w-5" />
+            </CustomButton>
           </div>
         </div>
       </div>
+
       <ScrollToTop />
     </>
   );
