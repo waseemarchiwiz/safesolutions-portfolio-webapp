@@ -4,6 +4,7 @@ import { IoMoon, IoSunny } from "react-icons/io5";
 import { useTheme } from "../context/ThemeContext";
 import CustomButton from "../globals/CustomButton";
 import logo from "../assets/logo.png";
+import ScrollToTop from "@/globals/ScrollToTop";
 
 const Header = () => {
   const { dark, toggleTheme } = useTheme();
@@ -56,6 +57,13 @@ const Header = () => {
                             ? "text-blue-500 dark:text-white"
                             : "text-white dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                         }`}
+                        onClick={() => {
+                          window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                          });
+                          menuOpen && setMenuOpen(false); // Close mobile menu if open
+                        }}
                       >
                         {item}
                         {isActive(
