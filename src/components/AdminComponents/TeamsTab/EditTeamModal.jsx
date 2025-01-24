@@ -7,18 +7,20 @@ import apiInstance from "../../../../api-config";
 const EditTeamModal = ({ team, onClose, onUpdate }) => {
   const userToken = localStorage.getItem("apiusertoken");
 
-  console.log(team, "team");
-
   const handleUpdate = async (values, { setSubmitting }) => {
     try {
       setSubmitting(true);
+
       const formData = new FormData();
+
+      // Always append all fields
       formData.append("name", values.name);
       formData.append("role", values.role);
       formData.append("github", values.githubLink);
       formData.append("linkedin", values.linkedInLink);
       formData.append("twitter", values.twitterLink);
 
+      // Handle image update
       if (values.image instanceof File) {
         formData.append("image", values.image);
       }
@@ -50,10 +52,9 @@ const EditTeamModal = ({ team, onClose, onUpdate }) => {
       setSubmitting(false);
     }
   };
-
   return (
-    <div className="fixed inset-0 bg-black justify-center items-center  bg-opacity-50 flex   z-50">
-      <div className="bg-white p-8 rounded-lg w-[50%]  ">
+    <div className="fixed inset-0 bg-black justify-center items-center bg-opacity-50 flex z-50">
+      <div className="bg-white p-8 rounded-lg w-[50%] h-[80%] overflow-scroll">
         <h2 className="text-2xl mb-4">Edit Team Member</h2>
         <Formik
           initialValues={{
