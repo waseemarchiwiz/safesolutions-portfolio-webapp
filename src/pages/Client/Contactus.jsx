@@ -39,7 +39,7 @@ const Contactus = () => {
       console.error("Error fetching emails:", error);
     }
   };
-  console.log(emails, "eeee");
+  
   useEffect(() => {
     // fetch emails when component mounts
     fetchEmails();
