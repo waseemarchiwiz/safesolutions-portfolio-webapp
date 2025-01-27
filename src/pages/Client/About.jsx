@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom"; // Hook for navigation within th
 
 import AboutHero from "@/components/AboutComponents/AboutHero"; // Hero section for the About page
 import NumberTicker from "../../components/ui/number-ticker"; // Animated number counter component
+import SEOComponent from "@/components/SEOComponent";
 
 const About = () => {
   const navigate = useNavigate(); // React Router navigation hook
@@ -49,6 +50,11 @@ const About = () => {
   return (
     <>
       {/* Hero Section */}
+      <SEOComponent
+        title="Leading the Way in Digital Innovation | about"
+        description="Safe Solutions Consultants specializes in delivering expert back-office solutions tailored to the unique needs of industries such as fintech, software development, architecture, and healthcare."
+        keywords="Founder, Co-Founder,Director,Dr Ghanimullah,Our Story"
+      />
       <AboutHero />
       <div className="bg-[#FFFFFF] dark:bg-black dark:text-white">
         {/* Achievements Section */}

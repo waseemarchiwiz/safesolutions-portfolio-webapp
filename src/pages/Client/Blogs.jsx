@@ -6,6 +6,7 @@ import Lottie from "lottie-react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomButton from "@/globals/CustomButton";
 import ScrollToTop from "@/globals/ScrollToTop";
+import SEOComponent from "@/components/SEOComponent";
 
 const Blogs = () => {
   const [blogData, setBlogData] = useState([]);
@@ -38,6 +39,11 @@ const Blogs = () => {
 
   return (
     <div>
+      <SEOComponent
+        title="Insights and Ideas to Elevate Your Blogging Journey | blogs"
+        description="Insights and Ideas to Elevate Your Blogging Journey"
+        keywords="our blogs,latest blogs"
+      />
       <div className="  min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
         {/* Animated grid background */}
         <div
