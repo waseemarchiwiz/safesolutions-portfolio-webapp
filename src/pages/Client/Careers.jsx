@@ -12,6 +12,7 @@ import WhySafe from "@/components/CareerComponents/WhySafe";
 
 import CareerHero from "@/components/CareerComponents/CareerHero";
 import ApplyModal from "@/components/CareerComponents/ApplyModal";
+import SEOComponent from "@/components/SEOComponent";
 
 const Careers = () => {
   const [emails, setEmails] = useState([]);
@@ -137,6 +138,11 @@ const Careers = () => {
   return (
     <div>
       {/* Hero Section */}
+      <SEOComponent
+        title="We Seek Dreamers | careers"
+        description="SafeSolution Consultants is a premier IT services provider, enabling businesses to transform their digital strategies and achieve lasting success. We have been delivering innovative solutions that help companies navigate the complexities of the digital age."
+        keywords="Join Our Team, SafeSolution Consultants is a premier IT services provider "
+      />
       <CareerHero />
       <WhySafe />
       <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">

@@ -8,6 +8,7 @@ import { CustomInput } from "@/globals/CustomInput";
 import { contactValidationSchema } from "@/schemas/validationSchemas";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SEOComponent from "@/components/SEOComponent";
 const Contactus = () => {
   const [emails, setEmails] = useState([]);
   const [selectEmail, setSelectedEmail] = useState("");
@@ -73,196 +74,204 @@ const Contactus = () => {
   };
   console.log(selectEmail, "selectemail");
   return (
-    <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200">
-      <div className="relative  min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
-        {/* Animated grid background */}
-        <div
-          className="absolute inset-0 overflow-hidden hidden sm:block"
-          style={{
-            backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
+    <>
+      <SEOComponent
+        title="Get In Touch | contact "
+        description="We are always ready to help you"
+        keywords="Have a specific inquiry or looking.,Message"
+      />
+
+      <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200">
+        <div className="relative  min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+          {/* Animated grid background */}
+          <div
+            className="absolute inset-0 overflow-hidden hidden sm:block"
+            style={{
+              backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
                          linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
-            backgroundSize: "50px 50px",
-            opacity: 0.2,
-          }}
-        />
+              backgroundSize: "50px 50px",
+              opacity: 0.2,
+            }}
+          />
 
-        {/* Enhanced glowing orbs with better blend modes */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-        <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-          {/* Tech decorations */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  opacity: 0.1,
-                  animation: `moveUpDown ${
-                    5 + Math.random() * 5
-                  }s linear infinite`,
-                  animationDelay: `${Math.random() * 5}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-white/90"> Contact us</span>
-              </div>
-
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="text-white">We are always ready </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  to help you
-                </span>
-              </h1>
-
-              <p className="text-lg text-gray-200 mb-8 max-w-xl">
-                Learn who we are and why we excel in delivering innovative
-                solutions that drive business growth and digital transformation.
-              </p>
-
-              {/* Service cards */}
-            </motion.div>
-
-            {/* Right content - 3D Grid */}
-          </div>
-        </div>
-
-        {/* Add some CSS animations */}
-        <style jsx>{`
-          @keyframes moveUpDown {
-            0%,
-            100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(100px);
-            }
-          }
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-20px);
-            }
-          }
-        `}</style>
-      </div>
-      <div className=" p-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#FFFFFF] dark:bg-black mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
-          <div>
-            <h2 className="text-gray-800 dark:text-white text-3xl font-extrabold">
-              Get In Touch
-            </h2>
-            <p className="text-sm text-gray-500 mt-4 leading-relaxed">
-              Have a specific inquiry or looking to explore new opportunities?
-              Our experienced team is ready to engage with you.
-            </p>
-
-            <div className="mt-10 w-full">
-              <select
-                onChange={(e) => {
-                  console.log("Selected email:", e.target.value);
-                  setSelectedEmail(e.target.value);
-                }}
-                className="mt-1 font-sans block w-full p-2 bg-[#f2f5f8] dark:bg-gray-800 text-black dark:text-white border border-gray-300 rounded-md"
-              >
-                <option value="">Select your preferred Email</option>
-
-                {emails &&
-                  emails.length > 0 &&
-                  emails.map((item, index) => (
-                    <option key={index} value={item.email}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
+          {/* Enhanced glowing orbs with better blend modes */}
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+          <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
+            {/* Tech decorations */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              {[...Array(20)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    opacity: 0.1,
+                    animation: `moveUpDown ${
+                      5 + Math.random() * 5
+                    }s linear infinite`,
+                    animationDelay: `${Math.random() * 5}s`,
+                  }}
+                />
+              ))}
             </div>
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={contactValidationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched, isSubmitting }) => (
-                <Form>
-                  <div className="space-y-4 mt-8">
-                    <Field
-                      name="name"
-                      label="Full Name"
-                      type="text"
-                      placeholder="Enter Full Name"
-                      as={CustomInput}
-                    />
-                    {errors.fullName && touched.fullName && (
-                      <div className="text-red-600">{errors.fullName}</div>
-                    )}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left content */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span className="text-white/90"> Contact us</span>
+                </div>
 
-                    <Field
-                      name="subject"
-                      label="Subject"
-                      type="text"
-                      placeholder="Subject"
-                      as={CustomInput}
-                    />
-                    {errors.subject && touched.subject && (
-                      <div className="text-red-600">{errors.subject}</div>
-                    )}
+                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  <span className="text-white">We are always ready </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+                    to help you
+                  </span>
+                </h1>
 
-                    <Field
-                      name="email"
-                      label="Email"
-                      type="email"
-                      placeholder="Enter your email address"
-                      as={CustomInput}
-                    />
-                    {errors.email && touched.email && (
-                      <div className="text-red-600">{errors.email}</div>
-                    )}
+                <p className="text-lg text-gray-200 mb-8 max-w-xl">
+                  Learn who we are and why we excel in delivering innovative
+                  solutions that drive business growth and digital
+                  transformation.
+                </p>
 
-                    <Field
-                      name="message"
-                      label="Message"
-                      isTextarea={true}
-                      rows="6"
-                      placeholder="Write your thoughts"
-                      as={CustomInput}
-                    />
-                    {errors.message && touched.message && (
-                      <div className="text-red-600">{errors.message}</div>
-                    )}
+                {/* Service cards */}
+              </motion.div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${
-                        isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit"}
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
+              {/* Right content - 3D Grid */}
+            </div>
+          </div>
 
-            {/* <ul className="mt-4 flex flex-wrap justify-center gap-6">
+          {/* Add some CSS animations */}
+          <style jsx>{`
+            @keyframes moveUpDown {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(100px);
+              }
+            }
+            @keyframes float {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-20px);
+              }
+            }
+          `}</style>
+        </div>
+        <div className=" p-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center relative overflow-hidden p-8 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-3xl max-w-6xl mx-auto bg-[#FFFFFF] dark:bg-black mt-4   before:absolute before:right-0 before:w-[300px] before:bg-blue-400 before:h-full max-md:before:hidden">
+            <div>
+              <h2 className="text-gray-800 dark:text-white text-3xl font-extrabold">
+                Get In Touch
+              </h2>
+              <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                Have a specific inquiry or looking to explore new opportunities?
+                Our experienced team is ready to engage with you.
+              </p>
+
+              <div className="mt-10 w-full">
+                <select
+                  onChange={(e) => {
+                    console.log("Selected email:", e.target.value);
+                    setSelectedEmail(e.target.value);
+                  }}
+                  className="mt-1 font-sans block w-full p-2 bg-[#f2f5f8] dark:bg-gray-800 text-black dark:text-white border border-gray-300 rounded-md"
+                >
+                  <option value="">Select your preferred Email</option>
+
+                  {emails &&
+                    emails.length > 0 &&
+                    emails.map((item, index) => (
+                      <option key={index} value={item.email}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <Formik
+                initialValues={initialValues}
+                validationSchema={contactValidationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ errors, touched, isSubmitting }) => (
+                  <Form>
+                    <div className="space-y-4 mt-8">
+                      <Field
+                        name="name"
+                        label="Full Name"
+                        type="text"
+                        placeholder="Enter Full Name"
+                        as={CustomInput}
+                      />
+                      {errors.fullName && touched.fullName && (
+                        <div className="text-red-600">{errors.fullName}</div>
+                      )}
+
+                      <Field
+                        name="subject"
+                        label="Subject"
+                        type="text"
+                        placeholder="Subject"
+                        as={CustomInput}
+                      />
+                      {errors.subject && touched.subject && (
+                        <div className="text-red-600">{errors.subject}</div>
+                      )}
+
+                      <Field
+                        name="email"
+                        label="Email"
+                        type="email"
+                        placeholder="Enter your email address"
+                        as={CustomInput}
+                      />
+                      {errors.email && touched.email && (
+                        <div className="text-red-600">{errors.email}</div>
+                      )}
+
+                      <Field
+                        name="message"
+                        label="Message"
+                        isTextarea={true}
+                        rows="6"
+                        placeholder="Write your thoughts"
+                        as={CustomInput}
+                      />
+                      {errors.message && touched.message && (
+                        <div className="text-red-600">{errors.message}</div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`group relative h-[40px] inline-block overflow-hidden border rounded-lg text-white bg-black border-indigo-600 px-6 md:px-8 py-[6px] focus:outline-none focus:ring ${
+                          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        {isSubmitting ? "Submitting..." : "Submit"}
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+
+              {/* <ul className="mt-4 flex flex-wrap justify-center gap-6">
               <li className="flex items-center text-blue-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -298,20 +307,21 @@ const Contactus = () => {
                 </a>
               </li>
             </ul> */}
-          </div>
-          <div className="z-10 relative h-full max-md:min-h-[350px]">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3523.017166976897!2d-82.4013096878559!3d27.99337117591978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c5a705cc0d59%3A0x2f450356ee611c06!2s5187%20Shadowlawn%20Ave%2C%20Tampa%2C%20FL%2033610%2C%20USA!5e0!3m2!1sen!2s!4v1736933560082!5m2!1sen!2s"
-              className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
-              allowfullscreen=""
-              loading="lazy"
-              // referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
+            </div>
+            <div className="z-10 relative h-full max-md:min-h-[350px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3523.017166976897!2d-82.4013096878559!3d27.99337117591978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c5a705cc0d59%3A0x2f450356ee611c06!2s5187%20Shadowlawn%20Ave%2C%20Tampa%2C%20FL%2033610%2C%20USA!5e0!3m2!1sen!2s!4v1736933560082!5m2!1sen!2s"
+                className="left-0 top-0 h-full w-full rounded-t-lg lg:rounded-tr-none lg:rounded-bl-lg"
+                allowfullscreen=""
+                loading="lazy"
+                // referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
         </div>
+        <ScrollToTop />
       </div>
-      <ScrollToTop />
-    </div>
+    </>
   );
 };
 

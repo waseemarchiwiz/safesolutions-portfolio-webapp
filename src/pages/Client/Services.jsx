@@ -10,6 +10,7 @@ import Archetecture from "@/components/servicescomponents/Archetecture";
 import ArchiwizConstruction from "@/components/servicescomponents/ArchiwizConstruction";
 import ArchiwizBuild from "@/components/servicescomponents/ArchiwizBuild";
 import ServicesHero from "@/components/servicescomponents/ServicesHero";
+import SEOComponent from "@/components/SEOComponent";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -41,6 +42,11 @@ const Services = () => {
   };
   return (
     <div className="bg-[#FFFFFF] dark:bg-black">
+      <SEOComponent
+        title="Turning Concepts Into Creations | services"
+        description=" Process Optimization Streamline your backoffice workflows for maximum productivity and minimal errors.Workflow Analysis,Automation Solutions,Resource Planning"
+        keywords="Services We Provide,BIM Services,Storing Inventory"
+      />
       <ServicesHero />
       <div className="min-h-screen bg-[#FFFFFF] dark:bg-black flex flex-col  items-center       py-16 px-4">
         <div className="container mx-auto">

@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin/
+Allow: /
+Sitemap: https://www.safesolutionsconsultants.com/sitemap.xml
+
+
+
+ 
