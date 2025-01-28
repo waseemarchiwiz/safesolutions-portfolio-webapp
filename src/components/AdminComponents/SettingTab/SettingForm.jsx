@@ -20,10 +20,10 @@ const SettingForm = () => {
           user_access_token: userToken,
         },
       });
-
+      console.log(response);
       resetForm();
-      fetchData();
-      if (response.success === true) {
+
+      if (response?.data?.success) {
         toast.success("Email added successfully!");
       }
       // toast.success("Email added successfully!");
@@ -34,7 +34,7 @@ const SettingForm = () => {
   };
 
   return (
-    <div className="container flex flex-col justify-center items-center">
+    <div className="container flex flex-col  ">
       <div className="w-[50%] mt-20">
         <Formik
           initialValues={{ email: "", name: "" }}

@@ -203,3 +203,18 @@ export const emailSchema = Yup.object().shape({
     .min(2, "Company Name must be at least 2 characters")
     .max(50, "Company Name must not exceed 50 characters"),
 });
+
+export const editBlogValidationSchema = Yup.object().shape({
+  title: Yup.string()
+    .required("Title is required")
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must be less than 100 characters"),
+  shortDescription: Yup.string()
+    .required("Short description is required")
+    .min(10, "Short description must be at least 10 characters")
+    .max(200, "Short description must not exceed 200 characters"),
+  description: Yup.string()
+    .required("Content is required")
+    .min(50, "Content must be at least 50 characters"),
+  images: Yup.array(),
+});

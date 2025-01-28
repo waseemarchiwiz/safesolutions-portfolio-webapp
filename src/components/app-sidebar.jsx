@@ -31,13 +31,12 @@ const items = [
   { title: "Dashboard", url: "dashboard", icon: Home },
   { title: "Blogs", url: "/admin/blogs", icon: Inbox },
   { title: "Teams", url: "/admin/Teams", icon: Calendar },
-  // { title: "Projects", url: "/admin/projects", icon: Search },
+
   { title: "Careers", url: "/admin/careers", icon: FaBriefcase },
   { title: "Testimonials", url: "/admin/testimonials", icon: FaQuoteLeft },
   { title: "Faqs", url: "/admin/faqs", icon: FaIdCard },
-  // { title: "Services", url: "/admin/services", icon: FaServicestack },
-  // { title: "Setings", url: "/admin/settings", icon: Settings },
-  { title: "Setings", url: "/admin/settings1", icon: Settings },
+
+  { title: "Setings", url: "/admin/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
