@@ -27,11 +27,11 @@ const FaqsForm = () => {
       });
       console.log(response, "Faq1 Response");
 
-      if (response.data.succes === true) {
-        toast.success(response.data.message || "Faq Added Successfully");
+      if (response?.data?.succes === true) {
+        toast.success(response?.data?.message || "Faq Added Successfully");
         resetForm(); // Optional: Reset the form after successful submission
       } else {
-        toast.error(response.data.message || "Failed to add Faq");
+        toast.error(response?.data?.message || "Failed to add Faq");
       }
     } catch (error) {
       console.error("Error details:", error); // Log error details
