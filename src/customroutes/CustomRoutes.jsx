@@ -232,7 +232,7 @@ const CustomRoutes = () => {
         // },
         {
           path: "*",
-          element: <ErrorPage />,
+          element: <Home />,
         },
       ],
     },
