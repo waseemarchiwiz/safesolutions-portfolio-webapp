@@ -10,6 +10,7 @@ import {
   FaCog,
   FaCheck,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const backofficeServices = [
   {
@@ -22,6 +23,7 @@ const backofficeServices = [
       "Meeting Scheduling",
       "Data Entry & Organization",
     ],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaClipboardList className="w-12 h-12 text-purple-500" />,
@@ -33,6 +35,7 @@ const backofficeServices = [
       "Automation Solutions",
       "Resource Planning",
     ],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaUsers className="w-12 h-12 text-green-500" />,
@@ -40,6 +43,7 @@ const backofficeServices = [
     description:
       "Support for HR activities, including recruitment, payroll, and employee engagement initiatives.",
     features: ["Recruitment Support", "Payroll Management", "Employee Records"],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaFileAlt className="w-12 h-12 text-red-500" />,
@@ -47,6 +51,7 @@ const backofficeServices = [
     description:
       "Ensure your operations comply with industry standards and regulatory requirements.",
     features: ["Policy Updates", "Audits & Reporting", "Risk Mitigation"],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaPhoneAlt className="w-12 h-12 text-yellow-500" />,
@@ -54,6 +59,7 @@ const backofficeServices = [
     description:
       "Deliver exceptional service by handling customer inquiries, complaints, and feedback effectively.",
     features: ["Call Handling", "Email Support", "Customer Escalation"],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaBoxOpen className="w-12 h-12 text-orange-500" />,
@@ -61,6 +67,7 @@ const backofficeServices = [
     description:
       "Keep track of your assets and supplies with efficient inventory management solutions.",
     features: ["Stock Monitoring", "Reorder Alerts", "Record Keeping"],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaBuilding className="w-12 h-12 text-teal-500" />,
@@ -72,6 +79,7 @@ const backofficeServices = [
       "Vendor Coordination",
       "Facility Audits",
     ],
+    link: "https://bactelemed.com/",
   },
   {
     icon: <FaCog className="w-12 h-12 text-cyan-500" />,
@@ -83,13 +91,12 @@ const backofficeServices = [
       "IT Asset Management",
       "System Updates",
     ],
+    link: "https://bactelemed.com/",
   },
 ];
 
-const ServiceCard = ({ icon, title, description, features }) => (
+const ServiceCard = ({ icon, title, description, features, link }) => (
   <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
-
-
     <div className="mb-4">{icon}</div>
     <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
       {title}
@@ -105,21 +112,19 @@ const ServiceCard = ({ icon, title, description, features }) => (
         </li>
       ))}
     </ul>
+    <Link
+      to={link}
+      target="_blank"
+      className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+      Learn More
+    </Link>
   </div>
 );
 
 const BackofficeServicesTab = () => (
   <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
     <div className="container mx-auto">
-      {/* <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
-          Backoffice Support Services
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Comprehensive backoffice solutions to streamline operations and
-          support your business growth.
-        </p>
-      </div> */}
       <div className="grid md:grid-cols-3 gap-8">
         {backofficeServices.map((service, index) => (
           <ServiceCard
@@ -128,6 +133,7 @@ const BackofficeServicesTab = () => (
             title={service.title}
             description={service.description}
             features={service.features}
+            link={service.link}
           />
         ))}
       </div>
