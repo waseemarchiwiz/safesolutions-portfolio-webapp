@@ -17,7 +17,7 @@ const Services = () => {
 
   const tabs = [
     {
-      title: "Backoffice Support",
+      title: "Backtelemed",
       content: <BackofficeServicesTab />,
     },
     {
