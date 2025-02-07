@@ -71,8 +71,8 @@ export const Software = [
     details: {
       overview:
         "From concept to deployment, we bring your game ideas to life with state-of-the-art technology and stunning visuals, ensuring an engaging experience for your audience.",
-      technologies: ["Unity", "Unreal Engine", "C#", "Blender", "Photon"],
-      gameTypes: ["Action", "Adventure", "Simulation", "Educational Games"],
+      technologies: ["Unity", "Unreal Engine", "Blender"],
+      useCases: ["Action", "Adventure", "Simulation", "Educational Gamess"],
     },
   },
   {
@@ -154,61 +154,4 @@ export const Software = [
   },
 ];
 
-// {
-//   id: "5",
-//   icon: DatabaseIcon,
-//   title: "Cloud Solutions",
-//   description:
-//     "Scalable and secure cloud infrastructure to streamline your business operations.",
-//   features: [
-//     "Cloud Migration",
-//     "Serverless Computing",
-//     "Data Backups",
-//     "Disaster Recovery",
-//     "Cloud Security",
-//   ],
-//   details: {
-//     overview:
-//       "Leverage the power of the cloud to reduce costs, enhance scalability, and improve business continuity.",
-//     cloudProviders: ["AWS", "Google Cloud", "Azure", "DigitalOcean"],
-//     servicesOffered: [
-//       "Cloud Architecture Design",
-//       "Hybrid Cloud Solutions",
-//       "Database Management",
-//       "DevOps in the Cloud",
-//     ],
-//   },
-// },
-
-// {
-//   id: "6",
-//   icon: ServerIcon,
-//   title: "DevOps Services",
-//   description:
-//     "Accelerate your software development lifecycle with continuous integration and delivery solutions.",
-//   features: [
-//     "CI/CD Pipeline Setup",
-//     "Infrastructure Automation",
-//     "Monitoring and Logging",
-//     "Configuration Management",
-//     "Containerization (Docker/Kubernetes)",
-//   ],
-//   details: {
-//     overview:
-//       "Our DevOps services ensure smooth collaboration between development and operations, enabling faster and more reliable software delivery.",
-//     tools: [
-//       "Jenkins",
-//       "GitHub Actions",
-//       "Terraform",
-//       "Ansible",
-//       "Kubernetes",
-//       "Docker",
-//     ],
-//     benefits: [
-//       "Reduced Time to Market",
-//       "Improved Code Quality",
-//       "Streamlined Deployment",
-//       "Enhanced Scalability",
-//     ],
-//   },
-// },
+ 
