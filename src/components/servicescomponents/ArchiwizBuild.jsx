@@ -8,6 +8,7 @@ import {
   FaHeadset,
   FaRegClipboard,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const archiwizbuild = [
   {
@@ -20,6 +21,7 @@ const archiwizbuild = [
       "Product Categorization",
       "Initial Quality Check",
     ],
+    link: "https://alphabuiltconsultants.com",
   },
   {
     icon: <FaClipboardCheck className="w-12 h-12 text-purple-500" />, // Changed to checkmark icon for inspection
@@ -31,6 +33,7 @@ const archiwizbuild = [
       "Defect Detection",
       "Product Testing",
     ],
+    link: "https://alphabuiltconsultants.com",
   },
   {
     icon: <FaBoxes className="w-12 h-12 text-green-500" />, // Changed to boxes icon for storing inventory
@@ -42,6 +45,7 @@ const archiwizbuild = [
       "Inventory Categorization",
       "Optimal Storage Space Utilization",
     ],
+    link: "https://alphabuiltconsultants.com",
   },
   {
     icon: <FaShippingFast className="w-12 h-12 text-red-500" />, // Changed to shipping icon for order processing
@@ -53,6 +57,7 @@ const archiwizbuild = [
       "Shipping Label Generation",
       "Real-Time Order Tracking",
     ],
+    link: "https://alphabuiltconsultants.com",
   },
   {
     icon: <FaHeadset className="w-12 h-12 text-yellow-500" />, // Changed to headset icon for customer support
@@ -60,6 +65,7 @@ const archiwizbuild = [
     description:
       "Enhance customer satisfaction with quick and effective customer service interactions.",
     features: ["Phone Support", "Email Correspondence", "Live Chat Support"],
+    link: "https://alphabuiltconsultants.com",
   },
   {
     icon: <FaRegClipboard className="w-12 h-12 text-orange-500" />, // Changed to clipboard icon for inventory management
@@ -71,10 +77,11 @@ const archiwizbuild = [
       "Automated Reordering",
       "Inventory Audits",
     ],
+    link: "https://alphabuiltconsultants.com",
   },
 ];
 
-const ServiceCard = ({ icon, title, description, features }) => (
+const ServiceCard = ({ icon, title, description, features, link }) => (
   <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
     <div className="mb-4">{icon}</div>
     <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
@@ -91,21 +98,19 @@ const ServiceCard = ({ icon, title, description, features }) => (
         </li>
       ))}
     </ul>
+    <Link
+      to={link}
+      target="_blank"
+      className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+      Learn More
+    </Link>
   </div>
 );
 
 const ArchiwizBuild = () => (
   <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
     <div className="container mx-auto">
-      {/* <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
-          Backoffice Support Services
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Comprehensive backoffice solutions to streamline operations and
-          support your business growth.
-        </p>
-      </div> */}
       <div className="grid md:grid-cols-3 gap-8">
         {archiwizbuild.map((service, index) => (
           <ServiceCard
@@ -114,6 +119,7 @@ const ArchiwizBuild = () => (
             title={service.title}
             description={service.description}
             features={service.features}
+            link={service.link}
           />
         ))}
       </div>
