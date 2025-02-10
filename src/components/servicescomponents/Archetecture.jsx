@@ -136,28 +136,6 @@ const architectureServices = [
   },
 ];
 
-// const ServiceCard = ({ icon, title, description, features, link }) => (
-//   <div className="bg-white dark:bg-[#18181B] p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-//     <Link to={link} target="_blank">
-//       <div className="mb-4">{icon}</div>
-//       <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
-//         {title}
-//       </h3>
-//       <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
-//       <ul className="space-y-2">
-//         {features.map((feature, index) => (
-//           <li
-//             key={index}
-//             className="flex items-center text-gray-700 dark:text-gray-300"
-//           >
-//             <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
-//           </li>
-//         ))}
-//       </ul>
-//     </Link>
-//   </div>
-// );
-
 const ServiceCard = ({ icon, title, description, features, link }) => (
   <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
     <Link to={link} target="_blank">
