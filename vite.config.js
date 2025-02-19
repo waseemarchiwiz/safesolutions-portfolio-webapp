@@ -11,8 +11,8 @@ export default defineConfig({
     },
   },
   server: {
-    preview: {
-      allowedHosts: ["www.safesolutionsconsultants.com","safesolutionsconsultants.com"], // Allow external host
-    },
-  },
+    
+    allowedHosts: ["www.safesolutionsconsultants.com","safesolutionsconsultants.com"], // Allow external host
+
+},
 });
