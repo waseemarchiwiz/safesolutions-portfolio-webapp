@@ -10,4 +10,9 @@ export default defineConfig({
       "@": path.resolve("./src"),
     },
   },
+  server: {
+    preview: {
+      allowedHosts: ["www.safesolutionsconsultants.com"], // Allow external host
+    },
+  },
 });
