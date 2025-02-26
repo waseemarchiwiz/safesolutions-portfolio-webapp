@@ -178,7 +178,7 @@ const BlogsDetails = () => {
                           className="absolute w-full h-full"
                         >
                           <img
-                            src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${slide.image}`}
+                            src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${slide.image}`}
                             alt={blogData.title}
                             className="w-full h-full object-contain"
                           />

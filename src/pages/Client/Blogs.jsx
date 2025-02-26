@@ -166,7 +166,7 @@ const Blogs = () => {
                     className="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group"
                   >
                     <img
-                      src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${blog.images[0].image}`}
+                      src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${blog.images[0].image}`}
                       alt={blog.images[0].image}
                       className="w-full h-96 object-cover"
                     />

@@ -45,8 +45,9 @@ const Teams = () => {
           api_token: apiToken,
         },
       });
+      console.log(response, "team response");
       if (response?.data?.succes) {
-        setTeamsMemberData(response.data.Teams);
+        setTeamsMemberData(response?.data?.Teams);
       } else {
         setTeamsMemberData(defaultTeamMembers);
       }
@@ -141,7 +142,8 @@ const Teams = () => {
                     <div className="w-full h-full rounded-full p-1 bg-gradient-to-r from-purple-500 to-blue-500">
                       <div className="w-full h-full rounded-full p-2 bg-white dark:bg-gray-800">
                         <img
-                          src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${member.image}`}
+                          // src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${member.image}`}
+                          src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${member.image}`}
                           alt={member.name}
                           className="w-full h-full object-cover rounded-full"
                         />

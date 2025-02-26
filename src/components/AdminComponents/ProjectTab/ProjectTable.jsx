@@ -39,7 +39,7 @@ const ProjectTable = () => {
     id: project.id,
     image: (
       <img
-        src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${project.image}`}
+        src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${project.image}`}
         alt={project.title}
         width={80}
         className="rounded-[50%]"

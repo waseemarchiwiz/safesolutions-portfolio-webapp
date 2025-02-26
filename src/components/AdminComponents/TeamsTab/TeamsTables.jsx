@@ -73,7 +73,7 @@ export const TeamsTable = () => {
     id: team.id,
     Image: (
       <img
-        src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${team.image}`}
+        src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${team.image}`}
         alt={team.name}
         width={80}
         className="rounded-[50%]"
