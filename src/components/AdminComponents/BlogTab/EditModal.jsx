@@ -180,7 +180,7 @@ const EditModal = ({ selectedBlog, onClose, onUpdate }) => {
                         src={
                           image.file
                             ? image.image
-                            : `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${image.image}`
+                            : `https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${image.image}`
                         }
                         alt={`Preview ${index + 1}`}
                         className="w-32 h-32 object-cover rounded-md"
