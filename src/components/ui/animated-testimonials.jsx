@@ -75,13 +75,10 @@ export const AnimatedTestimonials = ({
                   className="absolute inset-0 origin-bottom"
                 >
                   <img
-                    // src={`${testimonial.src}`}
-                    // src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testimonial.image}`}
-                    // src="https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/uploads/1735715353010-testemonial.avif"
-
+                    
                     src={
                       testimonial.image
-                        ? `https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testimonial.image}`
+                        ? `https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${testimonial.image}`
                         : testimonial.src
                     }
                     alt={testimonial.name}
