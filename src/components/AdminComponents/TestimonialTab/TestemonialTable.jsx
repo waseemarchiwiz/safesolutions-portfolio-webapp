@@ -41,7 +41,7 @@ export const TestimonialTable = () => {
     id: testemonial.id,
     image: (
       <img
-        src={`https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/${testemonial.image}`}
+        src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${testemonial.image}`}
         alt={testemonial.image}
         height={50}
         width={50}
