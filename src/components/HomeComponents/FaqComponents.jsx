@@ -8,7 +8,7 @@ const FaqComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const userUrl =
-    "https://safesolution-portfolio-backend-prod-h5h3g5fxa0bgfrcj.eastus-01.azurewebsites.net/api/user";
+    "https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/api/user";
   const api_token = "hilalahmadkhanisafullstackdevelopertoprotectedtheapi";
 
   const toggleAccordion = (index) => {
