@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { IoMoon, IoSunny } from "react-icons/io5";
 import { useTheme } from "../context/ThemeContext";
 import CustomButton from "../globals/CustomButton";
 import logo from "../assets/logo.png";
-import ScrollToTop from "@/globals/ScrollToTop";
 
 const Header = () => {
   const { dark, toggleTheme } = useTheme();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };

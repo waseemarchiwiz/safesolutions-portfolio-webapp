@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Settings2,
-} from "lucide-react";
+import React from "react";
+import { Calendar, Home, Inbox, Settings } from "lucide-react";
 import logo from "../assets/logo.png";
 import {
   Sidebar,
@@ -20,12 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
 // import { useAuth } from '../auth/AuthContext';
-import {
-  FaBriefcase,
-  FaIdCard,
-  FaQuoteLeft,
-  FaServicestack,
-} from "react-icons/fa";
+import { FaBriefcase, FaIdCard, FaQuoteLeft } from "react-icons/fa";
 
 const items = [
   { title: "Dashboard", url: "dashboard", icon: Home },
@@ -40,7 +28,7 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   // const { logout } = useAuth();
   // const location = useLocation();
@@ -53,6 +41,7 @@ export function AppSidebar() {
       navigate("/admin/login");
     }, 3000); // Simulate logout delay
   };
+
   return (
     <Sidebar
       collapsible="icon"
