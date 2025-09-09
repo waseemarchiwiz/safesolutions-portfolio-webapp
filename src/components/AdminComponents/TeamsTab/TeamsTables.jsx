@@ -1,15 +1,13 @@
-
-
-import { useState, useEffect } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import CustomTable from "@/globals/CustomTable";
 import EditTeamModal from "./EditTeamModal";
 import apiInstance from "../../../../api-config";
 
 export const TeamsTable = () => {
-  const [teamsData, setTeamsData] = useState([]);
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [teamsData, setTeamsData] = React.useState([]);
+  const [selectedTeam, setSelectedTeam] = React.useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const userToken = localStorage.getItem("apiusertoken");
 
   const fetchData = async () => {
@@ -30,14 +28,13 @@ export const TeamsTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, []);
 
   const handleEdit = (row) => {
     setSelectedTeam(row);
     setIsEditModalOpen(true);
-    setPreviewImage(selectedTeam.Image.props.src);
   };
 
   const handleDelete = async (row) => {

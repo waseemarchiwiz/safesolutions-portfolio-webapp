@@ -1,11 +1,12 @@
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { teamMemberValidationSchema } from "@/schemas/validationSchemas";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
-import { useState } from "react";
+
 export const TeamsForm = () => {
-  const [previewImage, setPreviewImage] =useState(null);
+  const [previewImage, setPreviewImage] = React.useState(null);
   const userToken = localStorage.getItem("apiusertoken");
 
   console.log("token2121", userToken);
@@ -51,8 +52,6 @@ export const TeamsForm = () => {
     } catch (error) {
       console.error("Error submitting Teams:", error.message);
       toast.error("Failed to submit Teams. Please try again.");
-    } finally {
-      setPreview(null);
     }
   };
   return (
