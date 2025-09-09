@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import CustomButton from "../../globals/CustomButton";
+import React from "react";
 import ScrollToTop from "../../globals/ScrollToTop";
 import { Formik, Form, Field } from "formik";
-
 import { CustomInput } from "@/globals/CustomInput";
 import { contactValidationSchema } from "@/schemas/validationSchemas";
-import axios from "axios";
 import { toast } from "react-toastify";
 import SEOComponent from "@/components/SEOComponent";
 import ContactHero from "@/components/AdminComponents/ContactComponents/ContactHero";
+import apiInstance from "../../../api-config";
+
 const Contactus = () => {
-  const [emails, setEmails] = useState([]);
-  const [selectEmail, setSelectedEmail] = useState("");
+  const [emails, setEmails] = React.useState([]);
+  const [selectEmail, setSelectedEmail] = React.useState("");
   const initialValues = {
     name: "",
     subject: "",
     email: "",
     message: "",
   };
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const api_token = import.meta.env.VITE_API_TOKEN;
 
   //fetch emails
   const fetchEmails = async () => {
     try {
-      const response = await axios.get(`${userUrl}/get/emails`, {
-        headers: {
-          api_token: api_token,
-        },
-      });
+      const response = await apiInstance.get(`/user/get/emails`);
       console.log(response?.data?.emails, "emailsss");
       if (response?.data?.emails?.length > 0) {
         setEmails(response?.data?.emails);
@@ -41,7 +33,7 @@ const Contactus = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     // fetch emails when component mounts
     fetchEmails();
   }, []);
@@ -50,19 +42,10 @@ const Contactus = () => {
     console.log(values);
 
     try {
-      const response = await axios.post(
-        `${userUrl}/contact`,
-        {
-          ...values,
-          sender_email: selectEmail, // Add the selected email to the request body
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            api_token: api_token,
-          },
-        }
-      );
+      const response = await apiInstance.post(`/user/contact`, {
+        ...values,
+        sender_email: selectEmail, // Add the selected email to the request body
+      });
       if (response?.data?.success) {
         toast.success(response?.data?.message || "message sent successfully");
         resetForm();
@@ -71,7 +54,9 @@ const Contactus = () => {
         toast.error(response?.data?.message || "Failed to send message");
       }
       console.log(response);
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
   console.log(selectEmail, "selectemail");
   return (

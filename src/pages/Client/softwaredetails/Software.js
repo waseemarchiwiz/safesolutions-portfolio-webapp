@@ -4,9 +4,7 @@ import {
   PaletteIcon,
   ShieldCheckIcon,
   DatabaseIcon,
-  ChartPieIcon,
   ServerIcon,
-  GlobeIcon,
 } from "lucide-react";
 
 export const Software = [
@@ -153,5 +151,3 @@ export const Software = [
     },
   },
 ];
-
- 

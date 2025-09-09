@@ -24,7 +24,6 @@ const Home = () => {
         <AboutComp />
         <WorkingArea />
         <ServicesComponent />
-        {/* <ProjComp /> */}
         <ProjectsComponent />
         <Testimonial />
         <FaqComponent />
