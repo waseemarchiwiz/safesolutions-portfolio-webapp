@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { servicesValidationSchema } from "../../../schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
 import apiInstance from "../../../../api-config";
 import { toast } from "react-toastify";
+
 const ServicesForm = () => {
   const initialValues = {
     title: "",
@@ -16,7 +17,7 @@ const ServicesForm = () => {
 
   const userToken = localStorage.getItem("apiusertoken");
 
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = React.useState(null);
 
   // Form submission handler
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {

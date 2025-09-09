@@ -1,6 +1,6 @@
 import CustomTable from "@/globals/CustomTable";
 import apiInstance from "../../../../api-config";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import { servicesValidationSchema } from "@/schemas/validationSchemas";
 import CreatableSelect from "react-select/creatable";
@@ -10,10 +10,9 @@ import { CustomInput } from "@/globals/CustomInput";
 
 export const ServicesTable = () => {
   const headers = ["ID", "Title", "Key Points", "Description"];
-  const [selectedService, setSelectedService] = useState();
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [servicesData, setServicesData] = useState([]);
-  const [previewImage, setPreviewImage] = useState();
+  const [selectedService, setSelectedService] = React.useState();
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const [servicesData, setServicesData] = React.useState([]);
 
   const userToken = localStorage.getItem("apiusertoken");
 
@@ -32,7 +31,7 @@ export const ServicesTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchServicesData();
   }, []);
 

@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React from "react";
+import { Formik, Form, Field } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { projectValidationSchema } from "../../../schemas/validationSchemas";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
 
 const ProjectForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const userToken = localStorage.getItem("apiusertoken");
   const initialValues = {
     projectName: "",
