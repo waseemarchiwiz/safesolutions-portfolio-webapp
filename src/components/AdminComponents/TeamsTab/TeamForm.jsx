@@ -1,13 +1,11 @@
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { teamMemberValidationSchema } from "@/schemas/validationSchemas";
-import React, { useState } from "react";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
+import { useState } from "react";
 export const TeamsForm = () => {
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] =useState(null);
   const userToken = localStorage.getItem("apiusertoken");
 
   console.log("token2121", userToken);
