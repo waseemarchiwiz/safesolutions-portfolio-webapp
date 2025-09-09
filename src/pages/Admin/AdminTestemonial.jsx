@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
@@ -7,7 +7,7 @@ import { TestimonialTable } from "@/components/AdminComponents/TestimonialTab/Te
 import { TestimonialForm } from "@/components/AdminComponents/TestimonialTab/TestemonailForm";
 
 const AdminTestimonial = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     { title: "VIEW TESTIMONIALS", content: <TestimonialTable /> },

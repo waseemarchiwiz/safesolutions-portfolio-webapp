@@ -1,19 +1,13 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-
-import { CustomInput } from "@/globals/CustomInput"; // Assuming you have a custom input component
-import { faqSchema } from "@/schemas/validationSchemas";
-import CustomButton from "@/globals/CustomButton";
+import React from "react";
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
-import CustomTable from "@/globals/CustomTable";
 import FaqsForm from "@/components/AdminComponents/FaqTab/FaqForm";
 import { FaqsTable } from "@/components/AdminComponents/FaqTab/FaqTable";
 
 // Define the validation schema for the FAQ form
 
 const AdminFaqs = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
   const tabs = [
     { title: "Add FAQ", content: <FaqsForm /> },
     { title: "VIEW FAQ", content: <FaqsTable /> },

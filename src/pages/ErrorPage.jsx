@@ -1,4 +1,3 @@
-import CustomButton from "@/globals/CustomButton";
 import React from "react";
 
 const ErrorPage = () => {

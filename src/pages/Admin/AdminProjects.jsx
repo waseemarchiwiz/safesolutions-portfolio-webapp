@@ -1,15 +1,11 @@
-import React, { useState } from "react";
-import { Field, Form, Formik } from "formik";
-import { CustomInput } from "@/globals/CustomInput";
-import { projectValidationSchema } from "@/schemas/validationSchemas";
+import React from "react";
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
-import CustomTable from "@/globals/CustomTable";
 import ProjectTable from "../../components/AdminComponents/ProjectTab/ProjectTable";
 import ProjectForm from "../../components/AdminComponents/ProjectTab/ProjectForm";
 
 const AdminProjects = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     { title: "VIEW PROJECTS", content: <ProjectTable /> },
