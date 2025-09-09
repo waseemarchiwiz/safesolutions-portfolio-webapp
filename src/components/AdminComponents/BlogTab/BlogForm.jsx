@@ -32,7 +32,7 @@ export const BlogForm = () => {
     formData.append("description", values.description);
 
     // Append multiple images
-    values.images.forEach((image, index) => {
+    values.images.forEach((image) => {
       formData.append(`image`, image);
     });
 
