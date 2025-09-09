@@ -26,7 +26,7 @@ const EditTeamModal = ({ team, onClose, onUpdate }) => {
       }
 
       const response = await apiInstance.put(
-        `/update/team/${team.id}`,
+        `/update/team/${team?.id}`,
         formData,
         {
           headers: {

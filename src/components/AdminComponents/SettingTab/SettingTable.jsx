@@ -1,14 +1,14 @@
+import React from "react";
 import CustomTable from "@/globals/CustomTable";
 import apiInstance from "../../../../api-config";
-import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { EditModal } from "./EditModal";
 
 const SettingTable = () => {
   const userToken = localStorage.getItem("apiusertoken");
-  const [emails, setEmails] = useState([]);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedEmail, setSelectedEmail] = useState(null);
+  const [emails, setEmails] = React.useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const [selectedEmail, setSelectedEmail] = React.useState(null);
 
   const headers = ["ID", "Name", "Email"];
 
@@ -24,7 +24,7 @@ const SettingTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, []);
 
@@ -45,6 +45,7 @@ const SettingTable = () => {
           },
         }
       );
+      console.log("response: ", response);
 
       await fetchData();
       toast.success("Email updated successfully!");
