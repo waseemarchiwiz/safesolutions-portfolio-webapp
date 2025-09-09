@@ -86,28 +86,29 @@ export const projectValidationSchema = Yup.object().shape({
 });
 
 export const teamMemberValidationSchema = Yup.object().shape({
-  name: Yup.string()
+   name: Yup.string()
     .required("Name is required")
     .min(3, "Name must be at least 3 characters"),
   role: Yup.string()
     .required("Role is required")
     .min(3, "Role must be at least 3 characters"),
-  image: Yup.mixed()
-    .required("Image is required")
-    .test(
-      "fileType",
-      "Only image files are allowed (jpg, png)",
-      (value) => value && ["image/jpeg", "image/png"].includes(value.type)
-    ),
+  image: Yup.mixed().test(
+    "fileType",
+    "Only image files are allowed (jpg, png)",
+    (value) => {
+      if (!value) return true; // ✅ allow empty (optional)
+      return ["image/jpeg", "image/png"].includes(value.type);
+    }
+  ),
   githubLink: Yup.string()
-    .required("Link is required")
-    .url("Invalid URL format"),
+    .url("Invalid URL format")
+    .nullable(), // ✅ optional
   linkedInLink: Yup.string()
-    .required("Link is required")
-    .url("Invalid URL format"),
+    .url("Invalid URL format")
+    .nullable(), // ✅ optional
   twitterLink: Yup.string()
-    .required("Link is required")
-    .url("Invalid URL format"),
+    .url("Invalid URL format")
+    .nullable(), // ✅ optional
 });
 
 //testemonial schemea
