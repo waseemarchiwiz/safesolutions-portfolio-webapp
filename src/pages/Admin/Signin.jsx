@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +14,16 @@ const validationSchema = Yup.object({
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    console.log("form submitted: ", values);
     setIsSubmitting(true);
+
     try {
-      const response = await apiInstance.post("/login", values);
+      const response = await apiInstance.post("admin/login", values);
+      console.log("response: ", response);
+
       if (response?.data?.success) {
         navigate("/admin/dashboard");
         toast.success("Login Successfully");

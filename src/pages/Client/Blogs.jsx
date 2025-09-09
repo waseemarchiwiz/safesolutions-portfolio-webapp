@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
 import loaderAnimation from "../../assets/lottie/loadanimate.json";
 import Lottie from "lottie-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "@/globals/CustomButton";
 import ScrollToTop from "@/globals/ScrollToTop";
 import SEOComponent from "@/components/SEOComponent";
+import apiInstance from "../../../api-config";
 
 const Blogs = () => {
-  const [blogData, setBlogData] = useState([]);
-  const [loading, setLoading] = useState(true); // Loader state
+  const [blogData, setBlogData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true); // Loader state
   const navigate = useNavigate();
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const api_token = import.meta.env.VITE_API_TOKEN;
 
   const fetchBlogs = async () => {
     try {
       setLoading(true); // Set loading to true before fetching
-      const response = await axios.get(`${userUrl}/get/blog`, {
-        headers: {
-          api_token: api_token,
-        },
-      });
+      const response = await apiInstance.get(`/user/get/blog`);
       if (response?.data.succes === true && response?.data.blogs.length > 0) {
         setBlogData(response?.data?.blogs);
       }
@@ -33,7 +27,7 @@ const Blogs = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchBlogs();
   }, []);
 

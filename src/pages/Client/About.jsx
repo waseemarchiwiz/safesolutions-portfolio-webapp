@@ -1,25 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion"; // Animation library for smooth transitions
-import {
-  ArrowRight,
-  CheckCircle2,
-  Users,
-  Building,
-  Gitlab,
-} from "lucide-react"; // Icon set for adding visual elements
+import { CheckCircle2, Users, Building, Gitlab } from "lucide-react"; // Icon set for adding visual elements
 import ProjectsComponent from "@/components/HomeComponents/ProjectsComponent"; // Custom Projects Component
 import Teams from "@/components/AboutComponents/Teams"; // Teams section component
 import PartnersSection from "@/components/AboutComponents/PartnersSection"; // Partners section component
 import ScrollToTop from "@/globals/ScrollToTop"; // Scroll to top button
-import { useNavigate } from "react-router-dom"; // Hook for navigation within the app
-
 import AboutHero from "@/components/AboutComponents/AboutHero"; // Hero section for the About page
 import NumberTicker from "../../components/ui/number-ticker"; // Animated number counter component
 import SEOComponent from "@/components/SEOComponent";
 
 const About = () => {
-  const navigate = useNavigate(); // React Router navigation hook
-
   // Achievements data with icons and labels
   const achievements = [
     {
