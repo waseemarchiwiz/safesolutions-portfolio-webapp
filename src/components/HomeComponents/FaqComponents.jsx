@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 import Lottie from "lottie-react";
 import loaderAnimation from "../../assets/lottie/loadanimate.json";
+
 const FaqComponent = () => {
-  const [openIndexes, setOpenIndexes] = useState([]);
-  const [faqData, setFaqData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [openIndexes, setOpenIndexes] = React.useState([]);
+  const [faqData, setFaqData] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const userUrl =
     "https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/api/user";
@@ -72,7 +73,7 @@ const FaqComponent = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchFaq();
   }, []);
 

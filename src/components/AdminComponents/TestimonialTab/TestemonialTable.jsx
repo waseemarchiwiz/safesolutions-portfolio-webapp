@@ -1,18 +1,19 @@
+import React from "react";
 import CustomTable from "@/globals/CustomTable";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
-import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Field, Form, Formik } from "formik";
 import { testimonialSchema } from "@/schemas/validationSchemas";
 import { CustomInput } from "@/globals/CustomInput";
 import apiInstance from "../../../../api-config";
 
+// Headers
+const headers = ["Id", "Image", "Name", "Designation", "Description"];
+
+// Testimonials
 export const TestimonialTable = () => {
-  const headers = ["Id", "Image", "Name", "Designation", "Description"];
-  const [testemonailData, setTestimonialData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const [testemonailData, setTestimonialData] = React.useState([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [selectedTestimonial, setSelectedTestimonial] = React.useState(null);
   const userToken = localStorage.getItem("apiusertoken");
 
   const fetchData = async () => {
@@ -33,7 +34,7 @@ export const TestimonialTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, []);
 

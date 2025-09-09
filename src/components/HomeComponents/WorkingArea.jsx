@@ -1,11 +1,12 @@
 import React from "react";
 // import { GiArtificialIntelligence } from 'react-icons/gi'
-import azure from "../../assets/azure.jpg";
-import sql from "../../assets/sql.png";
-import github from "../../assets/github.png";
-import { PinContainer } from "../ui/3d-pin";
+// import azure from "../../assets/azure.jpg";
+// import sql from "../../assets/sql.png";
+// import github from "../../assets/github.png";
+// import { PinContainer } from "../ui/3d-pin";
 const WorkingArea = () => {
   return (
+    <></>
     // <div className="px-10 flex justify-center items-center bg-[#ffffff]  dark:bg-[#1f2937] ">
     //   <div className="container ">
     //     <hr className="border-t-1 border-black  mt-10" />
@@ -127,50 +128,7 @@ const WorkingArea = () => {
     //     </div>
     //   </div>
     // </div>
-    <>
-    </>
   );
 };
 
 export default WorkingArea;
-
-{
-  /* <div className="border border-[#343434] dark:hover:border-indigo-600 hover:border-white hover:border-2  w-[300px] h-[150px] p-5 cursor-pointer bg-black text-white rounded-md group    ">
-<div className="flex flex-col gap-3 items-center justify-center py-3">
-  <img
-    src={azure}
-    className="w-12 h-12  group-hover:scale-120 ease-in  transition-all group-hover:text-white  text-neutral-500 dark:text-neutral-200 "
-  />
-  <h1 className="text-gray-400 text-[26px] group-hover:text-white">
-    Azure
-  </h1>
-</div>
-</div>
-<div className="border border-[#343434] dark:hover:border-indigo-600 hover:border-white hover:border-2  w-[300px] h-[150px] p-5 cursor-pointer bg-black text-white rounded-md group    ">
-<div className="flex flex-col gap-3 items-center justify-center  ">
-  <img
-    src={sql}
-    className="w-16 h-16  group-hover:scale-120 ease-in  transition-all group-hover:text-white  text-neutral-500 dark:text-neutral-200 "
-  />
-  <h1 className="text-gray-400 text-[26px] group-hover:text-white">
-    Sql
-  </h1>
-</div>
-</div>
-<div className="border border-[#343434] dark:hover:border-indigo-600 hover:border-white hover:border-2  w-[300px] h-[150px] p-5 cursor-pointer bg-black text-white rounded-md group    ">
-<div className="flex flex-col gap-3 items-center justify-center py-3">
-<img src={azure} className="w-12 h-12  group-hover:scale-120 ease-in  transition-all group-hover:text-white  text-neutral-500 dark:text-neutral-200 " />
-<h1 className="text-gray-400 text-[26px] group-hover:text-white">
-Azure
-</h1>
-</div>
-</div>
-<div className="border border-[#343434] dark:hover:border-indigo-600 hover:border-white hover:border-2  w-[300px] h-[150px] p-5 cursor-pointer bg-black text-white rounded-md group    ">
-<div className="flex flex-col gap-3 items-center justify-center py-3">
-<img src={github} className="w-12 h-12  group-hover:scale-120 ease-in  transition-all group-hover:text-white  text-neutral-500 dark:text-neutral-200 " />
-<h1 className="text-gray-400 text-[26px] group-hover:text-white">
-Github
-</h1>
-</div>
-</div> */
-}

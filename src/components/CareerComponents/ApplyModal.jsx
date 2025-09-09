@@ -3,7 +3,6 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { EasyApplyValidationSchema } from "@/schemas/validationSchemas";
-import { toast } from "react-toastify";
 
 const ApplyModal = ({
   modalOpen,
