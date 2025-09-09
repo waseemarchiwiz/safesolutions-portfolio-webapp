@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
 
 const ServicesHero = () => {
   return (
