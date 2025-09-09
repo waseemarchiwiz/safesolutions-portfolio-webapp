@@ -11,6 +11,7 @@ import ArchiwizConstruction from "@/components/servicescomponents/ArchiwizConstr
 import ArchiwizBuild from "@/components/servicescomponents/ArchiwizBuild";
 import ServicesHero from "@/components/servicescomponents/ServicesHero";
 import SEOComponent from "@/components/SEOComponent";
+import Agriculture from "@/components/servicescomponents/Agriculture";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -36,10 +37,16 @@ const Services = () => {
       title: "Alpha build",
       content: <ArchiwizBuild />,
     },
+    {
+      title: "Agriculture",
+      content: <Agriculture />,
+    },
   ];
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
+
+
   return (
     <div className="bg-[#FFFFFF] dark:bg-black">
       <SEOComponent
