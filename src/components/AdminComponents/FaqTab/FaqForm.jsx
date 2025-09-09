@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React from "react";
+import { Formik, Form, Field } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { faqSchema } from "../../../schemas/validationSchemas";
-import CreatableSelect from "react-select/creatable";
 import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
-import axios from "axios";
 import apiInstance from "../../../../api-config";
+// faqs form
 const FaqsForm = () => {
+  // initial values
   const initialValues = {
     question: "",
     answer: "",

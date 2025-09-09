@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React from "react";
+import { Formik, Form, Field } from "formik";
 import { CustomInput } from "../../../globals/CustomInput";
 import { jobOpeningSchema } from "../../../schemas/validationSchemas";
-import CreatableSelect from "react-select/creatable";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
+
+// careers form
 export const CareersForm = () => {
   const userToken = localStorage.getItem("apiusertoken");
+
   const initialValues = {
     title: "",
     job_description: "",

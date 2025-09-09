@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
 import CustomTable from "@/globals/CustomTable";
 import EditModal from "./EditModal";
 
 export const BlogsTable = () => {
-  const [blogData, setBlogData] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [blogData, setBlogData] = React.useState([]);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [selectedBlog, setSelectedBlog] = React.useState(null);
 
   const headers = ["ID", "Title", "Short Description"];
   const userToken = localStorage.getItem("apiusertoken");
@@ -27,7 +27,7 @@ export const BlogsTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, []);
 
