@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TabComponent from "../../globals/TabComponents"; // Adjust the import path as needed
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 
@@ -6,7 +6,7 @@ import { BlogForm } from "@/components/AdminComponents/BlogTab/BlogForm";
 import { BlogsTable } from "@/components/AdminComponents/BlogTab/BlogsTable";
 
 const AdminBlogs = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     { title: "VIEW BLOGS", content: <BlogsTable /> },

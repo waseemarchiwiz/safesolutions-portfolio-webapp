@@ -1,11 +1,11 @@
 import KPICard from "@/components/AdminComponents/KpiCard";
 import DashboardChart from "../../components/AdminComponents/DashboardLineCharts";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import apiInstance from "../../../api-config";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
-  const [kpiData, setKpiData] = useState();
+  const [kpiData, setKpiData] = React.useState();
   const userToken = localStorage.getItem("apiusertoken");
   const fetchKpi = async () => {
     try {
@@ -20,10 +20,13 @@ const AdminDashboard = () => {
       } else {
         toast.error("Failed to fetch KPI data");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
   console.log(kpiData, "kpi data");
-  useEffect(() => {
+
+  React.useEffect(() => {
     fetchKpi();
   }, []);
 

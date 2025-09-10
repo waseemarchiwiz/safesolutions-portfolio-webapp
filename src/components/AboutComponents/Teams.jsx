@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
-import axios from "axios";
 import { motion } from "framer-motion";
+import apiInstance from "../../../api-config";
 
 const Teams = () => {
-  const [loading, setLoading] = useState(true);
-  const [teamsMemberData, setTeamsMemberData] = useState([]);
-
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const apiToken = import.meta.env.VITE_API_TOKEN;
+  const [loading, setLoading] = React.useState(true);
+  const [teamsMemberData, setTeamsMemberData] = React.useState([]);
 
   // Default team members in case API fails
   const defaultTeamMembers = [
@@ -40,11 +37,7 @@ const Teams = () => {
 
   const fetchTeamData = async () => {
     try {
-      const response = await axios.get(`${userUrl}/get/team`, {
-        headers: {
-          api_token: apiToken,
-        },
-      });
+      const response = await apiInstance.get(`/user/get/team`);
       console.log(response, "team response");
       if (response?.data?.succes) {
         setTeamsMemberData(response?.data?.Teams);
@@ -59,7 +52,7 @@ const Teams = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchTeamData();
   }, []);
 
@@ -142,7 +135,6 @@ const Teams = () => {
                     <div className="w-full h-full rounded-full p-1 bg-gradient-to-r from-purple-500 to-blue-500">
                       <div className="w-full h-full rounded-full p-2 bg-white dark:bg-gray-800">
                         <img
-                          // src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${member.image}`}
                           src={`https://safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net/${member.image}`}
                           alt={member.name}
                           className="w-full h-full object-cover rounded-full"

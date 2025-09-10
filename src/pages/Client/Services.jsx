@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { motion } from "framer-motion";
 import ScrollToTop from "../../globals/ScrollToTop";
-import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
 
 import BackofficeServicesTab from "@/components/servicescomponents/BackofficeServicesTab";
 import SoftwareService from "../../components/servicescomponents/SoftwareServices";
@@ -14,7 +12,7 @@ import SEOComponent from "@/components/SEOComponent";
 import Agriculture from "@/components/servicescomponents/Agriculture";
 
 const Services = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     {
@@ -45,7 +43,6 @@ const Services = () => {
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
-
 
   return (
     <div className="bg-[#FFFFFF] dark:bg-black">

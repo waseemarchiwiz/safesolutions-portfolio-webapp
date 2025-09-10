@@ -1,8 +1,9 @@
-import blog1 from '../assets/blog1.jpg'
+import blog1 from "../assets/blog1.jpg";
+
 export const blogPosts = [
   {
     id: 1,
-    image:blog1,
+    image: blog1,
     category: "Construction",
     type: "external",
     date: "2024-12-03",

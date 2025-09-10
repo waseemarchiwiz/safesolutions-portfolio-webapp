@@ -1,5 +1,4 @@
 import React from "react";
-import archiwiz from "../../assets/projectlogos/archiwiz.webp";
 import archiwizlight from "../../assets/projectlogos/archiwizlight.webp";
 import archiwizdark from "../../assets/projectlogos/archiwizdark.png";
 import lumsdenlogo from "../../assets/projectlogos/lumsdenlogo.webp";
@@ -7,7 +6,7 @@ import alphalogo from "../../assets/projectlogos/alphabuilt.png";
 import { useTheme } from "../../context/ThemeContext";
 
 const ProjComp = () => {
-  const { dark, toggleTheme } = useTheme();
+  const { dark } = useTheme();
   const theme = localStorage.getItem("theme");
 
   console.log(theme, "hsgd");

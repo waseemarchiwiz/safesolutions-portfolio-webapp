@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   ChevronRight,
   Code2,
@@ -33,10 +33,10 @@ const CodeBlock = ({ delay = 0 }) => (
 );
 
 const MainHero = () => {
-  const [scrolled, setScrolled] = useState(0);
+  const [scrolled, setScrolled] = React.useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       const position = window.scrollY;
       setScrolled(Math.min(position / 500, 1));

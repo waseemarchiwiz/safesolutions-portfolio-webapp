@@ -1,7 +1,5 @@
-
 import CustomButton from "@/globals/CustomButton";
 import {
-  FaCheck,
   FaMapMarkedAlt,
   FaWater,
   FaLeaf,
@@ -9,12 +7,11 @@ import {
   FaTractor,
   FaHelicopter,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import ServiceCard from "./cards/service.card";
 
 const agricultureId = [
-     {
-    icon:<FaHelicopter className="w-12 h-12 text-blue-500" />,
+  {
+    icon: <FaHelicopter className="w-12 h-12 text-blue-500" />,
     title: "Drone-Based Monitoring",
     description:
       "Capture high-resolution aerial imagery for early detection of crop stress, pests, and diseases.",
@@ -85,55 +82,28 @@ const agricultureId = [
     ],
     link: "https://archiwiz.com/services/precision-agriculture",
   },
-]
-
-const ServiceCard = ({ icon, title, description, features, link }) => (
-  <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
-    <div className="mb-4">{icon}</div>
-    <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
-      {title}
-    </h3>
-    <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
-    <ul className="space-y-2">
-      {features.map((feature, index) => (
-        <li
-          key={index}
-          className="flex items-center text-gray-700 dark:text-gray-300"
-        >
-          <FaCheck className="w-5 h-5 mr-2 text-green-500" /> {feature}
-        </li>
-      ))}
-    </ul>
-    <Link
-      to={link}
-      target="_blank"
-      className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-    >
-      Learn More
-    </Link>
-  </div>
-);
+];
 
 export default function Agriculture() {
   return (
-   <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
-    <div className="container mx-auto">
-      <div className="grid md:grid-cols-3 gap-8">
-        {agricultureId.map((service, index) => (
-          <ServiceCard
-            key={index}
-            icon={service.icon}
-            title={service.title}
-            description={service.description}
-            features={service.features}
-            link={service.link}
-          />
-        ))}
-      </div>
-      <div className="text-center mt-12">
-        <CustomButton to={"/contact"} label="Get Started" />
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
+      <div className="container mx-auto">
+        <div className="grid md:grid-cols-3 gap-8">
+          {agricultureId.map((service, index) => (
+            <ServiceCard
+              key={index}
+              icon={service.icon}
+              title={service.title}
+              description={service.description}
+              features={service.features}
+              link={service.link}
+            />
+          ))}
+        </div>
+        <div className="text-center mt-12">
+          <CustomButton to={"/contact"} label="Get Started" />
+        </div>
       </div>
     </div>
-  </div>
-  )
+  );
 }

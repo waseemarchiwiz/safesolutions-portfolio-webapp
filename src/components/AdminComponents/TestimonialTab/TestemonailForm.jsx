@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
 import { testimonialSchema } from "@/schemas/validationSchemas";
-import apiUrl from "../../../../baseUrl";
-import axios from "axios";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
+
 export const TestimonialForm = () => {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = React.useState(null);
   const userToken = localStorage.getItem("apiusertoken");
 
   const initialValues = {

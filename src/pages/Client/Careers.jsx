@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Briefcase, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import CustomButton from "../../globals/CustomButton";
@@ -13,37 +13,30 @@ import WhySafe from "@/components/CareerComponents/WhySafe";
 import CareerHero from "@/components/CareerComponents/CareerHero";
 import ApplyModal from "@/components/CareerComponents/ApplyModal";
 import SEOComponent from "@/components/SEOComponent";
+import apiInstance from "../../../api-config";
 
 const Careers = () => {
-  const [emails, setEmails] = useState([]);
-  const [selectEmail, setSelectedEmail] = useState("");
-  const [careersData, setCareersData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedJob, setSelectedJob] = useState(""); // Loader state to track data fetching
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // Function to fetch career data from API
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const api_token = import.meta.env.VITE_API_TOKEN;
-  // State to toggle between URL and file input
+  const [emails, setEmails] = React.useState([]);
+  const [selectEmail, setSelectedEmail] = React.useState("");
+  const [careersData, setCareersData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [selectedJob, setSelectedJob] = React.useState(""); // Loader state to track data fetching
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   //fetching careers
   const fetchCareers = async () => {
     try {
-      const response = await axios.get(`${userUrl}/get/careers`, {
-        headers: {
-          api_token: api_token,
-        },
-      });
+      const response = await apiInstance.get(`/user/get/careers`);
       console.log(response, "careers response");
 
       if (response?.data?.succes) {
         setCareersData(response?.data?.careers);
       } else {
-        setCareersData(jobOpenings); // Fallback to a default set of job openings
+        setCareersData([]); // Fallback to a default set of job openings
       }
     } catch (error) {
-      setCareersData(jobOpenings); // Fallback if API call fails
+      console.log(" Errro: ", error);
+      setCareersData([]); // Fallback if API call fails
     } finally {
       setLoading(false); // Stop the loader once the data is fetched (or fallback is used)
     }
@@ -52,11 +45,7 @@ const Careers = () => {
   //fetch emails
   const fetchEmails = async () => {
     try {
-      const response = await axios.get(`${userUrl}/get/emails`, {
-        headers: {
-          api_token: api_token,
-        },
-      });
+      const response = await apiInstance.get(`/user/get/emails`);
       console.log(response?.data?.emails, "emailsss");
       if (response?.data?.emails?.length > 0) {
         setEmails(response?.data?.emails);
@@ -69,7 +58,7 @@ const Careers = () => {
   };
 
   // Fetch careers when the component mounts
-  useEffect(() => {
+  React.useEffect(() => {
     fetchCareers();
     fetchEmails(); // Fetch emails when the component mounts
   }, []);
@@ -108,19 +97,8 @@ const Careers = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${userUrl}/easy/apply`,
-        formData, // Send formData directly, don't spread it
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            api_token: api_token,
-          },
-        }
-      );
-
+      const response = await apiInstance.post(`/user/easy/apply`, formData);
       console.log(response, "response easy apply");
-
       if (response?.data?.success) {
         toast.success(response?.data?.message);
         setModalOpen(false); // Close the modal after submission

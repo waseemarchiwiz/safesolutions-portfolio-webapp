@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import axios from "axios";
 import ScrollToTop from "@/globals/ScrollToTop";
 import loaderAnimation from "../../assets/lottie/loadanimate.json";
 import Lottie from "lottie-react";
+import apiInstance from "../../../api-config";
 
 const BlogsDetails = () => {
   const { slug } = useParams();
-  const [blogData, setBlog] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const userUrl = import.meta.env.VITE_USER_URL;
-  const api_token = import.meta.env.VITE_API_TOKEN;
+  const [blogData, setBlog] = React.useState(null);
+  const [currentSlide, setCurrentSlide] = React.useState(0);
 
   const fetchBlogDetails = async () => {
     try {
-      const response = await axios.get(`${userUrl}/get/blog/detail/${slug}`, {
-        headers: {
-          api_token: api_token,
-        },
-      });
-
+      const response = await apiInstance.get(`/user/get/blog/detail/${slug}`);
       setBlog(response?.data.blog);
     } catch (error) {
       console.error("Error fetching blog details:", error);
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchBlogDetails();
   }, [slug]);
 

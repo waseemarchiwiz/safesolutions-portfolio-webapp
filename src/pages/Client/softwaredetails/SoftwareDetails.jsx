@@ -1,6 +1,6 @@
 import React from "react";
 import { Software } from "./Software";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollToTop from "@/globals/ScrollToTop";

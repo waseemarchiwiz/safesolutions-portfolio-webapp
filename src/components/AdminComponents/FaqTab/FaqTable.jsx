@@ -1,7 +1,5 @@
 import CustomTable from "@/globals/CustomTable";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Formik } from "formik";
 import { faqSchema } from "@/schemas/validationSchemas";
@@ -10,9 +8,9 @@ import { Form, Field } from "formik";
 import { toast } from "react-toastify";
 import apiInstance from "../../../../api-config";
 export const FaqsTable = () => {
-  const [faqsData, setFaqsData] = useState([]);
-  const [selectedFaq, setSelectedFaq] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [faqsData, setFaqsData] = React.useState([]);
+  const [selectedFaq, setSelectedFaq] = React.useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const userToken = localStorage.getItem("apiusertoken");
 
   const headers = ["id", "Question", "Answer"];
@@ -32,7 +30,7 @@ export const FaqsTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchFaqsData();
   }, []);
 
@@ -68,7 +66,7 @@ export const FaqsTable = () => {
       toast.error("Failed to delete FAQ");
     }
   };
-  const handleUpdate = async (values, { setSubmitting }) => {
+  const handleUpdate = async (values) => {
     console.log(values, "update");
     try {
       await apiInstance.put(`/update/faq/${selectedFaq.id}`, values, {
@@ -106,7 +104,7 @@ export const FaqsTable = () => {
             validationSchema={faqSchema}
             onSubmit={handleUpdate}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <Field
                   name="question"

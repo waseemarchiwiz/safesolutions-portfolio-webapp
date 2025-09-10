@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { StarIcon, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
 const Testimonial = () => {
-  const [hoveredId, setHoveredId] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [hoveredId, setHoveredId] = React.useState(null);
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
+  const [testimonialData, setTestimonialData] = React.useState([]);
+  //
   const userUrl = import.meta.env.VITE_USER_URL;
   const api_token = import.meta.env.VITE_API_TOKEN;
-  const [testimonialData, setTestimonialData] = useState([]);
 
   const testimonials = [
     {
@@ -48,7 +49,7 @@ const Testimonial = () => {
     {
       id: 3,
       name: "Emily Rodriguez",
-      description: "CEO",
+      designation: "CEO",
       // image: "/api/placeholder/64/64",
       description:
         "I'm incredibly impressed with their dedication and ability to understand our unique needs. They've helped us stay ahead in a competitive market.",
@@ -79,10 +80,10 @@ const Testimonial = () => {
       // setLoading(false); // Stop loader
     }
   };
-  useEffect(() => {
+  React.useEffect(() => {
     fetchTestimonials();
   }, []);
-  useEffect(() => {
+  React.useEffect(() => {
     let interval;
     if (isAutoPlaying) {
       interval = setInterval(() => {
@@ -109,15 +110,15 @@ const Testimonial = () => {
     },
   };
 
-  const renderStars = (rating) => {
-    return [...Array(rating)].map((_, index) => (
-      <StarIcon
-        key={index}
-        size={16}
-        className="text-yellow-400 fill-yellow-400 transform transition-transform duration-300 hover:scale-110"
-      />
-    ));
-  };
+  // const renderStars = (rating) => {
+  //   return [...Array(rating)].map((_, index) => (
+  //     <StarIcon
+  //       key={index}
+  //       size={16}
+  //       className="text-yellow-400 fill-yellow-400 transform transition-transform duration-300 hover:scale-110"
+  //     />
+  //   ));
+  // };
 
   const handlePrevious = () => {
     setActiveIndex((current) =>
@@ -234,7 +235,7 @@ const Testimonial = () => {
                     </div> */}
 
                     <p className="text-gray-700 dark:text-white leading-relaxed">
-                      "{testimonial.description}"
+                      {`"${testimonial.description}"`}
                     </p>
 
                     {hoveredId === testimonial.id && (

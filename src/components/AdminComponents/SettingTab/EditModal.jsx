@@ -1,22 +1,10 @@
- 
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Field, Form, Formik } from "formik";
-import { Trash2, Pencil } from "lucide-react";
-import { toast } from "react-toastify";
-
-import CustomTable from "@/globals/CustomTable";
 import { CustomInput } from "@/globals/CustomInput";
-import apiInstance from "../../../../api-config";
 import { emailSchema } from "@/schemas/validationSchemas";
 
 // Separate EditModal Component
-export const EditModal = ({ 
-  isOpen, 
-  onClose, 
-  selectedEmail, 
-  onUpdate 
-}) => {
+export const EditModal = ({ isOpen, onClose, selectedEmail, onUpdate }) => {
   if (!isOpen || !selectedEmail) return null;
 
   return (

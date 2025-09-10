@@ -23,11 +23,11 @@ const DashboardChart = () => {
 
   // Custom tooltip for more detailed information
   const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
+    if (active && payload && payload?.length) {
       return (
         <div className="bg-white shadow-lg rounded-xl p-4 border border-gray-200">
           <p className="font-bold text-gray-600 mb-2">{label}</p>
-          {payload.map((entry) => (
+          {payload?.map((entry) => (
             <div
               key={entry.name}
               className="flex items-center justify-between"
@@ -46,9 +46,7 @@ const DashboardChart = () => {
   return (
     <div className="bg-white w-[98%] shadow-lg rounded-3xl p-6 mt-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-[30px]">
-          Monthly Performance Trends
-        </h2>
+        <h2 className="text-[30px]">Monthly Performance Trends</h2>
         <div className="flex items-center space-x-4">
           <span className="text-sm text-gray-500">Last 6 Months</span>
         </div>

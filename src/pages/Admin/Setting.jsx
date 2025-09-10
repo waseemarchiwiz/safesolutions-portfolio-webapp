@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
@@ -6,7 +6,7 @@ import SettingTable from "@/components/AdminComponents/SettingTab/SettingTable";
 import SettingForm from "@/components/AdminComponents/SettingTab/SettingForm";
 
 const Setting = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     { title: "Emails", content: <SettingTable /> },

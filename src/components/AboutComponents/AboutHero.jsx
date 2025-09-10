@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Code2, Cpu, Globe2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const AboutHero = () => {
+  // navigate
+  const navigate = useNavigate();
   return (
     <div className="relative min-h-[85vh] flex items-center  bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       {/* Animated grid background */}
@@ -55,7 +57,7 @@ const AboutHero = () => {
 
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                Transforming Ideas {" "}  
+                Transforming Ideas{" "}
                 <span className="block py-3 mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
                   Into Digital Reality
                 </span>

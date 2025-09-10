@@ -1,6 +1,5 @@
 import CustomTable from "@/globals/CustomTable";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { projectValidationSchema } from "../../../schemas/validationSchemas";
@@ -8,9 +7,9 @@ import { CustomInput } from "../../../globals/CustomInput";
 import apiInstance from "../../../../api-config";
 
 const ProjectTable = () => {
-  const [projectsData, setProjectsData] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [projectsData, setProjectsData] = React.useState([]);
+  const [selectedProject, setSelectedProject] = React.useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const apiusertoken = localStorage.getItem("apiusertoken");
 
   // Fetch projects data from the server
@@ -29,7 +28,7 @@ const ProjectTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchProjects();
   }, []);
 

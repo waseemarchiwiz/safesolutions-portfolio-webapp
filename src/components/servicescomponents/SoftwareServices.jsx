@@ -3,19 +3,18 @@ import { Check } from "lucide-react";
 import { Software } from "@/pages/Client/softwaredetails/Software";
 import { Link } from "react-router-dom";
 
-
-const ServiceCard = ({ icon: Icon, id, title, description, features }) => (
+const ServiceCard = ({ icon, id, title, description, features }) => (
   <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
     <Link to={`/software/${id}`}>
       <div className="mb-4">
-        <Icon className="w-12 h-12 text-blue-500" /> {/* Invoke the icon */}
+        <icon className="w-12 h-12 text-blue-500" /> {/* Invoke the icon */}
       </div>
       <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
         {title}
       </h3>
       <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
       <ul className="space-y-2">
-        {features.map((feature, index) => (
+        {features?.map((feature, index) => (
           <li
             key={index}
             className="flex items-center text-gray-700 dark:text-gray-300"

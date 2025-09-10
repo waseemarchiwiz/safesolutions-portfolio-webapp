@@ -1,9 +1,7 @@
+import React from "react";
 import { CustomInput } from "@/globals/CustomInput";
 import apiInstance from "../../../../api-config";
 import { Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import { Trash2, X, Pencil } from "lucide-react";
 import { toast } from "react-toastify";
 import { emailSchema } from "../../../schemas/validationSchemas";
 

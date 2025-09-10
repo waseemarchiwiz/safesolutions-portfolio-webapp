@@ -1,11 +1,11 @@
+import React from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
-    <SidebarProvider >
+    <SidebarProvider>
       <AppSidebar />
       <main className="container">
         <SidebarTrigger />

@@ -1,7 +1,5 @@
+import React from "react";
 import CustomTable from "@/globals/CustomTable";
-import axios from "axios";
-import apiUrl from "../../../../baseUrl";
-import { React, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { CustomInput } from "@/globals/CustomInput";
@@ -9,9 +7,9 @@ import { jobOpeningSchema } from "@/schemas/validationSchemas";
 import apiInstance from "../../../../api-config";
 
 export const CareersTable = () => {
-  const [careersData, setCareersData] = useState([]);
-  const [selectedCareer, setSelectedCareer] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [careersData, setCareersData] = React.useState([]);
+  const [selectedCareer, setSelectedCareer] = React.useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const userToken = localStorage.getItem("apiusertoken");
 
   const headers = [
@@ -44,7 +42,7 @@ export const CareersTable = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchCareers();
   }, []);
 

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Field, Form, Formik } from "formik";
-import { CustomInput } from "../../globals/CustomInput";
-import { teamMemberValidationSchema } from "../../schemas/validationSchemas";
+import React from "react";
 import BreadCrumb from "@/components/AdminComponents/BreadCrumb";
 import TabComponent from "@/globals/TabComponents";
-import CustomTable from "@/globals/CustomTable";
 import { TeamsForm } from "@/components/AdminComponents/TeamsTab/TeamForm";
 import { TeamsTable } from "@/components/AdminComponents/TeamsTab/TeamsTables";
 
 const AdminTeams = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const tabs = [
     { title: "VIEW TEAMS", content: <TeamsTable /> },

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import CustomButton from "../../globals/CustomButton";
+import React from "react";
 import careers from "../../assets/careers.jpg";
 
 const WhySafe = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsVisible(true);
   }, []);
 
