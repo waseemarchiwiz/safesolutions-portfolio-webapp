@@ -198,18 +198,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes moveUpDown {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(100px);
-          }
-        }
-      `}</style>
     </div>
   );
 };
