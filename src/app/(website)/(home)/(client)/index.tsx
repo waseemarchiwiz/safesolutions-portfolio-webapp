@@ -1,20 +1,26 @@
 "use client";
+
 import React from "react";
 import Hero from "./hero";
 import WhyChoose from "./why-choose";
+import About from "./about";
+import Services from "./services";
+import Projects from "./Projects";
+import Testimonial from "./Testimonial";
+import Faq from "./Faq";
+import ScrollToTop from "@/components/common/scroll-to-top";
 
 const Main = () => {
   return (
     <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200  ">
       <Hero />
       <WhyChoose />
-      {/* <AboutComp />
-      <WorkingArea />
-      <ServicesComponent />
-      <ProjectsComponent />
+      <About />
+      <Services />
+      <Projects />
       <Testimonial />
-      <FaqComponent />
-      <ScrollToTop /> */}
+      <Faq />
+      <ScrollToTop />
     </div>
   );
 };

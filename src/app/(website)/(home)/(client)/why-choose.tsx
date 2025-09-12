@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { cardData } from "../data";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight, Zap } from "lucide-react";
 
 const WhyChoose = () => {
   const containerVariants = {
@@ -26,7 +27,7 @@ const WhyChoose = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
       },
     },
   };
@@ -43,7 +44,7 @@ const WhyChoose = () => {
       scale: 1,
       transition: {
         duration: 0.8,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
       },
     },
   };
@@ -115,7 +116,7 @@ const WhyChoose = () => {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {item?.icon}
+                  <Zap />
                 </motion.div>
               </div>
 
