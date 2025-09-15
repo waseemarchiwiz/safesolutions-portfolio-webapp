@@ -19,13 +19,72 @@ import {
   Box,
 } from "lucide-react";
 
+// icons maps
+export const iconsMap = {
+  BarChart3,
+  Users,
+  Package,
+  Phone,
+  HelpCircle,
+  Briefcase,
+  BookOpen,
+  Building,
+  Calculator,
+  Archive,
+  MessageCircle,
+  Settings,
+  Cloud,
+  Gamepad,
+  Eye,
+  ToolCase,
+  RectangleGoggles,
+  Box,
+};
+
+type ServiceTypes = {
+  title: string;
+  description: string;
+  features: string[];
+  icon: keyof typeof iconsMap;
+}[];
+
+type ProjectDetailsTypes = {
+  name: string;
+  version: string;
+  lastUpdated: string;
+  deploymentType: string;
+  supportHours: string;
+}[];
+
+type SupportTypes = {
+  title: string;
+  description: string;
+  icon: keyof typeof iconsMap;
+}[];
+
+export interface ProjectTypes {
+  name: string;
+  description: string;
+  slug: string;
+  img: string;
+  version: string;
+  lastupdated: string;
+  type: string;
+  link?: string;
+  tabs: {
+    services: ServiceTypes;
+    projectDetails: ProjectDetailsTypes;
+    support: SupportTypes;
+  };
+}
+
 // Projects
-export const projects = [
+export const projects: ProjectTypes[] = [
   {
     name: "ERP System",
     description:
       "Comprehensive ERP and CRM implementation and customization to streamline business processes and improve customer management.",
-    route: "/enterprise-erp",
+    slug: "enterprise-erp",
     img: "/erp.webp",
     version: "2.0.1",
     lastupdated: "2024-12-23",
@@ -41,7 +100,7 @@ export const projects = [
             "Accounts Payable/Receivable",
             "Asset Management",
           ],
-          icon: BarChart3,
+          icon: "BarChart3",
         },
         {
           title: "Human Resources",
@@ -52,7 +111,7 @@ export const projects = [
             "Time & Attendance",
             "Employee Records",
           ],
-          icon: Users,
+          icon: "Users",
         },
         {
           title: "Inventory Management",
@@ -62,7 +121,7 @@ export const projects = [
             "Purchase Orders",
             "Warehouse Management",
           ],
-          icon: Package,
+          icon: "Package",
         },
         {
           title: "Customer Relations",
@@ -72,7 +131,7 @@ export const projects = [
             "Support Tickets",
             "Customer Portal",
           ],
-          icon: Phone,
+          icon: "Phone",
         },
       ],
       projectDetails: [
@@ -88,23 +147,23 @@ export const projects = [
         {
           title: "Technical Support",
           description: "24/7 technical support and assistance",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Customer Support",
           description: "High-quality customer support and resolutions",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Maintenance & Updates",
           description: "Regular software updates and maintenance",
-          icon: Briefcase,
+          icon: "Briefcase",
         },
         {
           title: "Training & Certification",
           description:
             "Access to industry-specific training and certifications",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
       ],
     },
@@ -113,7 +172,7 @@ export const projects = [
     name: "Archiwiz Portal",
     description:
       "Archiwiz Portal offers cutting-edge solutions for architectural project management, cost estimation, and digital asset organization. With advanced tools for 3D modeling, 360° visualizations, and efficient communication, Archiwiz simplifies complex workflows while providing seamless data integration and project collaboration",
-    route: "/portal",
+    slug: "portal",
     img: "/portal.png",
     version: "1.0.1",
     lastupdated: "2024-12-23",
@@ -128,7 +187,7 @@ export const projects = [
             "360° Views and Walkthroughs",
             "Point Cloud Data Integration",
           ],
-          icon: Building,
+          icon: "Building",
         },
         {
           title: "RS Management",
@@ -139,7 +198,7 @@ export const projects = [
             "Project Resource Allocation",
             "Budget Management Tools",
           ],
-          icon: Calculator,
+          icon: "Calculator",
         },
         {
           title: "Digital Assets Management",
@@ -149,7 +208,7 @@ export const projects = [
             "Secure Storage Solutions",
             "Search and Retrieval Optimization",
           ],
-          icon: Archive,
+          icon: "Archive",
         },
         {
           title: "Internal Communication",
@@ -159,7 +218,7 @@ export const projects = [
             "Project Collaboration Tools",
             "Notification and Updates",
           ],
-          icon: MessageCircle,
+          icon: "MessageCircle",
         },
       ],
       projectDetails: [
@@ -175,22 +234,21 @@ export const projects = [
         {
           title: "Technical Support",
           description: "Expert technical assistance.",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
         {
           title: "Documentation",
           description: "Comprehensive API and usage documentation.",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
       ],
     },
   },
-
   {
     name: "Medical Nate",
     description:
       "Doctor portal for hospital management to view patient information, add notes, and prescriptions",
-    route: "/medical-nate",
+    slug: "medical-nate",
     img: "/nate.png",
     version: "2.0.1",
     lastupdated: "2024-12-23",
@@ -207,7 +265,7 @@ export const projects = [
             "MRI/EEG Scans",
             "Prescription Records",
           ],
-          icon: BarChart3,
+          icon: "BarChart3",
         },
         {
           title: "Patient Notes & Prescriptions",
@@ -219,7 +277,7 @@ export const projects = [
             "View Medical History",
             "Patient Recommendations",
           ],
-          icon: Users,
+          icon: "Users",
         },
         {
           title: "Appointments Management",
@@ -229,13 +287,13 @@ export const projects = [
             "Follow-up Reminders",
             "Appointment History",
           ],
-          icon: Package,
+          icon: "Package",
         },
         {
           title: "Reports & Analytics",
           description: "Access patient health reports and analytics",
           features: ["Medical Reports", "Lab Analysis", "Health Trends"],
-          icon: Phone,
+          icon: "Phone",
         },
       ],
       projectDetails: [
@@ -251,42 +309,41 @@ export const projects = [
         {
           title: "Technical Support",
           description: "24/7 technical support and assistance",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Customer Support",
           description: "High-quality customer support and resolutions",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Maintenance & Updates",
           description: "Regular software updates and maintenance",
-          icon: Briefcase,
+          icon: "Briefcase",
         },
         {
           title: "Training & Certification",
           description:
             "Access to industry-specific training and certifications",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
       ],
     },
   },
-
-  // {
-  //   name: "Medical Nate",
-  //   description:
-  //     "Medical Precision gives information about medical health and how to maintain it.",
-  //   link: "https://medicalkp-hcffechccfexazfb.eastus-01.azurewebsites.net/",
-  //   img: nate,
-  //   type: "external",
-  // },
   {
     name: "Lumsden Trading",
     description: "Trading platform with innovative solutions.",
     link: "https://lumsdentrading.com/",
     img: "/lumsden.png",
     type: "external",
+    slug: "lumsden-trading",
+    version: "2.0.1",
+    lastupdated: "2024-12-23",
+    tabs: {
+      services: [],
+      projectDetails: [],
+      support: [],
+    },
   },
   {
     name: "Archiwiz",
@@ -294,14 +351,24 @@ export const projects = [
     link: "https://archiwiz.com/",
     img: "/archiwizfrontpage.png",
     type: "external",
+    slug: "archiwiz",
+    version: "2.0.1",
+    lastupdated: "2024-12-23",
+    tabs: {
+      services: [],
+      projectDetails: [],
+      support: [],
+    },
   },
   {
     name: "Digital Twin",
     description:
       "Innovative digital solutions for creating virtual replicas of physical assets to enhance efficiency and decision-making.",
-    route: "/digitaltwin",
+    slug: "digital-twin",
     img: "/digitaltwin.webp",
     type: "detailed",
+    lastupdated: "Yesterday",
+    version: "2.0.1",
     tabs: {
       services: [
         {
@@ -313,7 +380,7 @@ export const projects = [
             "Real-Time Synchronization",
             "Lifecycle Monitoring",
           ],
-          icon: BarChart3,
+          icon: "BarChart3",
         },
         {
           title: "Operational Optimization",
@@ -323,7 +390,7 @@ export const projects = [
             "Process Automation",
             "Performance Analytics",
           ],
-          icon: Settings,
+          icon: "Settings",
         },
         {
           title: "Data Integration",
@@ -333,7 +400,7 @@ export const projects = [
             "Cloud Connectivity",
             "Advanced Analytics",
           ],
-          icon: Cloud,
+          icon: "Cloud",
         },
         {
           title: "Collaboration Tools",
@@ -344,7 +411,7 @@ export const projects = [
             "Shared Virtual Environments",
             "Interactive Workflows",
           ],
-          icon: Users,
+          icon: "Users",
         },
       ],
       projectDetails: [
@@ -360,40 +427,35 @@ export const projects = [
         {
           title: "Technical Support",
           description: "Round-the-clock technical assistance",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Training & Onboarding",
           description: "Comprehensive training for optimal platform use",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
         {
           title: "Custom Development",
           description: "Tailored solutions to meet specific requirements",
-          icon: Briefcase,
+          icon: "Briefcase",
         },
         {
           title: "Platform Maintenance",
           description: "Regular updates and performance improvements",
-          icon: ToolCase,
+          icon: "ToolCase",
         },
       ],
     },
   },
   {
-    name: "Archiwiz Build",
-    description: "We bring your ideal home to life from concept tp completion.",
-    link: "https://archiwizbuild.com",
-    img: "/archiwizbuild.png",
-    type: "external",
-  },
-  {
     name: "AR/VR Solutions",
     description:
       "Innovative augmented and virtual reality solutions for immersive experiences across diverse industries.",
-    route: "/ar-vr",
+    slug: "ar-vr",
     img: "/Ar-vr.jpg",
     type: "detailed",
+    version: "",
+    lastupdated: "",
     tabs: {
       services: [
         {
@@ -404,7 +466,7 @@ export const projects = [
             "Custom AR Applications",
             "Device Compatibility",
           ],
-          icon: Eye,
+          icon: "Eye",
         },
         {
           title: "Virtual Reality",
@@ -415,7 +477,7 @@ export const projects = [
             "Collaborative Virtual Spaces",
             "Interactive Experiences",
           ],
-          icon: RectangleGoggles,
+          icon: "RectangleGoggles",
         },
         {
           title: "3D Asset Creation",
@@ -425,7 +487,7 @@ export const projects = [
             "Performance Optimization",
             "Custom Designs",
           ],
-          icon: Box,
+          icon: "Box",
         },
         {
           title: "Interactive Solutions",
@@ -435,7 +497,7 @@ export const projects = [
             "Personalized User Experiences",
             "Interactive Workflows",
           ],
-          icon: Gamepad,
+          icon: "Gamepad",
         },
       ],
       projectDetails: [
@@ -451,31 +513,46 @@ export const projects = [
         {
           title: "Technical Support",
           description: "24/7 expert assistance for AR/VR solutions",
-          icon: HelpCircle,
+          icon: "HelpCircle",
         },
         {
           title: "Training & Implementation",
           description: "Comprehensive training for AR/VR tools and platforms",
-          icon: BookOpen,
+          icon: "BookOpen",
         },
         {
           title: "Custom Development",
           description: "Personalized AR/VR solutions to meet unique needs",
-          icon: Briefcase,
+          icon: "Briefcase",
         },
         {
           title: "Platform Maintenance",
           description: "Regular updates and performance enhancements",
-          icon: ToolCase,
+          icon: "ToolCase",
         },
       ],
+    },
+  },
+  {
+    name: "Archiwiz Build",
+    description: "We bring your ideal home to life from concept tp completion.",
+    link: "https://archiwizbuild.com",
+    img: "/archiwizbuild.png",
+    type: "external",
+    slug: "archiwiz-build",
+    version: "2.0.1",
+    lastupdated: "2024-12-23",
+    tabs: {
+      services: [],
+      projectDetails: [],
+      support: [],
     },
   },
 ];
 
 // Utility functions
-export const getProjectByRoute = (route: string) => {
-  return projects.find((project) => project.route === route);
+export const GetProjectDetailsBySlug = (slug: string) => {
+  return projects.filter((project) => project.slug === slug);
 };
 
 export const getDetailedProjects = () => {

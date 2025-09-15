@@ -8,15 +8,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { projects } from "@/lib/Project";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { projects } from "../project/data";
 
 interface ProjectsComponentProps {
   background?: string;
 }
 
 const Projects = ({ background }: ProjectsComponentProps) => {
+  // get project link
   const getProjectLink = (project: (typeof projects)[number]) => {
     if (project.type === "external") {
       return {
@@ -27,7 +28,7 @@ const Projects = ({ background }: ProjectsComponentProps) => {
     }
     if (project.type === "detailed") {
       return {
-        href: `/project${project.route}`,
+        href: `/project/${project.slug}`,
       };
     }
     return null;

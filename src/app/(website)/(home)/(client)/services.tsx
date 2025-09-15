@@ -9,7 +9,6 @@ import { HoverEffect } from "@/components/common/card-hover.effect";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Brain } from "lucide-react";
-import { projects } from "@/lib/Project";
 import { ourProjectsData } from "../data";
 
 const Services = () => {

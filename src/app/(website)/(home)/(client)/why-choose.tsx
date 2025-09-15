@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { cardData } from "../data";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 
 const WhyChoose = () => {
   const containerVariants = {

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "next-themes";
@@ -8,40 +8,24 @@ import { Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
-// navigations
 const navigations = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "About",
-    href: "/about",
-  },
-  {
-    title: "Services",
-    href: "/services",
-  },
-  {
-    title: "Careers",
-    href: "/careers",
-  },
-  {
-    title: "Blogs",
-    href: "/blogs",
-  },
+  { title: "Home", href: "/" },
+  { title: "About", href: "/about" },
+  { title: "Services", href: "/services" },
+  { title: "Careers", href: "/careers" },
+  { title: "Blogs", href: "/blogs" },
 ];
 
 const Header = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [scrolled, setScrolled] = React.useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false); // State to track mounting
   const pathname = usePathname();
 
-  // isActive
   const isActive = (path: string) => pathname === path;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -49,10 +33,14 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Ensures that theme is applied only after the initial render
+    setMounted(true);
+  }, []);
+
   const toggleTheme = () => {
-    if (!resolvedTheme?.trim()) {
-      return;
-    }
+    if (!resolvedTheme?.trim()) return;
+
     if (resolvedTheme === "light") {
       setTheme("dark");
     } else {
@@ -60,10 +48,15 @@ const Header = () => {
     }
   };
 
+  if (!mounted) {
+    // Prevent rendering until the component is mounted on the client
+    return null;
+  }
+
   return (
     <header
       className={`fixed w-full z-[999] transition-all duration-300 ${
-        scrolled ? " bg-blue-900   " : "  "
+        scrolled ? "bg-blue-900" : ""
       }`}
     >
       <div className="container mx-auto px-4">
@@ -73,7 +66,7 @@ const Header = () => {
             <Link href="/" className="flex items-center">
               <img
                 className="h-24 w-auto transition-transform hover:scale-105"
-                src={"/logo.png"}
+                src="/logo.png"
                 alt="safesolution"
               />
             </Link>
@@ -81,7 +74,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <nav className="flex items-center justify-center gap-2  ">
+            <nav className="flex items-center justify-center gap-2">
               <ul className="flex items-center gap-5">
                 {navigations.map((item, index) => (
                   <li key={index}>
@@ -93,16 +86,13 @@ const Header = () => {
                           : "text-white dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                       }`}
                       onClick={() => {
-                        window.scrollTo({
-                          top: 0,
-                          behavior: "smooth",
-                        });
-                        menuOpen && setMenuOpen(false); // Close mobile menu if open
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        if (menuOpen) setMenuOpen(false); // Close mobile menu if open
                       }}
                     >
                       {item.title}
                       {isActive(item.href) && (
-                        <span className="absolute bottom-0 left-0 h-0.5 w-full bg-blue-500 dark:bg-blue-400 " />
+                        <span className="absolute bottom-0 left-0 h-0.5 w-full bg-blue-500 dark:bg-blue-400" />
                       )}
                     </Link>
                   </li>
@@ -116,12 +106,13 @@ const Header = () => {
                   </Button>
                 </Link>
 
+                {/* Dark Mode Toggle */}
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                   aria-label="Toggle Dark Mode"
                 >
-                  {theme === "dark" ? (
+                  {resolvedTheme === "dark" ? (
                     <Sun className="w-5 h-5 text-yellow-500" />
                   ) : (
                     <Moon className="w-5 h-5 text-gray-700" />
@@ -160,7 +151,7 @@ const Header = () => {
             <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
               <Image
                 className="h-12 w-auto"
-                src={"/logo.png"}
+                src="/logo.png"
                 alt="safesolution"
               />
               <button
@@ -168,7 +159,7 @@ const Header = () => {
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <svg
-                  className="w-6 h-6 text-white  dark:text-gray-300"
+                  className="w-6 h-6 text-white dark:text-gray-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -213,6 +204,7 @@ const Header = () => {
                   </Button>
                 </Link>
 
+                {/* Dark Mode Toggle */}
                 <button
                   onClick={() => {
                     toggleTheme();
