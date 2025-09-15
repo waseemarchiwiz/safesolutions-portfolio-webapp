@@ -5,10 +5,10 @@ import Hero from "./hero";
 import WhyChoose from "./why-choose";
 import About from "./about";
 import Services from "./services";
-import Projects from "./Projects";
 import Testimonial from "./Testimonial";
 import Faq from "./Faq";
 import ScrollToTop from "@/components/common/scroll-to-top";
+import Projects from "../../(common)/projects";
 
 const Main = () => {
   return (
@@ -17,8 +17,8 @@ const Main = () => {
       <WhyChoose />
       <About />
       <Services />
-      <Projects />
       <Testimonial />
+      <Projects />
       <Faq />
       <ScrollToTop />
     </div>
