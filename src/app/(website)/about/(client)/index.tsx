@@ -3,14 +3,13 @@
 import React from "react";
 import { motion } from "framer-motion"; // Animation library for smooth transitions
 import { CheckCircle2, Users } from "lucide-react"; // Icon set for adding visual elements
-import AboutHero from "./about-hero";
 import NumberTicker from "@/components/common/number-ticker";
 import { achievements, features } from "../data";
 import Image from "next/image";
 import Teams from "./teams";
 import PartnersSection from "./partners";
 import ScrollToTop from "@/components/common/scroll-to-top";
-import Projects from "../../(common)/projects";
+import Projects from "../../(common)/project-section";
 import { TeamTypes } from "../page";
 import PageHeroSection from "../../(common)/hero-section";
 

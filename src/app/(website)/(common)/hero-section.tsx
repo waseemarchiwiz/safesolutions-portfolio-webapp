@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -7,6 +9,14 @@ interface HeroDataTypes {
   topTitle: string;
   bottomTittle: string;
   description: string;
+  buttonText: string;
+}
+
+interface Decoration {
+  left: string;
+  top: string;
+  duration: number;
+  delay: number;
 }
 
 const PageHeroSection = ({
@@ -14,12 +24,24 @@ const PageHeroSection = ({
   topTitle = "",
   bottomTittle = "",
   description = "",
+  buttonText = "Contact Us",
 }: HeroDataTypes) => {
-  // navigate
   const navigate = useRouter();
+  const [decorations, setDecorations] = useState<Decoration[]>([]);
+
+  // Generate random decorations only on client
+  useEffect(() => {
+    const generated = Array.from({ length: 20 }, () => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      duration: 5 + Math.random() * 5,
+      delay: Math.random() * 5,
+    }));
+    setDecorations(generated);
+  }, []);
 
   return (
-    <div className="relative min-h-[85vh] flex items-center  bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+    <div className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       {/* Animated grid background */}
       <div
         className="absolute inset-0 overflow-hidden hidden sm:block"
@@ -31,25 +53,24 @@ const PageHeroSection = ({
         }}
       />
 
-      {/* Enhanced glowing orbs with better blend modes */}
+      {/* Glowing orbs */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
       <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
+
       <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-        {/* Tech decorations */}
+        {/* Tech decorations (client-only) */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          {decorations.map((p, i) => (
             <div
               key={i}
               className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: p.left,
+                top: p.top,
                 opacity: 0.1,
-                animation: `moveUpDown ${
-                  5 + Math.random() * 5
-                }s linear infinite`,
-                animationDelay: `${Math.random() * 5}s`,
+                animation: `moveUpDown ${p.duration}s linear infinite`,
+                animationDelay: `${p.delay}s`,
               }}
             />
           ))}
@@ -70,35 +91,33 @@ const PageHeroSection = ({
 
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                Transforming Ideas{" "}
+                {topTitle || "Transforming Ideas"}{" "}
                 <span className="block py-3 mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  Into Digital Reality
+                  {bottomTittle || "Into Digital Reality"}
                 </span>
               </h1>
 
               <p className="text-xl text-white/80 max-w-xl">
-                Learn who we are and why we excel in delivering innovative
-                solutions that drive business growth and digital transformation.
+                {description ||
+                  "Learn who we are and why we excel in delivering innovative solutions that drive business growth and digital transformation."}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-4">
               <button
-                className="relative group"
+                className="relative group px-6 py-3 text-lg font-medium rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-white shadow-lg"
                 onClick={() => navigate.push("/contact")}
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
+                {buttonText}
               </button>
             </div>
-
-            {/* Service cards */}
           </motion.div>
 
-          {/* Right content - 3D Grid */}
+          {/* Right content placeholder (you can add 3D / graphics here) */}
         </div>
       </div>
 
-      {/* Add some CSS animations */}
+      {/* Animations */}
       <style jsx>{`
         @keyframes moveUpDown {
           0%,
@@ -107,15 +126,6 @@ const PageHeroSection = ({
           }
           50% {
             transform: translateY(100px);
-          }
-        }
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-20px);
           }
         }
       `}</style>

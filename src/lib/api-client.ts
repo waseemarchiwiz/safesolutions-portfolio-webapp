@@ -4,11 +4,15 @@ class APIClient {
   private defaultHeaders: HeadersInit;
 
   constructor() {
-    this.baseURL = process.env.API_URL!;
+    this.baseURL = process.env.API_URL! || process.env.NEXT_PUBLIC_API_URL!;
     this.defaultHeaders = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.API_TOKEN}`,
-      api_token: process.env.API_TOKEN as string,
+      Authorization: `Bearer ${
+        process.env.API_TOKEN || process.env.NEXT_PUBLIC_API_TOKEN
+      } `,
+      api_token:
+        (process.env.API_TOKEN as string) ||
+        (process.env.NEXT_PUBLIC_API_TOKEN as string),
     };
   }
 
@@ -16,18 +20,24 @@ class APIClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    // url
     const url = `${this.baseURL}/api/${endpoint}`;
 
-    const response = await fetch(url, {
-      headers: {
-        ...this.defaultHeaders,
-        ...options.headers, // Allow header overrides
-      },
-      ...options,
-    });
+    // Start with defaults
+    let headers: HeadersInit = { ...this.defaultHeaders, ...options.headers };
 
-    console.log("response: ", response);
+    // 🚨 If sending FormData, remove Content-Type (browser will set it with boundary)
+    if (options.body instanceof FormData) {
+      const { ["Content-Type"]: _, ...rest } = headers as Record<
+        string,
+        string
+      >;
+      headers = rest;
+    }
+
+    const response = await fetch(url, {
+      ...options,
+      headers,
+    });
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} ${response.statusText}`);
@@ -45,9 +55,17 @@ class APIClient {
     data?: any,
     options?: RequestInit
   ): Promise<T> {
+    let body: BodyInit | undefined;
+
+    if (data instanceof FormData) {
+      body = data;
+    } else if (data) {
+      body = JSON.stringify(data);
+    }
+
     return this.request<T>(endpoint, {
       method: "POST",
-      body: data ? JSON.stringify(data) : undefined,
+      body,
       ...options,
     });
   }
@@ -57,9 +75,17 @@ class APIClient {
     data?: any,
     options?: RequestInit
   ): Promise<T> {
+    let body: BodyInit | undefined;
+
+    if (data instanceof FormData) {
+      body = data;
+    } else if (data) {
+      body = JSON.stringify(data);
+    }
+
     return this.request<T>(endpoint, {
       method: "PUT",
-      body: data ? JSON.stringify(data) : undefined,
+      body,
       ...options,
     });
   }

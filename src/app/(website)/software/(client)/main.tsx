@@ -11,6 +11,7 @@ import ScrollToTop from "@/components/common/scroll-to-top";
 const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
   // icon
   const Icon = iconsMap[serviceData.icon];
+
   return (
     <>
       {/* Hero Section (Kept from previous implementation) */}
@@ -30,14 +31,14 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
 
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                  <span className="text-white">{serviceData.title} </span>
+                  <span className="text-white">{serviceData?.title} </span>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
                     Services
                   </span>
                 </h1>
 
                 <p className="text-xl text-white/80 max-w-xl">
-                  {serviceData.description}
+                  {serviceData?.description}
                 </p>
               </div>
             </motion.div>
@@ -52,10 +53,9 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
           </div>
         </div>
       </div>
-
       {/* Detailed Service Information */}
-      <div className="bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+      <div className=" bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-5xl mx-auto">
           {/* Overview Section */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
@@ -63,7 +63,7 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
             </h2>
             <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                {serviceData.details.overview}
+                {serviceData?.details?.overview}
               </p>
             </div>
           </section>
@@ -74,7 +74,7 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
               Key Features
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
-              {serviceData.features.map((feature, index) => (
+              {serviceData?.features.map((feature, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -98,7 +98,7 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
             </h2>
             <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
               <div className="flex flex-wrap gap-4">
-                {serviceData.details.technologies.map((tech, index) => (
+                {serviceData?.details.technologies.map((tech, index) => (
                   <span
                     key={index}
                     className="bg-blue-50 dark:bg-gray-700 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium"
@@ -113,13 +113,15 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
           {/* Use Cases or Industries Section */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
-              {serviceData.details.useCases ? "Use Cases" : "Industries Served"}
+              {serviceData?.details.useCases
+                ? "Use Cases"
+                : "Industries Served"}
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {(
-                serviceData.details.useCases ||
-                serviceData.details.industriesServed
-              ).map((item, index) => (
+                serviceData?.details.useCases ||
+                serviceData?.details.industriesServed
+              )?.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
@@ -138,11 +140,11 @@ const SoftwareDetails = ({ serviceData }: { serviceData: SoftwareTypes }) => {
 
           {/* Call to Action */}
           <div className="text-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
-            >
-              <Button>
+            <Link href="/contact">
+              <Button
+                variant="outline"
+                className="bg-indigo-500 text-white hover:bg-indigo-400 hover:text-white"
+              >
                 Discuss your project
                 <ArrowRight className="ml-3 -mr-1 h-5 w-5" />
               </Button>
