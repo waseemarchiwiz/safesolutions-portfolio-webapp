@@ -15,7 +15,10 @@ export default async function SoftwareDetailsPage({ params }: ParamsProps) {
   if (!id) {
     <div className="text-center py-12">No service found</div>;
   }
-  const softwareService = softwareData.filter((software) => software.id === id);
+  const softwareService = softwareData.filter(
+    (software) => Number(software.id) === Number(id)
+  );
+
   console.log("software service: ", softwareService);
 
   // if (index !== -1) {

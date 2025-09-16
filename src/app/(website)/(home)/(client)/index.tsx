@@ -8,7 +8,7 @@ import Services from "./services";
 import Testimonial from "./Testimonial";
 import Faq from "./Faq";
 import ScrollToTop from "@/components/common/scroll-to-top";
-import Projects from "../../(common)/projects";
+import Projects from "../../(common)/project-section";
 
 const Main = () => {
   return (

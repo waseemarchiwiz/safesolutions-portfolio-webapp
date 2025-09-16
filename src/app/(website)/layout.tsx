@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/styles/globals.css";
 import Header from "./(common)/header";
 import Footer from "./(common)/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,8 @@ export default function RootLayout({
           {children}
           <Footer />
         </ThemeProvider>
+        {/* Toast */}
+        <Toaster />
       </body>
     </html>
   );
