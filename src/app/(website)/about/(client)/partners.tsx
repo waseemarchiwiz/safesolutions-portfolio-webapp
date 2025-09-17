@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { containerVariants } from "../motion.settings";
 import { Partners } from "../data";
 
 const PartnersSection = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
   // Logo item variant for individual animations
   const logoVariants = {
     hidden: {
@@ -32,6 +34,10 @@ const PartnersSection = () => {
     },
   };
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <section className="relative bg-gradient-to-r from-purple-700 to-indigo-800 overflow-hidden mt-16 py-16">
       {/* Background Decorations */}
@@ -49,21 +55,25 @@ const PartnersSection = () => {
       <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
 
       {/* Tech Decorations */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: 0.1,
-              animation: `moveUpDown ${5 + Math.random() * 5}s linear infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          />
-        ))}
-      </div>
+      {isMounted && (
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                opacity: 0.1,
+                animation: `moveUpDown ${
+                  5 + Math.random() * 5
+                }s linear infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Content Section */}
       <div className="relative w-full container mx-auto px-6 text-center">

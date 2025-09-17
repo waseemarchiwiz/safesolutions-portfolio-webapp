@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api-client";
+import { apiClient } from "@/lib/api.config";
 import Main from "./(client)";
 
 export interface TeamTypes {
@@ -15,10 +15,9 @@ export interface TeamTypes {
 
 export default async function AboutPage() {
   // api client
-  const result = await apiClient.get<{ Teams: TeamTypes[]; sucess: boolean }>(
-    "user/get/team"
-  );
+  const result = await apiClient.get("/user/get/team");
   console.log("result: ", result);
+
   // teams
   return <Main teams={result?.Teams || []} />;
 }

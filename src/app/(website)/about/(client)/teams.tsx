@@ -1,34 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { defaultTeamMembers, MemberTypes } from "../data";
 import { Github, Linkedin, TwitchIcon } from "lucide-react";
 import { TeamTypes } from "../page";
+import { baseURL } from "@/lib/api.config";
+import Image from "next/image";
 
 const Teams = ({ teams }: { teams: TeamTypes[] }) => {
-  const [loading, setLoading] = useState(true);
-  // team members
-  const [teamsMemberData, setTeamsMemberData] =
-    useState<MemberTypes[]>(defaultTeamMembers);
-
-  if (!process.env.NEXT_PUBLIC_API_URL) {
-    return <code>env is not loaded</code>;
-  }
-
-  console.log("NEXT_PUBLIC_API_URL: ", process.env.NEXT_PUBLIC_API_URL);
-
-  useEffect(() => {
-    setTeamsMemberData(teams);
-    setLoading(false);
-  }, [teams]);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
   const headerVariants = {
     hidden: {
       opacity: 0,
@@ -43,6 +20,12 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
       },
     },
   };
+
+  // const [isMounted, setIsMounted] = useState(false);
+
+  // useEffect(() => {
+  //   setIsMounted(true);
+  // }, []);
 
   return (
     <div className="min-h-[95vh]  bg-white dark:bg-black py-24">
@@ -77,7 +60,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
         </motion.div>
         {/* Team Grid */}
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 px-4">
-          {teamsMemberData.map((member, index) => (
+          {teams.map((member, index) => (
             <div key={index} className="group relative">
               <div
                 className="relative bg-white dark:bg-black rounded-2xl p-8 transition-all duration-300 
@@ -96,10 +79,15 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
                   <div className="w-48 h-48 mx-auto mb-8">
                     <div className="w-full h-full rounded-full p-1 bg-gradient-to-r from-purple-500 to-blue-500">
                       <div className="w-full h-full rounded-full p-2 bg-white dark:bg-gray-800">
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_API_URL}/${member.image}`}
+                        <Image
+                          width={500}
+                          height={500}
+                          src={
+                            `${baseURL}/${member.image}` ||
+                            ("/600x400.png" as string)
+                          }
                           alt={member.name}
-                          className="w-full h-full object-cover rounded-full"
+                          className="w-full h-full  object-cover rounded-full"
                         />
                       </div>
                     </div>

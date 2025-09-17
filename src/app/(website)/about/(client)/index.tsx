@@ -17,7 +17,7 @@ interface AboutProps {
   teams: TeamTypes[];
 }
 
-const About = ({ teams }: AboutProps) => {
+const Main = ({ teams }: AboutProps) => {
   return (
     <>
       {/* Hero Section */}
@@ -159,4 +159,4 @@ const About = ({ teams }: AboutProps) => {
   );
 };
 
-export default About;
+export default Main;

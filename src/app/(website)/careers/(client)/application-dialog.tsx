@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import { z } from "zod";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { applicationSchema } from "../(validation)/schema";
+import { applicationSchema, ApplicationTypes } from "../(validation)/schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,90 +32,82 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { CareerTypes } from "../page";
 import { SubmitApplyAction } from "../(actions)/action";
-import { fa } from "zod/v4/locales";
-import { toast } from "sonner";
 
-type ApplicationFormValues = z.infer<typeof applicationSchema>;
+interface ApplyModalProp {
+  modalOpen: boolean;
+  onOpenChange: () => void;
+  selectedJob: CareerTypes;
+  emails: { name: string; email: string }[];
+  onSave: (success: boolean, message: string) => void;
+}
 
 const ApplyModal = ({
   modalOpen,
   onOpenChange,
   selectedJob,
   emails,
-  setSelectedEmail,
-}: {
-  modalOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  selectedJob: CareerTypes;
-  emails: { name: string; email: string }[];
-  // handleSubmit: (
-  //   data: ApplicationFormValues
-  // ) => Promise<{ success: boolean; result: []; message: string }>;
-  setSelectedEmail: (email: string) => void;
-}) => {
-  const form = useForm<ApplicationFormValues>({
+  onSave,
+}: ApplyModalProp) => {
+  // use form
+  const form = useForm<ApplicationTypes>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      resume: null,
-      experience: "",
-      message: "",
-      portfolioType: "",
-      portfolioUrl: "",
+      name: "test",
+      email: "test@gmail.com",
+      phone: "1234567890",
+      file: null,
+      experience: "mid",
+      message: "testing",
+      portfolioType: "URL",
+      portfolioUrl: "http://unsplash.com",
       portfolioFile: null,
     },
   });
 
+  const [selectedEmail, setSelectedEmail] = useState<string>("");
+
   if (!selectedJob) return null;
 
-  const SubmitForm = async (values: ApplicationFormValues) => {
+  const handleOpenChange = (success: boolean, message: string) => {
+    onOpenChange();
+    onSave(success, message);
+  };
+
+  const formSubmit = async (values: ApplicationTypes) => {
+    console.log("values: ", values);
+
     const formData = new FormData();
 
-    // Append everything except files
+    // Append basic fields
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone);
     formData.append("message", values.message);
     formData.append("experience", values.experience);
-    formData.append("portfolioType", values.portfolioType);
+    formData.append("sender_email", selectedEmail);
+    formData.append("file", values.file); // resume
 
-    // Resume
-    if (values.resume instanceof File) {
-      formData.append("resume", values.resume);
+    if (values.portfolioType === "url") {
+      formData.append("portfolioUrl", values.portfolioUrl as string);
+    } else if (values.portfolioType === "file" && values.portfolioFile) {
+      formData.append("portfolioFile", values.portfolioFile as File);
     }
 
-    // Portfolio
-    if (values.portfolioType === "url" && values.portfolioUrl) {
-      formData.append("portfolioUrl", values.portfolioUrl);
-    }
-    if (
-      values.portfolioType === "file" &&
-      values.portfolioFile instanceof File
-    ) {
-      formData.append("portfolioFile", values.portfolioFile);
+    console.log("values ready for submission:");
+    for (const [key, val] of formData.entries()) {
+      console.log(`${key}:`, val);
     }
 
-    // ✅ Debug: inspect keys
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    // Send
     try {
       const response = await SubmitApplyAction(formData);
-      if (response.success) {
-        toast.success(response.message);
-        onOpenChange(false);
+      console.log(response, "response easy apply");
+      if (response?.success) {
+        handleOpenChange(response.success, response.message);
       } else {
-        toast.error(response.message || "Something went wrong");
+        console.log("error:", response.message);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Failed to submit application"
-      );
     }
   };
 
@@ -134,7 +125,9 @@ const ApplyModal = ({
 
         {/* Email select dropdown */}
         <div className="my-4">
-          <label className="block text-sm font-medium mb-1">Select Email</label>
+          <label className="block text-sm font-medium mb-1">
+            Select Company
+          </label>
           <select
             onChange={(e) => setSelectedEmail(e.target.value)}
             className="block w-full p-2 bg-muted text-foreground border border-input rounded-md"
@@ -150,7 +143,7 @@ const ApplyModal = ({
 
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(SubmitForm)}
+            onSubmit={form.handleSubmit(formSubmit)}
             className="space-y-4"
             encType="multipart/form-data"
           >
@@ -217,7 +210,7 @@ const ApplyModal = ({
             {/* Resume Upload */}
             <FormField
               control={form.control}
-              name="resume"
+              name="file"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Upload CV</FormLabel>
@@ -316,11 +309,7 @@ const ApplyModal = ({
               )}
             />
             <DialogFooter className="mt-6">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button type="button" variant="outline" onClick={onOpenChange}>
                 Cancel
               </Button>
               <Button

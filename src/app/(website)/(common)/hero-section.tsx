@@ -9,7 +9,7 @@ interface HeroDataTypes {
   topTitle: string;
   bottomTittle: string;
   description: string;
-  buttonText: string;
+  buttonText?: string;
 }
 
 interface Decoration {
@@ -24,13 +24,14 @@ const PageHeroSection = ({
   topTitle = "",
   bottomTittle = "",
   description = "",
-  buttonText = "Contact Us",
+  buttonText = "",
 }: HeroDataTypes) => {
   const navigate = useRouter();
   const [decorations, setDecorations] = useState<Decoration[]>([]);
+  const [mounted, setMounted] = useState(false);
 
-  // Generate random decorations only on client
   useEffect(() => {
+    setMounted(true);
     const generated = Array.from({ length: 20 }, () => ({
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -59,22 +60,23 @@ const PageHeroSection = ({
       <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
 
       <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-        {/* Tech decorations (client-only) */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          {decorations.map((p, i) => (
-            <div
-              key={i}
-              className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-              style={{
-                left: p.left,
-                top: p.top,
-                opacity: 0.1,
-                animation: `moveUpDown ${p.duration}s linear infinite`,
-                animationDelay: `${p.delay}s`,
-              }}
-            />
-          ))}
-        </div>
+        {mounted && (
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            {decorations.map((p, i) => (
+              <div
+                key={i}
+                className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+                style={{
+                  left: p.left,
+                  top: p.top,
+                  opacity: 0.1,
+                  animation: `moveUpDown ${p.duration}s linear infinite`,
+                  animationDelay: `${p.delay}s`,
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left content */}
@@ -104,12 +106,14 @@ const PageHeroSection = ({
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <button
-                className="relative group px-6 py-3 text-lg font-medium rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-white shadow-lg"
-                onClick={() => navigate.push("/contact")}
-              >
-                {buttonText}
-              </button>
+              {buttonText.length > 0 && (
+                <button
+                  className="relative group px-6 py-3 text-lg font-medium rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-white shadow-lg"
+                  onClick={() => navigate.push("/contact")}
+                >
+                  {buttonText}
+                </button>
+              )}
             </div>
           </motion.div>
 
