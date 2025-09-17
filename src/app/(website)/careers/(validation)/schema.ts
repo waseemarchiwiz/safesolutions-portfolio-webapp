@@ -11,7 +11,7 @@ export const applicationSchema = z
       .string()
       .regex(/^[0-9]{10}$/, "Phone must be a 10-digit number")
       .min(1, "Phone is required"),
-    resume: z.any().refine((val) => !!val, { message: "Resume is required" }),
+    file: z.any().refine((val) => !!val, { message: "Resume is required" }),
     experience: z.string().min(1, "Experience Level is required"),
     message: z.string().min(1, "Message is required"),
     portfolioType: z.string().min(1, "Please select portfolio type"),

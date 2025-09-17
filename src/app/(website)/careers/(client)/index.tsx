@@ -35,52 +35,13 @@ const Careers = ({ careers, emails }: CareersProps) => {
     setModalOpen(true); // Open the modal
   };
 
-  // const handleSubmit = async (values: any) => {
-  //   console.log(values, "Submitted Values");
-  //   console.log(selectEmail, "selectEmail");
-
-  //   // Create FormData object
-  //   const formData = new FormData();
-
-  //   // Append basic fields
-  //   formData.append("name", values.name);
-  //   formData.append("email", values.email);
-  //   formData.append("phone", values.phone);
-  //   formData.append("message", values.message);
-  //   formData.append("experience", values.experience);
-  //   formData.append("sender_email", selectEmail);
-
-  //   // Append resume file
-  //   if (values.resume) {
-  //     formData.append("file", values.resume);
-  //   }
-
-  //   // Append portfolio related fields
-  //   formData.append("portfolioType", values.portfolioType);
-  //   if (values.portfolioType === "url") {
-  //     formData.append("portfolioUrl", values.portfolioUrl);
-  //   } else if (values.portfolioType === "file" && values.portfolioFile) {
-  //     formData.append("portfolioFile", values.portfolioFile);
-  //   }
-
-  //   try {
-  //     const response = await SubmitApplyAction(formData);
-  //     console.log(response, "response easy apply");
-  //     if (response?.data?.success) {
-  //       toast.success(response?.data?.message);
-  //       setModalOpen(false); // Close the modal after submission
-  //     } else {
-  //       toast.error(response?.data?.message || "Something went wrong");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //     toast.error(
-  //       error?.response?.data?.message || "Failed to submit application"
-  //     );
-  //   }
-  // };
-
-  // const onSave = () => {};
+  const handleSubmit = async (success: boolean, message: string) => {
+    if (success) {
+      toast.success(message || "Success");
+    } else {
+      toast.error(message || "Something went wrong");
+    }
+  };
 
   return (
     <div>
@@ -174,7 +135,7 @@ const Careers = ({ careers, emails }: CareersProps) => {
         onOpenChange={() => setModalOpen(false)}
         selectedJob={selectedJob as CareerTypes}
         emails={emails}
-        setSelectedEmail={setSelectedEmail}
+        onSave={handleSubmit}
       />
       <ScrollToTop />
     </div>
