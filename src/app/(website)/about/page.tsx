@@ -14,10 +14,13 @@ export interface TeamTypes {
 }
 
 export default async function AboutPage() {
-  // api client
-  const result = await apiClient.get("/user/get/team");
-  console.log("result: ", result);
-
+  try {
+    // api client
+    const result = await apiClient.get("/user/get/team");
+    console.log("result: ", result);
+    return <Main teams={result?.Teams || []} />;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
   // teams
-  return <Main teams={result?.Teams || []} />;
 }

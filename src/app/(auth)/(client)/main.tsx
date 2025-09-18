@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SignInFormValues, signInSchema } from "../(validation)/schema";
-import { LogInIcon, Send, SendHorizonal } from "lucide-react";
+import { LogInIcon } from "lucide-react";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api.config";
 import { useRouter } from "next/navigation";
@@ -28,7 +28,7 @@ export default function SignInForm({
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "user@archiwiz.com",
+      email: "user.test@gmail.com",
       password: "password",
     },
   });
@@ -42,7 +42,10 @@ export default function SignInForm({
       if (result?.success) {
         toast.success("Sign in successfull.");
         router.push("/dashboard");
-        localStorage.setItem("access_token", JSON.stringify(result?.token));
+
+        // localStorage.setItem("access_token", JSON.stringify(result?.token));
+
+        // add item in the cookies
       } else {
         toast.error(result?.message || "Failed to Sign in. Please try again.");
       }
@@ -58,7 +61,7 @@ export default function SignInForm({
         <CardContent className="grid grid-cols-1">
           <Form {...form}>
             <form
-              className="px-2 py-10"
+              className="px-1 py-8"
               onSubmit={form.handleSubmit(formSubmit)}
             >
               <div className="flex flex-col gap-6">
