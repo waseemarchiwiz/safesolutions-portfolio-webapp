@@ -1,17 +1,31 @@
-import { NextRequest } from "next/server";
-import { useAuth } from "./app/hooks/use-auth";
-import { redirect } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
   console.log("middleware...");
+
+  // access token
+  const isLoggedIn = !!req.cookies.get("access_token")?.value;
+  const { pathname } = req.nextUrl;
+
+  console.log("isloggedin: ", isLoggedIn);
+
   // dashboard route
-  const dashboardRoute = req.url.startsWith("/dashboard");
-  // get the auth
-  // const { isLoggedIn } = useAuth();
-  // if logged in
-  // if (!isLoggedIn && dashboardRoute) {
-  //   redirect("/signin");
-  // }
+  const dashboardRoute = pathname.startsWith("/dashboard");
+  // auth route
+  const authRoute = pathname.startsWith("/signin");
+
+  // if not logged in
+  if (!isLoggedIn && dashboardRoute) {
+    const signInUrl = req.nextUrl.clone();
+    signInUrl.pathname = "/signin";
+    return NextResponse.redirect(signInUrl);
+  }
+  // if already logged in
+  if (isLoggedIn && authRoute) {
+    const dashboardUrl = req.nextUrl.clone();
+    dashboardUrl.pathname = "/dashboard";
+    return NextResponse.redirect(dashboardUrl);
+  }
 }
 
 export const config = {

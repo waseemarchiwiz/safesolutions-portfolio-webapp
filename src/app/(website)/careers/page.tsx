@@ -23,19 +23,25 @@ export interface EmailTypes {
 export default async function CareersPage() {
   // api client
 
-  const [careersResult, emailsResult] = await Promise.all([
-    await apiClient.get("user/get/careers"),
-    await apiClient.get("user/get/emails"),
-  ]);
+  try {
+    const [careersResult, emailsResult] = await Promise.all([
+      await apiClient.get("user/get/careers"),
+      await apiClient.get("user/get/emails"),
+    ]);
 
-  // careers
-  const careers = careersResult?.careers || [];
-  // emails
-  const emails = emailsResult?.emails || [];
+    console.log("career result: ", careersResult);
 
-  console.log("careers: ", careers);
-  console.log("emails: ", emails);
+    // careers
+    const careers = careersResult?.careers || [];
+    // emails
+    const emails = emailsResult?.emails || [];
 
-  // teams
-  return <Main careers={careers} emails={emails} />;
+    console.log("careers: ", careers);
+    console.log("emails: ", emails);
+
+    // teams
+    return <Main careers={careers} emails={emails} />;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
 }
