@@ -1,10 +1,20 @@
 import Home from "./(client)";
+import { cookies } from "next/headers";
+import { ReturnPayload } from "@/lib/types";
+import { axiosServer } from "@/lib/api-config/client";
 
-/**
- * Cookies doesn;t work here
- * Fetch fails in server components
- */
 export default async function Page() {
-  // success
-  return <Home stats={[]} />;
+  // cookies
+  const cookieStore = await cookies();
+  // Build Cookie header manually
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
+  const api = await axiosServer(cookieHeader);
+
+  const result: ReturnPayload = await api.get("/admin/dashboard");
+  console.log("result: ", result);
+
+  return <Home counts={[]} />;
 }

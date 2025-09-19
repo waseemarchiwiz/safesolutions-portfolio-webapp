@@ -69,14 +69,6 @@ const Statistics = ({
         hover:shadow-xl 
         relative 
         overflow-hidden 
-        w-72
-        sm:w-60
-        md:w-48
-        lg:w-40
-        xl:w-52
-        2xl:w-72
-         
-        
       `}
     >
       {/* Subtle background effect */}

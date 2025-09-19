@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 import Main from "./(client)";
 
 export interface TeamTypes {

@@ -1,5 +1,5 @@
 import Main from "../(client)/main";
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;

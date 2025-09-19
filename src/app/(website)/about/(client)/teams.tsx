@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, TwitchIcon } from "lucide-react";
 import { TeamTypes } from "../page";
-import { baseURL } from "@/lib/api.config";
+import { baseURL } from "@/lib/api-config/client";
 import Image from "next/image";
 
 const Teams = ({ teams }: { teams: TeamTypes[] }) => {

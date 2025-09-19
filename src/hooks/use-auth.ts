@@ -1,6 +1,6 @@
 "use client";
 
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

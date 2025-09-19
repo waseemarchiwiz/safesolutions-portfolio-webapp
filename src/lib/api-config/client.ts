@@ -24,3 +24,15 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use((response) => {
   return response.data;
 });
+
+// For server
+export async function axiosServer(cookieHeader: string) {
+  return axios.create({
+    baseURL: process.env.API_URL + "/api",
+    headers: {
+      Cookie: cookieHeader, // 👈 now backend sees req.cookies.access_token
+      api_token: process.env.API_TOKEN,
+    },
+    withCredentials: true,
+  });
+}
