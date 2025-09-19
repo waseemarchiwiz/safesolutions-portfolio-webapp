@@ -6,7 +6,7 @@ import PageHeroSection from "../../(common)/hero-section";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { BlogTypes } from "../page";
 import { Button } from "@/components/ui/button";
-import { baseURL } from "@/lib/api.config";
+import { baseURL } from "@/lib/api-config/client";
 import Link from "next/link";
 
 const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {

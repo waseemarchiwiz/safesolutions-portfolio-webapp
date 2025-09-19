@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 import { applicationSchema } from "../(validation)/schema";
 
 export const SubmitApplyAction = async (

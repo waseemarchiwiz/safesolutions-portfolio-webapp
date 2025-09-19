@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Loading from "../[slug]/loading";
-import { baseURL } from "@/lib/api.config";
+import { baseURL } from "@/lib/api-config/client";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import PageHeroSection from "../../(common)/hero-section";
 import { BlogTypes } from "../../blogs/page";

@@ -17,7 +17,7 @@ import {
 import { SignInFormValues, signInSchema } from "../(validation)/schema";
 import { LogInIcon } from "lucide-react";
 import { toast } from "sonner";
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 import { useRouter } from "next/navigation";
 
 export default function SignInForm({

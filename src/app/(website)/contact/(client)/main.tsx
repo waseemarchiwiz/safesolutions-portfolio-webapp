@@ -27,7 +27,7 @@ import { Send, Mail, User, MessageSquare, Building2 } from "lucide-react";
 import PageHeroSection from "../../(common)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
 import { EmailTypes } from "../page";
-import { apiClient } from "@/lib/api.config";
+import { apiClient } from "@/lib/api-config/client";
 
 interface MainProps {
   emails: EmailTypes[];
