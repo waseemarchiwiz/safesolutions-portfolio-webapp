@@ -40,7 +40,7 @@ const navItems = [
     items: [
       {
         title: "Add Blog",
-        url: "/dashboard/add-Blog",
+        url: "/dashboard/add-blog",
       },
       {
         title: "All blogs",

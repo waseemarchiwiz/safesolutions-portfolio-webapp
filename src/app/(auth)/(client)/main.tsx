@@ -19,6 +19,7 @@ import { LogInIcon } from "lucide-react";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api-config/client";
 import { useRouter } from "next/navigation";
+import { ReturnPayload } from "@/lib/types";
 
 export default function SignInForm({
   className,
@@ -38,20 +39,23 @@ export default function SignInForm({
   const formSubmit = async (values: SignInFormValues) => {
     try {
       // Call sign in on client side
-      const result = await apiClient.post("/admin/login", values);
+      const result: ReturnPayload = await apiClient.post(
+        "/admin/login",
+        values
+      );
       if (result?.success) {
         toast.success("Sign in successfull.");
         router.push("/dashboard");
-
-        // localStorage.setItem("access_token", JSON.stringify(result?.token));
-
-        // add item in the cookies
       } else {
         toast.error(result?.message || "Failed to Sign in. Please try again.");
       }
     } catch (error) {
       console.error(" error:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
     }
   };
 
