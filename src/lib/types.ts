@@ -1,6 +1,6 @@
-// Return payload
-export interface ReturnPayload {
+// lib/types.ts
+export interface ReturnPayload<T = any> {
   success: boolean;
   message: string;
-  data?: any[];
+  data?: T;
 }

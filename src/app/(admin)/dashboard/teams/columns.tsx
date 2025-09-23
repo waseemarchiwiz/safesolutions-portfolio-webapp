@@ -13,36 +13,31 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
+import Image from "next/image";
+import { baseURL } from "@/lib/api-config/client";
 
-// Define the shape of your BlogTypes data
-export type BlogTypes = {
+// Define the shape of your TeamTypes data
+export type TeamTypes = {
   id: number;
-  title: string;
-  slug: string;
-  description: string;
-  shortDescription: string;
-  category: string;
-  tags: string;
+  name: string;
+  role: string;
+  image: string;
+  github: string;
+  linkedin: string;
+  twitter: string;
   createdAt: string;
   updatedAt: string;
-  images: [
-    {
-      id: number;
-      image: string;
-      blog_id: number;
-    }
-  ];
 };
 
 interface columnsProps {
-  onEdit: (category: BlogTypes) => void;
-  onDelete: (category: BlogTypes) => void;
+  onEdit: (category: TeamTypes) => void;
+  onDelete: (category: TeamTypes) => void;
 }
 
 export const getColumns = ({
   onEdit,
   onDelete,
-}: columnsProps): ColumnDef<BlogTypes>[] => [
+}: columnsProps): ColumnDef<TeamTypes>[] => [
   // Column for Dragging
   // {
   //   id: "drag",
@@ -74,19 +69,31 @@ export const getColumns = ({
   },
   // Column for Title
   {
-    accessorKey: "title",
-    header: "Title",
-    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
-  },
-  // Column for Slug
-  {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "image",
+    header: "Profile",
     cell: ({ row }) => (
-      <div className="font-mono">
-        {shortText(row.original.shortDescription || "Empty", 30)}
+      <div className="font-medium  p-1">
+        <Image
+          width={100}
+          height={150}
+          src={`${baseURL}/${row.original.image as string}`}
+          alt={row.original.image}
+          className=" rounded-full w-10 h-10"
+        />
       </div>
     ),
+  },
+  // Column for Name
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => <div className="font-mono">{row.original.name}</div>,
+  },
+  // Column for Role
+  {
+    accessorKey: "role",
+    header: "Role",
+    cell: ({ row }) => <div className="font-mono">{row.original.role}</div>,
   },
   // Column for Actions
   {
