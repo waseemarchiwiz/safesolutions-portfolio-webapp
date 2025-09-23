@@ -13,36 +13,30 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
+import Image from "next/image";
+import { baseURL } from "@/lib/api-config/client";
 
-// Define the shape of your BlogTypes data
-export type BlogTypes = {
+// Define the shape of your CareerTypes data
+export type CareerTypes = {
   id: number;
   title: string;
-  slug: string;
-  description: string;
-  shortDescription: string;
-  category: string;
-  tags: string;
+  job_description: string;
+  location: string;
+  short_description: string;
+  link: string;
   createdAt: string;
   updatedAt: string;
-  images: [
-    {
-      id: number;
-      image: string;
-      blog_id: number;
-    }
-  ];
 };
 
 interface columnsProps {
-  onEdit: (category: BlogTypes) => void;
-  onDelete: (category: BlogTypes) => void;
+  onEdit: (category: CareerTypes) => void;
+  onDelete: (category: CareerTypes) => void;
 }
 
 export const getColumns = ({
   onEdit,
   onDelete,
-}: columnsProps): ColumnDef<BlogTypes>[] => [
+}: columnsProps): ColumnDef<CareerTypes>[] => [
   // Column for Dragging
   // {
   //   id: "drag",
@@ -76,17 +70,23 @@ export const getColumns = ({
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
+    cell: ({ row }) => <div className="font-mono">{row.original.title}</div>,
   },
-  // Column for Slug
+  // Column for Name
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "short-description",
+    header: "Job Description",
     cell: ({ row }) => (
       <div className="font-mono">
-        {shortText(row.original.shortDescription || "Empty", 30)}
+        {shortText(row.original.short_description, 40)}
       </div>
     ),
+  },
+  // Column for Role
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => <div className="font-mono">{row.original.location}</div>,
   },
   // Column for Actions
   {

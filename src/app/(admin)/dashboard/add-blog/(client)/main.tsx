@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,46 +18,69 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import Image from "next/image";
-import { AddBlogFormValues, addBlogSchema } from "../(validation)/validation";
+import { AddBlogFormValues, buildBlogSchema } from "../(validation)/validation";
 import EditorClient from "./editor";
-import { apiClient } from "@/lib/api-config/client";
+import { apiClient, baseURL } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { BlogTypes } from "../../blogs/columns";
 
-export default function AddBlogForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const [previews, setPreviews] = useState<string[]>([]);
+// Types
+export type ImagesTypes = { id: number; image: string; blog_id: number };
+
+type PreviewType = ImagesTypes | { image: string }; // backend or new upload
+
+interface BlogFormPropTypes {
+  blog?: BlogTypes;
+}
+
+export default function BlogForm({ blog }: BlogFormPropTypes) {
+  const [previews, setPreviews] = useState<PreviewType[]>([]);
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  // search params
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("id");
 
   const form = useForm<AddBlogFormValues>({
-    resolver: zodResolver(addBlogSchema),
+    resolver: zodResolver(buildBlogSchema(!!editId)), // ✅ pass true if editing
     defaultValues: {
-      title: "",
-      description: "",
-      content: "", // ✅ must initialize as string
-      images: [], // ✅ must initialize as array
+      title: blog?.title || "",
+      description: blog?.shortDescription || "",
+      content: blog?.description || "",
+      images: [],
     },
   });
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
+  // 🔹 Load previews if blog has images
+  useEffect(() => {
+    if (blog?.images) {
+      setPreviews(blog.images as ImagesTypes[]);
+    } else {
+      setPreviews([]);
+    }
+  }, [blog?.images]);
 
-  // image preview handler
+  // 🔹 Handle new image uploads
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
     if (files.length > 0) {
       form.setValue("images", files, { shouldValidate: true });
-      // create previews
-      const fileReaders = files.map(
+      const readers = files.map(
         (file) =>
-          new Promise<string>((resolve) => {
+          new Promise<{ image: string }>((resolve) => {
             const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
+            reader.onloadend = () =>
+              resolve({ image: reader.result as string });
             reader.readAsDataURL(file);
           })
       );
-      Promise.all(fileReaders).then((urls) => setPreviews(urls));
+      Promise.all(readers).then((urls) => setPreviews(urls));
     }
   };
+
+  console.log("preview", previews);
 
   const handleFormReset = () => {
     form.reset();
@@ -65,41 +88,47 @@ export default function AddBlogForm({
     if (inputFileRef.current) inputFileRef.current.value = "";
   };
 
+  // 🔹 Submit (Add or Edit depending on uuid)
   async function onSubmit(values: AddBlogFormValues) {
-    console.log("blog data to submit:", values);
-
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("content", values.content);
+    formData.append("shortDescription", values.description);
+    formData.append("description", values.content);
 
-    // ✅ append all images
-    values.images.forEach((file, idx) => {
-      formData.append("image", file);
-    });
+    if (values.images && values.images.length > 0) {
+      values.images.forEach((file) => {
+        formData.append("image", file);
+      });
+    }
 
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "admin/store/blog",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const endpoint = editId
+        ? `/admin/update/blog/${editId}`
+        : "admin/store/blog";
+
+      const result: ReturnPayload = editId
+        ? await apiClient.put(endpoint, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+        : await apiClient.post(endpoint, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+
       if (result.success) {
         handleFormReset();
         toast.success(result.message);
+        router.replace("blogs");
       } else {
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error adding blog:", error);
-      toast.error("Error adding blog. Please try again.");
+      console.error("Error saving blog:", error);
+      toast.error("Error saving blog. Please try again.");
     }
   }
 
   return (
-    <div className={cn("mx-6", className)} {...props}>
+    <div className={cn("mx-6")}>
       <Card>
         <CardContent className="pt-6">
           <Form {...form}>
@@ -138,11 +167,11 @@ export default function AddBlogForm({
                 )}
               />
 
-              {/* Image Upload (Multiple) */}
+              {/* Images */}
               <FormField
                 control={form.control}
                 name="images"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Images *</FormLabel>
                     <FormControl>
@@ -157,24 +186,33 @@ export default function AddBlogForm({
                     </FormControl>
                     <FormMessage />
                     {previews.length > 0 && (
-                      <div className="mt-2 grid grid-cols-2 gap-2">
-                        {previews.map((src, idx) => (
-                          <Image
-                            key={idx}
-                            width={250}
-                            height={150}
-                            src={src}
-                            alt={`Preview ${idx + 1}`}
-                            className="rounded border"
-                          />
-                        ))}
+                      <div className="mt-2 flex items-center gap-5 flex-wrap">
+                        {previews.map((p, idx) => {
+                          const src =
+                            "id" in p
+                              ? `${baseURL}/${p.image}` // backend image
+                              : p.image.startsWith("data:")
+                              ? p.image // local base64
+                              : `${baseURL}/${p.image}`; // fallback for string path
+
+                          return (
+                            <Image
+                              key={"id" in p ? p.id : idx}
+                              width={250}
+                              height={250}
+                              src={src}
+                              alt={`Preview ${idx + 1}`}
+                              className="w-50 h-50 rounded border object-cover"
+                            />
+                          );
+                        })}
                       </div>
                     )}
                   </FormItem>
                 )}
               />
 
-              {/* Rich Text Editor */}
+              {/* Content (TinyMCE) */}
               <FormField
                 control={form.control}
                 name="content"
@@ -184,7 +222,7 @@ export default function AddBlogForm({
                     <FormControl>
                       <EditorClient
                         initialValue={field.value || "<p>Welcome!</p>"}
-                        onEditorChange={(val) => field.onChange(val)} // ✅ update RHF
+                        onEditorChange={(val) => field.onChange(val)}
                       />
                     </FormControl>
                     <FormMessage />
@@ -194,21 +232,36 @@ export default function AddBlogForm({
 
               {/* Buttons */}
               <div className="flex justify-end space-x-4 mt-5">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleFormReset}
-                  disabled={form.formState.isSubmitting}
-                  className="hover:text-indigo-500"
-                >
-                  Reset
-                </Button>
+                {blog?.id ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.back()}
+                    disabled={form.formState.isSubmitting}
+                    className="hover:text-indigo-500"
+                  >
+                    Cancel
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleFormReset}
+                    disabled={form.formState.isSubmitting}
+                    className="hover:text-indigo-500"
+                  >
+                    Reset
+                  </Button>
+                )}
+
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
                   className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
                 >
-                  {form.formState.isSubmitting ? "Adding..." : "Add Blog"}
+                  {form.formState.isSubmitting
+                    ? "Processing"
+                    : `${editId ? "Update" : "Add"} Blog`}
                 </Button>
               </div>
             </form>
