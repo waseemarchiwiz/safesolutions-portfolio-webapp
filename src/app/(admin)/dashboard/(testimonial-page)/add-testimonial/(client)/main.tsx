@@ -1,0 +1,220 @@
+"use client";
+
+import React, { useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import Image from "next/image";
+import { apiClient } from "@/lib/api-config/client";
+import { ReturnPayload } from "@/lib/types";
+import { useRouter } from "next/navigation";
+
+import { Textarea } from "@/components/ui/textarea";
+import {
+  TestimonialsFormValues,
+  TestimonialsSchema,
+} from "../(validation)/validation";
+
+export default function AddTestimonialForm() {
+  const [preview, setPreview] = useState<string | null>(null);
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const form = useForm<TestimonialsFormValues>({
+    resolver: zodResolver(TestimonialsSchema),
+    defaultValues: {
+      name: "",
+      designation: "",
+      description: "",
+      image: undefined,
+    },
+  });
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      form.setValue("image", file, { shouldValidate: true });
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFormReset = () => {
+    form.reset();
+    setPreview(null);
+    if (inputFileRef.current) inputFileRef.current.value = "";
+  };
+
+  async function handleFormSubmit(values: TestimonialsFormValues) {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("designation", values.designation);
+    formData.append("description", values.description);
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
+    }
+
+    console.log("values: --", values);
+
+    console.log("formData---", formData);
+
+    try {
+      const result: ReturnPayload = await apiClient.post(
+        "/admin/store/testimonial",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      if (result.success) {
+        handleFormReset();
+        toast.success(result.message);
+        router.replace("testimonials");
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error saving Testimonial testimonial:", error);
+      toast.error("Error saving Testimonial testimonial. Please try again.");
+    }
+  }
+
+  return (
+    <div className={cn("mx-6")}>
+      <Card>
+        <CardContent className="pt-6">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleFormSubmit)}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Name */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Role */}
+                <FormField
+                  control={form.control}
+                  name="designation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Designation *</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your designation"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Short Description */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description *</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter short description"
+                        className="min-h-[100px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Image Upload */}
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>Image *</FormLabel>
+                      <FormControl>
+                        <Input
+                          ref={inputFileRef}
+                          type="file"
+                          accept="image/jpeg,image/jpg,image/png,image/webp"
+                          onChange={handleImageChange}
+                          className="cursor-pointer"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                      {preview && (
+                        <div className="mt-2">
+                          <Image
+                            width={250}
+                            height={250}
+                            src={preview}
+                            alt="Preview"
+                            className="rounded border"
+                          />
+                        </div>
+                      )}
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-end space-x-4 mt-5">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleFormReset}
+                  disabled={form.formState.isSubmitting}
+                >
+                  Reset
+                </Button>
+
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                  onClick={() => console.log("Add Testimonial clicked")}
+                >
+                  {form.formState.isSubmitting
+                    ? "Processing"
+                    : "Add testimonial"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

@@ -108,7 +108,7 @@ const navItems = [
       },
       {
         title: "All FAQ",
-        url: "/dashboard/faq",
+        url: "/dashboard/faqs",
       },
     ],
   },
