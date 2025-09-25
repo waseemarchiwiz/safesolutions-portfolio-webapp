@@ -17,9 +17,11 @@ import {
 import {
   Briefcase,
   Building,
+  FolderCheck,
   LayoutDashboard,
   NotepadTextIcon,
   Quote,
+  Store,
   Users2,
 } from "lucide-react";
 import Link from "next/link";
@@ -125,6 +127,38 @@ const navItems = [
       {
         title: "All company",
         url: "/dashboard/companies",
+      },
+    ],
+  },
+  {
+    title: "Services",
+    url: "/dashboard/services",
+    icon: Store,
+    isActive: false,
+    items: [
+      {
+        title: "Add Service",
+        url: "/dashboard/add-service",
+      },
+      {
+        title: "All service",
+        url: "/dashboard/services",
+      },
+    ],
+  },
+  {
+    title: "Projects",
+    url: "/dashboard/projects",
+    icon: FolderCheck,
+    isActive: false,
+    items: [
+      {
+        title: "Add Project",
+        url: "/dashboard/add-project",
+      },
+      {
+        title: "All project",
+        url: "/dashboard/projects",
       },
     ],
   },
