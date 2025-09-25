@@ -17,6 +17,12 @@ import {
   ToolCase,
   RectangleGoggles,
   Box,
+  Rocket,
+  CodeIcon,
+  PaletteIcon,
+  ShieldCheckIcon,
+  DatabaseIcon,
+  ServerIcon,
 } from "lucide-react";
 
 // icons maps
@@ -39,6 +45,12 @@ export const iconsMap = {
   ToolCase,
   RectangleGoggles,
   Box,
+  Rocket,
+  CodeIcon,
+  PaletteIcon,
+  ShieldCheckIcon,
+  DatabaseIcon,
+  ServerIcon,
 };
 
 type ServiceTypes = {
