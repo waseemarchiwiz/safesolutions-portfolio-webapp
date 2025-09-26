@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-config/client";
-import Main from "./(client)/main";
+import MainBlogs from "./(client)/main";
 
 export interface BlogTypes {
   id: number;
@@ -19,11 +19,17 @@ export interface BlogTypes {
     }
   ];
 }
+
+type BlogPayload = {
+  success: boolean;
+  blogs: BlogTypes[];
+};
+
 export default async function BlogsPage() {
   // api client
-  const result = await apiClient.get("/user/get/blog");
+  const result: BlogPayload = await apiClient.get("/user/get/blog");
   console.log("result: ", result);
 
-  // teams
-  return <Main blogs={result?.blogs || []} />;
+  // blogs
+  return <MainBlogs blogs={result?.blogs} />;
 }

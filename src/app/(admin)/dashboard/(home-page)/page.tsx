@@ -16,5 +16,5 @@ export default async function HomePage() {
   const result: ReturnPayload = await api.get("/admin/dashboard");
   console.log("result: ", result);
 
-  return <Home counts={result.data || {}} />;
+  return <Home counts={result?.data || {}} />;
 }

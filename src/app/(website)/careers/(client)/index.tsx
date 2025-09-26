@@ -9,13 +9,13 @@ import Loading from "../loading";
 import ApplyModal from "./application-dialog";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { Button } from "@/components/ui/button";
-import { CareerTypes, EmailTypes } from "../page";
+import { CareerTypes } from "../page";
 import { toast } from "sonner";
-import { SubmitApplyAction } from "../(actions)/action";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 
 interface CareersProps {
   careers: CareerTypes[];
-  emails: EmailTypes[];
+  companies: CompanyTypes[];
 }
 
 /**
@@ -24,9 +24,8 @@ interface CareersProps {
  * Submission fails
  * */
 
-const Careers = ({ careers, emails }: CareersProps) => {
-  const [selectEmail, setSelectedEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+const Careers = ({ careers, companies }: CareersProps) => {
+  // selected job
   const [selectedJob, setSelectedJob] = useState<CareerTypes | {}>({}); // Loader state to track data fetching
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -72,11 +71,7 @@ const Careers = ({ careers, emails }: CareersProps) => {
           </div>
 
           {/* Loader Section */}
-          {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <Loading />
-            </div>
-          ) : careers?.length === 0 ? (
+          {careers?.length === 0 ? (
             <div className="text-center py-12 bg-white dark:bg-black rounded-lg shadow">
               <p className="text-xl text-gray-600 dark:text-white">
                 No jobs available at the moment.
@@ -134,7 +129,7 @@ const Careers = ({ careers, emails }: CareersProps) => {
         modalOpen={modalOpen}
         onOpenChange={() => setModalOpen(false)}
         selectedJob={selectedJob as CareerTypes}
-        emails={emails}
+        companies={companies}
         onSave={handleSubmit}
       />
       <ScrollToTop />

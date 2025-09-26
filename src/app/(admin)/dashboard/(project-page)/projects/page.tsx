@@ -1,8 +1,8 @@
-import MainServices from "./(client)/main";
+import MainProjects from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { axiosServer } from "@/lib/api-config/client";
 import { cookies } from "next/headers";
-import { ServiceTypes } from "./columns";
+import { ProjectTypes } from "./columns";
 import { ReturnPayload } from "@/lib/types";
 
 export interface PaginationUrlProps {
@@ -15,7 +15,7 @@ export interface PaginationUrlProps {
  * Pending
  * **/
 
-export default async function AllServicesPage({
+export default async function AllProjectsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
@@ -33,7 +33,7 @@ export default async function AllServicesPage({
     .join("; ");
   const api = await axiosServer(cookieHeader);
 
-  const result: ReturnPayload = await api.get("/admin/services");
+  const result: ReturnPayload = await api.get("/admin/projects");
   console.log("result----: ", result);
 
   return (
@@ -41,16 +41,16 @@ export default async function AllServicesPage({
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           <div className="flex justify-between items-center px-4 lg:px-6">
-            <h1 className="text-lg">All Services</h1>
-            <Breadcrumbs page="add Service" />
+            <h1 className="text-lg">All Projects</h1>
+            <Breadcrumbs page="add Project" />
           </div>
-          {/* All Services */}
-          <MainServices
-            data={result.data?.services as ServiceTypes[]}
+          {/* All Projects */}
+          <MainProjects
+            data={result.data?.projects as ProjectTypes[]}
             page={1}
             limit={10}
             total={1}
-            linkInfo={{ text: "Add Service", link: "add-service" }}
+            linkInfo={{ text: "Add Project", link: "add-project" }}
           />
         </div>
       </div>

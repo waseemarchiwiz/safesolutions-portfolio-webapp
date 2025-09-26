@@ -11,12 +11,10 @@ const serviceSchema = z.object({
 });
 
 // Project Detail inside Project
+// Project Detail inside Project
 const projectDetailSchema = z.object({
   name: z.string().min(2, "Detail name is required"),
-  version: z.string().optional(),
-  lastUpdated: z.string().optional(),
   deploymentType: z.string().min(2, "Deployment type is required"),
-  supportHours: z.string().min(2, "Support hours are required"),
 });
 
 // Support inside Project

@@ -53,7 +53,7 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
       description: project?.description || "",
       slug: project?.slug || "",
       version: project?.version || "",
-      lastUpdated: project?.lastUpdated || "",
+      // lastUpdated: project?.lastUpdated || "",
       type: (project?.type as "detailed" | "external") || "external",
       link: project?.link || "",
       services: project?.services || [],
@@ -97,7 +97,7 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
     formData.append("description", values.description);
     formData.append("slug", values.slug);
     if (values.version) formData.append("version", values.version);
-    if (values.lastUpdated) formData.append("lastUpdated", values.lastUpdated);
+    // if (values.lastUpdated) formData.append("lastUpdated", values.lastUpdated);
     formData.append("type", values.type);
     if (values.link) formData.append("link", values.link);
     if (values.image) formData.append("image", values.image);
@@ -341,39 +341,12 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                                   }}
                                 />
                                 <Input
-                                  placeholder="Version"
-                                  value={detail.version}
-                                  onChange={(e) => {
-                                    const updated = [...(field.value || [])];
-                                    updated[idx].version = e.target.value;
-                                    field.onChange(updated);
-                                  }}
-                                />
-                                <Input
-                                  type="date"
-                                  value={detail.lastUpdated}
-                                  onChange={(e) => {
-                                    const updated = [...(field.value || [])];
-                                    updated[idx].lastUpdated = e.target.value;
-                                    field.onChange(updated);
-                                  }}
-                                />
-                                <Input
                                   placeholder="Deployment Type"
                                   value={detail.deploymentType}
                                   onChange={(e) => {
                                     const updated = [...(field.value || [])];
                                     updated[idx].deploymentType =
                                       e.target.value;
-                                    field.onChange(updated);
-                                  }}
-                                />
-                                <Input
-                                  placeholder="Support Hours"
-                                  value={detail.supportHours}
-                                  onChange={(e) => {
-                                    const updated = [...(field.value || [])];
-                                    updated[idx].supportHours = e.target.value;
                                     field.onChange(updated);
                                   }}
                                 />

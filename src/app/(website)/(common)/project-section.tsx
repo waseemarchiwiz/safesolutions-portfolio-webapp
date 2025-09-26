@@ -10,13 +10,16 @@ import {
 import AutoScroll from "embla-carousel-auto-scroll";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { projects } from "../project/data";
+import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
+import Image from "next/image";
+import { baseURL } from "@/lib/api-config/client";
 
 interface ProjectsComponentProps {
   background?: string;
+  projects: ProjectTypes[];
 }
 
-const Projects = ({ background }: ProjectsComponentProps) => {
+const Projects = ({ background, projects }: ProjectsComponentProps) => {
   // get project link
   const getProjectLink = (project: (typeof projects)[number]) => {
     if (project.type === "external") {
@@ -33,6 +36,8 @@ const Projects = ({ background }: ProjectsComponentProps) => {
     }
     return null;
   };
+
+  console.log("projects----", projects);
 
   return (
     <section className={cn(background, "p-16 bg-white dark:bg-black")}>
@@ -71,12 +76,14 @@ const Projects = ({ background }: ProjectsComponentProps) => {
           className="w-full mx-auto mt-10"
         >
           <CarouselContent>
-            {projects.map((project, index) => {
+            {projects?.map((project, index) => {
               const linkProps = getProjectLink(project);
               const CardContent = (
                 <div className="group relative overflow-hidden rounded-lg shadow-lg h-full transition-transform hover:scale-105">
-                  <img
-                    src={project.img as string}
+                  <Image
+                    width={150}
+                    height={150}
+                    src={`${baseURL}/${project.img as string}`}
                     alt={project.name}
                     className="object-cover w-full h-full"
                   />
@@ -111,7 +118,6 @@ const Projects = ({ background }: ProjectsComponentProps) => {
               );
             })}
           </CarouselContent>
-
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
