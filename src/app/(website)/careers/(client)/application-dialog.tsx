@@ -31,13 +31,17 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CareerTypes } from "../page";
-import { SubmitApplyAction } from "../(actions)/action";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
+import { toast } from "sonner";
+import { apiClient } from "@/lib/api-config/client";
+import { ReturnPayload } from "@/lib/types";
+import { AxiosError } from "axios";
 
 interface ApplyModalProp {
   modalOpen: boolean;
   onOpenChange: () => void;
   selectedJob: CareerTypes;
-  emails: { name: string; email: string }[];
+  companies: CompanyTypes[];
   onSave: (success: boolean, message: string) => void;
 }
 
@@ -45,7 +49,7 @@ const ApplyModal = ({
   modalOpen,
   onOpenChange,
   selectedJob,
-  emails,
+  companies,
   onSave,
 }: ApplyModalProp) => {
   // use form
@@ -99,15 +103,30 @@ const ApplyModal = ({
     }
 
     try {
-      const response = await SubmitApplyAction(formData);
-      console.log(response, "response easy apply");
+      const response: ReturnPayload = await apiClient.post(
+        `/user/easy/apply`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log("response easy apply------", response);
+
       if (response?.success) {
         handleOpenChange(response.success, response.message);
       } else {
         console.log("error:", response.message);
+        toast.error(response.message || "Failed to submit application..");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      if (error && (error as AxiosError).isAxiosError) {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        toast.error(
+          axiosError.response?.data?.message || "Failed to send your message"
+        );
+      } else {
+        toast.error("Unexpected error submitting form");
+      }
     }
   };
 
@@ -133,7 +152,7 @@ const ApplyModal = ({
             className="block w-full p-2 bg-muted text-foreground border border-input rounded-md"
           >
             <option value="">Select Email</option>
-            {emails?.map((item, index) => (
+            {companies?.map((item, index) => (
               <option key={index} value={item.email}>
                 {item.name}
               </option>

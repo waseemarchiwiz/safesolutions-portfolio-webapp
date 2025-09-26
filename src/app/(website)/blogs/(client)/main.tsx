@@ -1,16 +1,16 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import PageHeroSection from "../../(common)/hero-section";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { BlogTypes } from "../page";
 import { Button } from "@/components/ui/button";
 import { baseURL } from "@/lib/api-config/client";
 import Link from "next/link";
+import Image from "next/image";
 
-const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
-  const router = useRouter();
+const MainBlogs = ({ blogs }: { blogs: BlogTypes[] }) => {
+  console.log("blogss-in client:-", blogs);
 
   return (
     <div>
@@ -40,7 +40,9 @@ const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
                     key={blog.slug}
                     className="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group"
                   >
-                    <img
+                    <Image
+                      width={100}
+                      height={100}
                       src={`${baseURL}/${blog.images?.[0].image}`}
                       alt={blog.images?.[0].image}
                       className="w-full h-96 object-cover"
@@ -77,4 +79,4 @@ const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
   );
 };
 
-export default Blogs;
+export default MainBlogs;

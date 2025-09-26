@@ -17,7 +17,13 @@ interface MainTeamsProps {
   linkInfo?: LinkTypes;
 }
 
-const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
+const MainCompany = ({
+  data,
+  page,
+  limit,
+  total,
+  linkInfo,
+}: MainTeamsProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<CompanyTypes | null>(null);
   const [action, setAction] = useState<string>("");
@@ -57,7 +63,7 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
     if (action === "delete") {
       try {
         const result: ReturnPayload = await apiClient.delete(
-          `/admin/delete/email/${updated?.id}` // ✅ fixed endpoint
+          `/admin/company/${updated?.id}` // ✅ fixed endpoint
         );
         if (result.success) {
           toast.success(result.message);
@@ -101,4 +107,4 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
   );
 };
 
-export default MainFaq;
+export default MainCompany;

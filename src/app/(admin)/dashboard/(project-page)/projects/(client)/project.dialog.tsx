@@ -11,23 +11,23 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ServiceTypes } from "../columns";
+import { ProjectTypes } from "../columns";
 
-interface serviceDialogProps {
+interface ProjectDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  service: ServiceTypes;
-  onSave: (updated: ServiceTypes) => void;
+  project: ProjectTypes;
+  onSave: (updated: ProjectTypes) => void;
   action: string;
 }
 
-export default function ServiceDialog({
+export default function ProjectDialog({
   open,
   onOpenChange,
-  service,
+  project,
   onSave,
   action,
-}: serviceDialogProps) {
+}: ProjectDialogProps) {
   // handle close
   const handleDialogClose = () => {
     onOpenChange(false);
@@ -38,12 +38,12 @@ export default function ServiceDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {action === "edit" ? "Update Service" : "Delete Service"}
+            {action === "edit" ? "Update Project" : "Delete Project"}
           </DialogTitle>
           <DialogDescription className="sr-only">
             {action === "edit"
-              ? "Update Service dialog"
-              : "Delete Service confirmation"}
+              ? "Update Project dialog"
+              : "Delete Project confirmation"}
           </DialogDescription>
         </DialogHeader>
         <Separator className="" />
@@ -56,7 +56,7 @@ export default function ServiceDialog({
           <Button
             type="button"
             variant="destructive"
-            onClick={() => onSave(service)}
+            onClick={() => onSave(project)}
             className="flex"
           >
             Delete

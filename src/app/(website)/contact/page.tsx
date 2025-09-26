@@ -1,5 +1,6 @@
 import { apiClient } from "@/lib/api-config/client";
 import Main from "./(client)/main";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 
 export interface EmailTypes {
   id: number;
@@ -9,13 +10,20 @@ export interface EmailTypes {
   updatedAt?: string;
 }
 
+interface CompaniesResponse {
+  success: boolean;
+  data: CompanyTypes[];
+}
+
 export default async function ContactPage() {
   // api client
 
-  const emailsResult = await apiClient.get("/user/get/emails");
+  const emailsResult: CompaniesResponse = await apiClient.get(
+    "/user/get/emails"
+  );
 
   // emails
-  const emails = emailsResult?.emails || [];
+  const emails = emailsResult?.data || [];
 
   console.log("emails: ", emails);
 

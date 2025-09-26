@@ -4,6 +4,8 @@ import { axiosServer } from "@/lib/api-config/client";
 import { cookies } from "next/headers";
 import { BlogTypes } from "./columns";
 import { ReturnPayload } from "@/lib/types";
+import prisma from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -25,16 +27,22 @@ export default async function AllBlogsPage({
   // const skip = (page - 1) * limit;
 
   // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  // const cookieStore = await cookies();
+  // // Build Cookie header manually
+  // const cookieHeader = cookieStore
+  //   .getAll()
+  //   .map((c) => `${c.name}=${c.value}`)
+  //   .join("; ");
+  // const api = await axiosServer(cookieHeader);
 
-  const result: ReturnPayload = await api.get("/admin/get/blog");
-  console.log("result----: ", result);
+  // const result: ReturnPayload = await api.get("/admin/get/blog");
+  // console.log("result----: ", result);
+
+  const result = await prisma.blog.findMany({
+    include: { images: true },
+  });
+
+  const blogs = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -46,7 +54,7 @@ export default async function AllBlogsPage({
           </div>
           {/* All Blogs */}
           <MainBlogs
-            data={result.data?.blogs as BlogTypes[]}
+            data={blogs}
             page={1}
             limit={10}
             total={1}

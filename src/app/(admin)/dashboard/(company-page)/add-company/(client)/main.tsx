@@ -19,7 +19,6 @@ import { toast } from "sonner";
 import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
 import { CompanyFormValues, companySchema } from "../(validation)/validation";
 
 export default function AddCompanyForm() {
@@ -40,7 +39,7 @@ export default function AddCompanyForm() {
   async function onSubmit(values: CompanyFormValues) {
     try {
       const result: ReturnPayload = await apiClient.post(
-        "admin/store/email", // it is company | need to change from the backend
+        "admin/company", // it is company | need to change from the backend
         values
       );
 

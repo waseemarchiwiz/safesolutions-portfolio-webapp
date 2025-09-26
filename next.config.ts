@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost", // ✅ no http://
-        port: "8080", // ✅ port separately
+        hostname: "localhost", //  no http://
+        port: "8080", //  port separately
         pathname: "/**",
       },
       {

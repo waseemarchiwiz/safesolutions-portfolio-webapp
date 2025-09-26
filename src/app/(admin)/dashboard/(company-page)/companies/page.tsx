@@ -33,7 +33,7 @@ export default async function AllCompanysPage({
     .join("; ");
   const api = await axiosServer(cookieHeader);
 
-  const result: ReturnPayload = await api.get("/admin/get/email"); // it is company
+  const result: ReturnPayload = await api.get("/admin/companies"); // it is company
   console.log("result----: ", result);
 
   return (

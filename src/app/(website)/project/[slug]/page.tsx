@@ -1,36 +1,36 @@
 import { apiClient } from "@/lib/api-config/client";
-import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
-import Main from "../(client)/main";
+import ProjectDetails from "../(client)/project-details";
+import { ProjectTypes } from "../data";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
 };
 
-type BlogPayload = {
+type ProjectPayload = {
   success: boolean;
-  blog: BlogTypes;
+  project: ProjectTypes;
 };
 
-export default async function BlogDetailsPage({ params }: ParamsProps) {
+export default async function ProjectDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;
 
-  // blog data
-  const data: BlogPayload = await apiClient.get(
-    `/user/get/blog/detail/${slug}`
+  // Project data
+  const data: ProjectPayload = await apiClient.get(
+    `/user/get/project/detail/${slug}`
   );
 
-  console.log("blog Data: ", data);
+  console.log("Project Data: ", data);
 
   if (!data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-gray-800">
-            blog Not Found
+            Project Not Found
           </h2>
           <p className="mt-2 text-gray-600">
-            The requested blog could not be found.
+            The requested Project could not be found.
           </p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default async function BlogDetailsPage({ params }: ParamsProps) {
 
   return (
     <div className="dark:bg-[#18181b]">
-      <Main blogData={(data.blog as BlogTypes) || {}} />
+      <ProjectDetails data={(data.project as ProjectTypes) || {}} />
     </div>
   );
 }

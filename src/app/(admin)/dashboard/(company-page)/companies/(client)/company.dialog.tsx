@@ -63,7 +63,7 @@ export default function CompanyDialog({
     // 🔹 Map fields to backend names
     try {
       const result: ReturnPayload = await apiClient.put(
-        `/admin/update/email/${company?.id}`,
+        `/admin/company/${company?.id}`,
         values
       );
 

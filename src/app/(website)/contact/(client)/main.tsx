@@ -28,6 +28,7 @@ import PageHeroSection from "../../(common)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
 import { EmailTypes } from "../page";
 import { apiClient } from "@/lib/api-config/client";
+import { AxiosError } from "axios";
 
 interface MainProps {
   emails: EmailTypes[];
@@ -51,15 +52,24 @@ const Main: React.FC<MainProps> = ({ emails }) => {
 
     try {
       const result = await apiClient.post(`/user/contact`, values);
+      console.log("result--", result);
+
       if (result?.success) {
         toast.success(result?.message || "message sent successfully");
         form.reset();
       } else {
         toast.error(result?.message || "Failed to send message");
       }
-      console.log(result);
     } catch (error) {
       console.log("Error: ", error);
+      if (error && (error as AxiosError).isAxiosError) {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        toast.error(
+          axiosError.response?.data?.message || "Failed to send your message"
+        );
+      } else {
+        toast.error("Unexpected error submitting form");
+      }
     }
   };
 

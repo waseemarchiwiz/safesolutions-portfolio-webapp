@@ -15,6 +15,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
 import { iconsMap } from "@/app/(website)/project/data";
+import Image from "next/image";
+import { baseURL } from "@/lib/api-config/client";
 
 // Define the shape of your ServiceTypes data
 
@@ -58,8 +60,8 @@ export interface ProjectTypes {
 }
 
 interface columnsProps {
-  onEdit: (category: ProjectTypes) => void;
-  onDelete: (category: ProjectTypes) => void;
+  onEdit: (project: ProjectTypes) => void;
+  onDelete: (project: ProjectTypes) => void;
 }
 
 export const getColumns = ({
@@ -95,22 +97,27 @@ export const getColumns = ({
     enableSorting: false,
     enableHiding: false,
   },
-  // Column for Title
-  // {
-  //   accessorKey: "image",
-  //   header: "Logo",
-  //   cell: ({ row }) => {
-  //     const Icon = iconsMap[row?.original?.icon as keyof typeof iconsMap];
-  //     return (
-  //       <span className=" text-indigo-600">
-  //         <Icon />
-  //       </span>
-  //     );
-  //   },
-  // },
+  // Column for image
+  {
+    accessorKey: "image",
+    header: "Logo",
+    cell: ({ row }) => {
+      return (
+        <div className="font-medium  p-1">
+          <Image
+            width={100}
+            height={150}
+            src={`${baseURL}/${row.original.img as string}`}
+            alt={row.original.img}
+            className=" rounded-full w-10 h-10"
+          />
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Project",
     cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
   },
   // Column for Slug
@@ -128,7 +135,7 @@ export const getColumns = ({
     header: "Actions",
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const project = row.original;
       return (
         <>
           <div className="flex md:hidden">
@@ -141,12 +148,12 @@ export const getColumns = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => onEdit(category)}>
+                <DropdownMenuItem onClick={() => onEdit(project)}>
                   Edit
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="text-red-500"
-                  onClick={() => onDelete(category)}
+                  onClick={() => onDelete(project)}
                 >
                   Delete
                 </DropdownMenuItem>
@@ -154,17 +161,13 @@ export const getColumns = ({
             </DropdownMenu>
           </div>
           <div className="hidden md:flex md:gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onEdit(category)}
-            >
+            <Button variant="outline" size="sm" onClick={() => onEdit(project)}>
               <Pen />
             </Button>
             <Button
               variant="destructive"
               size="sm"
-              onClick={() => onDelete(category)}
+              onClick={() => onDelete(project)}
             >
               <Trash />
             </Button>

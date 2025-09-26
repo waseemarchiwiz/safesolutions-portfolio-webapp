@@ -12,12 +12,14 @@ import ScrollToTop from "@/components/common/scroll-to-top";
 import Projects from "../../(common)/project-section";
 import { TeamTypes } from "../page";
 import PageHeroSection from "../../(common)/hero-section";
+import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 
 interface AboutProps {
   teams: TeamTypes[];
+  projects: ProjectTypes[];
 }
 
-const Main = ({ teams }: AboutProps) => {
+const Main = ({ teams, projects }: AboutProps) => {
   return (
     <>
       {/* Hero Section */}
@@ -150,7 +152,7 @@ const Main = ({ teams }: AboutProps) => {
         </div>
 
         {/* Other Components */}
-        <Projects />
+        <Projects projects={projects} />
         <Teams teams={teams} />
         <PartnersSection />
         <ScrollToTop />

@@ -1,5 +1,6 @@
 import { apiClient } from "@/lib/api-config/client";
 import Main from "./(client)";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 
 export interface CareerTypes {
   id: number;
@@ -20,28 +21,35 @@ export interface EmailTypes {
   updatedAt?: string;
 }
 
-export default async function CareersPage() {
-  // api client
+interface CareersResponse {
+  success: boolean;
+  careers: CareerTypes[];
+}
 
+interface CompaniesResponse {
+  success: boolean;
+  data: CompanyTypes[];
+}
+
+export default async function CareersPage() {
   try {
-    const [careersResult, emailsResult] = await Promise.all([
-      await apiClient.get("user/get/careers"),
-      await apiClient.get("user/get/emails"),
+    // Since response interceptor already returns response.data,
+    // the type here is directly CareersResponse and CompaniesResponse
+    const [careersResult, companiesResult] = await Promise.all([
+      apiClient.get<CareersResponse>("user/get/careers"),
+      apiClient.get<CompaniesResponse>("user/get/emails"),
     ]);
 
-    console.log("career result: ", careersResult);
-
-    // careers
+    // ✅ No `.data` needed, it's already the final payload
     const careers = careersResult?.careers || [];
-    // emails
-    const emails = emailsResult?.emails || [];
+    const companies = companiesResult?.data || [];
 
     console.log("careers: ", careers);
-    console.log("emails: ", emails);
+    console.log("companies: ", companies);
 
-    // teams
-    return <Main careers={careers} emails={emails} />;
+    return <Main careers={careers} companies={companies} />;
   } catch (error) {
-    console.log("Error: ", error);
+    console.error("Error fetching careers/emails:", error);
+    return <div>Failed to load careers or emails</div>;
   }
 }

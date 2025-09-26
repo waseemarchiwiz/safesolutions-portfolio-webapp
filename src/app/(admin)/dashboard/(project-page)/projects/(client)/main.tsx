@@ -4,14 +4,15 @@ import React, { useState } from "react";
 
 import { DataTable, LinkTypes } from "@/components/data-table";
 import { useRouter } from "next/navigation";
-import { getColumns, ServiceTypes } from "../columns";
+import { getColumns, ProjectTypes } from "../columns";
 import { toast } from "sonner";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
-import ServiceDialog from "./services.dialog";
+import ServiceDialog from "./project.dialog";
+import ProjectDialog from "./project.dialog";
 
 interface MainBlogsProps {
-  data: ServiceTypes[];
+  data: ProjectTypes[];
   page: number;
   limit: number;
   total: number;
@@ -21,33 +22,33 @@ interface MainBlogsProps {
 const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   // open
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<ServiceTypes | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ProjectTypes | null>(null);
   // router
   const router = useRouter();
   const [action, setAction] = useState<string>("");
   // router
   // handle edit
-  const handleEdit = (data: ServiceTypes) => {
+  const handleEdit = (data: ProjectTypes) => {
     // setOpen(true);
     setAction("edit");
     setSelectedItem(data);
-    router.push(`add-service?id=${data.id}`);
+    router.push(`add-project?id=${data.id}`);
   };
   // handle delete
-  const handleDelete = (data: ServiceTypes) => {
+  const handleDelete = (data: ProjectTypes) => {
     setAction("delete");
     setOpen(true);
     setSelectedItem(data);
   };
 
   // handle on save
-  const onSave = async (updated: ServiceTypes) => {
+  const onSave = async (updated: ProjectTypes) => {
     setOpen(false);
     // check the action
     // if (action === "edit") {
     //   try {
     //     // call delete action
-    //     const result = await UpdateServiceTypesAction(updated);
+    //     const result = await UpdateProjectTypesAction(updated);
     //     console.log("result: ", result);
     //     if (result.success) {
     //       router.refresh();
@@ -64,7 +65,7 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
       try {
         // call delete action
         const result: ReturnPayload = await apiClient.delete(
-          `/admin/service/${updated?.id}`
+          `/admin/project/${updated?.id}`
         );
         console.log("result: ", result);
         if (result.success) {
@@ -94,11 +95,11 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
         total={total}
         linkInfo={linkInfo}
       />
-      {/* ServiceTypes Dialog */}
-      <ServiceDialog
+      {/* ProjectTypes Dialog */}
+      <ProjectDialog
         open={open}
         onOpenChange={setOpen}
-        service={selectedItem as ServiceTypes}
+        project={selectedItem as ProjectTypes}
         onSave={onSave}
         action={action}
       />
