@@ -1,10 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { convertToBase64 } from "@/lib/utils";
-import { categoryEditSchema } from "../(validation)/validation";
-import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
+import { prisma } from "@/lib/prisma";
+import fs from "fs";
 
 // Server-side validation for FormData
 // export async function UpdateCategoryAction(
@@ -114,14 +113,30 @@ export async function DeleteBlogAction(id: number): Promise<ReturnPayload> {
       };
     }
 
-    // delete category in the database
-    const result: ReturnPayload = await apiClient.delete(
-      `/admin/delete/blog/${id}`
-    );
+    // delete blog in the database
+    const blog = await prisma.blog.findMany({ where: { id } });
 
-    if (!result) {
-      return { success: false, message: "Failed to delete record" };
+    if (!blog) {
+      return { success: false, message: "Blog record not found" };
     }
+
+    let image = await prisma.blogImage.findMany({
+      where: { blogId: id },
+    });
+
+    if (image) {
+      image.forEach(async (img) => {
+        fs.unlink(img.image, (err) => {
+          if (err) {
+            console.log(`Field to delete image : ${err.message}`);
+          }
+        });
+        await prisma.blogImage.delete({ where: { id: img.id } });
+      });
+    }
+
+    // Delete
+    await prisma.blog.delete({ where: { id } });
 
     revalidatePath("/dashboard/blogs");
 

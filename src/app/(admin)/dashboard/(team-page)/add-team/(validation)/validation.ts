@@ -3,9 +3,16 @@ import { z } from "zod";
 export const buildTeamSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
   role: z.string().min(2, "Role must be at least 2 characters").max(100),
-  githubUrl: z.string().url("Invalid GitHub URL").optional(),
-  linkedinUrl: z.string().url("Invalid LinkedIn URL").optional(),
-  twitterUrl: z.string().url("Invalid Twitter URL").optional(),
+  slug: z
+    .string()
+    .min(2, "Slug must be at least 2 characters")
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Slug must be lowercase with hyphens only"
+    ),
+  github: z.string().url("Invalid GitHub URL").optional(),
+  linkedin: z.string().url("Invalid LinkedIn URL").optional(),
+  twitter: z.string().url("Invalid Twitter URL").optional(),
   image: z
     .instanceof(File)
     .refine((file) => file.size > 0, "Image is required")

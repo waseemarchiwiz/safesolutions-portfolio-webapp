@@ -1,112 +1,120 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { convertToBase64 } from "@/lib/utils";
-import { categoryEditSchema } from "../(validation)/validation";
-import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
+import { prisma } from "@/lib/prisma";
+import fs from "fs";
+import path from "path";
+import { EditBuildTeamSchema } from "../(validation)/validation";
 
-// Server-side validation for FormData
-// export async function UpdateCategoryAction(
-//   formData: Category
-// ): Promise<PayloadReturn> {
-//   try {
-//     const data = {
-//       id: formData.id,
-//       title: formData.title,
-//       description: formData.desc,
-//       slug: formData.slug,
-//       image: formData.img,
-//     };
+// -----------------------------
+// Update Team Action
+// -----------------------------
+export async function UpdateTeamAction(
+  formData: FormData
+): Promise<ReturnPayload> {
+  let uploadedFilePath: string | null = null;
 
-//     // Validate FormData
-//     const validation = categoryEditSchema.safeParse(data);
-//     // if false
-//     if (!validation.success) {
-//       return { success: false, message: validation.error.message };
-//     }
-
-//     // Check for category existence
-//     const existingCategory = await prisma.category.findUnique({
-//       where: { id: data.id as string },
-//     });
-
-//     if (!existingCategory) {
-//       return { success: false, message: "Category doesn't exists" };
-//     }
-
-//     const imageUrl = {
-//       img: "",
-//       imgPublicId: "",
-//     };
-
-//     // image assets exists
-//     const isImageAssetExists = await imageAssetExists(
-//       existingCategory.imgPublicId
-//     );
-
-//     if (isImageAssetExists) {
-//       // if image exists do not upload
-//       imageUrl.img = existingCategory.img;
-//       imageUrl.imgPublicId = existingCategory.imgPublicId;
-//     }
-//     // check if it is
-//     if (data.image instanceof File) {
-//       // if not exists convert to base 64 and call upload action
-//       const base64ImageUri = await convertToBase64(data.image as File);
-//       // upload file
-//       const imageUpload = await uploadFile(base64ImageUri as string);
-
-//       if (!imageUpload) {
-//         return { success: false, message: "failed to update image" };
-//       }
-//       // update the image obj
-//       imageUrl.img = imageUpload.data?.secure_url as string;
-//       imageUrl.imgPublicId = imageUpload.data?.public_id as string;
-//     }
-
-//     // update category in the database
-//     const updateCategory = await prisma.category.update({
-//       where: { id: existingCategory.id },
-//       data: {
-//         title: data.title as string,
-//         desc: data.description as string,
-//         slug: data.slug as string,
-//         img: imageUrl.img,
-//         imgPublicId: imageUrl.imgPublicId,
-//       },
-//     });
-
-//     if (!updateCategory) {
-//       // delete the uploaded file from the cloudinary
-//       const response = await deleteFile(existingCategory.imgPublicId);
-//       if (!response.success) {
-//         return { success: false, message: "Failed to delete image" };
-//       }
-//       return { success: false, message: "Failed to update record" };
-//     }
-
-//     revalidatePath("/dashboard/categories");
-
-//     return {
-//       success: true,
-//       message: "Category updated successfully",
-//       data: updateCategory,
-//     };
-//   } catch (error) {
-//     console.error("update category error:", error);
-//     return {
-//       success: false,
-//       message:
-//         error instanceof Error ? error.message : "Failed to update category",
-//     };
-//   }
-// }
-
-// Server-side validation for FormData
-export async function DeleteBlogAction(id: number): Promise<ReturnPayload> {
   try {
-    // Validate FormData
+    // Build data
+    const dataToParse = {
+      id: formData.get("id") as string,
+      name: formData.get("name") as string,
+      role: formData.get("role") as string,
+      slug: formData.get("slug") as string,
+      github: formData.get("github") as string,
+      linkedin: formData.get("linkedin") as string,
+      twitter: formData.get("twitter") as string,
+      image: (formData.get("image") as File | string | null) ?? undefined,
+    };
+
+    const editId = Number(dataToParse.id);
+
+    if (!editId) {
+      return { success: false, message: "Please provide id" };
+    }
+
+    // Validate
+    const validation = EditBuildTeamSchema.safeParse(dataToParse);
+    if (!validation.success) {
+      return {
+        success: false,
+        message: validation.error.issues.map((i) => i.message).join(", "),
+      };
+    }
+
+    const { name, role, slug, github, linkedin, twitter, image } =
+      validation.data;
+
+    const existing = await prisma.team.findUnique({ where: { id: editId } });
+    if (!existing) {
+      return { success: false, message: "Team member not found" };
+    }
+
+    // Handle image update
+    if (image instanceof File) {
+      // upload new file
+      const uploadDir = path.join(process.cwd(), "public", "uploads", "teams");
+      fs.mkdir(uploadDir, { recursive: true }, () =>
+        console.log("image added")
+      );
+
+      const bytes = Buffer.from(await image.arrayBuffer());
+      const fileName = `${Date.now()}-${image.name}`;
+      uploadedFilePath = `/uploads/teams/${fileName}`;
+      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
+      fs.writeFile(filePath, bytes, () => console.log("image added"));
+
+      // remove old image if exists
+      if (existing.image) {
+        const oldPath = path.join(process.cwd(), "public", existing.image);
+        fs.unlink(oldPath, () => console.log("image added"));
+      }
+    } else if (typeof image === "string") {
+      uploadedFilePath = image; // keep old string path
+    } else {
+      uploadedFilePath = existing.image; // no change
+    }
+
+    // Update DB
+    const updated = await prisma.team.update({
+      where: { id: editId },
+      data: {
+        name,
+        role,
+        slug,
+        github,
+        linkedin,
+        twitter,
+        image: uploadedFilePath,
+      },
+    });
+
+    revalidatePath("/dashboard/teams");
+
+    return {
+      success: true,
+      message: "Team member updated successfully",
+      data: updated,
+    };
+  } catch (error) {
+    // rollback new file if uploaded but update failed
+    if (uploadedFilePath && uploadedFilePath.startsWith("/uploads/teams/")) {
+      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
+      fs.unlink(fullPath, () => console.log("image added"));
+    }
+    console.error("UpdateTeamAction error:", error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+// Server-side validation for FormData
+export async function DeleteTeamAction(id: number): Promise<ReturnPayload> {
+  try {
+    // Validate Id
     if (!id) {
       return {
         success: false,
@@ -114,23 +122,31 @@ export async function DeleteBlogAction(id: number): Promise<ReturnPayload> {
       };
     }
 
-    // delete category in the database
-    const result: ReturnPayload = await apiClient.delete(
-      `/admin/delete/blog/${id}`
-    );
+    // delete Team in the database
+    const team = await prisma.team.findUnique({ where: { id } });
 
-    if (!result) {
-      return { success: false, message: "Failed to delete record" };
+    if (!team) {
+      return { success: false, message: "Team record not found" };
     }
 
-    revalidatePath("/dashboard/blogs");
+    // Delete
+    const result = await prisma.team.delete({ where: { id } });
+
+    if (!result) {
+      // delete image
+      fs.unlink(team.image as string, (err) => {
+        if (err) console.error(`Failed to delete image: ${err.message}`);
+      });
+    }
+
+    revalidatePath("/dashboard/teams");
 
     return {
       success: true,
-      message: `Blog record deleted successfully`,
+      message: `Team record deleted successfully`,
     };
   } catch (error) {
-    console.error("Add category error:", error);
+    console.error("Add team error:", error);
     return {
       success: false,
       message:

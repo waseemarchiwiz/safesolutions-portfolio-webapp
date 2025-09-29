@@ -18,15 +18,20 @@ import {
 } from "@/components/ui/sidebar";
 import React from "react";
 import { User } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { signOut } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { logout, isLoggedIn } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    router.push("/");
+  };
 
   const user = {
-    name: isLoggedIn && "admin",
-    email: (isLoggedIn && "admin@gmail.com") || "",
+    name: "admin",
+    email: "admin@gmail.com",
   };
 
   return (
@@ -74,7 +79,7 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => logout()}>
+            <DropdownMenuItem onClick={handleSignOut}>
               <IconLogout />
               Log out
             </DropdownMenuItem>

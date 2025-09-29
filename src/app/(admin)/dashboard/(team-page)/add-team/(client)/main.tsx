@@ -18,10 +18,10 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import Image from "next/image";
 import { buildTeamSchema, TeamFormValues } from "../(validation)/validation";
-import { apiClient, baseURL } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
-import { useRouter, useSearchParams } from "next/navigation";
+import { baseURL } from "@/lib/api-config/client";
+import { useRouter } from "next/navigation";
 import { TeamTypes } from "../../teams/columns";
+import { AddTeamAction } from "../(actions)/action";
 
 interface TeamFormProps {
   member?: TeamTypes;
@@ -37,9 +37,10 @@ export default function TeamForm({ member }: TeamFormProps) {
     defaultValues: {
       name: "",
       role: "",
-      githubUrl: "",
-      linkedinUrl: "",
-      twitterUrl: "",
+      slug: "",
+      github: "",
+      linkedin: "",
+      twitter: "",
       image: undefined,
     },
   });
@@ -73,21 +74,17 @@ export default function TeamForm({ member }: TeamFormProps) {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("role", values.role);
-    if (values.githubUrl) formData.append("github", values.githubUrl);
-    if (values.linkedinUrl) formData.append("linkedin", values.linkedinUrl);
-    if (values.twitterUrl) formData.append("twitter", values.twitterUrl);
+    formData.append("slug", values.slug);
+    if (values.github) formData.append("github", values.github);
+    if (values.linkedin) formData.append("linkedin", values.linkedin);
+    if (values.twitter) formData.append("twitter", values.twitter);
     if (values.image instanceof File) {
       formData.append("image", values.image);
     }
 
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "admin/store/team",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const result = await AddTeamAction(formData);
+      console.log("Result---add team--", result);
 
       if (result.success) {
         handleFormReset();
@@ -101,6 +98,19 @@ export default function TeamForm({ member }: TeamFormProps) {
       toast.error("Error saving team member. Please try again.");
     }
   }
+
+  // Auto-generate slug from title
+  const watchedName = form.watch("name");
+  useEffect(() => {
+    if (watchedName) {
+      const slug = watchedName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedName, form]);
 
   return (
     <div className={cn("mx-6")}>
@@ -124,6 +134,21 @@ export default function TeamForm({ member }: TeamFormProps) {
                   )}
                 />
 
+                {/* Slug */}
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="team-slug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* Role */}
                 <FormField
                   control={form.control}
@@ -138,13 +163,11 @@ export default function TeamForm({ member }: TeamFormProps) {
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* GitHub */}
                 <FormField
                   control={form.control}
-                  name="githubUrl"
+                  name="github"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>GitHub URL</FormLabel>
@@ -158,11 +181,10 @@ export default function TeamForm({ member }: TeamFormProps) {
                     </FormItem>
                   )}
                 />
-
                 {/* LinkedIn */}
                 <FormField
                   control={form.control}
-                  name="linkedinUrl"
+                  name="linkedin"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>LinkedIn URL</FormLabel>
@@ -176,13 +198,10 @@ export default function TeamForm({ member }: TeamFormProps) {
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Twitter */}
                 <FormField
                   control={form.control}
-                  name="twitterUrl"
+                  name="twitter"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Twitter URL</FormLabel>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,21 +21,10 @@ import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { buildJobSchema, JobFormValues } from "../(validation)/validation";
+import { prisma } from "@/lib/prisma";
+import { AddCareerAction } from "../(actions)/action";
 
-interface JobFormProps {
-  job?: {
-    id?: number;
-    title: string;
-    description: string;
-    location: string;
-    shortDescription: string;
-    easyApply?: string;
-  };
-}
-
-export default function JobForm() {
-  const [preview, setPreview] = useState<string | null>(null);
-  const inputFileRef = useRef<HTMLInputElement>(null);
+export default function AddCareerForm() {
   const router = useRouter();
 
   const form = useForm<JobFormValues>({
@@ -43,6 +32,7 @@ export default function JobForm() {
     defaultValues: {
       title: "",
       description: "",
+      slug: "",
       location: "",
       shortDescription: "",
       easyApply: "",
@@ -55,19 +45,10 @@ export default function JobForm() {
 
   async function onSubmit(values: JobFormValues) {
     // change names
-    const newObj = {
-      title: values.title,
-      short_description: values.shortDescription,
-      location: values.location,
-      job_description: values.description,
-      link: values.easyApply,
-    };
 
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "admin/store/career",
-        newObj
-      );
+      const result = await AddCareerAction(values);
+      console.log("result---:", result);
 
       if (result.success) {
         handleFormReset();
@@ -81,6 +62,19 @@ export default function JobForm() {
       toast.error("Error saving job. Please try again.");
     }
   }
+
+  // Auto-generate slug from title
+  const watchedTitle = form.watch("title");
+  useEffect(() => {
+    if (watchedTitle) {
+      const slug = watchedTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedTitle, form]);
 
   return (
     <div className={cn("mx-6")}>
@@ -104,6 +98,21 @@ export default function JobForm() {
                   )}
                 />
 
+                {/* Slug */}
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter job slug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 {/* Short Description */}
                 <FormField
                   control={form.control}
@@ -121,9 +130,6 @@ export default function JobForm() {
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Location */}
                 <FormField
                   control={form.control}
@@ -138,23 +144,21 @@ export default function JobForm() {
                     </FormItem>
                   )}
                 />
-
-                {/* Easy Apply */}
-                <FormField
-                  control={form.control}
-                  name="easyApply"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Easy Apply</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Easy apply link" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
-
+              {/* Easy Apply */}
+              <FormField
+                control={form.control}
+                name="easyApply"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Easy Apply</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Easy apply link" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               {/* Description */}
               <FormField
                 control={form.control}

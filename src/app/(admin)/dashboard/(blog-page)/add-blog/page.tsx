@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { axiosServer } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { BlogTypes } from "../blogs/columns";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 interface AddBlogPageProps {
   searchParams?: Promise<{ id?: string }>;
@@ -11,24 +13,18 @@ interface AddBlogPageProps {
 
 export default async function AddBlogPage({ searchParams }: AddBlogPageProps) {
   const data = await searchParams;
-  const Id = data?.id;
-  console.log("id from query:", Id);
+  const editId = Number(data?.id);
 
   let blog: BlogTypes | null = null;
 
-  if (Id) {
-    // cookies
-    const cookieStore = await cookies();
-    // Build Cookie header manually
-    const cookieHeader = cookieStore
-      .getAll()
-      .map((c) => `${c.name}=${c.value}`)
-      .join("; ");
-    const api = await axiosServer(cookieHeader);
-
-    const result: ReturnPayload = await api.get(`/admin/single/blog/${Id}`);
-    console.log("result----: ", result.data);
-    blog = result.data?.blog;
+  if (editId && editId !== null) {
+    const result = await prisma.blog.findFirst({
+      where: { id: editId },
+      include: { images: true },
+    });
+    const serializedBlog = serializePrisma(result);
+    console.log("blog:", serializedBlog);
+    blog = serializedBlog;
   }
 
   return (
@@ -37,9 +33,9 @@ export default async function AddBlogPage({ searchParams }: AddBlogPageProps) {
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           <div className="flex justify-between items-center px-4 lg:px-6">
             <h1 className="text-lg font-medium">
-              {Id ? "Edit Blog" : "Add Blog"}
+              {editId ? "Edit Blog" : "Add Blog"}
             </h1>
-            <Breadcrumbs page={Id ? "edit blog" : "add blog"} />
+            <Breadcrumbs page={editId ? "edit blog" : "add blog"} />
           </div>
           <AddBlogForm blog={blog || undefined} />
         </div>

@@ -20,10 +20,9 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { AddBlogFormValues, buildBlogSchema } from "../(validation)/validation";
 import EditorClient from "./editor";
-import { apiClient, baseURL } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BlogTypes } from "../../blogs/columns";
+import { AddBlogAction, UpdateBlogAction } from "../(actions)/action";
 
 // Types
 export type ImagesTypes = { id: number; image: string; blog_id: number };
@@ -47,20 +46,12 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
     resolver: zodResolver(buildBlogSchema(!!editId)), // ✅ pass true if editing
     defaultValues: {
       title: blog?.title || "",
-      description: blog?.shortDescription || "",
-      content: blog?.description || "",
+      description: blog?.description || "",
+      content: blog?.content || "",
+      slug: blog?.slug || "",
       images: [],
     },
   });
-
-  // 🔹 Load previews if blog has images
-  useEffect(() => {
-    if (blog?.images) {
-      setPreviews(blog.images as ImagesTypes[]);
-    } else {
-      setPreviews([]);
-    }
-  }, [blog?.images]);
 
   // 🔹 Handle new image uploads
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,31 +79,27 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
     if (inputFileRef.current) inputFileRef.current.value = "";
   };
 
-  // 🔹 Submit (Add or Edit depending on uuid)
+  // Submit (Add or Edit depending on uuid)
   async function onSubmit(values: AddBlogFormValues) {
     const formData = new FormData();
     formData.append("title", values.title);
-    formData.append("shortDescription", values.description);
-    formData.append("description", values.content);
+    formData.append("description", values.description);
+    formData.append("content", values.content);
+    formData.append("slug", values.slug);
 
     if (values.images && values.images.length > 0) {
       values.images.forEach((file) => {
-        formData.append("image", file);
+        formData.append("images", file);
       });
     }
 
-    try {
-      const endpoint = editId
-        ? `/admin/update/blog/${editId}`
-        : "admin/store/blog";
+    if (editId && editId !== null) formData.append("id", editId);
 
-      const result: ReturnPayload = editId
-        ? await apiClient.put(endpoint, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-        : await apiClient.post(endpoint, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
+    try {
+      const result = editId
+        ? await UpdateBlogAction(formData)
+        : await AddBlogAction(formData);
+      console.log("resul-===--", result);
 
       if (result.success) {
         handleFormReset();
@@ -127,26 +114,64 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
     }
   }
 
+  // Auto-generate slug from title
+  const watchedTitle = form.watch("title");
+  useEffect(() => {
+    if (watchedTitle) {
+      const slug = watchedTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedTitle, form]);
+
+  // 🔹 Load previews if blog has images
+  useEffect(() => {
+    if (blog?.images) {
+      setPreviews(blog.images as ImagesTypes[]);
+    } else {
+      setPreviews([]);
+    }
+  }, [blog?.images]);
+
   return (
     <div className={cn("mx-6")}>
       <Card>
         <CardContent className="pt-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Title */}
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter blog title" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Title */}
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Title *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter blog title" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Slug */}
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="blog-slug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               {/* Short Description */}
               <FormField
@@ -188,19 +213,12 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
                     {previews.length > 0 && (
                       <div className="mt-2 flex items-center gap-5 flex-wrap">
                         {previews.map((p, idx) => {
-                          const src =
-                            "id" in p
-                              ? `${baseURL}/${p.image}` // backend image
-                              : p.image.startsWith("data:")
-                              ? p.image // local base64
-                              : `${baseURL}/${p.image}`; // fallback for string path
-
                           return (
                             <Image
                               key={"id" in p ? p.id : idx}
                               width={250}
                               height={250}
-                              src={src}
+                              src={p.image as string}
                               alt={`Preview ${idx + 1}`}
                               className="w-50 h-50 rounded border object-cover"
                             />

@@ -20,9 +20,7 @@ export type BlogTypes = {
   title: string;
   slug: string;
   description: string;
-  shortDescription: string;
-  category: string;
-  tags: string;
+  content: string;
   createdAt: string;
   updatedAt: string;
   images: [
@@ -84,7 +82,7 @@ export const getColumns = ({
     header: "Description",
     cell: ({ row }) => (
       <div className="font-mono">
-        {shortText(row.original.shortDescription || "Empty", 30)}
+        {shortText(row.original.description || "Empty", 30)}
       </div>
     ),
   },

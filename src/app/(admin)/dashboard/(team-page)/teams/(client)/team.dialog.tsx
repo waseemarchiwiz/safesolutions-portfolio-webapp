@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -25,24 +24,19 @@ import {
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TeamTypes } from "../columns";
-
-import { ReturnPayload } from "@/lib/types";
-import { apiClient, baseURL } from "@/lib/api-config/client";
 import {
   EditBuildTeamSchema,
   EditTeamFormValues,
 } from "../(validation)/validation";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { DeleteTeamAction, UpdateTeamAction } from "../(actions)/actions";
+import { onSaveTypes } from "../../../types";
 
 interface EditTeamDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  team: TeamTypes | null;
-  onSave: (
-    updated: TeamTypes,
-    result?: { success?: boolean; message?: string }
-  ) => void;
+  team: TeamTypes;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -58,44 +52,43 @@ export default function EditTeamDialog({
     defaultValues: {
       name: team?.name || "",
       role: team?.role || "",
-      githubUrl: team?.github || "",
-      linkedinUrl: team?.linkedin || "",
-      twitterUrl: team?.twitter || "",
+      slug: team?.slug || "",
+      github: team?.github || "",
+      linkedin: team?.linkedin || "",
+      twitter: team?.twitter || "",
       image: undefined,
     },
   });
 
   const [preview, setPreview] = useState<string>(team?.image || "");
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
-
   const submitButtonText = action === "edit" ? "Save" : "Yes";
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const formSubmit = async (values: EditTeamFormValues) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("role", values.role);
-    if (values.githubUrl) formData.append("github", values.githubUrl);
-    if (values.linkedinUrl) formData.append("linkedin", values.linkedinUrl);
-    if (values.twitterUrl) formData.append("twitter", values.twitterUrl);
+    formData.append("slug", values.slug);
+    if (values.github) formData.append("github", values.github);
+    if (values.linkedin) formData.append("linkedin", values.linkedin);
+    if (values.twitter) formData.append("twitter", values.twitter);
+
     if (values.image instanceof File) {
       formData.append("image", values.image);
     }
 
+    if (team?.id) {
+      formData.append("id", String(team?.id));
+    }
+
     try {
-      const result: ReturnPayload = await apiClient.put(
-        `admin/update/team/${team?.id}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const result = await UpdateTeamAction(formData);
+      console.log("result--", result);
 
       if (result.success) {
-        onSave(team as TeamTypes, {
-          success: result.success,
-          message: result.message,
-        });
+        onSave({ success: result.success, message: result.message });
       } else {
         toast.error(result.message);
       }
@@ -114,19 +107,48 @@ export default function EditTeamDialog({
     }
   };
 
+  // Auto-generate slug from title
+  const watchedName = form.watch("name");
+  useEffect(() => {
+    if (watchedName) {
+      const slug = watchedName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedName, form]);
+
   useEffect(() => {
     if (open && team) {
       form.reset({
         name: team.name || "",
         role: team.role || "",
-        githubUrl: team.github || "",
-        linkedinUrl: team.linkedin || "",
-        twitterUrl: team.twitter || "",
+        slug: team.slug || "",
+        github: team.github || "",
+        linkedin: team.linkedin || "",
+        twitter: team.twitter || "",
         image: undefined,
       });
       setPreview(team.image || "");
     }
   }, [open, team, form]);
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteTeamAction(team?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
+  };
 
   const handleDialogClose = () => {
     form.reset();
@@ -147,7 +169,7 @@ export default function EditTeamDialog({
                 This is update team dialog
               </DialogDescription>
             </DialogHeader>
-            <Separator className="mt-3 mb-2" />
+            <Separator />
 
             {action === "edit" ? (
               <>
@@ -161,6 +183,21 @@ export default function EditTeamDialog({
                         <FormLabel>Name *</FormLabel>
                         <FormControl>
                           <Input placeholder="Enter name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Slug */}
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="team-slug" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -181,13 +218,11 @@ export default function EditTeamDialog({
                       </FormItem>
                     )}
                   />
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {/* GitHub */}
                   <FormField
                     control={form.control}
-                    name="githubUrl"
+                    name="github"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>GitHub URL</FormLabel>
@@ -205,7 +240,7 @@ export default function EditTeamDialog({
                   {/* LinkedIn */}
                   <FormField
                     control={form.control}
-                    name="linkedinUrl"
+                    name="linkedin"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>LinkedIn URL</FormLabel>
@@ -219,13 +254,11 @@ export default function EditTeamDialog({
                       </FormItem>
                     )}
                   />
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {/* Twitter */}
                   <FormField
                     control={form.control}
-                    name="twitterUrl"
+                    name="twitter"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Twitter URL</FormLabel>
@@ -266,11 +299,7 @@ export default function EditTeamDialog({
                     <Image
                       width={80}
                       height={80}
-                      src={
-                        preview.startsWith("data:")
-                          ? preview
-                          : `${baseURL}/${preview}`
-                      }
+                      src={team?.image as string}
                       alt="Preview"
                       className="rounded border"
                     />
@@ -297,11 +326,14 @@ export default function EditTeamDialog({
               </Button>
 
               <Button
-                type="submit"
                 disabled={form.formState.isSubmitting}
-                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                type={action === "edit" ? "submit" : "button"}
+                variant={action === "edit" ? "default" : "destructive"}
+                onClick={() => action !== "edit" && handeDelete()}
               >
-                {form.formState.isSubmitting ? "Processing" : submitButtonText}
+                {loading || form.formState.isSubmitting
+                  ? "Loading..."
+                  : submitButtonText}
               </Button>
             </div>
           </form>

@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { apiClient } from "@/lib/api-config/client";
 import { useRouter } from "next/navigation";
 import { ReturnPayload } from "@/lib/types";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInForm({
   className,
@@ -39,16 +40,26 @@ export default function SignInForm({
   const formSubmit = async (values: SignInFormValues) => {
     try {
       // Call sign in on client side
-      const result: ReturnPayload = await apiClient.post(
-        "/admin/login",
-        values
-      );
-      if (result?.success) {
-        toast.success("Sign in successfull.");
-        router.push("/dashboard");
-      } else {
-        toast.error(result?.message || "Failed to Sign in. Please try again.");
-      }
+      const { data, error } = await signIn.email({
+        email: values.email,
+        password: values.password,
+        callbackURL: "/dashboard",
+        rememberMe: false,
+      });
+
+      console.log("response-signin--", data);
+      console.log("error-signin--", error);
+
+      // const result: ReturnPayload = await apiClient.post(
+      //   "/admin/login",
+      //   values
+      // );
+      // if (result?.success) {
+      //   toast.success("Sign in successfull.");
+      //   router.push("/dashboard");
+      // } else {
+      //   toast.error(result?.message || "Failed to Sign in. Please try again.");
+      // }
     } catch (error) {
       console.error(" error:", error);
       toast.error(

@@ -12,12 +12,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BlogTypes } from "../columns";
+import { onSaveTypes } from "../../../types";
+import { DeleteBlogAction } from "../(actions)/actions";
+import { useState } from "react";
+import Loading from "../loading";
 
 interface BlogDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   blog: BlogTypes;
-  onSave: (updated: BlogTypes) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -28,9 +32,27 @@ export default function BlogDialog({
   onSave,
   action,
 }: BlogDialogProps) {
+  // loading
+  const [loading, setLoading] = useState<boolean>(false);
+
   // handle close
   const handleDialogClose = () => {
     onOpenChange(false);
+  };
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteBlogAction(blog.id);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,9 +68,9 @@ export default function BlogDialog({
               : "Delete blog confirmation"}
           </DialogDescription>
         </DialogHeader>
-        <Separator className="mt-3 mb-2" />
+        <Separator className="" />
         Are you sure you want to delete this record?
-        <Separator className="mt-6 mb-5" />
+        <Separator className="" />
         <DialogFooter>
           <div className="flex justify-end gap-2 items-center">
             <Button type="button" variant="outline" onClick={handleDialogClose}>
@@ -56,12 +78,11 @@ export default function BlogDialog({
             </Button>
 
             <Button
-              type="button"
-              variant="destructive"
-              onClick={() => onSave(blog)}
-              className="flex"
+              type={"button"}
+              variant={"destructive"}
+              onClick={handeDelete}
             >
-              Delete
+              {loading ? "Deleting..." : "Yes"}
             </Button>
           </div>
         </DialogFooter>
