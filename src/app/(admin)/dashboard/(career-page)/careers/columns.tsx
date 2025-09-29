@@ -13,16 +13,14 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
-import Image from "next/image";
-import { baseURL } from "@/lib/api-config/client";
 
 // Define the shape of your CareerTypes data
 export type CareerTypes = {
   id: number;
   title: string;
-  job_description: string;
+  jobDescription: string;
   location: string;
-  short_description: string;
+  shortDescription: string;
   link: string;
   createdAt: string;
   updatedAt: string;
@@ -78,7 +76,7 @@ export const getColumns = ({
     header: "Job Description",
     cell: ({ row }) => (
       <div className="font-mono">
-        {shortText(row.original.short_description, 40)}
+        {shortText(row.original.shortDescription, 40)}
       </div>
     ),
   },

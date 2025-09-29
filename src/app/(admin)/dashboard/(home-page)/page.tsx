@@ -1,20 +1,45 @@
 import Home from "./(client)";
-import { cookies } from "next/headers";
-import { ReturnPayload } from "@/lib/types";
-import { axiosServer } from "@/lib/api-config/client";
+import { prisma } from "@/lib/prisma";
+
+export const runtime = "nodejs"; // ✅ force Node runtime (not Edge)
 
 export default async function HomePage() {
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  try {
+    const [
+      totalBlogs,
+      totalCareers,
+      totalTestimonials,
+      totalTeams,
+      totalServices,
+      totalProjects,
+      totalFAQs,
+      totalContacts,
+    ] = await Promise.all([
+      prisma.blog.count(),
+      prisma.career.count(),
+      prisma.testimonial.count(),
+      prisma.team.count(),
+      prisma.service.count(),
+      prisma.project.count(),
+      prisma.fAQ.count(),
+      prisma.contact.count(),
+      prisma.companies.count(),
+    ]);
 
-  const result: ReturnPayload = await api.get("/admin/dashboard");
-  console.log("result: ", result);
-
-  return <Home counts={result?.data || {}} />;
+    return (
+      <Home
+        totalBlogs={totalBlogs}
+        totalCareers={totalCareers}
+        totalTestimonials={totalTestimonials}
+        totalTeams={totalTeams}
+        totalServices={totalServices}
+        totalProjects={totalProjects}
+        totalFAQs={totalFAQs}
+        totalContacts={totalContacts}
+      />
+    );
+  } catch (error) {
+    console.error("Dashboard count fetch failed:", error);
+    return <div>Something went wrong loading dashboard stats.</div>;
+  }
 }

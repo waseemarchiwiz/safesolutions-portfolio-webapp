@@ -12,15 +12,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
-import { shortText } from "@/lib/utils";
 import Image from "next/image";
-import { baseURL } from "@/lib/api-config/client";
 
 // Define the shape of your TeamTypes data
 export type TeamTypes = {
   id: number;
   name: string;
   role: string;
+  slug: string;
   image: string;
   github: string;
   linkedin: string;
@@ -76,9 +75,9 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={`${baseURL}/${row.original.image as string}`}
+          src={row.original.image as string}
           alt={row.original.image}
-          className=" rounded-full w-10 h-10"
+          className="rounded-full w-10 h-10"
         />
       </div>
     ),

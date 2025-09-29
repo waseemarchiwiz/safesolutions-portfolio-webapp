@@ -1,25 +1,21 @@
 import { z } from "zod";
 
+// Schema that accepts File OR string path
 export const EditBuildTeamSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
   role: z.string().min(2, "Role must be at least 2 characters").max(100),
-  githubUrl: z.string().url("Invalid GitHub URL").optional(),
-  linkedinUrl: z.string().url("Invalid LinkedIn URL").optional(),
-  twitterUrl: z.string().url("Invalid Twitter URL").optional(),
+  slug: z
+    .string()
+    .min(2, "Slug must be at least 2 characters")
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug must be lowercase with hyphens"),
+  github: z.string().url("Invalid GitHub URL").optional().or(z.literal("")),
+  linkedin: z.string().url("Invalid LinkedIn URL").optional().or(z.literal("")),
+  twitter: z.string().url("Invalid Twitter URL").optional().or(z.literal("")),
   image: z
-    .instanceof(File)
-    .refine((file) => file.size > 0, "Image is required")
-    .refine(
-      (file) => file.size <= 5 * 1024 * 1024,
-      "Image must be less than 5MB"
-    )
-    .refine(
-      (file) =>
-        ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(
-          file.type
-        ),
-      "Only JPEG, JPG, PNG, and WebP images are allowed"
-    )
+    .union([
+      z.instanceof(File), // new upload
+      z.string().min(1), // existing file path
+    ])
     .optional(),
 });
 

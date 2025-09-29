@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import BlogDialog from "./blog.dialog";
 import { BlogTypes, getColumns } from "../columns";
 import { toast } from "sonner";
-import { DeleteBlogAction } from "../(actions)/actions";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
+import { onSaveTypes } from "../../../types";
 
 interface MainBlogsProps {
   data: BlogTypes[];
@@ -42,7 +42,7 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   };
 
   // handle on save
-  const onSave = async (updated: BlogTypes) => {
+  const onSave = async (result: onSaveTypes) => {
     setOpen(false);
     // check the action
     // if (action === "edit") {
@@ -64,13 +64,12 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
     if (action === "delete") {
       try {
         // call delete action
-        const result: ReturnPayload = await apiClient.delete(
-          `/admin/delete/blog/${updated?.id}`
-        );
+        // const result: ReturnPayload = await apiClient.delete(
+        //   `/admin/delete/blog/${updated?.id}`
+        // );
         console.log("result: ", result);
         if (result.success) {
           toast.success(result.message);
-          router.refresh();
         } else {
           toast.error(result.message);
         }

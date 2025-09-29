@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { ReturnPayload } from "@/lib/types";
 import { CareerTypes } from "./columns";
 import MainCareers from "./(client)/main";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -19,22 +21,22 @@ export default async function AllTeamsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  // result
+  const result = await prisma.career.findMany({
+    orderBy: { createdAt: "desc" },
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/get/career");
-  console.log("result----: ", result);
+  // count
+  const totalCareers = await prisma.team.count();
+  // convert date objects to string
+  const careers = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -46,10 +48,10 @@ export default async function AllTeamsPage({
           </div>
           {/* All teams */}
           <MainCareers
-            data={(result.data?.careers as CareerTypes[]) || []}
-            page={1}
-            limit={10}
-            total={1}
+            data={(careers as CareerTypes[]) || []}
+            page={page}
+            limit={limit}
+            total={totalCareers}
             linkInfo={{ text: "Add career", link: "add-career" }}
           />
         </div>

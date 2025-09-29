@@ -13,18 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Blog {
-  id              Int         @id @default(autoincrement())
-  title           String      @unique
-  slug            String      @unique
-  description     String      // Replace 'Text' with 'String'
-  shortDescription String      @default("")
-  category        String
-  tags            Json
-  images          BlogImage[]
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-}
 
 
 model Service {
@@ -50,9 +38,10 @@ model Service {
 model Career {
   id                Int      @id @default(autoincrement())
   title             String
-  job_description   String
+  slug              String   @unique
+  jobDescription    String
   location          String
-  short_description String
+  shortDescription  String
   link              String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -80,6 +69,7 @@ model Team {
   id        Int      @id @default(autoincrement())
   name      String
   role      String
+  slug      String   @unique
   github    String
   twitter   String
   linkedin  String
@@ -168,13 +158,24 @@ model Companies {
   createdAt DateTime @default(now())
 }
 
+
+model Blog {
+  id              Int         @id @default(autoincrement())
+  title           String      @unique
+  slug            String      @unique
+  description     String      // Replace 'Text' with 'String'
+  content         String      @default("")
+  images          BlogImage[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
 model BlogImage {
   id      Int    @id @default(autoincrement())
   image   String
-  blog_id Int
-  blog    Blog   @relation(fields: [blog_id], references: [id]) // Relationship with Blog
+  blogId  Int
+  blog    Blog   @relation(fields: [blogId], references: [id]) // Relationship with Blog
 }
-
 
 
 

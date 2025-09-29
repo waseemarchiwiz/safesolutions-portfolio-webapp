@@ -1,23 +1,24 @@
-// 4. Updated auth.ts configuration
+// lib/auth.ts
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { db } from "@/lib/prisma"; // your prisma client
+import { prisma } from "./prisma";
 
 export const auth = betterAuth({
-  database: prismaAdapter(db, {
-    provider: "postgresql", // or "postgres"
-  }),
+  database: prismaAdapter(prisma, { provider: "postgresql" }),
+
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false, // set to true if you want email verification
+    requireEmailVerification: false,
   },
+
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24, // 1 day (session will be updated if it's older than this)
+    updateAge: 60 * 60 * 24, // refresh every day
+    cookie: {
+      name: "better-auth.session_token", // ✅ must match your cookie
+      secure: process.env.NODE_ENV === "production", // false in dev
+      sameSite: "lax",
+      path: "/",
+    },
   },
-  // Optional: Add trusted origins if running on different ports
-  trustedOrigins:
-    process.env.NODE_ENV === "development"
-      ? ["http://localhost:3000", "http://localhost:3001"]
-      : [],
 });

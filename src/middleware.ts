@@ -1,42 +1,32 @@
+// middleware.ts
 import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
-export function middleware(req: NextRequest) {
-  console.log("middleware...");
+export async function middleware(req: NextRequest) {
+  // ✅ Edge-safe session check (cookie presence only)
+  const sessionCookie = getSessionCookie(req);
 
-  // access token
-  const isLoggedIn = !!req.cookies.get("access_token")?.value;
   const { pathname } = req.nextUrl;
-
-  console.log("isloggedin: ", isLoggedIn);
-
-  // dashboard route
   const dashboardRoute = pathname.startsWith("/dashboard");
-  // auth route
   const authRoute = pathname.startsWith("/signin");
 
   // if not logged in
-  if (!isLoggedIn && dashboardRoute) {
+  if (!sessionCookie && dashboardRoute) {
     const signInUrl = req.nextUrl.clone();
     signInUrl.pathname = "/signin";
     return NextResponse.redirect(signInUrl);
   }
+
   // if already logged in
-  if (isLoggedIn && authRoute) {
+  if (sessionCookie && authRoute) {
     const dashboardUrl = req.nextUrl.clone();
     dashboardUrl.pathname = "/dashboard";
     return NextResponse.redirect(dashboardUrl);
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (public folder)
-     */
-    "/((?!_next/static|_next/image|favicon.ico|public/).*)",
-  ],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|public/).*)"],
 };

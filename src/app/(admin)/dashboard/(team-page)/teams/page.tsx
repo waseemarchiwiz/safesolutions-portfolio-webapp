@@ -4,37 +4,34 @@ import { axiosServer } from "@/lib/api-config/client";
 import { cookies } from "next/headers";
 import { TeamTypes } from "./columns";
 import { ReturnPayload } from "@/lib/types";
+import { prisma } from "@/lib/prisma";
+import MainTeams from "./(client)/main";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllTeamsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  // result
+  const result = await prisma.team.findMany({
+    orderBy: { createdAt: "desc" },
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/get/team");
-  console.log("result----: ", result);
+  // count
+  const totalTeams = await prisma.team.count();
+  // convert date objects to string
+  const teams = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -45,11 +42,11 @@ export default async function AllTeamsPage({
             <Breadcrumbs page="add team" />
           </div>
           {/* All teams */}
-          <Mainteams
-            data={(result.data?.teams as TeamTypes[]) || []}
-            page={1}
-            limit={10}
-            total={1}
+          <MainTeams
+            data={teams as TeamTypes[]}
+            page={page}
+            limit={limit}
+            total={totalTeams}
             linkInfo={{ text: "Add team", link: "add-team" }}
           />
         </div>
