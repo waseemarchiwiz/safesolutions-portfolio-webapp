@@ -14,6 +14,7 @@ export default async function HomePage() {
       totalProjects,
       totalFAQs,
       totalContacts,
+      totalCompanies,
     ] = await Promise.all([
       prisma.blog.count(),
       prisma.career.count(),
@@ -36,6 +37,7 @@ export default async function HomePage() {
         totalProjects={totalProjects}
         totalFAQs={totalFAQs}
         totalContacts={totalContacts}
+        totalCompanies={totalCompanies}
       />
     );
   } catch (error) {

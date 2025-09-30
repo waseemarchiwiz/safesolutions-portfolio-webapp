@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { iconsMap, ProjectTypes } from "../data";
+import Image from "next/image";
 
 const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
   const [activeTab, setActiveTab] = useState("services");
@@ -22,6 +23,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
     { id: "support", icon: Phone, label: "Support" },
   ];
 
+  console.log("data0-----", data);
   return (
     <div className="dark:bg-[#18181b]">
       <div className="container mx-auto px-4  ">
@@ -52,7 +54,9 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <img
+            <Image
+              width={100}
+              height={100}
               src={data.img}
               alt={data.name}
               className="w-full h-[40vh] object-cover"
@@ -100,7 +104,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
             {/* Services Tab */}
             {activeTab === "services" && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
-                {data.tabs.services.map((service, index) => {
+                {data?.services?.map((service, index) => {
                   const Icon = iconsMap[service.icon];
                   return (
                     <div
@@ -142,7 +146,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
             {activeTab === "details" && (
               <div className="bg-white dark:bg-[#18181b]  rounded-xl shadow-md p-8 animate-fadeIn">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {data.tabs.projectDetails.map((detail, index) => (
+                  {data?.projectDetails?.map((detail, index) => (
                     <React.Fragment key={index}>
                       <div className="space-y-6 transform transition-all duration-300 hover:scale-105">
                         <div className="flex items-center gap-3">
@@ -180,7 +184,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
             {activeTab === "support" && (
               <div className="bg-white dark:bg-[#18181b] rounded-xl shadow-md p-8 animate-fadeIn">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {data.tabs.support.map((item, index) => {
+                  {data?.supports?.map((item, index) => {
                     const Icon = iconsMap[item.icon];
                     return (
                       <div

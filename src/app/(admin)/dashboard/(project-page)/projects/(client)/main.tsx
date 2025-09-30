@@ -8,8 +8,8 @@ import { getColumns, ProjectTypes } from "../columns";
 import { toast } from "sonner";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
-import ServiceDialog from "./project.dialog";
 import ProjectDialog from "./project.dialog";
+import { onSaveTypes } from "../../../types";
 
 interface MainBlogsProps {
   data: ProjectTypes[];
@@ -42,42 +42,13 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   };
 
   // handle on save
-  const onSave = async (updated: ProjectTypes) => {
+  const onSave = async (result: onSaveTypes) => {
     setOpen(false);
-    // check the action
-    // if (action === "edit") {
-    //   try {
-    //     // call delete action
-    //     const result = await UpdateProjectTypesAction(updated);
-    //     console.log("result: ", result);
-    //     if (result.success) {
-    //       router.refresh();
-    //       toast.success(result.message);
-    //     } else {
-    //       toast.error(result.message);
-    //     }
-    //   } catch (error) {
-    //     console.log("Error:", error);
-    //   }
-    // } else
-
-    if (action === "delete") {
-      try {
-        // call delete action
-        const result: ReturnPayload = await apiClient.delete(
-          `/admin/project/${updated?.id}`
-        );
-        console.log("result: ", result);
-        if (result.success) {
-          toast.success(result.message);
-          router.refresh();
-          setOpen(false);
-        } else {
-          toast.error(result.message);
-        }
-      } catch (error) {
-        console.log("Error:", error);
-      }
+    if (result.success) {
+      toast.success(result.message);
+      setOpen(false);
+    } else {
+      toast.error(result.message);
     }
   };
 

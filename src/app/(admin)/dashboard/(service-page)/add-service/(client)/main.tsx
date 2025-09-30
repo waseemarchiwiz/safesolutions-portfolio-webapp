@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -34,6 +34,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { iconsMap } from "@/app/(website)/project/data";
+import {
+  AddBlogAction,
+  UpdateBlogAction,
+} from "../../../(blog-page)/add-blog/(actions)/action";
+import { AddServiceAction, UpdateServiceAction } from "../(actions)/action";
 
 interface ServiceFormPropTypes {
   service?: ServiceTypes;
@@ -49,6 +54,7 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
     defaultValues: {
       tab: service?.tab || "",
       title: service?.title || "",
+      slug: service?.slug || "",
       icon: service?.icon || "",
       description: service?.description || "",
       features: service?.features || [],
@@ -61,13 +67,12 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
   });
 
   async function onSubmit(values: AddServiceFormValues) {
+    const editId = service?.id;
     try {
-      const endpoint = editId ? `/admin/service/${editId}` : "/admin/service";
-
-      const result: ReturnPayload = editId
-        ? await apiClient.put(endpoint, values)
-        : await apiClient.post(endpoint, values);
-
+      const result = editId
+        ? await UpdateServiceAction(values, service?.id as number)
+        : await AddServiceAction(values);
+      console.log("resul-===--", result);
       if (result.success) {
         toast.success(result.message);
         router.replace("services");
@@ -79,6 +84,19 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
       toast.error("Error saving service. Please try again.");
     }
   }
+
+  // Auto-generate slug from title
+  const watchedTitle = form.watch("title");
+  useEffect(() => {
+    if (watchedTitle) {
+      const slug = watchedTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedTitle, form]);
 
   return (
     <div className="mx-6">
@@ -117,10 +135,21 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                     </FormItem>
                   )}
                 />
-              </div>
 
-              {/* Row 2: Icon + Link */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Service slug" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="icon"
@@ -148,26 +177,6 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="link"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Link</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="External portfolio link (if any)"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Row 3: Description + Overview */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <FormField
                   control={form.control}
                   name="description"
@@ -204,6 +213,22 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                   )}
                 />
               </div>
+              <FormField
+                control={form.control}
+                name="link"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Link</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="External portfolio link (if any)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               {/* Row 4: Tags */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

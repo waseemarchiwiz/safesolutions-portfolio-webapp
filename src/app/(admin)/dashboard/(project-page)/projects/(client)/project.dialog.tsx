@@ -12,12 +12,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ProjectTypes } from "../columns";
+import { onSaveTypes } from "../../../types";
+import { useEffect, useState } from "react";
+import { DeleteProjectAction } from "../(actions)/actions";
 
 interface ProjectDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   project: ProjectTypes;
-  onSave: (updated: ProjectTypes) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -28,10 +31,34 @@ export default function ProjectDialog({
   onSave,
   action,
 }: ProjectDialogProps) {
+  // loading state
+  const [loading, setLoading] = useState<boolean>(false);
+
   // handle close
   const handleDialogClose = () => {
     onOpenChange(false);
   };
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteProjectAction(project?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (open) {
+      setLoading(false);
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -53,13 +80,8 @@ export default function ProjectDialog({
           <Button type="button" variant="outline" onClick={handleDialogClose}>
             Cancel
           </Button>
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => onSave(project)}
-            className="flex"
-          >
-            Delete
+          <Button type={"button"} variant={"destructive"} onClick={handeDelete}>
+            {loading ? "Loading..." : "Yes"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -13,7 +13,7 @@ import {
 import ServiceCard from "./service.card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { ServicesTypes } from "./index";
 
 const architectureServices = [
   {
@@ -134,7 +134,7 @@ const architectureServices = [
   },
 ];
 
-const Architecture = () => {
+const Architecture = ({ data }: { data: ServicesTypes[] }) => {
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
       <div className="container mx-auto">
@@ -148,7 +148,7 @@ const Architecture = () => {
           </p>
         </div> */}
         <div className="grid md:grid-cols-3 gap-8">
-          {architectureServices.map((service, index) => (
+          {data?.map((service, index) => (
             <ServiceCard
               key={index}
               icon={service.icon}

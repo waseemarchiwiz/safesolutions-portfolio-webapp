@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { axiosServer } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { ServiceTypes } from "../services/columns";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 interface AddServicePageProps {
   searchParams?: Promise<{ id?: string }>;
@@ -19,18 +21,11 @@ export default async function AddServicePage({
   let service: ServiceTypes | null = null;
 
   if (Id) {
-    // cookies
-    const cookieStore = await cookies();
-    // Build Cookie header manually
-    const cookieHeader = cookieStore
-      .getAll()
-      .map((c) => `${c.name}=${c.value}`)
-      .join("; ");
-    const api = await axiosServer(cookieHeader);
-
-    const result: ReturnPayload = await api.get(`/admin/service/${Id}`);
-    console.log("result----: ", result.data);
-    service = result.data?.service;
+    const result = await prisma.service.findFirst({
+      where: { id: Number(Id) },
+    });
+    const processedService = serializePrisma(result);
+    service = processedService;
   }
 
   return (

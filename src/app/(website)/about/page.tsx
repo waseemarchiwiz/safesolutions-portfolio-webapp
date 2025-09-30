@@ -1,6 +1,8 @@
 import { apiClient } from "@/lib/api-config/client";
 import Main from "./(client)";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface TeamTypes {
   id: number;
@@ -25,21 +27,16 @@ type ProjectsPayload = {
 };
 
 export default async function AboutPage() {
-  try {
-    // api client
+  // api client
+  const [teamsResult, projectsResult] = await Promise.all([
+    // teams
+    await prisma.team.findMany(),
+    // projects
+    await prisma.project.findMany(),
+  ]);
 
-    const [teamsResult, projectsResult] = await Promise.all([
-      // teams
-      await apiClient.get<TeamsPayload>("/user/get/team"),
-      // projects
-      await apiClient.get<ProjectsPayload>("/user/get/projects"),
-    ]);
+  const teams = serializePrisma(teamsResult) || [];
+  const projects = serializePrisma(projectsResult) || [];
 
-    const teams = teamsResult?.Teams || [];
-    const projects = projectsResult?.projects || [];
-
-    return <Main teams={teams} projects={projects} />;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+  return <Main teams={teams} projects={projects} />;
 }

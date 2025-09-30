@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Loading from "../[slug]/loading";
-import { baseURL } from "@/lib/api-config/client";
 import ScrollToTop from "@/components/common/scroll-to-top";
-import PageHeroSection from "../../(common)/hero-section";
+import PageHeroSection from "../../../(common)/hero-section";
 import { BlogTypes } from "../../blogs/page";
+import Image from "next/image";
 
 const Main = ({ blogData }: { blogData: BlogTypes }) => {
   // get images
@@ -67,9 +67,11 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
                           }}
                           className="absolute w-full h-full"
                         >
-                          <img
-                            src={`${baseURL}/${slide.image}`}
-                            alt={blogData.title}
+                          <Image
+                            width={200}
+                            height={150}
+                            src={slide.image as string}
+                            alt={blogData.title as string}
                             className="w-full h-full object-contain"
                           />
                         </motion.div>

@@ -1,18 +1,7 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import AddCompanyForm from "./(client)/main";
-import { cookies } from "next/headers";
-import { axiosServer } from "@/lib/api-config/client";
 
 export default async function AddCompanyPage() {
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
-
   return (
     <div className="flex flex-1 flex-col">
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">

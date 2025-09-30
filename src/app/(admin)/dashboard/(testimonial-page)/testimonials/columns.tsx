@@ -20,6 +20,7 @@ import { shortText } from "@/lib/utils";
 export type TestimonialTypes = {
   id: number;
   name: string;
+  slug: string;
   description: string;
   designation: string;
   image: string;
@@ -74,7 +75,7 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={`${baseURL}/${row.original.image as string}`}
+          src={`${row.original.image as string}`}
           alt={row.original.image}
           className=" rounded-full w-10 h-10"
         />

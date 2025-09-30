@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,8 @@ import {
   TestimonialsFormValues,
   TestimonialsSchema,
 } from "../(validation)/validation";
+import { AddTeamAction } from "../../../(team-page)/add-team/(actions)/action";
+import { AddTestimonialsAction } from "../(actions)/action";
 
 export default function AddTestimonialForm() {
   const [preview, setPreview] = useState<string | null>(null);
@@ -36,6 +38,7 @@ export default function AddTestimonialForm() {
     resolver: zodResolver(TestimonialsSchema),
     defaultValues: {
       name: "",
+      slug: "",
       designation: "",
       description: "",
       image: undefined,
@@ -62,6 +65,7 @@ export default function AddTestimonialForm() {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("designation", values.designation);
+    formData.append("slug", values.slug);
     formData.append("description", values.description);
     if (values.image instanceof File) {
       formData.append("image", values.image);
@@ -72,13 +76,8 @@ export default function AddTestimonialForm() {
     console.log("formData---", formData);
 
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "/admin/store/testimonial",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const result = await AddTestimonialsAction(formData);
+      console.log("result---", result);
 
       if (result.success) {
         handleFormReset();
@@ -93,6 +92,19 @@ export default function AddTestimonialForm() {
     }
   }
 
+  // Auto-generate slug from title
+  const watchedName = form.watch("name");
+  useEffect(() => {
+    if (watchedName) {
+      const slug = watchedName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedName, form]);
+
   return (
     <div className={cn("mx-6")}>
       <Card>
@@ -102,7 +114,7 @@ export default function AddTestimonialForm() {
               onSubmit={form.handleSubmit(handleFormSubmit)}
               className="space-y-6"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {/* Name */}
                 <FormField
                   control={form.control}
@@ -112,6 +124,21 @@ export default function AddTestimonialForm() {
                       <FormLabel>Name *</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* slug */}
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter slug" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -136,7 +163,6 @@ export default function AddTestimonialForm() {
                   )}
                 />
               </div>
-
               {/* Short Description */}
               <FormField
                 control={form.control}
@@ -155,39 +181,38 @@ export default function AddTestimonialForm() {
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Image Upload */}
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={() => (
-                    <FormItem>
-                      <FormLabel>Image *</FormLabel>
-                      <FormControl>
-                        <Input
-                          ref={inputFileRef}
-                          type="file"
-                          accept="image/jpeg,image/jpg,image/png,image/webp"
-                          onChange={handleImageChange}
-                          className="cursor-pointer"
+
+              {/* Image Upload */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Image *</FormLabel>
+                    <FormControl>
+                      <Input
+                        ref={inputFileRef}
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/webp"
+                        onChange={handleImageChange}
+                        className="cursor-pointer"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    {preview && (
+                      <div className="mt-2">
+                        <Image
+                          width={250}
+                          height={250}
+                          src={preview}
+                          alt="Preview"
+                          className="rounded border"
                         />
-                      </FormControl>
-                      <FormMessage />
-                      {preview && (
-                        <div className="mt-2">
-                          <Image
-                            width={250}
-                            height={250}
-                            src={preview}
-                            alt="Preview"
-                            className="rounded border"
-                          />
-                        </div>
-                      )}
-                    </FormItem>
-                  )}
-                />
-              </div>
+                      </div>
+                    )}
+                  </FormItem>
+                )}
+              />
 
               {/* Buttons */}
               <div className="flex justify-end space-x-4 mt-5">

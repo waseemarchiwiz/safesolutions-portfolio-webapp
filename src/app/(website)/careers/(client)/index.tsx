@@ -5,13 +5,12 @@ import { Briefcase, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import PageHeroSection from "../../(common)/hero-section";
 import WhySafe from "./why-safe";
-import Loading from "../loading";
 import ApplyModal from "./application-dialog";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { Button } from "@/components/ui/button";
-import { CareerTypes } from "../page";
 import { toast } from "sonner";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
+import { CareerTypes } from "@/app/(admin)/dashboard/(career-page)/careers/columns";
 
 interface CareersProps {
   careers: CareerTypes[];
@@ -96,7 +95,7 @@ const Careers = ({ careers, companies }: CareersProps) => {
                   <div className="space-y-2 mt-5 mb-4 text-gray-600 dark:text-white">
                     <div className="flex items-center">
                       <Briefcase className="h-5 w-5 mr-2 text-gray-500 dark:text-white" />
-                      <span>{job.job_description}</span>
+                      <span>{job.jobDescription}</span>
                     </div>
                   </div>
                   <div className="space-y-2 mt-[-10px] mb-4 text-gray-600 dark:text-white">
@@ -106,7 +105,7 @@ const Careers = ({ careers, companies }: CareersProps) => {
                     </div>
                   </div>
                   <p className="text-gray-700 dark:text-white mb-4">
-                    {job.short_description}
+                    {job.shortDescription}
                   </p>
                   <div className="mt-4">
                     <Button

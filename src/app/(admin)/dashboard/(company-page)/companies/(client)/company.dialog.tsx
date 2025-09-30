@@ -21,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
 import { toast } from "sonner";
@@ -30,15 +30,14 @@ import {
   CompanyFormValues,
   companySchema,
 } from "../../add-company/(validation)/validation";
+import { onSaveTypes } from "../../../types";
+import { DeleteCompanyAction, UpdateCompanyAction } from "../(actions)/actions";
 
 interface CompanyDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   company: CompanyTypes | null;
-  onSave: (
-    updated: CompanyTypes,
-    result?: { success: boolean; message: string }
-  ) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -49,31 +48,37 @@ export default function CompanyDialog({
   onSave,
   action,
 }: CompanyDialogProps) {
+  // form
   const form = useForm<CompanyFormValues>({
-    resolver: zodResolver(companySchema), // ✅ allow edit mode (image optional)
+    resolver: zodResolver(companySchema),
     defaultValues: {
       name: company?.name || "",
       email: company?.email || "",
     },
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const submitButtonText = action === "edit" ? "Save" : "Yes";
 
   const formSubmit = async (values: CompanyFormValues) => {
-    // 🔹 Map fields to backend names
-    try {
-      const result: ReturnPayload = await apiClient.put(
-        `/admin/company/${company?.id}`,
-        values
-      );
+    //  Map fields to backend names
 
+    const payload = {
+      ...values,
+      id: company?.id as number,
+    };
+
+    try {
+      const result = await UpdateCompanyAction(payload);
+      console.log("Result===,", result);
       if (result.success) {
-        onSave(company as CompanyTypes, {
+        onSave({
           success: result.success,
           message: result.message,
         });
       } else {
-        onSave(company as CompanyTypes, {
+        onSave({
           success: result.success,
           message: result.message,
         });
@@ -90,12 +95,28 @@ export default function CompanyDialog({
         name: company.name || "",
         email: company.email || "",
       });
+      setLoading(false);
     }
   }, [open, company, form]);
 
   const handleDialogClose = () => {
     form.reset();
     onOpenChange(false);
+  };
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteCompanyAction(company?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -165,12 +186,14 @@ export default function CompanyDialog({
               </Button>
 
               <Button
-                type={action === "edit" ? "submit" : "button"}
                 disabled={form.formState.isSubmitting}
-                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
-                onClick={() => onSave(company as CompanyTypes)}
+                type={action === "edit" ? "submit" : "button"}
+                variant={action === "edit" ? "default" : "destructive"}
+                onClick={() => action !== "edit" && handeDelete()}
               >
-                {form.formState.isSubmitting ? "Processing" : submitButtonText}
+                {loading || form.formState.isSubmitting
+                  ? "Loading..."
+                  : submitButtonText}
               </Button>
             </div>
           </form>

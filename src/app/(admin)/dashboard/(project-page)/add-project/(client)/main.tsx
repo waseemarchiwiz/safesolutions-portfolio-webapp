@@ -33,9 +33,11 @@ import {
 } from "@/components/ui/select";
 import { TagsInput } from "@/components/common/tags-input";
 import { iconsMap } from "@/app/(website)/project/data";
+import { AddProjectAction, UpdateProjectAction } from "../(actions)/action";
+import { ProjectTypes } from "../../projects/columns";
 
 interface ProjectFormProps {
-  project?: any; // extend later with ProjectTypes
+  project?: ProjectTypes; // extend later with ProjectTypes
 }
 
 export default function AddProjectForm({ project }: ProjectFormProps) {
@@ -44,7 +46,9 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
   const searchParams = useSearchParams();
   const editId = searchParams.get("id");
 
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(
+    (project?.img as string) || null
+  );
 
   const form = useForm<AddProjectFormValues>({
     resolver: zodResolver(buildProjectSchema(!!editId)),
@@ -53,7 +57,6 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
       description: project?.description || "",
       slug: project?.slug || "",
       version: project?.version || "",
-      // lastUpdated: project?.lastUpdated || "",
       type: (project?.type as "detailed" | "external") || "external",
       link: project?.link || "",
       services: project?.services || [],
@@ -111,15 +114,9 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
     formData.append("supports", JSON.stringify(values.supports || []));
 
     try {
-      const endpoint = editId ? `/admin/project/${editId}` : "/admin/project";
-
-      const result: ReturnPayload = editId
-        ? await apiClient.put(endpoint, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-        : await apiClient.post(endpoint, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
+      const result = editId
+        ? await UpdateProjectAction(Number(editId), values)
+        : await AddProjectAction(values);
 
       if (result.success) {
         handleFormReset();
@@ -133,6 +130,8 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
       toast.error("Error saving project. Please try again.");
     }
   }
+
+  console.log("add project data--", project);
 
   return (
     <div className="mx-6">
@@ -467,10 +466,10 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                       />
                     </FormControl>
                     <FormMessage />
-                    {preview || project?.image ? (
+                    {preview || project?.img ? (
                       <div className="mt-3">
                         <Image
-                          src={preview || `${baseURL}/${project?.image}`}
+                          src={preview || (project?.img as string)}
                           width={120}
                           height={120}
                           alt="Preview"

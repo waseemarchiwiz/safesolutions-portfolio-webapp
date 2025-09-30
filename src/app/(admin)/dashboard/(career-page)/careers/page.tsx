@@ -11,12 +11,6 @@ export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllTeamsPage({
   searchParams,
 }: PaginationUrlProps) {

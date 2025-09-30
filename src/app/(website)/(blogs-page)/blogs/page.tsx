@@ -1,5 +1,6 @@
-import { apiClient } from "@/lib/api-config/client";
 import MainBlogs from "./(client)/main";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface BlogTypes {
   id: number;
@@ -20,16 +21,15 @@ export interface BlogTypes {
   ];
 }
 
-type BlogPayload = {
-  success: boolean;
-  blogs: BlogTypes[];
-};
-
 export default async function BlogsPage() {
   // api client
-  const result: BlogPayload = await apiClient.get("/user/get/blog");
-  console.log("result: ", result);
+  const result = await prisma.blog.findMany({
+    take: 10,
+    include: { images: true },
+  });
+
+  const blogs = serializePrisma(result);
 
   // blogs
-  return <MainBlogs blogs={result?.blogs} />;
+  return <MainBlogs blogs={blogs} />;
 }

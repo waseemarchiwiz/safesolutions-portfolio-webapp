@@ -4,37 +4,31 @@ import { axiosServer } from "@/lib/api-config/client";
 import { cookies } from "next/headers";
 import { ProjectTypes } from "./columns";
 import { ReturnPayload } from "@/lib/types";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllProjectsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  const result = await prisma.project.findMany({
+    include: { projectDetails: true, services: true, supports: true },
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/projects");
-  console.log("result----: ", result);
+  const totalProjects = await prisma.project.count();
+
+  const projects = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -46,10 +40,10 @@ export default async function AllProjectsPage({
           </div>
           {/* All Projects */}
           <MainProjects
-            data={result.data?.projects as ProjectTypes[]}
-            page={1}
-            limit={10}
-            total={1}
+            data={projects as ProjectTypes[]}
+            page={page}
+            limit={limit}
+            total={totalProjects}
             linkInfo={{ text: "Add Project", link: "add-project" }}
           />
         </div>

@@ -17,11 +17,8 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { apiClient } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { buildJobSchema, JobFormValues } from "../(validation)/validation";
-import { prisma } from "@/lib/prisma";
 import { AddCareerAction } from "../(actions)/action";
 
 export default function AddCareerForm() {

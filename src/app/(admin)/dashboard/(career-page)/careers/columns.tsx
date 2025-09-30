@@ -19,6 +19,7 @@ export type CareerTypes = {
   id: number;
   title: string;
   jobDescription: string;
+  slug: string;
   location: string;
   shortDescription: string;
   link: string;

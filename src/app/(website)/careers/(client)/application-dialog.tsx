@@ -30,12 +30,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { CareerTypes } from "../page";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { toast } from "sonner";
-import { apiClient } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { AxiosError } from "axios";
+import { CareerTypes } from "@/app/(admin)/dashboard/(career-page)/careers/columns";
+import { EasyApplyAction, EasyApplyTypes } from "../(actions)/action";
 
 interface ApplyModalProp {
   modalOpen: boolean;
@@ -103,13 +102,7 @@ const ApplyModal = ({
     }
 
     try {
-      const response: ReturnPayload = await apiClient.post(
-        `/user/easy/apply`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await EasyApplyAction(values as EasyApplyTypes);
       console.log("response easy apply------", response);
 
       if (response?.success) {

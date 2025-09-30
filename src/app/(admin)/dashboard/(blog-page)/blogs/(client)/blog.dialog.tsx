@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { BlogTypes } from "../columns";
 import { onSaveTypes } from "../../../types";
 import { DeleteBlogAction } from "../(actions)/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../loading";
 
 interface BlogDialogProps {
@@ -54,6 +54,12 @@ export default function BlogDialog({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (open) {
+      setLoading(false);
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

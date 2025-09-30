@@ -81,9 +81,9 @@ const Projects = ({ background, projects }: ProjectsComponentProps) => {
               const CardContent = (
                 <div className="group relative overflow-hidden rounded-lg shadow-lg h-full transition-transform hover:scale-105">
                   <Image
-                    width={150}
+                    width={200}
                     height={150}
-                    src={`${baseURL}/${project.img as string}`}
+                    src={`${project.img as string}`}
                     alt={project.name}
                     className="object-cover w-full h-full"
                   />

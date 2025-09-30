@@ -21,6 +21,7 @@ export interface ServiceTypes {
   id: number;
   tab: string;
   title: string;
+  slug: string;
   icon?: string;
   description: string;
   features?: string[];

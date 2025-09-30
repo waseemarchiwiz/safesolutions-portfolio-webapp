@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import PageHeroSection from "../../(common)/hero-section";
+import PageHeroSection from "../../../(common)/hero-section";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import { BlogTypes } from "../page";
 import { Button } from "@/components/ui/button";
-import { baseURL } from "@/lib/api-config/client";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -41,10 +40,10 @@ const MainBlogs = ({ blogs }: { blogs: BlogTypes[] }) => {
                     className="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group"
                   >
                     <Image
-                      width={100}
+                      width={150}
                       height={100}
-                      src={`${baseURL}/${blog.images?.[0].image}`}
-                      alt={blog.images?.[0].image}
+                      src={blog.images?.[0]?.image as string}
+                      alt={blog.images?.[0]?.image as string}
                       className="w-full h-96 object-cover"
                     />
                     <div className="p-6 absolute bottom-0 left-0 right-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-90">

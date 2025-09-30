@@ -21,6 +21,7 @@ import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { FaqFormValues, FaqSchema } from "../(validation)/validation";
 import { Textarea } from "@/components/ui/textarea";
+import { AddFAQsAction } from "../(actions)/action";
 
 export default function JobForm() {
   const router = useRouter();
@@ -33,19 +34,11 @@ export default function JobForm() {
     },
   });
 
-  const handleFormReset = () => {
-    form.reset();
-  };
-
   async function onSubmit(values: FaqFormValues) {
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "admin/store/faq",
-        values
-      );
-
+      const result = await AddFAQsAction(values);
       if (result.success) {
-        handleFormReset();
+        form.reset();
         toast.success(result.message);
         router.replace("faqs");
       } else {
@@ -102,7 +95,7 @@ export default function JobForm() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={handleFormReset}
+                  onClick={() => form.reset()}
                   disabled={form.formState.isSubmitting}
                 >
                   Reset

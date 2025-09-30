@@ -1,28 +1,23 @@
-import { apiClient } from "@/lib/api-config/client";
-import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 import Main from "../(client)/main";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
 };
 
-type BlogPayload = {
-  success: boolean;
-  blog: BlogTypes;
-};
-
 export default async function BlogDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;
-
   // blog data
-  const data: BlogPayload = await apiClient.get(
-    `/user/get/blog/detail/${slug}`
-  );
+  const result = await prisma.blog.findUnique({
+    where: { slug },
+    include: { images: true },
+  });
+  // blog
+  const blog = serializePrisma(result);
 
-  console.log("blog Data: ", data);
-
-  if (!data) {
+  if (!blog) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -39,7 +34,7 @@ export default async function BlogDetailsPage({ params }: ParamsProps) {
 
   return (
     <div className="dark:bg-[#18181b]">
-      <Main blogData={(data.blog as BlogTypes) || {}} />
+      <Main blogData={blog || {}} />
     </div>
   );
 }

@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
 import { toast } from "sonner";
@@ -32,15 +32,14 @@ import {
   FaqFormValues,
   FaqSchema,
 } from "../../add-faq/(validation)/validation";
+import { onSaveTypes } from "../../../types";
+import { DeleteFAQAction, UpdateFAQAction } from "../(actions)/actions";
 
 interface EditfaqDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   faq: FaqTypes | null;
-  onSave: (
-    updated: FaqTypes,
-    result?: { success?: boolean; message?: string }
-  ) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -51,6 +50,7 @@ export default function FaqDialog({
   onSave,
   action,
 }: EditfaqDialogProps) {
+  // use form
   const form = useForm<FaqFormValues>({
     resolver: zodResolver(FaqSchema), // ✅ allow edit mode (image optional)
     defaultValues: {
@@ -58,24 +58,28 @@ export default function FaqDialog({
       answer: faq?.answer || "",
     },
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const submitButtonText = action === "edit" ? "Save" : "Yes";
 
   const formSubmit = async (values: FaqFormValues) => {
     // 🔹 Map fields to backend names
+
+    const payload = {
+      ...values,
+      id: faq?.id as number,
+    };
+
     try {
-      const result: ReturnPayload = await apiClient.put(
-        `admin/update/faq/${faq?.id}`,
-        values
-      );
+      const result = await UpdateFAQAction(payload);
 
       if (result.success) {
-        onSave(faq as FaqTypes, {
+        onSave({
           success: result.success,
           message: result.message,
         });
       } else {
-        onSave(faq as FaqTypes, {
+        onSave({
           success: result.success,
           message: result.message,
         });
@@ -92,8 +96,24 @@ export default function FaqDialog({
         question: faq.question || "",
         answer: faq.answer || "",
       });
+      setLoading(false);
     }
   }, [open, faq, form]);
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteFAQAction(faq?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
+  };
 
   const handleDialogClose = () => {
     form.reset();
@@ -171,12 +191,14 @@ export default function FaqDialog({
               </Button>
 
               <Button
-                type={action === "edit" ? "submit" : "button"}
                 disabled={form.formState.isSubmitting}
-                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
-                onClick={() => onSave(faq as FaqTypes)}
+                type={action === "edit" ? "submit" : "button"}
+                variant={action === "edit" ? "default" : "destructive"}
+                onClick={() => action !== "edit" && handeDelete()}
               >
-                {form.formState.isSubmitting ? "Processing" : submitButtonText}
+                {loading || form.formState.isSubmitting
+                  ? "Loading..."
+                  : submitButtonText}
               </Button>
             </div>
           </form>
