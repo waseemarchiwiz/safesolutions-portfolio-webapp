@@ -83,11 +83,9 @@ export interface ProjectTypes {
   lastupdated: string;
   type: string;
   link?: string;
-  tabs: {
-    services: ServiceTypes;
-    projectDetails: ProjectDetailsTypes;
-    support: SupportTypes;
-  };
+  services: ServiceTypes;
+  projectDetails: ProjectDetailsTypes;
+  supports: SupportTypes;
 }
 
 // Projects

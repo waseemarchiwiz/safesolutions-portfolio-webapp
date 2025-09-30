@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -25,23 +24,24 @@ import {
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TestimonialTypes } from "../columns";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient, baseURL } from "@/lib/api-config/client";
+import { baseURL } from "@/lib/api-config/client";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {
   EditTestimonialsFormValues,
   EditTestimonialsSchema,
 } from "../(validation)/validation";
+import { onSaveTypes } from "../../../types";
+import {
+  DeleteTestimonialsAction,
+  UpdateTestimonialsAction,
+} from "../(actions)/actions";
 
 interface EditTestimonialDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   testimonial: TestimonialTypes | null;
-  onSave: (
-    updated: TestimonialTypes,
-    result?: { success?: boolean; message?: string }
-  ) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -52,16 +52,19 @@ export default function TestimonialDialog({
   onSave,
   action,
 }: EditTestimonialDialogProps) {
+  // use form
   const form = useForm<EditTestimonialsFormValues>({
     resolver: zodResolver(EditTestimonialsSchema),
     defaultValues: {
       name: testimonial?.name || "",
+      slug: testimonial?.slug || "",
       designation: testimonial?.designation || "",
       description: testimonial?.description || "",
       image: undefined,
     },
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [preview, setPreview] = useState<string>(testimonial?.image || "");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -70,35 +73,29 @@ export default function TestimonialDialog({
   const formSubmit = async (values: EditTestimonialsFormValues) => {
     const formData = new FormData();
     formData.append("name", values.name);
+    formData.append("slug", values.slug);
     formData.append("designation", values.designation);
     formData.append("description", values.description);
+
     if (values.image instanceof File) {
       formData.append("image", values.image);
     }
 
+    if (testimonial?.id) {
+      formData.append("id", String(testimonial?.id));
+    }
+
     try {
-      const result: ReturnPayload = await apiClient.put(
-        `/admin/update/testimonial/${testimonial?.id}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const result = await UpdateTestimonialsAction(formData);
+      console.log("result--", result);
 
       if (result.success) {
-        onSave(testimonial as TestimonialTypes, {
-          success: result.success,
-          message: result.message,
-        });
+        onSave({ success: result.success, message: result.message });
       } else {
-        onSave(testimonial as TestimonialTypes, {
-          success: result.success,
-          message: result.message,
-        });
+        toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error saving testimonial member:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to update");
+      console.error("Error saving team member:", error);
     }
   };
 
@@ -117,10 +114,12 @@ export default function TestimonialDialog({
       form.reset({
         name: testimonial.name || "",
         designation: testimonial.designation || "",
+        slug: testimonial.slug || "",
         description: testimonial.description || "",
         image: undefined,
       });
       setPreview(testimonial.image || "");
+      setLoading(false);
     }
   }, [open, testimonial, form]);
 
@@ -129,6 +128,34 @@ export default function TestimonialDialog({
     setPreview("");
     onOpenChange(false);
   };
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteTestimonialsAction(testimonial?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
+  };
+
+  // Auto-generate slug from title
+  const watchedName = form.watch("name");
+  useEffect(() => {
+    if (watchedName) {
+      const slug = watchedName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedName, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -143,7 +170,7 @@ export default function TestimonialDialog({
                 This is update testimonial dialog
               </DialogDescription>
             </DialogHeader>
-            <Separator className="mt-3 mb-2" />
+            <Separator className="" />
 
             {action === "edit" ? (
               <>
@@ -163,24 +190,38 @@ export default function TestimonialDialog({
                     )}
                   />
 
-                  {/* Designation */}
+                  {/* slug */}
                   <FormField
                     control={form.control}
-                    name="designation"
+                    name="slug"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Designation *</FormLabel>
+                        <FormLabel>Slug *</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Enter your designation"
-                            {...field}
-                          />
+                          <Input placeholder="Enter slug" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
+                {/* Designation */}
+                <FormField
+                  control={form.control}
+                  name="designation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Designation *</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your designation"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 {/* Short Description */}
                 <FormField
@@ -226,11 +267,7 @@ export default function TestimonialDialog({
                     <Image
                       width={80}
                       height={80}
-                      src={
-                        preview.startsWith("data:")
-                          ? preview
-                          : `${baseURL}/${preview}`
-                      }
+                      src={testimonial?.image as string}
                       alt="Preview"
                       className="rounded border"
                     />
@@ -257,12 +294,14 @@ export default function TestimonialDialog({
               </Button>
 
               <Button
-                type={action === "edit" ? "submit" : "button"}
                 disabled={form.formState.isSubmitting}
-                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
-                onClick={() => onSave(testimonial as TestimonialTypes)}
+                type={action === "edit" ? "submit" : "button"}
+                variant={action === "edit" ? "default" : "destructive"}
+                onClick={() => action !== "edit" && handeDelete()}
               >
-                {form.formState.isSubmitting ? "Processing" : submitButtonText}
+                {loading || form.formState.isSubmitting
+                  ? "Loading..."
+                  : submitButtonText}
               </Button>
             </div>
           </form>

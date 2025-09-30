@@ -20,6 +20,7 @@ import { apiClient } from "@/lib/api-config/client";
 import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { CompanyFormValues, companySchema } from "../(validation)/validation";
+import { AddCompanyAction } from "../(action)/action";
 
 export default function AddCompanyForm() {
   const router = useRouter();
@@ -38,11 +39,7 @@ export default function AddCompanyForm() {
 
   async function onSubmit(values: CompanyFormValues) {
     try {
-      const result: ReturnPayload = await apiClient.post(
-        "admin/company", // it is company | need to change from the backend
-        values
-      );
-
+      const result = await AddCompanyAction(values);
       if (result.success) {
         handleFormReset();
         toast.success(result.message);

@@ -1,9 +1,8 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import AddProjectForm from "./(client)/main";
-import { cookies } from "next/headers";
-import { axiosServer } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { ProjectTypes } from "../projects/columns";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 interface AddProjectPageProps {
   searchParams?: Promise<{ id?: string }>;
@@ -19,18 +18,12 @@ export default async function AddProjectPage({
   let project: ProjectTypes | null = null;
 
   if (Id) {
-    // cookies
-    const cookieStore = await cookies();
-    // Build Cookie header manually
-    const cookieHeader = cookieStore
-      .getAll()
-      .map((c) => `${c.name}=${c.value}`)
-      .join("; ");
-    const api = await axiosServer(cookieHeader);
-
-    const result: ReturnPayload = await api.get(`/admin/project/${Id}`);
-    console.log("result----: ", result.data);
-    project = result.data?.project;
+    const result = await prisma.project.findUnique({
+      where: { id: Number(Id) },
+      include: { projectDetails: true, services: true, supports: true },
+    });
+    const processedProject = serializePrisma(result);
+    project = processedProject;
   }
 
   return (

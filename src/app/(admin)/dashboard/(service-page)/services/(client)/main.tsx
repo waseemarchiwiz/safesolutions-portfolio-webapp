@@ -9,8 +9,9 @@ import { toast } from "sonner";
 import { ReturnPayload } from "@/lib/types";
 import { apiClient } from "@/lib/api-config/client";
 import ServiceDialog from "./services.dialog";
+import { onSaveTypes } from "../../../types";
 
-interface MainBlogsProps {
+interface MainServicesProps {
   data: ServiceTypes[];
   page: number;
   limit: number;
@@ -18,7 +19,13 @@ interface MainBlogsProps {
   linkInfo?: LinkTypes;
 }
 
-const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
+const MainServices = ({
+  data,
+  page,
+  limit,
+  total,
+  linkInfo,
+}: MainServicesProps) => {
   // open
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<ServiceTypes | null>(null);
@@ -41,42 +48,14 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   };
 
   // handle on save
-  const onSave = async (updated: ServiceTypes) => {
+  const onSave = async (result: onSaveTypes) => {
     setOpen(false);
-    // check the action
-    // if (action === "edit") {
-    //   try {
-    //     // call delete action
-    //     const result = await UpdateServiceTypesAction(updated);
-    //     console.log("result: ", result);
-    //     if (result.success) {
-    //       router.refresh();
-    //       toast.success(result.message);
-    //     } else {
-    //       toast.error(result.message);
-    //     }
-    //   } catch (error) {
-    //     console.log("Error:", error);
-    //   }
-    // } else
-
-    if (action === "delete") {
-      try {
-        // call delete action
-        const result: ReturnPayload = await apiClient.delete(
-          `/admin/service/${updated?.id}`
-        );
-        console.log("result: ", result);
-        if (result.success) {
-          toast.success(result.message);
-          router.refresh();
-          setOpen(false);
-        } else {
-          toast.error(result.message);
-        }
-      } catch (error) {
-        console.log("Error:", error);
-      }
+    console.log("result: ", result);
+    if (result.success) {
+      toast.success(result.message);
+      setOpen(false);
+    } else {
+      toast.error(result.message);
     }
   };
 
@@ -106,4 +85,4 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   );
 };
 
-export default MainBlogs;
+export default MainServices;

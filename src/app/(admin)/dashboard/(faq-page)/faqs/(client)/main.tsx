@@ -5,9 +5,8 @@ import { DataTable, LinkTypes } from "@/components/data-table";
 import { useRouter } from "next/navigation";
 import { FaqTypes, getColumns } from "../columns";
 import { toast } from "sonner";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
 import FaqDialog from "./faq.dialog";
+import { onSaveTypes } from "../../../types";
 
 interface MainTeamsProps {
   data: FaqTypes[];
@@ -38,44 +37,12 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
   };
 
   // handle save
-  const onSave = async (
-    updated: FaqTypes,
-    result?: { success?: boolean; message?: string }
-  ) => {
-    if (action === "edit") {
-      if (result?.success) {
-        toast.success(result.message);
-        // close AFTER showing toast
-        setTimeout(() => {
-          setOpen(false);
-          router.refresh();
-        }, 300); // small delay avoids blink
-        setOpen(false);
-      } else if (result?.success) {
-        toast.error(result?.message || "Failed to update");
-      }
-    }
-
-    if (action === "delete") {
-      try {
-        const result: ReturnPayload = await apiClient.delete(
-          `/admin/delete/faq/${updated?.id}` // ✅ fixed endpoint
-        );
-        if (result.success) {
-          toast.success(result.message);
-          // close AFTER showing toast
-          setTimeout(() => {
-            setOpen(false);
-            router.refresh();
-          }, 300); // small delay avoids blink
-          setOpen(false);
-        } else {
-          toast.error(result.message);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        toast.error("Failed to delete team member");
-      }
+  const onSave = async (result: onSaveTypes) => {
+    setOpen(false);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
     }
   };
 

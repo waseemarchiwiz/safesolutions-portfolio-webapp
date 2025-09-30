@@ -1,14 +1,11 @@
 import { apiClient } from "@/lib/api-config/client";
 import ProjectDetails from "../(client)/project-details";
 import { ProjectTypes } from "../data";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
-};
-
-type ProjectPayload = {
-  success: boolean;
-  project: ProjectTypes;
 };
 
 export default async function ProjectDetailsPage({ params }: ParamsProps) {
@@ -16,13 +13,19 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
   const { slug } = await params;
 
   // Project data
-  const data: ProjectPayload = await apiClient.get(
-    `/user/get/project/detail/${slug}`
-  );
+  const result = await prisma.project.findUnique({
+    where: { slug },
+    include: {
+      services: true,
+      projectDetails: true,
+      supports: true,
+    },
+  });
+  const project = serializePrisma(result);
 
-  console.log("Project Data: ", data);
+  console.log("Project Data: ", project);
 
-  if (!data) {
+  if (!project) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -39,7 +42,7 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
 
   return (
     <div className="dark:bg-[#18181b]">
-      <ProjectDetails data={(data.project as ProjectTypes) || {}} />
+      <ProjectDetails data={(project as ProjectTypes) || {}} />
     </div>
   );
 }

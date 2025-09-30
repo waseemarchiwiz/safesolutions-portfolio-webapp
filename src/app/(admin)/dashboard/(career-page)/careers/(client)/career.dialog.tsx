@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -22,9 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect } from "react";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   buildJobSchema,
@@ -32,15 +29,14 @@ import {
 } from "../../add-career/(validation)/validation";
 import { CareerTypes } from "../columns";
 import { Textarea } from "@/components/ui/textarea";
+import { DeleteCareerAction, UpdateCareerAction } from "../(actions)/actions";
+import { onSaveTypes } from "../../../types";
 
 interface EditCareerDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   career: CareerTypes | null;
-  onSave: (
-    updated: CareerTypes,
-    result?: { success?: boolean; message?: string }
-  ) => void;
+  onSave: (result: onSaveTypes) => void;
   action: string;
 }
 
@@ -51,61 +47,82 @@ export default function EditCareerDialog({
   onSave,
   action,
 }: EditCareerDialogProps) {
+  // use form
   const form = useForm<JobFormValues>({
     resolver: zodResolver(buildJobSchema), // ✅ allow edit mode (image optional)
     defaultValues: {
       title: career?.title || "",
-      shortDescription: career?.short_description || "",
-      description: career?.job_description || "",
+      shortDescription: career?.shortDescription || "",
+      slug: career?.slug,
+      description: career?.jobDescription || "",
       location: career?.location || "",
       easyApply: career?.link || "",
     },
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const submitButtonText = action === "edit" ? "Save" : "Yes";
 
   const formSubmit = async (values: JobFormValues) => {
-    // 🔹 Map fields to backend names
+    // Map fields to backend names
     const payload = {
-      title: values.title,
-      short_description: values.shortDescription,
-      job_description: values.description,
-      location: values.location,
-      link: values.easyApply,
+      ...values,
+      id: career?.id as number,
     };
 
     try {
-      const result: ReturnPayload = await apiClient.put(
-        `/admin/update/career/${career?.id}`,
-        payload
-      );
-
+      const result = await UpdateCareerAction(payload);
+      console.log("result--", result);
       if (result.success) {
-        onSave(career as CareerTypes, {
-          success: result.success,
-          message: result.message,
-        });
+        onSave({ success: result.success, message: result.message });
       } else {
-        onSave(career as CareerTypes, {
-          success: result.success,
-          message: result.message,
-        });
+        toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error updating career:", error);
-      toast.error("Failed to update career");
+      console.error("Error saving team member:", error);
     }
   };
+
+  // For delete
+  const handeDelete = async () => {
+    // data
+    try {
+      setLoading(true);
+      // call delete action
+      const result = await DeleteCareerAction(career?.id as number);
+      console.log("result: ", result);
+      onSave({ success: result.success, message: result.message });
+    } catch (error) {
+      console.log("Error:", error);
+      setLoading(false);
+    }
+  };
+
+  // Auto-generate slug from title
+  const watchedTitle = form.watch("title");
+  useEffect(() => {
+    if (watchedTitle) {
+      const slug = watchedTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedTitle, form]);
 
   useEffect(() => {
     if (open && career) {
       form.reset({
         title: career.title || "",
-        shortDescription: career.short_description || "",
-        description: career.job_description || "",
+        shortDescription: career.shortDescription || "",
+        slug: career.slug,
+        description: career.jobDescription || "",
         location: career.location || "",
         easyApply: career.link || "",
       });
+      setLoading(false);
     }
   }, [open, career, form]);
 
@@ -146,6 +163,20 @@ export default function EditCareerDialog({
                       </FormItem>
                     )}
                   />
+                  {/* slug */}
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter career slug" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   {/* Location */}
                   <FormField
                     control={form.control}
@@ -155,23 +186,6 @@ export default function EditCareerDialog({
                         <FormLabel>Location *</FormLabel>
                         <FormControl>
                           <Input placeholder="Enter location" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-                  {/* Easy Apply */}
-                  <FormField
-                    control={form.control}
-                    name="easyApply"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Easy Apply</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Enter apply link" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -195,6 +209,20 @@ export default function EditCareerDialog({
                     )}
                   />
                 </div>
+                {/* Easy Apply */}
+                <FormField
+                  control={form.control}
+                  name="easyApply"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Easy Apply</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter apply link" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 {/* Full Description */}
                 <FormField
@@ -235,12 +263,14 @@ export default function EditCareerDialog({
               </Button>
 
               <Button
-                type={action === "edit" ? "submit" : "button"}
                 disabled={form.formState.isSubmitting}
-                className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
-                onClick={() => onSave(career as CareerTypes)}
+                type={action === "edit" ? "submit" : "button"}
+                variant={action === "edit" ? "default" : "destructive"}
+                onClick={() => action !== "edit" && handeDelete()}
               >
-                {form.formState.isSubmitting ? "Processing" : submitButtonText}
+                {loading || form.formState.isSubmitting
+                  ? "Loading..."
+                  : submitButtonText}
               </Button>
             </div>
           </form>

@@ -2,6 +2,13 @@ import { z } from "zod";
 
 export const TestimonialsSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  slug: z
+    .string()
+    .min(2, "Slug must be at least 2 characters")
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      "Slug must be lowercase with hyphens only"
+    ),
   designation: z
     .string()
     .min(2, "Designation must be at least 2 characters")

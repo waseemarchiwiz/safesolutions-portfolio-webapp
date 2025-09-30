@@ -132,6 +132,7 @@ export default function EditTeamDialog({
         image: undefined,
       });
       setPreview(team.image || "");
+      setLoading(false);
     }
   }, [open, team, form]);
 

@@ -4,37 +4,30 @@ import { axiosServer } from "@/lib/api-config/client";
 import { cookies } from "next/headers";
 import { TestimonialTypes } from "./columns";
 import { ReturnPayload } from "@/lib/types";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllTestimonialsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  const result = await prisma.testimonial.findMany({
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/get/Testimonial");
-  console.log("result----: ", result);
+  const totalTestimonials = await prisma.testimonial.count();
+
+  const testimonials = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -46,10 +39,10 @@ export default async function AllTestimonialsPage({
           </div>
           {/* All Testimonials */}
           <MainTestimonials
-            data={(result.data?.testimonials as TestimonialTypes[]) || []}
-            page={1}
-            limit={10}
-            total={1}
+            data={(testimonials as TestimonialTypes[]) || []}
+            page={page}
+            limit={limit}
+            total={totalTestimonials}
             linkInfo={{ text: "Add Testimonial", link: "add-testimonial" }}
           />
         </div>

@@ -19,6 +19,7 @@ model Service {
   id           Int       @id @default(autoincrement())
   tab          String
   title        String
+  slug         String   @unique
   icon         String?
   description  String
   features     String[]  // always an array (empty if nothing)
@@ -58,6 +59,7 @@ model FAQ {
 model Testimonial {
   id          Int      @id @default(autoincrement())
   name        String
+  slug        String   @unique
   designation String
   description String
   image       String
@@ -109,10 +111,10 @@ model ProjectService {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  features    String[]   // ["feature1", "feature2"]
+  features    String[]
   icon        String
   projectId   Int
-  project     Project   @relation(fields: [projectId], references: [id])
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ProjectDetail {
@@ -120,7 +122,7 @@ model ProjectDetail {
   name           String
   deploymentType String
   projectId      Int
-  project        Project   @relation(fields: [projectId], references: [id])
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ProjectSupport {
@@ -129,8 +131,9 @@ model ProjectSupport {
   description String
   icon        String
   projectId   Int
-  project     Project   @relation(fields: [projectId], references: [id])
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
+
 
 
 model Setting {
@@ -157,7 +160,6 @@ model Companies {
   name      String   @default("Unknown")
   createdAt DateTime @default(now())
 }
-
 
 model Blog {
   id              Int         @id @default(autoincrement())

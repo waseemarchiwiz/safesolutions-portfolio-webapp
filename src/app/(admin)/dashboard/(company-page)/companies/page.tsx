@@ -4,37 +4,30 @@ import { cookies } from "next/headers";
 import { ReturnPayload } from "@/lib/types";
 import { CompanyTypes } from "./columns";
 import MainCompany from "./(client)/main";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllCompanysPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  const result = await prisma.companies.findMany({
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/companies"); // it is company
-  console.log("result----: ", result);
+  const totalCompanies = await prisma.companies.count();
+
+  const companies = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -46,10 +39,10 @@ export default async function AllCompanysPage({
           </div>
           {/* All Companys */}
           <MainCompany
-            data={(result.data?.data as CompanyTypes[]) || []}
-            page={1}
-            limit={10}
-            total={1}
+            data={(companies as CompanyTypes[]) || []}
+            page={page}
+            limit={limit}
+            total={totalCompanies}
             linkInfo={{ text: "Add Company", link: "add-company" }}
           />
         </div>

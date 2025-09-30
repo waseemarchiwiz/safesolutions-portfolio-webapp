@@ -44,38 +44,10 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
   // handle on save
   const onSave = async (result: onSaveTypes) => {
     setOpen(false);
-    // check the action
-    // if (action === "edit") {
-    //   try {
-    //     // call delete action
-    //     const result = await UpdateBlogTypesAction(updated);
-    //     console.log("result: ", result);
-    //     if (result.success) {
-    //       router.refresh();
-    //       toast.success(result.message);
-    //     } else {
-    //       toast.error(result.message);
-    //     }
-    //   } catch (error) {
-    //     console.log("Error:", error);
-    //   }
-    // } else
-
-    if (action === "delete") {
-      try {
-        // call delete action
-        // const result: ReturnPayload = await apiClient.delete(
-        //   `/admin/delete/blog/${updated?.id}`
-        // );
-        console.log("result: ", result);
-        if (result.success) {
-          toast.success(result.message);
-        } else {
-          toast.error(result.message);
-        }
-      } catch (error) {
-        console.log("Error:", error);
-      }
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
     }
   };
 

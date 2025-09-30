@@ -4,38 +4,30 @@ import { cookies } from "next/headers";
 import { ReturnPayload } from "@/lib/types";
 import { FaqTypes } from "./columns";
 import MainFaq from "./(client)/main";
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
 
-/**
- * Pagination
- * On Server Side
- * Pending
- * **/
-
 export default async function AllFaqsPage({
   searchParams,
 }: PaginationUrlProps) {
   // page limit
-  // const params = await searchParams;
-  // const page = Number(params?.page) || 1;
-  // const limit = Number(params?.limit) || 5;
-  // const skip = (page - 1) * limit;
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const limit = Number(params?.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  // cookies
-  const cookieStore = await cookies();
-  // Build Cookie header manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-  const api = await axiosServer(cookieHeader);
+  const result = await prisma.fAQ.findMany({
+    skip,
+    take: limit,
+  });
 
-  const result: ReturnPayload = await api.get("/admin/get/faq");
-  console.log("result----: ", result);
+  const totalFAQs = await prisma.fAQ.count();
 
+  const faqs = serializePrisma(result);
   return (
     <div className="flex flex-1 flex-col">
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">
@@ -46,10 +38,10 @@ export default async function AllFaqsPage({
           </div>
           {/* All Faqs */}
           <MainFaq
-            data={(result.data?.faqs as FaqTypes[]) || []}
-            page={1}
-            limit={10}
-            total={1}
+            data={(faqs as FaqTypes[]) || []}
+            page={page}
+            limit={limit}
+            total={totalFAQs}
             linkInfo={{ text: "Add Faq", link: "add-faq" }}
           />
         </div>

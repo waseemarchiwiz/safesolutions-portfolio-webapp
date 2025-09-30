@@ -11,6 +11,7 @@ export interface StatTypes {
   totalProjects: number;
   totalFAQs: number;
   totalContacts: number;
+  totalCompanies: number;
 }
 
 const Home = ({
@@ -22,6 +23,7 @@ const Home = ({
   totalProjects,
   totalFAQs,
   totalContacts,
+  totalCompanies,
 }: StatTypes) => {
   return (
     <div className="flex flex-1 flex-col">
@@ -37,7 +39,7 @@ const Home = ({
           <Statistics title="Teams" value={totalTeams} change="2.4%" />
           <Statistics title="Services" value={totalServices} change="6.9%" />
           <Statistics title="Projects" value={totalProjects} change="7.5%" />
-          <Statistics title="Companies" value={0} change="1.2%" />
+          <Statistics title="Companies" value={totalCompanies} change="1.2%" />
           <Statistics title="Queries" value={totalContacts} change="8.0%" />
         </div>
       </div>

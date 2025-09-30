@@ -12,10 +12,7 @@ export const EditBuildTeamSchema = z.object({
   linkedin: z.string().url("Invalid LinkedIn URL").optional().or(z.literal("")),
   twitter: z.string().url("Invalid Twitter URL").optional().or(z.literal("")),
   image: z
-    .union([
-      z.instanceof(File), // new upload
-      z.string().min(1), // existing file path
-    ])
+    .union([z.instanceof(File), z.string().min(1), z.literal(null)])
     .optional(),
 });
 

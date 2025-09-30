@@ -107,7 +107,7 @@ export const getColumns = ({
           <Image
             width={100}
             height={150}
-            src={`${baseURL}/${row.original.img as string}`}
+            src={`${row.original.img as string}`}
             alt={row.original.img}
             className=" rounded-full w-10 h-10"
           />

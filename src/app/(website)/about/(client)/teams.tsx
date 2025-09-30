@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, TwitchIcon } from "lucide-react";
 import { TeamTypes } from "../page";
@@ -21,12 +21,6 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
     },
   };
 
-  // const [isMounted, setIsMounted] = useState(false);
-
-  // useEffect(() => {
-  //   setIsMounted(true);
-  // }, []);
-
   return (
     <div className="min-h-[95vh]  bg-white dark:bg-black py-24">
       <div className="max-w-7xl mx-auto px-4">
@@ -38,7 +32,6 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
           variants={headerVariants}
         >
           {/* Header Section */}
-
           <div className="max-w-6xl mx-auto text-center mb-20">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-black shadow-md mb-6">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
@@ -82,10 +75,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
                         <Image
                           width={500}
                           height={500}
-                          src={
-                            `${baseURL}/${member.image}` ||
-                            ("/600x400.png" as string)
-                          }
+                          src={`${member.image}` || ("/600x400.png" as string)}
                           alt={member.name}
                           className="w-full h-full  object-cover rounded-full"
                         />

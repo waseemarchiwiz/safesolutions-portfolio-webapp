@@ -12,13 +12,42 @@ import Architecture from "./architecture";
 import Agriculture from "./agriculture";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+export type ServicesTypes = {
+  id: number;
+  tab: string;
+  title: string;
+  slug: string;
+  icon: string | null;
+  description: string;
+  features: string[];
+  link: string | null;
+  overview: string | null;
+  technologies: string[];
+  industries: string[];
+  useCases: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 const fadeSlide = {
   initial: { opacity: 0, x: 20 },
   animate: { opacity: 1, x: 0 },
   transition: { duration: 0.4 },
 };
 
-const Services = () => {
+const Services = ({ services }: { services: ServicesTypes[] }) => {
+  console.log("servics---", services);
+
+  // software
+  const softwares = services.filter((i) => i.tab === "Software Development");
+  console.log("softwares-data-", softwares);
+  const backtelemed = services.filter((i) => i.tab === "Backtelemed");
+  console.log("backtelemed-data-", backtelemed);
+  const architectures = services.filter(
+    (i) => i.tab === "Architecture And Design"
+  );
+  console.log("backtelemed-data-", backtelemed);
+
   return (
     <>
       {/* Animate Hero Section */}
@@ -72,7 +101,7 @@ const Services = () => {
 
               <TabsContent value="backtelemed">
                 <motion.div {...fadeSlide}>
-                  <BackofficeServicesTab />
+                  <BackofficeServicesTab data={backtelemed} />
                 </motion.div>
               </TabsContent>
 
@@ -84,7 +113,7 @@ const Services = () => {
 
               <TabsContent value="architecture">
                 <motion.div {...fadeSlide}>
-                  <Architecture />
+                  <Architecture data={architectures} />
                 </motion.div>
               </TabsContent>
 
