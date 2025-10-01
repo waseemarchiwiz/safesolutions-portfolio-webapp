@@ -1,41 +1,89 @@
-import { apiClient } from "@/lib/api-config/client";
-import { applicationSchema } from "../(validation)/schema";
+"use server";
 
-export const SubmitApplyAction = async (
-  formData: FormData
-): Promise<{ success: boolean; data?: unknown; message: string }> => {
+import { prisma } from "@/lib/prisma";
+import { ReturnPayload } from "@/lib/types";
+import nodemailer from "nodemailer";
+
+interface ContactUsValues {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  sender_email: string;
+}
+
+// -----------------------------
+// Contact Us Action
+// -----------------------------
+export async function ContactUsAction(
+  values: ContactUsValues
+): Promise<ReturnPayload> {
   try {
-    // Convert FormData to plain object for validation
-    // const plainObject: Record<string, any> = {};
-    // formData.forEach((value, key) => {
-    //   plainObject[key] = value;
-    // });
+    const { name, email, subject, message, sender_email } = values;
 
-    // Validate
-    // const validation = applicationSchema.safeParse(plainObject);
-    // if (!validation.success) {
-    //   return {
-    //     success: false,
-    //     message: validation.error?.errors?.[0]?.message,
-    //   };
-    // }
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+      return { success: false, message: "All fields are required" };
+    }
 
-    // Submit original FormData (not plain object)
-    const response = await apiClient.post(`/user/easy/apply`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+    // Find recipient in DB
+    const getMail = await prisma.companies.findFirst({
+      where: { email: sender_email },
     });
 
+    if (!getMail) {
+      return {
+        success: false,
+        message: "Sender email not found in the database.",
+      };
+    }
+
+    // Configure Nodemailer
+    const transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST, // e.g., smtp-mail.outlook.com
+      port: Number(process.env.MAIL_PORT) || 587,
+      secure: false,
+      auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    // Mail content
+    const mailOptions = {
+      from: `${process.env.MAIL_FROM_NAME} <${process.env.MAIL_FROM_ADDRESS}>`,
+      to: getMail.email,
+      subject: `New Contact Form Submission: ${subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+          <h2 style="color: #333;">Contact Us</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Subject:</strong> ${subject}</p>
+          <p><strong>Message:</strong></p>
+          <p style="background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+            ${message}
+          </p>
+          <hr>
+          <p style="font-size: 0.9em; color: #555;">
+            This email was sent from your website's contact form.
+          </p>
+        </div>
+      `,
+    };
+
+    // Send mail
+    await transporter.sendMail(mailOptions);
+
     return {
-      success: Boolean(response?.data?.success) || true,
-      data: response?.data?.data ?? [],
-      message: response?.data?.message ?? "Application submitted successfully",
+      success: true,
+      message: "Email sent successfully!",
     };
   } catch (error) {
-    console.error("Error submitting form:", error);
+    console.error("ContactUsAction error:", error);
     return {
       success: false,
-      message:
-        error instanceof Error ? error.message : "Failed to submit application",
+      message: error instanceof Error ? error.message : "Unknown error",
     };
   }
-};
+}

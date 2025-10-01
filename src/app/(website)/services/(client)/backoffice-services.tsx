@@ -1,14 +1,3 @@
-import {
-  Briefcase, // FaBriefcase
-  ClipboardList, // FaClipboardList
-  Users, // FaUsers
-  FileText, // FaFileAlt
-  Phone, // FaPhoneAlt
-  Package, // FaBoxOpen
-  Building, // FaBuilding
-  Settings, // FaCog
-} from "lucide-react";
-
 import ServiceCard from "./service.card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

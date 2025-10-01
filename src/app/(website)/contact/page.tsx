@@ -1,32 +1,14 @@
-import { apiClient } from "@/lib/api-config/client";
 import Main from "./(client)/main";
-import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
-
-export interface EmailTypes {
-  id: number;
-  email: string;
-  name: string;
-  createdAt: string;
-  updatedAt?: string;
-}
-
-interface CompaniesResponse {
-  success: boolean;
-  data: CompanyTypes[];
-}
+import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
 export default async function ContactPage() {
-  // api client
+  const companiesResult = await prisma.companies.findMany();
+  // companies
+  const companies = serializePrisma(companiesResult) || [];
 
-  const emailsResult: CompaniesResponse = await apiClient.get(
-    "/user/get/emails"
-  );
-
-  // emails
-  const emails = emailsResult?.data || [];
-
-  console.log("emails: ", emails);
+  console.log("companies: ", companies);
 
   // teams
-  return <Main emails={emails || []} />;
+  return <Main companies={companies || []} />;
 }

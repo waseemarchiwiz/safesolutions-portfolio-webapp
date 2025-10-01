@@ -11,13 +11,14 @@ import ArchiwizBuild from "./archiwiz-build";
 import Architecture from "./architecture";
 import Agriculture from "./agriculture";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { iconsMap } from "../data";
 
 export type ServicesTypes = {
   id: number;
   tab: string;
   title: string;
   slug: string;
-  icon: string | null;
+  icon: keyof typeof iconsMap;
   description: string;
   features: string[];
   link: string | null;
@@ -40,13 +41,15 @@ const Services = ({ services }: { services: ServicesTypes[] }) => {
 
   // software
   const softwares = services.filter((i) => i.tab === "Software Development");
-  console.log("softwares-data-", softwares);
   const backtelemed = services.filter((i) => i.tab === "Backtelemed");
-  console.log("backtelemed-data-", backtelemed);
   const architectures = services.filter(
     (i) => i.tab === "Architecture And Design"
   );
-  console.log("backtelemed-data-", backtelemed);
+  const archiwzConstructions = services.filter(
+    (i) => i.tab === "Archiwiz Construction"
+  );
+  const alphabuild = services.filter((i) => i.tab === "Alpha Build");
+  const agriculture = services.filter((i) => i.tab === "Agriculture");
 
   return (
     <>
@@ -107,7 +110,7 @@ const Services = ({ services }: { services: ServicesTypes[] }) => {
 
               <TabsContent value="software">
                 <motion.div {...fadeSlide}>
-                  <SoftwareService />
+                  <SoftwareService data={softwares} />
                 </motion.div>
               </TabsContent>
 
@@ -119,19 +122,19 @@ const Services = ({ services }: { services: ServicesTypes[] }) => {
 
               <TabsContent value="construction">
                 <motion.div {...fadeSlide}>
-                  <ArchiwizConstruction />
+                  <ArchiwizConstruction data={archiwzConstructions} />
                 </motion.div>
               </TabsContent>
 
               <TabsContent value="alphabuild">
                 <motion.div {...fadeSlide}>
-                  <ArchiwizBuild />
+                  <ArchiwizBuild data={alphabuild} />
                 </motion.div>
               </TabsContent>
 
               <TabsContent value="agriculture">
                 <motion.div {...fadeSlide}>
-                  <Agriculture />
+                  <Agriculture data={agriculture} />
                 </motion.div>
               </TabsContent>
             </Tabs>

@@ -27,7 +27,7 @@ type ProjectsPayload = {
 };
 
 export default async function AboutPage() {
-  // api client
+  // fetch teams + projects
   const [teamsResult, projectsResult] = await Promise.all([
     // teams
     await prisma.team.findMany(),

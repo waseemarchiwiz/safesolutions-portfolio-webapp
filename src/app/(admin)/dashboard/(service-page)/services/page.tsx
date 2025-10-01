@@ -25,6 +25,7 @@ export default async function AllServicesPage({
     take: limit,
   });
 
+  const totalSerivces = await prisma.service.count();
   const services = serializePrisma(result);
 
   return (
@@ -38,9 +39,9 @@ export default async function AllServicesPage({
           {/* All Services */}
           <MainServices
             data={services as ServiceTypes[]}
-            page={1}
-            limit={10}
-            total={1}
+            page={page}
+            limit={limit}
+            total={totalSerivces}
             linkInfo={{ text: "Add Service", link: "add-service" }}
           />
         </div>

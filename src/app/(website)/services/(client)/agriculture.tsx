@@ -10,6 +10,7 @@ import {
 import ServiceCard from "./service.card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ServicesTypes } from ".";
 
 const agricultureId = [
   {
@@ -86,12 +87,12 @@ const agricultureId = [
   },
 ];
 
-export default function Agriculture() {
+export default function Agriculture({ data }: { data: ServicesTypes[] }) {
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
       <div className="container mx-auto">
         <div className="grid md:grid-cols-3 gap-8">
-          {agricultureId.map((service, index) => (
+          {data.map((service, index) => (
             <ServiceCard
               key={index}
               icon={service.icon}

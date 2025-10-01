@@ -85,9 +85,9 @@ export const getColumns = ({
     },
   },
   {
-    accessorKey: "title",
-    header: "Title",
-    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
+    accessorKey: "tab",
+    header: "Category",
+    cell: ({ row }) => <div className="font-medium">{row.original.tab}</div>,
   },
   // Column for Slug
   {

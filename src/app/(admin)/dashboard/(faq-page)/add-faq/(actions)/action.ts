@@ -43,7 +43,7 @@ export async function AddFAQsAction(
 
     return {
       success: true,
-      message: "FAQs member added successfully",
+      message: "Faq record added successfully",
       data: newFAQs,
     };
   } catch (error) {

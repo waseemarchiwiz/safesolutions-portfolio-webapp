@@ -20,9 +20,28 @@ import {
   Rocket,
   CodeIcon,
   PaletteIcon,
-  ShieldCheckIcon,
   DatabaseIcon,
+  ShieldCheckIcon,
   ServerIcon,
+  GlobeIcon,
+  Construction,
+  Toilet,
+  BrickWall,
+  HandPlatter,
+  SquareSquare,
+  Trees,
+  CookingPot,
+  Truck,
+  ClipboardCheck,
+  Boxes,
+  TruckElectricIcon,
+  Headphones,
+  Map, // FaMapMarkedAlt
+  Waves, // FaWater
+  Leaf, // FaLeaf
+  LineChart, // FaChartLine
+  Tractor, // FaTractor
+  Plane, // FaHelicopter (no helicopter, closest is Plane)
 } from "lucide-react";
 
 // icons maps
@@ -51,6 +70,25 @@ export const iconsMap = {
   ShieldCheckIcon,
   DatabaseIcon,
   ServerIcon,
+  GlobeIcon,
+  Construction,
+  Toilet,
+  BrickWall,
+  HandPlatter,
+  SquareSquare,
+  Trees,
+  CookingPot,
+  Truck,
+  ClipboardCheck,
+  Boxes,
+  TruckElectricIcon,
+  Headphones,
+  Map,
+  Waves,
+  Leaf,
+  LineChart,
+  Tractor,
+  Plane,
 };
 
 type ServiceTypes = {
