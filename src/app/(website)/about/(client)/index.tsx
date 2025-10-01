@@ -20,6 +20,9 @@ interface AboutProps {
 }
 
 const Main = ({ teams, projects }: AboutProps) => {
+  console.log("teams--", teams);
+  console.log("projects--", projects);
+
   return (
     <>
       {/* Hero Section */}

@@ -10,6 +10,7 @@ import {
 import ServiceCard from "./service.card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ServicesTypes } from ".";
 
 const archiwizbuild = [
   {
@@ -82,11 +83,11 @@ const archiwizbuild = [
   },
 ];
 
-const ArchiwizBuild = () => (
+const ArchiwizBuild = ({ data }: { data: ServicesTypes[] }) => (
   <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
     <div className="container mx-auto">
       <div className="grid md:grid-cols-3 gap-8">
-        {archiwizbuild.map((service, index) => (
+        {data.map((service, index) => (
           <ServiceCard
             key={index}
             icon={service.icon}

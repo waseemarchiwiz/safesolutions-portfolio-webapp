@@ -12,7 +12,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import Image from "next/image";
-import { baseURL } from "@/lib/api-config/client";
 
 interface ProjectsComponentProps {
   background?: string;

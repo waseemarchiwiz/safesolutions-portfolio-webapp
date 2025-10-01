@@ -1,35 +1,35 @@
-import { Check } from "lucide-react";
 import Link from "next/link";
 import { ServicesTypes } from ".";
 import { iconsMap } from "../../project/data";
+import { Check } from "lucide-react";
 
 // Pick only the required fields for ServiceCard
-export type ServiceCardProps = Pick<
+type ServiceCardProps = Pick<
   ServicesTypes,
-  "icon" | "title" | "description" | "features" | "link"
+  "id" | "icon" | "title" | "description" | "features"
 >;
 
-const ServiceCard = ({
+const SoftwareServiceCard = ({
   icon,
+  id,
   title,
   description,
   features,
-  link,
 }: ServiceCardProps) => {
+  // icon
   const Icon = iconsMap[icon];
-
   return (
-    <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg border-2 hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
-      <Link href={link as string} target="_blank">
-        <div className={`w-12 h-12 text-sky-600`}>
-          <Icon size={35} />
+    <div className="group bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 relative">
+      <Link href={`/software/${id}`}>
+        <div className="mb-4">
+          <Icon className="w-12 h-12 text-blue-500" /> {/* Invoke the icon */}
         </div>
         <h3 className="text-xl font-bold mb-3 dark:text-white text-gray-800">
           {title}
         </h3>
         <p className="text-gray-600 dark:text-gray-300 mb-4">{description}</p>
         <ul className="space-y-2">
-          {features.map((feature, index) => (
+          {features?.map((feature, index) => (
             <li
               key={index}
               className="flex items-center text-gray-700 dark:text-gray-300"
@@ -40,8 +40,7 @@ const ServiceCard = ({
         </ul>
       </Link>
       <Link
-        href={link as string}
-        target="_blank"
+        href={`/software/${id}`}
         className="absolute bottom-6 right-6 text-sm font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
         Learn More
@@ -50,4 +49,4 @@ const ServiceCard = ({
   );
 };
 
-export default ServiceCard;
+export default SoftwareServiceCard;

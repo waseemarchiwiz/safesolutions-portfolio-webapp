@@ -26,15 +26,16 @@ import { toast } from "sonner";
 import { Send, Mail, User, MessageSquare, Building2 } from "lucide-react";
 import PageHeroSection from "../../(common)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
-import { EmailTypes } from "../page";
 import { apiClient } from "@/lib/api-config/client";
 import { AxiosError } from "axios";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
+import { ContactUsAction } from "../(actions)/action";
 
 interface MainProps {
-  emails: EmailTypes[];
+  companies: CompanyTypes[];
 }
 
-const Main: React.FC<MainProps> = ({ emails }) => {
+const Main: React.FC<MainProps> = ({ companies }) => {
   // use form
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -49,12 +50,10 @@ const Main: React.FC<MainProps> = ({ emails }) => {
 
   const onSubmit = async (values: ContactFormValues) => {
     console.log("values to submit:", values);
-
     try {
-      const result = await apiClient.post(`/user/contact`, values);
-      console.log("result--", result);
+      const result = await ContactUsAction(values);
 
-      if (result?.success) {
+      if (result.success) {
         toast.success(result?.message || "message sent successfully");
         form.reset();
       } else {
@@ -62,14 +61,11 @@ const Main: React.FC<MainProps> = ({ emails }) => {
       }
     } catch (error) {
       console.log("Error: ", error);
-      if (error && (error as AxiosError).isAxiosError) {
-        const axiosError = error as AxiosError<{ message?: string }>;
-        toast.error(
-          axiosError.response?.data?.message || "Failed to send your message"
-        );
-      } else {
-        toast.error("Unexpected error submitting form");
-      }
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Unexpected error submitting form"
+      );
     }
   };
 
@@ -137,7 +133,7 @@ const Main: React.FC<MainProps> = ({ emails }) => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
-                              {emails.map((item) => (
+                              {companies.map((item) => (
                                 <SelectItem key={item.id} value={item.email}>
                                   <div className="flex items-center gap-3 py-1">
                                     <div className="w-2 h-2 bg-blue-500 rounded-full" />

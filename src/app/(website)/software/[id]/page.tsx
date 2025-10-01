@@ -1,5 +1,6 @@
+import { prisma } from "@/lib/prisma";
 import SoftwareDetails from "../(client)/main";
-import { softwareData } from "../../services/data";
+import { serializePrisma } from "@/lib/utils";
 
 type ParamsProps = {
   params: Promise<{ id: number }>;
@@ -8,29 +9,16 @@ type ParamsProps = {
 export default async function SoftwareDetailsPage({ params }: ParamsProps) {
   // id
   const { id } = await params;
-  // if not id return
-
-  console.log("id: ", id);
 
   if (!id) {
     <div className="text-center py-12">No service found</div>;
   }
-  const softwareService = softwareData.filter(
-    (software) => Number(software.id) === Number(id)
-  );
 
-  console.log("software service: ", softwareService);
+  const result = await prisma.service.findUnique({ where: { id: Number(id) } });
 
-  // if (index !== -1) {
-  //   return <div className="text-center py-12">No service found</div>;
-  // }
+  const softwareService = serializePrisma(result);
 
-  // const softwareService = softwareData[index];
+  console.log("softwre service--", softwareService);
 
-  //  return if no services found
-  if (!softwareService) {
-    return <div className="text-center py-12">No service found</div>;
-  }
-
-  return <SoftwareDetails serviceData={softwareService?.[0]} />;
+  return <SoftwareDetails serviceData={softwareService} />;
 }

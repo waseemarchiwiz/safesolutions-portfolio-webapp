@@ -1,36 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { faqsData } from "../data";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
 
-const Faq = () => {
-  const [openIndexes, setOpenIndexes] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Fallback to local static data if API fetching fails or is commented out
-  const toggleAccordion = (index: string) => {
-    setOpenIndexes((prevIndexes) =>
-      prevIndexes.includes(index)
-        ? prevIndexes.filter((i) => i !== index)
-        : [...prevIndexes, index]
-    );
-  };
-
-  // Simulate loading state (Replace this with actual API call if needed)
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center p-10">
-        <span>Loading...</span>
-      </div>
-    );
-  }
-
+const Faq = ({ faqs }: { faqs: FaqTypes[] }) => {
   return (
     <>
       <section
@@ -48,7 +26,7 @@ const Faq = () => {
         <div className="max-w-7xl mx-auto sm:px-8 px-4">
           <div className="w-full">
             <Accordion type="multiple">
-              {faqsData.map((faq, index) => (
+              {faqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={faq.answer}
