@@ -1,33 +1,11 @@
-# Use Node.js version 20 LTS as the base image
-FROM node:20
+FROM node:22
+ENV PORT 3000
+EXPOSE 3000
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install --force
-
-# Copy the rest of the application files to the working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY package.json .
+RUN npm install
 COPY . .
 
-# Set the environment variables
-ARG VITE_API_URL
-ARG VITE_API_TOKEN
-ARG VITE_USER_URL
-
-# Set the environment variables
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_API_TOKEN=$VITE_API_TOKEN
-ENV VITE_USER_URL=$VITE_USER_URL
-
-# Build the application
-RUN npm run build
-
-# Expose the port the app will run on
-EXPOSE 4173
-
-# Command to run the app
-CMD ["npm", "run", "preview", "--", "--host"]
+CMD ["npm", "start"]
