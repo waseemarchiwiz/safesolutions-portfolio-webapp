@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(req: NextRequest) {
-  // ✅ Edge-safe session check (cookie presence only)
+  //  Edge-safe session check (cookie presence only)
   const sessionCookie = getSessionCookie(req);
 
   const { pathname } = req.nextUrl;

@@ -18,14 +18,15 @@ import {
 } from "@/components/ui/sidebar";
 import React from "react";
 import { User } from "lucide-react";
-import { signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { signOut } from "@/lib/auth-client";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await signOut();
     router.push("/");
   };
 

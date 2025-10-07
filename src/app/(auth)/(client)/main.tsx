@@ -15,12 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SignInFormValues, signInSchema } from "../(validation)/schema";
-import { LogInIcon } from "lucide-react";
+import { LoaderCircle, LogInIcon } from "lucide-react";
 import { toast } from "sonner";
-import { apiClient } from "@/lib/api-config/client";
 import { useRouter } from "next/navigation";
-import { ReturnPayload } from "@/lib/types";
 import { signIn } from "@/lib/auth-client";
+import Loading from "../signin/loading";
 
 export default function SignInForm({
   className,
@@ -35,8 +34,6 @@ export default function SignInForm({
     },
   });
 
-  const router = useRouter();
-
   const formSubmit = async (values: SignInFormValues) => {
     try {
       // Call sign in on client side
@@ -49,17 +46,6 @@ export default function SignInForm({
 
       console.log("response-signin--", data);
       console.log("error-signin--", error);
-
-      // const result: ReturnPayload = await apiClient.post(
-      //   "/admin/login",
-      //   values
-      // );
-      // if (result?.success) {
-      //   toast.success("Sign in successfull.");
-      //   router.push("/dashboard");
-      // } else {
-      //   toast.error(result?.message || "Failed to Sign in. Please try again.");
-      // }
     } catch (error) {
       console.error(" error:", error);
       toast.error(
@@ -76,13 +62,13 @@ export default function SignInForm({
         <CardContent className="grid grid-cols-1">
           <Form {...form}>
             <form
-              className="px-1 py-8"
+              className="px-1.5 py-8"
               onSubmit={form.handleSubmit(formSubmit)}
             >
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-2xl font-medium">Welcome Back</h1>
-                  <p className="text-muted-foreground text-balance">
+                  <p className="text-muted-foreground text-balance py-1">
                     Sign in to your account
                   </p>
                 </div>
@@ -140,7 +126,9 @@ export default function SignInForm({
                   disabled={form.formState.isSubmitting}
                 >
                   {form.formState.isSubmitting ? (
-                    <div>Loading...</div>
+                    <div className="flex justify-center items-center min-h-dvh">
+                      <LoaderCircle className="animate-spin" />
+                    </div>
                   ) : (
                     <>
                       <span>Sign In</span>
