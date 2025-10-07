@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/app/styles/globals.css";
-import Header from "./(common)/header";
 import Footer from "./(common)/footer";
 import { Toaster } from "@/components/ui/sonner";
+import Header from "./(common)/header";
 
 export const metadata: Metadata = {
   title: "Create Next App",

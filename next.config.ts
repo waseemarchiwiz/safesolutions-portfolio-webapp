@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "ik.imagekit.io",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname:
           "safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net",
         port: "",

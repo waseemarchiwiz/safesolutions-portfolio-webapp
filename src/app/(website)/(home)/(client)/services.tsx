@@ -52,29 +52,12 @@ const Services = () => {
         />
       </motion.div>
 
-      <div className="relative container mx-auto px-4 py-24">
+      <div className="relative container max-w-7xl mx-auto px-4 py-24">
         <motion.div className="mx-auto">
           {/* Animated header section */}
-          <motion.div
-            className="space-y-6 text-center mb-16"
-            variants={itemVariants}
-          >
-            <motion.div
-              className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-white text-sm font-medium">
-                Our Services
-              </span>
-            </motion.div>
-
-            <motion.h2
-              className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white"
-              variants={itemVariants}
-            >
-              Transforming Ideas into
+          <div className="text-center">
+            <h2 className="text-balance text-4xl leading-15 font-semibold lg:text-5xl">
+              Transforming Ideas into <br />
               <motion.span
                 className="block py-3 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent"
                 animate={{
@@ -91,19 +74,15 @@ const Services = () => {
               >
                 Digital Reality
               </motion.span>
-            </motion.h2>
-
-            <motion.p
-              className="text-slate-600 dark:text-white text-[20px] md:text-[26px] leading-relaxed text-center w-auto"
-              variants={itemVariants}
-            >
+            </h2>
+            <p className="mt-4 md:mx-28 text-lg text-gray-600 dark:text-gray-300">
               Our services include Medical Billing and Coding, Web Development
               and Cloud Services, BIM services and Visualization services, and
               FINTECH. We provide robust, proactive and effective management of
               all problems related to our services to help our clients make the
               most of their investments.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           {/* Animated services grid */}
           <motion.div className="relative" variants={itemVariants}>
@@ -145,18 +124,17 @@ const Services = () => {
           </motion.div>
 
           {/* Animated CTA section */}
-          <motion.div className="mt-16 text-center" variants={itemVariants}>
+          <motion.div className=" text-center" variants={itemVariants}>
             <motion.div
               className="inline-flex flex-col items-center"
               whileHover={{ y: -5 }}
               transition={{ duration: 0.3 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileTap={{ scale: 0.95 }}>
                 <Link href={"/services"}>
-                  <Button className="relative group">Learn More</Button>
+                  <Button asChild size="lg" variant="outline">
+                    <span>Get Started</span>
+                  </Button>
                 </Link>
               </motion.div>
               <motion.div

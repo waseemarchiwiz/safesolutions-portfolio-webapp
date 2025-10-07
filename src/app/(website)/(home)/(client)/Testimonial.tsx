@@ -56,13 +56,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
   console.log("testimonials--", testimonials);
 
   return (
-    <section className="  bg-[#FFFFFF] dark:bg-black py-5 px-4 relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
-      <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
-      {/* <div className=" bottom-0 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" /> */}
-
-      {/* <motion.div className="max-w-6xl mx-auto relative  "> */}
+    <section className="  bg-[#FFFFFF] dark:bg-black py-5 px-4 relative overflow-hidden mt-8">
       <motion.div
         className="max-w-6xl mx-auto relative  "
         initial="hidden"
@@ -103,7 +97,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
           </button>
 
           {/* Carousel Container */}
-          <div className="overflow-hidden bg-[#FFFFFF] dark:bg-black p-10 ">
+          <div className="overflow-hidden bg-[#FFFFFF] dark:bg-slate-800 p-10 ">
             <div
               className="flex transition-transform duration-500  ease-in-out"
               style={{ transform: `translateX(-${activeIndex * 33.33}%)` }}

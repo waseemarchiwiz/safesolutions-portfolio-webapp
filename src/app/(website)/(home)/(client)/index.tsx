@@ -24,11 +24,10 @@ const Main = ({ faqs, projects, testimonials }: MainPropTypes) => {
     <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200  ">
       <Hero />
       <WhyChoose />
-      <About />
       <Services />
+      {/* <Projects projects={projects} /> */}
       <Testimonials testimonials={testimonials} />
-      <Projects projects={projects} />
-      <Faq faqs={faqs} />
+      {/* <Faq faqs={faqs} /> */}
       <ScrollToTop />
     </div>
   );
