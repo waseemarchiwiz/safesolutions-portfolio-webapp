@@ -1,27 +1,26 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Settings2, Sparkles, Zap } from "lucide-react";
+import { ScanText, Settings2, Sparkles, Zap } from "lucide-react";
 import { ReactNode } from "react";
 
 export default function Features() {
   return (
     <section className="bg-zinc-100 py-16 md:py-32 dark:bg-transparent">
       <div className="@container mx-auto max-w-7xl px-6">
-        <div className="text-center">
-          <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Why Choose Safe Solution?
-          </h2>
-          <p className="mt-4">
-            Libero sapiente aliquam quibusdam aspernatur, praesentium iusto
-            repellendus.
-          </p>
+        {/* Section Title */}
+        <div className="mb-3 flex items-center text-sm text-sky-600">
+          <ScanText size={15} className=" text-sky-600 mr-2" aria-hidden />
+          <span className="font-semibold">Choose Us</span>
         </div>
+        <h2 className="text-balance text-4xl font-semibold">
+          Why Choose <span className=" py-3 text-sky-600">Safe Solutions?</span>
+        </h2>
+
         <Card className="@min-4xl:max-w-full @min-4xl:grid-cols-3 @min-4xl:divide-x @min-4xl:divide-y-0 mx-auto mt-8 grid max-w-sm divide-y overflow-hidden shadow-zinc-950/5 *:text-center md:mt-16">
           <div className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
                 <Zap className="size-6" aria-hidden />
               </CardDecorator>
-
               <h3 className="mt-6 font-medium">Customizable</h3>
             </CardHeader>
 

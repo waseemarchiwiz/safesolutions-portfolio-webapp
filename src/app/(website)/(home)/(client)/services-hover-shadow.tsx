@@ -1,0 +1,144 @@
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  containerVariants,
+  floatingAnimation,
+  itemVariants,
+} from "../motion.settings";
+import { HoverEffect } from "@/components/common/card-hover.effect";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Brain, ScanText } from "lucide-react";
+import { ourProjectsData } from "../data";
+
+const Services = () => {
+  // blob
+  const backgroundBlobVariants = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 1.5,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      className="relative overflow-hidden bg-[#FFFFFF] dark:bg-black"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={containerVariants}
+    >
+      {/* Animated background decorations */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden"
+        initial="initial"
+        animate="animate"
+      >
+        <motion.div
+          variants={backgroundBlobVariants}
+          animate={floatingAnimation}
+          className="absolute -top-40 -right-40 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          variants={backgroundBlobVariants}
+          animate={floatingAnimation}
+          transition={{ delay: 0.3 }}
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"
+        />
+      </motion.div>
+
+      <div className="relative container max-w-7xl mx-auto px-7 py-24">
+        <motion.div className="mx-auto">
+          {/* Animated header section */}
+          <div className="mb-3 flex items-center text-sm text-sky-600">
+            <ScanText size={15} className=" text-sky-600 mr-2" aria-hidden />
+            <span className="font-semibold">Services</span>
+          </div>
+          <h2 className="text-balance text-4xl font-semibold">
+            Transforming Ideas into{" "}
+            <span className=" py-3 text-sky-600">Digital Reality</span>
+          </h2>
+
+          {/* Animated services grid */}
+          <motion.div className="relative" variants={itemVariants}>
+            {/* Animated grid lines */}
+            <motion.div
+              className="absolute inset-0 grid grid-cols-3 gap-4 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  // className="border-r border-t border-slate-200 dark:border-slate-800"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.1 }}
+                />
+              ))}
+            </motion.div>
+
+            <motion.div className="relative" variants={itemVariants}>
+              <HoverEffect
+                items={ourProjectsData.map((project) => ({
+                  ...project,
+                  className:
+                    "bg-white dark:bg-zinc-800 shadow-xl dark:shadow-zinc-700/20 border border-slate-200 dark:border-slate-700/50 rounded-xl transition-all duration-300 hover:scale-105",
+                  icon: (
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Brain className="w-10 h-10 text-purple-500 dark:text-purple-400" />
+                    </motion.div>
+                  ),
+                }))}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Animated CTA section */}
+          <motion.div className=" text-center" variants={itemVariants}>
+            <motion.div
+              className="inline-flex flex-col items-center"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div whileTap={{ scale: 0.95 }}>
+                <Link href={"/services"}>
+                  <Button asChild size="lg" variant="outline">
+                    <span>Get Started</span>
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div
+                className="mt-4 text-sm text-slate-600 dark:text-slate-400"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                Discover our full range of services
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Animated decorative bottom line */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      />
+    </motion.div>
+  );
+};
+
+export default Services;

@@ -1,164 +1,118 @@
-import React from "react";
-import { motion } from "framer-motion";
-import {
-  containerVariants,
-  floatingAnimation,
-  itemVariants,
-} from "../motion.settings";
-import { HoverEffect } from "@/components/common/card-hover.effect";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Brain } from "lucide-react";
-import { ourProjectsData } from "../data";
+import { Card } from "@/components/ui/card";
+import { ChevronRight, ScanText } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
+import {
+  Gemini,
+  Replit,
+  MagicUI,
+  VSCodium,
+  MediaWiki,
+  GooglePaLM,
+} from "@/components/logos";
 
-const Services = () => {
-  // blob
-  const backgroundBlobVariants = {
-    initial: { scale: 0.8, opacity: 0 },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 1.5,
-        ease: "easeOut" as const,
-      },
-    },
-  };
-
+export default function Services() {
   return (
-    <motion.div
-      className="relative overflow-hidden bg-[#FFFFFF] dark:bg-black"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
-      {/* Animated background decorations */}
-      <motion.div
-        className="absolute inset-0 overflow-hidden"
-        initial="initial"
-        animate="animate"
-      >
-        <motion.div
-          variants={backgroundBlobVariants}
-          animate={floatingAnimation}
-          className="absolute -top-40 -right-40 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          variants={backgroundBlobVariants}
-          animate={floatingAnimation}
-          transition={{ delay: 0.3 }}
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"
-        />
-      </motion.div>
-
-      <div className="relative container max-w-7xl mx-auto px-4 py-24">
-        <motion.div className="mx-auto">
-          {/* Animated header section */}
-          <div className="text-center">
-            <h2 className="text-balance text-4xl leading-15 font-semibold lg:text-5xl">
-              Transforming Ideas into <br />
-              <motion.span
-                className="block py-3 bg-gradient-to-r from-cyan-300 via-blue-500 to-purple-800 bg-clip-text text-transparent"
-                animate={{
-                  backgroundPosition: ["0%", "100%", "0%"],
-                }}
-                style={{
-                  backgroundSize: "200% auto",
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                Digital Reality
-              </motion.span>
-            </h2>
-            <p className="mt-4 md:mx-28 text-lg text-gray-600 dark:text-gray-300">
-              Our services include Medical Billing and Coding, Web Development
-              and Cloud Services, BIM services and Visualization services, and
-              FINTECH. We provide robust, proactive and effective management of
-              all problems related to our services to help our clients make the
-              most of their investments.
-            </p>
+    <section>
+      <div className="py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          {/* Section Title */}
+          <div className="mb-3 flex items-center text-sm text-sky-600">
+            <ScanText size={15} className=" text-sky-600 mr-2" aria-hidden />
+            <span className="font-semibold">Services</span>
           </div>
+          <h2 className="text-balance text-4xl font-semibold">
+            What we offer at{" "}
+            <span className=" py-3 text-sky-600">Safe Solutions</span>
+          </h2>
 
-          {/* Animated services grid */}
-          <motion.div className="relative" variants={itemVariants}>
-            {/* Animated grid lines */}
-            <motion.div
-              className="absolute inset-0 grid grid-cols-3 gap-4 pointer-events-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <IntegrationCard
+              title="Google Gemini"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
             >
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  // className="border-r border-t border-slate-200 dark:border-slate-800"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                />
-              ))}
-            </motion.div>
+              <Gemini />
+            </IntegrationCard>
 
-            <motion.div className="relative" variants={itemVariants}>
-              <HoverEffect
-                items={ourProjectsData.map((project) => ({
-                  ...project,
-                  className:
-                    "bg-white dark:bg-zinc-800 shadow-xl dark:shadow-zinc-700/20 border border-slate-200 dark:border-slate-700/50 rounded-xl transition-all duration-300 hover:scale-105",
-                  icon: (
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Brain className="w-10 h-10 text-purple-500 dark:text-purple-400" />
-                    </motion.div>
-                  ),
-                }))}
-              />
-            </motion.div>
-          </motion.div>
-
-          {/* Animated CTA section */}
-          <motion.div className=" text-center" variants={itemVariants}>
-            <motion.div
-              className="inline-flex flex-col items-center"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.3 }}
+            <IntegrationCard
+              title="Replit"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
             >
-              <motion.div whileTap={{ scale: 0.95 }}>
-                <Link href={"/services"}>
-                  <Button asChild size="lg" variant="outline">
-                    <span>Get Started</span>
-                  </Button>
-                </Link>
-              </motion.div>
-              <motion.div
-                className="mt-4 text-sm text-slate-600 dark:text-slate-400"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                Discover our full range of services
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+              <Replit />
+            </IntegrationCard>
+
+            <IntegrationCard
+              title="Magic UI"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+            >
+              <MagicUI />
+            </IntegrationCard>
+
+            <IntegrationCard
+              title="VSCodium"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+            >
+              <VSCodium />
+            </IntegrationCard>
+
+            <IntegrationCard
+              title="MediaWiki"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+            >
+              <MediaWiki />
+            </IntegrationCard>
+
+            <IntegrationCard
+              title="Google PaLM"
+              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+            >
+              <GooglePaLM />
+            </IntegrationCard>
+          </div>
+        </div>
       </div>
+    </section>
+  );
+}
 
-      {/* Animated decorative bottom line */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-      />
-    </motion.div>
+const IntegrationCard = ({
+  title,
+  description,
+  children,
+  link = "https://github.com/meschacirung/cnblocks",
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+  link?: string;
+}) => {
+  return (
+    <Card className="p-6">
+      <div className="relative">
+        <div className="*:size-10">{children}</div>
+
+        <div className="space-y-2 py-6">
+          <h3 className="text-base font-medium">{title}</h3>
+          <p className="text-muted-foreground line-clamp-2 text-sm">
+            {description}
+          </p>
+        </div>
+
+        <div className="flex gap-3 border-t border-dashed pt-6">
+          <Button
+            asChild
+            variant="secondary"
+            size="sm"
+            className="gap-1 pr-2 shadow-none"
+          >
+            <Link href={link}>
+              Learn More
+              <ChevronRight className="ml-0 !size-3.5 opacity-50" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </Card>
   );
 };
-
-export default Services;

@@ -12,55 +12,104 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import Image from "next/image";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import { FolderKanban } from "lucide-react";
 
 interface ProjectsComponentProps {
   background?: string;
   projects: ProjectTypes[];
 }
 
-const Projects = ({ background, projects }: ProjectsComponentProps) => {
-  // get project link
-  const getProjectLink = (project: (typeof projects)[number]) => {
-    if (project.type === "external") {
-      return {
-        href: project.link,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      };
-    }
-    if (project.type === "detailed") {
-      return {
-        href: `/project/${project.slug}`,
-      };
-    }
-    return null;
-  };
-
-  console.log("projects----", projects);
-
+export function ThreeDCardDemo({
+  project,
+  linkProps,
+}: {
+  project: ProjectTypes;
+  linkProps?: ReturnType<typeof GetProjectLink>;
+}) {
   return (
-    <section className={cn(background, "p-16 bg-white dark:bg-black")}>
-      <div className="container mx-auto px-4">
-        {/* Section header */}
-        <div className="flex flex-col justify-center items-center gap-4">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <span className="text-purple-600 dark:text-white text-sm font-medium">
-              Our Projects
-            </span>
-          </div>
-          <p className="text-slate-600 dark:text-white text-[20px] md:text-[26px] leading-normal text-center p-7 max-w-5xl">
-            At Safe Solution, we pride ourselves on delivering impactful
-            solutions tailored to our clients&apos; unique needs. With a focus
-            on innovation, precision, and excellence, we have successfully
-            completed a diverse range of projects.
-          </p>
+    <CardContainer className="inter-var">
+      <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[20rem] sm:w-[25rem] md:w-[28rem] h-auto rounded-xl p-6 border">
+        <CardItem
+          translateZ="50"
+          className="text-lg font-bold text-neutral-700 dark:text-white"
+        >
+          {project.name}
+        </CardItem>
+
+        <CardItem
+          as="p"
+          translateZ="60"
+          className="text-neutral-500 text-sm mt-2 dark:text-neutral-300"
+        >
+          {project.description}
+        </CardItem>
+
+        <CardItem translateZ="100" className="w-full mt-4">
+          <Image
+            width={300}
+            height={200}
+            src={`/project-img.png`}
+            alt={project.name}
+            className="h-48 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+          />
+        </CardItem>
+
+        <div className="flex justify-between items-center mt-8">
+          <CardItem
+            translateZ={20}
+            className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-medium"
+          >
+            <Link
+              href={linkProps?.href as string}
+              target={linkProps?.target}
+              rel={linkProps?.rel}
+            >
+              View Details →
+            </Link>
+          </CardItem>
         </div>
+      </CardBody>
+    </CardContainer>
+  );
+}
+
+// Helper: get project link
+const GetProjectLink = (project: ProjectTypes) => {
+  if (project.type === "external") {
+    return {
+      href: project.link,
+      target: "_blank",
+      rel: "noopener noreferrer",
+    };
+  }
+  if (project.type === "detailed") {
+    return { href: `/project/${project.slug}` };
+  }
+  return null;
+};
+
+const Projects = ({ background, projects }: ProjectsComponentProps) => {
+  return (
+    <section
+      className={cn(background, "py-20 bg-zinc-100 dark:bg-transparent")}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Animated header section */}
+        <div className="mb-3 flex items-center text-sm text-sky-600">
+          <FolderKanban size={15} className="text-sky-600 mr-2" aria-hidden />
+          <span className="font-semibold">Projects</span>
+        </div>
+
+        <h2 className="text-4xl font-semibold">
+          Showcasing Our{" "}
+          <span className="py-3 text-sky-600">Creative Builds</span>
+        </h2>
 
         {/* Carousel */}
         <Carousel
           opts={{
-            align: "center",
+            align: "start", // 👈 This fixes the center alignment
             loop: true,
           }}
           plugins={[
@@ -72,53 +121,30 @@ const Projects = ({ background, projects }: ProjectsComponentProps) => {
               stopOnInteraction: true,
             }),
           ]}
-          className="w-full mx-auto mt-10"
+          className=" max-w-7xl mx-auto"
         >
-          <CarouselContent>
+          <CarouselContent className="md:ml-18">
             {projects?.map((project, index) => {
-              const linkProps = getProjectLink(project);
-              const CardContent = (
-                <div className="group relative overflow-hidden rounded-lg shadow-lg h-full transition-transform hover:scale-105">
-                  <Image
-                    width={200}
-                    height={150}
-                    src={`${project.img as string}`}
-                    alt={project.name}
-                    className="object-cover w-full h-full"
-                  />
-                  <div className="absolute inset-0 bg-black/50 transition-opacity group-hover:bg-black/70 flex flex-col items-center justify-center p-4">
-                    <h3 className="text-white text-lg font-semibold text-center">
-                      {project.name}
-                    </h3>
-                    <p className="text-white text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity text-center">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
-              );
+              const linkProps = GetProjectLink(project);
 
               return (
                 <CarouselItem
                   key={index}
-                  className="md:basis-1/3 lg:basis-1/4 h-72"
+                  className="pl-4 basis-auto md:basis-1/3 lg:basis-1/4"
                 >
                   {linkProps ? (
-                    <Link
-                      href={linkProps.href as string}
-                      rel={linkProps.rel}
-                      target={linkProps.target}
-                    >
-                      {CardContent}
-                    </Link>
+                    <ThreeDCardDemo project={project} linkProps={linkProps} />
                   ) : (
-                    CardContent
+                    <ThreeDCardDemo project={project} />
                   )}
                 </CarouselItem>
               );
             })}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+
+          {/* Optional Nav buttons */}
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
         </Carousel>
       </div>
     </section>
