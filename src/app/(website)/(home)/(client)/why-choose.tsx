@@ -6,14 +6,20 @@ export default function Features() {
   return (
     <section className="bg-zinc-100 py-16 md:py-32 dark:bg-transparent">
       <div className="@container mx-auto max-w-7xl px-6">
-        {/* Section Title */}
-        <div className="mb-3 flex items-center text-sm text-sky-600">
-          <ScanText size={15} className=" text-sky-600 mr-2" aria-hidden />
-          <span className="font-semibold">Choose Us</span>
+        {/* Header */}
+        <div className="mb-8">
+          <div className="mb-3 flex items-center text-sm text-sky-600">
+            <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
+            <span className="font-semibold">Choose</span>
+          </div>
+          <h2 className="text-4xl font-semibold text-slate-900">
+            Why choose <span className="text-sky-600">Safe Solutions ?</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-slate-600">
+            Explore a what we offer at Safe Solutions — crafted with precision,
+            creativity, and a focus on real-world results.
+          </p>
         </div>
-        <h2 className="text-balance text-4xl font-semibold">
-          Why Choose <span className=" py-3 text-sky-600">Safe Solutions?</span>
-        </h2>
 
         <Card className="@min-4xl:max-w-full @min-4xl:grid-cols-3 @min-4xl:divide-x @min-4xl:divide-y-0 mx-auto mt-8 grid max-w-sm divide-y overflow-hidden shadow-zinc-950/5 *:text-center md:mt-16">
           <div className="group shadow-zinc-950/5">

@@ -11,8 +11,10 @@ import Projects from "../../(common)/project-section";
 import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { TestimonialTypes } from "@/app/(admin)/dashboard/(testimonial-page)/testimonials/columns";
-import Testimonials from "./Testimonial";
+// import Testimonials from "./Testimonial";
 import IntegrationsSection from "@/app/(website)/(home)/(client)/services";
+import Testimonials from "./testimonials";
+import OurStack from "./our-stack";
 
 interface MainPropTypes {
   faqs: FaqTypes[];
@@ -24,9 +26,11 @@ const Main = ({ faqs, projects, testimonials }: MainPropTypes) => {
   return (
     <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200  ">
       <Hero />
+      <About />
       <WhyChoose />
       <IntegrationsSection />
       <Projects projects={projects} />
+      <OurStack />
       <Testimonials testimonials={testimonials} />
       <Faq faqs={faqs} />
       <ScrollToTop />

@@ -14,62 +14,68 @@ import {
 
 export default function Services() {
   return (
-    <section>
-      <div className="py-32">
-        <div className="mx-auto max-w-7xl px-6">
-          {/* Section Title */}
+    <section className="py-15">
+      <div className="mx-auto max-w-7xl px-6">
+        {/* Section Title */}
+
+        {/* Header */}
+        <div className="mb-8">
           <div className="mb-3 flex items-center text-sm text-sky-600">
-            <ScanText size={15} className=" text-sky-600 mr-2" aria-hidden />
+            <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
             <span className="font-semibold">Services</span>
           </div>
-          <h2 className="text-balance text-4xl font-semibold">
+          <h2 className="text-4xl font-semibold text-slate-900">
             What we offer at{" "}
-            <span className=" py-3 text-sky-600">Safe Solutions</span>
+            <span className="text-sky-600">Safe Solutions</span>
           </h2>
+          <p className="mt-3 max-w-2xl text-slate-600">
+            Explore about our services at Safe Solutions — crafted with
+            precision, creativity, and a focus on real-world results.
+          </p>
+        </div>
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <IntegrationCard
-              title="Google Gemini"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <Gemini />
-            </IntegrationCard>
+        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <IntegrationCard
+            title="Google Gemini"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <Gemini />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title="Replit"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <Replit />
-            </IntegrationCard>
+          <IntegrationCard
+            title="Replit"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <Replit />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title="Magic UI"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <MagicUI />
-            </IntegrationCard>
+          <IntegrationCard
+            title="Magic UI"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <MagicUI />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title="VSCodium"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <VSCodium />
-            </IntegrationCard>
+          <IntegrationCard
+            title="VSCodium"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <VSCodium />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title="MediaWiki"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <MediaWiki />
-            </IntegrationCard>
+          <IntegrationCard
+            title="MediaWiki"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <MediaWiki />
+          </IntegrationCard>
 
-            <IntegrationCard
-              title="Google PaLM"
-              description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
-            >
-              <GooglePaLM />
-            </IntegrationCard>
-          </div>
+          <IntegrationCard
+            title="Google PaLM"
+            description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
+          >
+            <GooglePaLM />
+          </IntegrationCard>
         </div>
       </div>
     </section>

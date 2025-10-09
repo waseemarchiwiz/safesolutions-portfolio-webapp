@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -7,202 +9,177 @@ import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import LogoCloud from "./logo-cloud";
 import DotPattern from "./ui/dot-pattern";
-import useDarkMode from "@/hooks/use-theme";
 
 const transitionVariants = {
   item: {
-    hidden: {
-      opacity: 0,
-      filter: "blur(12px)",
-      y: 12,
-    },
+    hidden: { opacity: 0, filter: "blur(12px)", y: 12 },
     visible: {
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
-      transition: {
-        type: "spring",
-        bounce: 0.3,
-        duration: 1.5,
-      },
+      transition: { type: "spring", bounce: 0.3, duration: 1.5 },
     },
   },
 };
 
 export default function HeroSection() {
-  // toggle theme
-  const { isDarkMode } = useDarkMode();
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
+  useEffect(() => setIsMounted(true), []);
   if (!isMounted) return null;
 
   return (
-    <>
-      <main className="overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
-        >
+    <main className="overflow-hidden bg-black">
+      <section className="relative  text-white">
+        {/* Subtle dot pattern */}
+        <DotPattern className="w-full h-[70vh] opacity-20" />
+
+        {/* Background visuals */}
+        <div className="absolute inset-0 isolate opacity-65 hidden lg:block">
           <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
           <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
-          <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
         </div>
-        <section>
-          {/* show dotted pattern on light mode */}
-          {isDarkMode && <DotPattern className="w-full h-[70vh]" />}
-          <div className="relative pt-24 md:pt-36">
+
+        {/* Background image */}
+        <AnimatedGroup
+          variants={{
+            container: { visible: { transition: { delayChildren: 1 } } },
+            item: {
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { type: "spring", bounce: 0.3, duration: 2 },
+              },
+            },
+          }}
+          className="mask-b-from-35% mask-b-to-90% absolute inset-0 top-56 -z-10 lg:top-32"
+        >
+          <Image
+            src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
+            alt="background"
+            className="size-full object-cover opacity-80"
+            width={3276}
+            height={4095}
+            priority
+          />
+        </AnimatedGroup>
+
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-20 bg-[radial-gradient(125%_125%_at_50%_100%,transparent_0%,#000_80%)]"
+        />
+
+        {/* Hero content */}
+        <div className="relative mx-auto max-w-7xl px-6 pt-24 md:pt-36">
+          <div className="text-center sm:mx-auto lg:mr-auto">
+            {/* Announcement pill */}
+            <AnimatedGroup variants={transitionVariants}>
+              <Link
+                href="#link"
+                className="group mx-auto flex w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
+              >
+                <span className="text-white text-sm">
+                  Introducing Support for AI Models
+                </span>
+                <span className="block h-4 w-0.5 bg-white/40"></span>
+                <div className="bg-zinc-800 group-hover:bg-zinc-700 size-6 overflow-hidden rounded-full duration-500">
+                  <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
+                    <span className="flex size-6">
+                      <ArrowRight className="m-auto size-3 text-white" />
+                    </span>
+                    <span className="flex size-6">
+                      <ArrowRight className="m-auto size-3 text-white" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </AnimatedGroup>
+
+            {/* Heading */}
+            <TextEffect
+              preset="fade-in-blur"
+              speedSegment={0.3}
+              as="h1"
+              className="mx-auto mt-8 max-w-4xl text-balance text-5xl font-semibold text-white md:text-7xl lg:mt-16 xl:text-[5.25rem]"
+            >
+              Modern Solutions for Customer Engagement
+            </TextEffect>
+
+            {/* Subtext */}
+            <TextEffect
+              per="line"
+              preset="fade-in-blur"
+              speedSegment={0.3}
+              delay={0.5}
+              as="p"
+              className="mx-auto mt-8 max-w-2xl text-balance text-lg text-zinc-300"
+            >
+              Highly customizable components for building modern websites and
+              applications that look and feel the way you mean it.
+            </TextEffect>
+
+            {/* CTA Buttons */}
             <AnimatedGroup
               variants={{
                 container: {
                   visible: {
                     transition: {
-                      delayChildren: 1,
+                      staggerChildren: 0.05,
+                      delayChildren: 0.75,
                     },
                   },
                 },
-                item: {
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      type: "spring",
-                      bounce: 0.3,
-                      duration: 2,
-                    },
-                  },
-                },
+                ...transitionVariants,
               }}
-              className="mask-b-from-35% mask-b-to-90% absolute inset-0 top-56 -z-20 lg:top-32"
+              className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
             >
-              <Image
-                src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
-                alt="background"
-                className="hidden size-full dark:block"
-                width="3276"
-                height="4095"
-              />
-            </AnimatedGroup>
-
-            <div
-              aria-hidden
-              className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"
-            />
-
-            <div className="mx-auto max-w-7xl px-6">
-              <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                <AnimatedGroup variants={transitionVariants}>
-                  <Link
-                    href="#link"
-                    className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
-                  >
-                    <span className="text-foreground text-sm">
-                      Introducing Support for AI Models
-                    </span>
-                    <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
-
-                    <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
-                      <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3" />
-                        </span>
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3" />
-                        </span>
-                      </div>
-                    </div>
+              <div
+                key={1}
+                className="rounded-[calc(var(--radius-xl)+0.125rem)] border border-white/20 p-0.5"
+              >
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-xl px-5 text-base bg-white text-black hover:bg-zinc-200"
+                >
+                  <Link href="#link">
+                    <span className="text-nowrap">Start Building</span>
                   </Link>
-                </AnimatedGroup>
-
-                <TextEffect
-                  preset="fade-in-blur"
-                  speedSegment={0.3}
-                  as="h1"
-                  className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]"
-                >
-                  Modern Solutions for Customer Engagement
-                </TextEffect>
-                <TextEffect
-                  per="line"
-                  preset="fade-in-blur"
-                  speedSegment={0.3}
-                  delay={0.5}
-                  as="p"
-                  className="mx-auto mt-8 max-w-2xl text-balance text-lg"
-                >
-                  Highly customizable components for building modern websites
-                  and applications that look and feel the way you mean it.
-                </TextEffect>
-
-                <AnimatedGroup
-                  variants={{
-                    container: {
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.05,
-                          delayChildren: 0.75,
-                        },
-                      },
-                    },
-                    ...transitionVariants,
-                  }}
-                  className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
-                >
-                  <div
-                    key={1}
-                    className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
-                  >
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-xl px-5 text-base"
-                    >
-                      <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
-                      </Link>
-                    </Button>
-                  </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-5"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
-                </AnimatedGroup>
+                </Button>
               </div>
-            </div>
+
+              <Button
+                key={2}
+                asChild
+                size="lg"
+                variant="ghost"
+                className="h-10.5 rounded-xl px-5 text-white border border-white/20 hover:bg-zinc-800"
+              >
+                <Link href="#link">
+                  <span className="text-nowrap">Request a demo</span>
+                </Link>
+              </Button>
+            </AnimatedGroup>
           </div>
-        </section>
-        <AnimatedGroup
-          variants={{
-            container: {
-              visible: {
-                transition: {
-                  staggerChildren: 0.05,
-                  delayChildren: 0.75,
-                },
-              },
+        </div>
+      </section>
+
+      {/* Logo cloud below hero */}
+      <AnimatedGroup
+        variants={{
+          container: {
+            visible: {
+              transition: { staggerChildren: 0.05, delayChildren: 0.75 },
             },
-            ...transitionVariants,
-          }}
-        >
-          <div className="mt-32 lg:mt-25">
-            <LogoCloud />
-          </div>
-        </AnimatedGroup>
-      </main>
-    </>
+          },
+          ...transitionVariants,
+        }}
+      >
+        <div className="mt-32 lg:mt-25">
+          <LogoCloud />
+        </div>
+      </AnimatedGroup>
+    </main>
   );
 }

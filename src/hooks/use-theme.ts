@@ -26,6 +26,7 @@ const useDarkMode = () => {
   return {
     toggleTheme,
     isDarkMode,
+    setTheme,
   };
 };
 

@@ -1,151 +1,95 @@
 "use client";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import AutoScroll from "embla-carousel-auto-scroll";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { FolderKanban, ArrowRight } from "lucide-react";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
-import Image from "next/image";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { FolderKanban } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ProjectsComponentProps {
   background?: string;
   projects: ProjectTypes[];
 }
 
-export function ThreeDCardDemo({
-  project,
-  linkProps,
-}: {
-  project: ProjectTypes;
-  linkProps?: ReturnType<typeof GetProjectLink>;
-}) {
-  return (
-    <CardContainer className="inter-var">
-      <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[20rem] sm:w-[25rem] md:w-[28rem] h-auto rounded-xl p-6 border">
-        <CardItem
-          translateZ="50"
-          className="text-lg font-bold text-neutral-700 dark:text-white"
-        >
-          {project.name}
-        </CardItem>
-
-        <CardItem
-          as="p"
-          translateZ="60"
-          className="text-neutral-500 text-sm mt-2 dark:text-neutral-300"
-        >
-          {project.description}
-        </CardItem>
-
-        <CardItem translateZ="100" className="w-full mt-4">
-          <Image
-            width={300}
-            height={200}
-            src={`/project-img.png`}
-            alt={project.name}
-            className="h-48 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-          />
-        </CardItem>
-
-        <div className="flex justify-between items-center mt-8">
-          <CardItem
-            translateZ={20}
-            className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-medium"
-          >
-            <Link
-              href={linkProps?.href as string}
-              target={linkProps?.target}
-              rel={linkProps?.rel}
-            >
-              View Details →
-            </Link>
-          </CardItem>
-        </div>
-      </CardBody>
-    </CardContainer>
-  );
-}
-
-// Helper: get project link
-const GetProjectLink = (project: ProjectTypes) => {
-  if (project.type === "external") {
-    return {
-      href: project.link,
-      target: "_blank",
-      rel: "noopener noreferrer",
-    };
-  }
-  if (project.type === "detailed") {
-    return { href: `/project/${project.slug}` };
-  }
-  return null;
-};
-
 const Projects = ({ background, projects }: ProjectsComponentProps) => {
   return (
-    <section
-      className={cn(background, "py-20 bg-zinc-100 dark:bg-transparent")}
-    >
+    <section className={cn(background, "py-24 bg-zinc-50")}>
       <div className="max-w-7xl mx-auto px-6">
-        {/* Animated header section */}
-        <div className="mb-3 flex items-center text-sm text-sky-600">
-          <FolderKanban size={15} className="text-sky-600 mr-2" aria-hidden />
-          <span className="font-semibold">Projects</span>
+        {/* Header */}
+        <div className="mb-8">
+          <div className="mb-3 flex items-center text-sm text-sky-600">
+            <FolderKanban size={15} className="text-sky-600 mr-2" aria-hidden />
+            <span className="font-semibold">Projects</span>
+          </div>
+          <h2 className="text-4xl font-semibold text-slate-900">
+            Showcasing Our <span className="text-sky-600">Creative Builds</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-slate-600">
+            Explore a selection of our recent projects — crafted with precision,
+            creativity, and a focus on real-world results.
+          </p>
         </div>
 
-        <h2 className="text-4xl font-semibold">
-          Showcasing Our{" "}
-          <span className="py-3 text-sky-600">Creative Builds</span>
-        </h2>
+        {/* Projects Grid */}
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {projects?.map((project, i) => {
+            const isExternal = project.type === "external";
+            const link =
+              project.type === "detailed"
+                ? `/project/${project.slug}`
+                : project.link || "#";
 
-        {/* Carousel */}
-        <Carousel
-          opts={{
-            align: "start", // 👈 This fixes the center alignment
-            loop: true,
-          }}
-          plugins={[
-            AutoScroll({
-              speed: 1,
-              direction: "backward",
-              stopOnFocusIn: true,
-              stopOnMouseEnter: true,
-              stopOnInteraction: true,
-            }),
-          ]}
-          className=" max-w-7xl mx-auto"
-        >
-          <CarouselContent className="md:ml-18">
-            {projects?.map((project, index) => {
-              const linkProps = GetProjectLink(project);
+            return (
+              <motion.div
+                key={project.id || i}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300"
+              >
+                {/* Image */}
+                <div className="relative aspect-video overflow-hidden">
+                  <img
+                    src={(project.img as string) || "/project-img.png"}
+                    alt={project.name}
+                    width={600}
+                    height={400}
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
 
-              return (
-                <CarouselItem
-                  key={index}
-                  className="pl-4 basis-auto md:basis-1/3 lg:basis-1/4"
-                >
-                  {linkProps ? (
-                    <ThreeDCardDemo project={project} linkProps={linkProps} />
-                  ) : (
-                    <ThreeDCardDemo project={project} />
-                  )}
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-slate-900 group-hover:text-sky-600 transition-colors">
+                    {project.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-600 line-clamp-3">
+                    {project.description}
+                  </p>
 
-          {/* Optional Nav buttons */}
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
-        </Carousel>
+                  <div className="mt-5 flex items-center justify-between">
+                    <span className="text-xs text-slate-400">
+                      {project.lastUpdated
+                        ? `Updated ${project.lastUpdated}`
+                        : ""}
+                    </span>
+
+                    <Link
+                      href={link}
+                      target={isExternal ? "_blank" : "_self"}
+                      rel={isExternal ? "noopener noreferrer" : ""}
+                      className="text-sky-600 hover:text-sky-800 text-sm font-medium flex items-center gap-1"
+                    >
+                      View Details
+                      <ArrowRight size={15} />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
