@@ -167,6 +167,9 @@ importers:
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
+      tech-stack-icons:
+        specifier: ^3.3.2
+        version: 3.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       tinymce:
         specifier: ^8.1.2
         version: 8.1.2
@@ -3820,6 +3823,12 @@ packages:
   tar@7.4.3:
     resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
     engines: {node: '>=18'}
+
+  tech-stack-icons@3.3.2:
+    resolution: {integrity: sha512-5QegRg78uTzcgHOg61yU5G9w5UO88/R+yzKagKZFyAocGZrGPy1kF0hV2BWT8IT8j+AQ0/gDX4Je4n/DQDfcuw==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
 
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
@@ -8240,6 +8249,11 @@ snapshots:
       minizlib: 3.0.2
       mkdirp: 3.0.1
       yallist: 5.0.0
+
+  tech-stack-icons@3.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   tiny-invariant@1.3.3: {}
 

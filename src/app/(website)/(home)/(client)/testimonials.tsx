@@ -29,7 +29,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
   };
 
   return (
-    <section className="bg-white dark:bg-black py-20 px-4 relative overflow-hidden">
+    <section className="bg-zinc-100 dark:bg-black py-20 px-4 relative overflow-hidden">
       <motion.div
         className="max-w-[77rem] mx-auto relative"
         initial="hidden"

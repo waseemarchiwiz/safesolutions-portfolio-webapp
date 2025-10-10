@@ -57,7 +57,7 @@ export default function Faqs({ faqs }: { faqs: faqTypes[] }) {
   ];
 
   return (
-    <section className="bg-muted dark:bg-background py-20">
+    <section className="dark:bg-background py-20">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex flex-col gap-10 md:flex-row md:gap-16">
           <div className="md:w-1/3">
@@ -78,19 +78,16 @@ export default function Faqs({ faqs }: { faqs: faqTypes[] }) {
           </div>
           <div className="md:w-2/3">
             <Accordion type="single" collapsible className="w-full space-y-2">
-              {faqItems.map((item) => (
+              {faqs.map((item) => (
                 <AccordionItem
                   key={item.id}
-                  value={item.id}
+                  value={String(item.id)}
                   className="bg-background shadow-xs rounded-lg border px-4 last:border-b"
                 >
                   <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <div className="flex size-6">
-                        <DynamicIcon
-                          name={item.icon}
-                          className="m-auto size-4"
-                        />
+                        <DynamicIcon name={"clock"} className="m-auto size-4" />
                       </div>
                       <span className="text-base">{item.question}</span>
                     </div>

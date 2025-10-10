@@ -11,17 +11,17 @@ export default function LogoCloud() {
             <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
               <div className="flex">
                 <img
-                  className="mx-auto h-5 w-fit invert"
-                  src="https://html.tailus.io/blocks/customers/nvidia.svg"
+                  className="mx-auto h-10 w-fit invert"
+                  src="/projectlogos/alpha-removebg-preview.png"
                   alt="Nvidia Logo"
-                  height="20"
+                  height="16"
                   width="auto"
                 />
               </div>
               <div className="flex">
                 <img
-                  className="mx-auto h-4 w-fit invert"
-                  src="https://html.tailus.io/blocks/customers/column.svg"
+                  className="mx-auto h-10 w-fit invert"
+                  src="/projectlogos/archiwiz.webp"
                   alt="Column Logo"
                   height="16"
                   width="auto"
@@ -29,14 +29,14 @@ export default function LogoCloud() {
               </div>
               <div className="flex">
                 <img
-                  className="mx-auto h-4 w-fit invert"
-                  src="https://html.tailus.io/blocks/customers/github.svg"
+                  className="mx-auto h-10 w-fit invert"
+                  src="/projectlogos/lumsden.webp"
                   alt="GitHub Logo"
                   height="16"
                   width="auto"
                 />
               </div>
-              <div className="flex">
+              {/* <div className="flex">
                 <img
                   className="mx-auto h-5 w-fit invert"
                   src="https://html.tailus.io/blocks/customers/nike.svg"
@@ -44,8 +44,8 @@ export default function LogoCloud() {
                   height="20"
                   width="auto"
                 />
-              </div>
-              <div className="flex">
+              </div> */}
+              {/* <div className="flex">
                 <img
                   className="mx-auto h-5 w-fit invert"
                   src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
@@ -53,8 +53,8 @@ export default function LogoCloud() {
                   height="20"
                   width="auto"
                 />
-              </div>
-              <div className="flex">
+              </div> */}
+              {/* <div className="flex">
                 <img
                   className="mx-auto h-4 w-fit invert"
                   src="https://html.tailus.io/blocks/customers/laravel.svg"
@@ -62,8 +62,8 @@ export default function LogoCloud() {
                   height="16"
                   width="auto"
                 />
-              </div>
-              <div className="flex">
+              </div> */}
+              {/* <div className="flex">
                 <img
                   className="mx-auto h-7 w-fit invert"
                   src="https://html.tailus.io/blocks/customers/lilly.svg"
@@ -71,8 +71,8 @@ export default function LogoCloud() {
                   height="28"
                   width="auto"
                 />
-              </div>
-              <div className="flex">
+              </div> */}
+              {/* <div className="flex">
                 <img
                   className="mx-auto h-6 w-fit invert"
                   src="https://html.tailus.io/blocks/customers/openai.svg"
@@ -80,7 +80,7 @@ export default function LogoCloud() {
                   height="24"
                   width="auto"
                 />
-              </div>
+              </div> */}
             </InfiniteSlider>
 
             {/* Edge blur effects */}

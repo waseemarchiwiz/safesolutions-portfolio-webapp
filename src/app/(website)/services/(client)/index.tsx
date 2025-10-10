@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import PageHeroSection from "../../(common)/hero-section";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import BackofficeServicesTab from "./backoffice-services";
 import SoftwareService from "./software-services";
 import ArchiwizConstruction from "./archiwiz-construction";
@@ -138,11 +137,8 @@ const Services = ({ services }: { services: ServicesTypes[] }) => {
                 </motion.div>
               </TabsContent>
             </Tabs>
-
-            <ScrollToTop />
           </div>
         </div>
-        <ScrollToTop />
       </div>
     </>
   );

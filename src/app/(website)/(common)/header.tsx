@@ -8,10 +8,11 @@ import { cn } from "@/lib/utils";
 import CustomLogo from "./logo";
 
 const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
+  { name: "Home", href: "#link" },
   { name: "About", href: "#link" },
+  { name: "Services", href: "#link" },
+  { name: "Blogs", href: "#link" },
+  { name: "Careers", href: "#link" },
 ];
 
 const Header = () => {
@@ -104,10 +105,10 @@ const Header = () => {
                   asChild
                   size="sm"
                   variant={isScrolled ? "default" : "outline"}
-                  className="border-sky-600  bg-sky-600 text-white transition-all"
+                  className="border-sky-600 hover:bg-sky-700  bg-sky-600 text-white transition-all"
                 >
                   <Link href="#">
-                    <span>Login</span>
+                    <span>Contact Us</span>
                   </Link>
                 </Button>
               </div>

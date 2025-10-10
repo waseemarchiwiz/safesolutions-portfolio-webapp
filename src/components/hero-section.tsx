@@ -12,44 +12,40 @@ import DotPattern from "./ui/dot-pattern";
 
 const transitionVariants = {
   item: {
-    hidden: { opacity: 0, filter: "blur(12px)", y: 12 },
+    hidden: { opacity: 0, filter: "blur(12px)", y: 12 } as const,
     visible: {
       opacity: 1,
       filter: "blur(0px)",
       y: 0,
-      transition: { type: "spring", bounce: 0.3, duration: 1.5 },
+      transition: { type: "spring", bounce: 0.3, duration: 1.2 } as const,
     },
   },
 };
 
 export default function HeroSection() {
   const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => setIsMounted(true), []);
   if (!isMounted) return null;
 
   return (
     <main className="overflow-hidden bg-black">
-      <section className="relative  text-white">
-        {/* Subtle dot pattern */}
+      <section className="relative text-white">
         <DotPattern className="w-full h-[70vh] opacity-20" />
 
-        {/* Background visuals */}
         <div className="absolute inset-0 isolate opacity-65 hidden lg:block">
           <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
           <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
         </div>
 
-        {/* Background image */}
         <AnimatedGroup
           variants={{
-            container: { visible: { transition: { delayChildren: 1 } } },
+            container: { visible: { transition: { delayChildren: 0.8 } } },
             item: {
               hidden: { opacity: 0, y: 20 },
               visible: {
                 opacity: 1,
                 y: 0,
-                transition: { type: "spring", bounce: 0.3, duration: 2 },
+                transition: { type: "spring", bounce: 0.3, duration: 1.8 },
               },
             },
           }}
@@ -58,7 +54,7 @@ export default function HeroSection() {
           <Image
             src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
             alt="background"
-            className="size-full object-cover opacity-80"
+            className="w-full h-full object-cover opacity-80"
             width={3276}
             height={4095}
             priority
@@ -70,17 +66,15 @@ export default function HeroSection() {
           className="absolute inset-0 -z-20 bg-[radial-gradient(125%_125%_at_50%_100%,transparent_0%,#000_80%)]"
         />
 
-        {/* Hero content */}
         <div className="relative mx-auto max-w-7xl px-6 pt-24 md:pt-36">
           <div className="text-center sm:mx-auto lg:mr-auto">
-            {/* Announcement pill */}
             <AnimatedGroup variants={transitionVariants}>
               <Link
-                href="#link"
+                href="#services"
                 className="group mx-auto flex w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
               >
                 <span className="text-white text-sm">
-                  Introducing Support for AI Models
+                  Modern Software Solutions
                 </span>
                 <span className="block h-4 w-0.5 bg-white/40"></span>
                 <div className="bg-zinc-800 group-hover:bg-zinc-700 size-6 overflow-hidden rounded-full duration-500">
@@ -96,37 +90,34 @@ export default function HeroSection() {
               </Link>
             </AnimatedGroup>
 
-            {/* Heading */}
             <TextEffect
               preset="fade-in-blur"
-              speedSegment={0.3}
+              speedSegment={0.25}
               as="h1"
               className="mx-auto mt-8 max-w-4xl text-balance text-5xl font-semibold text-white md:text-7xl lg:mt-16 xl:text-[5.25rem]"
             >
-              Modern Solutions for Customer Engagement
+              We Provide Modern Solutions
             </TextEffect>
 
-            {/* Subtext */}
             <TextEffect
               per="line"
               preset="fade-in-blur"
-              speedSegment={0.3}
-              delay={0.5}
+              speedSegment={0.25}
+              delay={0.4}
               as="p"
               className="mx-auto mt-8 max-w-2xl text-balance text-lg text-zinc-300"
             >
-              Highly customizable components for building modern websites and
-              applications that look and feel the way you mean it.
+              From concept to deployment — we build reliable, scalable, and
+              maintainable software that powers your business forward.
             </TextEffect>
 
-            {/* CTA Buttons */}
             <AnimatedGroup
               variants={{
                 container: {
                   visible: {
                     transition: {
-                      staggerChildren: 0.05,
-                      delayChildren: 0.75,
+                      staggerChildren: 0.04,
+                      delayChildren: 0.6,
                     },
                   },
                 },
@@ -143,8 +134,8 @@ export default function HeroSection() {
                   size="lg"
                   className="rounded-xl px-5 text-base bg-white text-black hover:bg-zinc-200"
                 >
-                  <Link href="#link">
-                    <span className="text-nowrap">Start Building</span>
+                  <Link href="#contact">
+                    <span className="whitespace-nowrap">Get Started</span>
                   </Link>
                 </Button>
               </div>
@@ -154,10 +145,10 @@ export default function HeroSection() {
                 asChild
                 size="lg"
                 variant="ghost"
-                className="h-10.5 rounded-xl px-5 text-white border border-white/20 hover:bg-zinc-800"
+                className="h-10.5 rounded-xl px-5 text-white border border-white/20 "
               >
-                <Link href="#link">
-                  <span className="text-nowrap">Request a demo</span>
+                <Link href="#portfolio">
+                  <span className="whitespace-nowrap">Our Work</span>
                 </Link>
               </Button>
             </AnimatedGroup>
@@ -165,12 +156,11 @@ export default function HeroSection() {
         </div>
       </section>
 
-      {/* Logo cloud below hero */}
       <AnimatedGroup
         variants={{
           container: {
             visible: {
-              transition: { staggerChildren: 0.05, delayChildren: 0.75 },
+              transition: { staggerChildren: 0.04, delayChildren: 0.6 },
             },
           },
           ...transitionVariants,

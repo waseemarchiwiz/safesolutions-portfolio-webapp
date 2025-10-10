@@ -4,6 +4,7 @@ import "@/app/styles/globals.css";
 import Footer from "./(common)/footer";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "./(common)/header";
+import ScrollToTop from "./(common)/scroll-to-top";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="relative">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -30,6 +31,8 @@ export default function RootLayout({
         </ThemeProvider>
         {/* Toast */}
         <Toaster richColors position="top-right" />
+        {/* Scroll to Top Button */}
+        <ScrollToTop />
       </body>
     </html>
   );

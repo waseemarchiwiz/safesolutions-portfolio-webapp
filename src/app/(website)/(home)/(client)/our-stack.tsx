@@ -1,24 +1,45 @@
-import { Button } from "@/components/ui/button";
-import {
-  Gemini,
-  GooglePaLM,
-  Replit,
-  MediaWiki,
-  MagicUI,
-  VSCodium,
-} from "@/components/logos";
 import Link from "next/link";
 import { ScanText } from "lucide-react";
+import StackIcon from "tech-stack-icons";
+import { Button } from "@/components/ui/button";
 import { InfiniteSlider } from "@/components/infinite-slider";
 
 export default function OurStack() {
-  const logos = [
-    <MediaWiki key="mediawiki" className="m-auto size-10 sm:size-12" />,
-    <MagicUI key="magicui" className="m-auto size-10 sm:size-12" />,
-    <VSCodium key="vscodium" className="m-auto size-10 sm:size-12" />,
-    <Gemini key="gemini" className="m-auto size-10 sm:size-12" />,
-    <GooglePaLM key="googlepalm" className="m-auto size-10 sm:size-12" />,
-    <Replit key="replit" className="m-auto size-10 sm:size-12" />,
+  const languages = [
+    <StackIcon name="php" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="laravel" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="python" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="js" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="jquery" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="react" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="nodejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="nextjs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="expressjs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="vuejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="django" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="alpinejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="csharp" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="c++" className="m-auto size-10 sm:size-12" />,
+  ];
+  const uiLibraries = [
+    <StackIcon name="html5" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="css3" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="tailwindcss" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="shadcnui" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="materialui" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="figma" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="headlessui" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="threejs" className="m-auto size-10 sm:size-12" />,
+  ];
+  const databaseAndServices = [
+    <StackIcon name="azure" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="microsoft" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="mongodb" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="postgresql" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="mysql" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="github" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="kubernetes" className="m-auto size-10 sm:size-12" />,
+    <StackIcon name="docker" className="m-auto size-10 sm:size-12" />,
   ];
 
   return (
@@ -44,9 +65,9 @@ export default function OurStack() {
         {/* Infinite sliders */}
         <div className="mt-16 space-y-10">
           {/* Row 1 */}
-          <InfiniteSlider speed={40} speedOnHover={20} gap={80}>
+          <InfiniteSlider speed={40} speedOnHover={20} gap={40}>
             <div className="flex items-center gap-6 sm:gap-10">
-              {logos.map((logo, i) => (
+              {languages.map((logo, i) => (
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"
@@ -58,9 +79,9 @@ export default function OurStack() {
           </InfiniteSlider>
 
           {/* Row 2 (reverse direction) */}
-          <InfiniteSlider speed={35} speedOnHover={20} gap={80} reverse>
+          <InfiniteSlider speed={35} speedOnHover={20} gap={40} reverse>
             <div className="flex items-center gap-6 sm:gap-10">
-              {logos.map((logo, i) => (
+              {uiLibraries.map((logo, i) => (
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"
@@ -72,9 +93,9 @@ export default function OurStack() {
           </InfiniteSlider>
 
           {/* Row 3 */}
-          <InfiniteSlider speed={30} speedOnHover={20} gap={80}>
+          <InfiniteSlider speed={30} speedOnHover={20} gap={40}>
             <div className="flex items-center gap-6 sm:gap-10">
-              {logos.map((logo, i) => (
+              {databaseAndServices.map((logo, i) => (
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"

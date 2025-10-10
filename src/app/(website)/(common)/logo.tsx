@@ -1,10 +1,9 @@
-import { LogoIcon } from "@/components/logo";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface CustomLogoProps {
-  color?: string; // text color (white or black typically)
+  color?: string;
 }
 
 const CustomLogo = ({ color = "black" }: CustomLogoProps) => {
