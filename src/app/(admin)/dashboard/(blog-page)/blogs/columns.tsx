@@ -23,6 +23,7 @@ export type BlogTypes = {
   content: string;
   createdAt: string;
   updatedAt: string;
+  img?: string;
   images: [
     {
       id: number;

@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Building2,
 } from "lucide-react";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import { iconsMap, ProjectTypes } from "../data";
 import Image from "next/image";
 
@@ -210,7 +209,6 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
             )}
           </div>
         </div>
-        <ScrollToTop />
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Briefcase, MapPin } from "lucide-react";
+import { Briefcase, MapPin, ScanText } from "lucide-react";
 import { motion } from "framer-motion";
 import PageHeroSection from "../../(common)/hero-section";
 import WhySafe from "./why-safe";
 import ApplyModal from "./application-dialog";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
@@ -44,28 +43,22 @@ const Careers = ({ careers, companies }: CareersProps) => {
   return (
     <div>
       {/* Hero Section */}
-      <PageHeroSection
-        mainTitle="Join Our Team"
-        topTitle="We Seek"
-        bottomTittle="Dreamers."
-        description="Learn who we are and why we excel in delivering innovative solutions that drive business growth and digital transformation."
-        buttonText="Get Started"
-      />
+      <PageHeroSection />
       <WhySafe />
-      <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
+      <div className="my-10 bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                Trending Oppurtunities
-              </span>
+          {/* Header Section */}
+          <div className="mb-8">
+            <div className="mb-3 flex items-center text-sm text-sky-600">
+              <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
+              <span className="font-semibold">Job openings</span>
             </div>
-
-            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto mt-4">
-              We promise you a dynamic and collaborative work environment where
-              innovation thrives, and every challenge becomes an opportunity to
-              grow and excel
+            <h2 className="text-4xl font-semibold text-slate-900">
+              Current Available <span className="text-sky-600">Positions</span>
+            </h2>
+            <p className="mt-3 max-w-2xl text-slate-600">
+              Great teams are built on shared goals and a sense of purpose. When
+              everyone is aligned with a clear mission.
             </p>
           </div>
 
@@ -87,7 +80,7 @@ const Careers = ({ careers, companies }: CareersProps) => {
               {careers?.map((job, index) => (
                 <div
                   key={index}
-                  className="bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
+                  className="mb-10 bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
                 >
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {job.title}
@@ -131,7 +124,6 @@ const Careers = ({ careers, companies }: CareersProps) => {
         companies={companies}
         onSave={handleSubmit}
       />
-      <ScrollToTop />
     </div>
   );
 };

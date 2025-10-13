@@ -93,7 +93,7 @@ export const Partners: PartnersTypes[] = [
   },
   {
     name: "Archiwiz Build",
-    logo: "/projectlogos/ArchiWizBuild_jpg.jpg",
+    logo: "/projectlogos/archiwizbuild.jpg",
     link: "https://archiwizbuild.com/",
   },
 ];

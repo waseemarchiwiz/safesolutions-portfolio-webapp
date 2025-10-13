@@ -84,7 +84,7 @@ const archiwizbuild = [
 ];
 
 const ArchiwizBuild = ({ data }: { data: ServicesTypes[] }) => (
-  <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
+  <div className=" bg-[#FFFFFF] dark:bg-black py-16">
     <div className="container mx-auto">
       <div className="grid md:grid-cols-3 gap-8">
         {data.map((service, index) => (
@@ -97,11 +97,6 @@ const ArchiwizBuild = ({ data }: { data: ServicesTypes[] }) => (
             link={service.link}
           />
         ))}
-      </div>
-      <div className="text-center mt-12">
-        <Link href={"/contact"}>
-          <Button>Get Started</Button>
-        </Link>
       </div>
     </div>
   </div>

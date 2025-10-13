@@ -125,14 +125,11 @@ export default function HeroSection() {
               }}
               className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
             >
-              <div
-                key={1}
-                className="rounded-[calc(var(--radius-xl)+0.125rem)] border border-white/20 p-0.5"
-              >
+              <div key={1} className=" p-0.5">
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-xl px-5 text-base bg-white text-black hover:bg-zinc-200"
+                  className="rounded-xl px-5 bg-sky-600 text-white hover:bg-sky-700"
                 >
                   <Link href="#contact">
                     <span className="whitespace-nowrap">Get Started</span>

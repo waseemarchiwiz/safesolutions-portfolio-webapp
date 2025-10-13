@@ -12,7 +12,7 @@ const WhySafe = () => {
       {/* Animated background overlay */}
 
       {/* Main content */}
-      <div className="relative min-h-[600px] container dark:bg-black    mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+      <div className="relative min-h-[600px] max-w-7xl dark:bg-black mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
         {/* Left side - Image */}
 
         {/* Right side - Content */}
@@ -22,7 +22,7 @@ const WhySafe = () => {
           }`}
         >
           <div className="space-y-6">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white ">
+            <h2 className="text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white ">
               Why Work With Safe Solution
             </h2>
 
@@ -43,7 +43,7 @@ const WhySafe = () => {
         </div>
 
         <div
-          className={`w-full lg:w-1/2 transform transition-all duration-1000 ${
+          className={` w-full lg:w-1/2 transform transition-all duration-1000 ${
             isVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-20 opacity-0"

@@ -17,9 +17,6 @@ export default function OurStack() {
     <StackIcon name="expressjs" className="m-auto size-10 sm:size-12" />,
     <StackIcon name="vuejs" className="m-auto size-10 sm:size-12" />,
     <StackIcon name="django" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="alpinejs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="csharp" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="c++" className="m-auto size-10 sm:size-12" />,
   ];
   const uiLibraries = [
     <StackIcon name="html5" className="m-auto size-10 sm:size-12" />,

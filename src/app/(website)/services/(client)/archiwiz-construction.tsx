@@ -127,7 +127,7 @@ const services = [
 ];
 
 const ArchiwizConstruction = ({ data }: { data: ServicesTypes[] }) => (
-  <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-16 px-4">
+  <div className="bg-[#FFFFFF] dark:bg-black py-16">
     <div className="container mx-auto">
       {/* <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
@@ -148,11 +148,6 @@ const ArchiwizConstruction = ({ data }: { data: ServicesTypes[] }) => (
             link={service.link} // Link to service details
           />
         ))}
-      </div>
-      <div className="text-center mt-12">
-        <Link href={"/contact"}>
-          <Button>Get Started</Button>
-        </Link>
       </div>
     </div>
   </div>

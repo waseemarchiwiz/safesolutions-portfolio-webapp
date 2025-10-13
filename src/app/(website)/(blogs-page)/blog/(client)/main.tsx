@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Loading from "../[slug]/loading";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import PageHeroSection from "../../../(common)/hero-section";
 import { BlogTypes } from "../../blogs/page";
 import Image from "next/image";
@@ -34,20 +33,15 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
   return (
     <>
       {/* Hero Section (Kept from previous implementation) */}
-      <PageHeroSection
-        mainTitle="Join Our Team"
-        topTitle=" Insights and Ideas to Elevate Your"
-        bottomTittle="Blogging Journey"
-        description="Join our team and be part of an inspiring journey. Explore opportunities to grow, learn, and make an impact."
-      />
+      <PageHeroSection />
 
-      <div className="w-full bg-white dark:bg-black py-16">
+      <div className="w-full bg-white dark:bg-black py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-5xl mx-auto"
+            className="max-w-7xl mx-auto lg:px-6"
           >
             {/* Image Carousel */}
             {images.length > 0 && (
@@ -127,7 +121,6 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
           </motion.div>
         </div>
       </div>
-      <ScrollToTop />
     </>
   );
 };

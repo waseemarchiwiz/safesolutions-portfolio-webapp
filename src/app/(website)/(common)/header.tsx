@@ -2,17 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import CustomLogo from "./logo";
+import { usePathname } from "next/navigation";
 
 const menuItems = [
-  { name: "Home", href: "#link" },
-  { name: "About", href: "#link" },
-  { name: "Services", href: "#link" },
-  { name: "Blogs", href: "#link" },
-  { name: "Careers", href: "#link" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Blogs", href: "/blogs" },
+  { name: "Careers", href: "/careers" },
 ];
 
 const Header = () => {
@@ -20,6 +21,8 @@ const Header = () => {
 
   // inside Header component
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 80);
@@ -38,7 +41,7 @@ const Header = () => {
       >
         <div
           className={cn(
-            "mx-auto mt-2 max-w-7xl px-6 transition-all duration-300 lg:px-12",
+            "mx-auto mt-2 max-w-7xl px-6 transition-all duration-300 lg:px-5",
             isScrolled &&
               "bg-background/70 max-w-[1235px] rounded-2xl border backdrop-blur-lg shadow-sm dark:shadow-none lg:px-5"
           )}
@@ -62,22 +65,37 @@ const Header = () => {
 
             {/* ---------- NAV LINKS ---------- */}
             <div className="absolute inset-0 m-auto hidden size-fit lg:block">
-              <ul className="flex gap-8 text-sm">
-                {menuItems.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "block duration-150",
-                        isScrolled
-                          ? "text-zinc-800 hover:text-sky-600 dark:text-white dark:hover:text-sky-400"
-                          : "text-zinc-100 hover:text-white"
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
+              <ul className="flex items-center gap-6 text-sm">
+                {menuItems.map((item) => {
+                  const active =
+                    pathname === item.href ||
+                    (item.href !== "/" && pathname?.startsWith(item.href));
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "relative block py-2 transition-colors",
+                          isScrolled
+                            ? "text-zinc-800 hover:text-sky-700 dark:text-zinc-200 dark:hover:text-sky-400"
+                            : "text-zinc-100 hover:text-white",
+                          active && "font-medium"
+                        )}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        <span>{item.name}</span>
+                        {/* Active underline */}
+                        <span
+                          className={cn(
+                            "absolute left-0 right-0 -bottom-0.5 mx-auto h-0.5 w-0 rounded-full transition-all",
+                            active ? "w-10 bg-current" : "w-0"
+                          )}
+                          aria-hidden
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -101,16 +119,19 @@ const Header = () => {
 
               {/* Login Button */}
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button
-                  asChild
-                  size="sm"
-                  variant={isScrolled ? "default" : "outline"}
-                  className="border-sky-600 hover:bg-sky-700  bg-sky-600 text-white transition-all"
-                >
-                  <Link href="#">
-                    <span>Contact Us</span>
-                  </Link>
-                </Button>
+                <Link href="/contact">
+                  <Button
+                    asChild
+                    size="sm"
+                    variant={isScrolled ? "default" : "outline"}
+                    className="border-sky-600 hover:bg-sky-700 bg-sky-600 text-white hover:text-white transition-all"
+                  >
+                    <span>
+                      Contact Us
+                      <ArrowRight />
+                    </span>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

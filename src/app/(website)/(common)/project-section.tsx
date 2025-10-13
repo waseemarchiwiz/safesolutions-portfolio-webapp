@@ -14,7 +14,7 @@ interface ProjectsComponentProps {
 
 const Projects = ({ background, projects }: ProjectsComponentProps) => {
   return (
-    <section className={cn(background, "py-24 bg-zinc-50")}>
+    <section className={cn(background, "py-24")}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="mb-8">

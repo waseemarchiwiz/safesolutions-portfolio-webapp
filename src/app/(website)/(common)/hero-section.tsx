@@ -1,140 +1,127 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import * as React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { MotionConfig, useReducedMotion, m } from "framer-motion";
+import { TextEffect } from "@/components/ui/text-effect";
+import { AnimatedGroup } from "@/components/ui/animated-group";
+import DotPattern from "@/components/ui/dot-pattern";
 
-interface HeroDataTypes {
-  mainTitle: string;
-  topTitle: string;
-  bottomTittle: string;
-  description: string;
-  buttonText?: string;
-}
+/**
+ * PageHeroSection
+ * - Theme: dark surface (pairs with transparent header at top)
+ * - Motion: subtle springs; respects prefers-reduced-motion
+ * - Layout: no top margin (header already reserves space)
+ * - Background: DotPattern + soft radial + hero image mask, matching home
+ */
 
-interface Decoration {
-  left: string;
-  top: string;
-  duration: number;
-  delay: number;
-}
+const transition = { type: "spring", bounce: 0.3, duration: 1.2 } as const;
 
-const PageHeroSection = ({
-  mainTitle = "",
-  topTitle = "",
-  bottomTittle = "",
-  description = "",
-  buttonText = "",
-}: HeroDataTypes) => {
-  const navigate = useRouter();
-  const [decorations, setDecorations] = useState<Decoration[]>([]);
-  const [mounted, setMounted] = useState(false);
+const variants = {
+  container: {
+    visible: { transition: { delayChildren: 0.6, staggerChildren: 0.04 } },
+  },
+  item: {
+    hidden: { opacity: 0, y: 12, filter: "blur(12px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition },
+  },
+} as const;
 
-  useEffect(() => {
-    setMounted(true);
-    const generated = Array.from({ length: 20 }, () => ({
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      duration: 5 + Math.random() * 5,
-      delay: Math.random() * 5,
-    }));
-    setDecorations(generated);
-  }, []);
+export default function PageHeroSection() {
+  const prefersReduced = useReducedMotion();
 
   return (
-    <div className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
-      {/* Animated grid background */}
-      <div
-        className="absolute inset-0 overflow-hidden hidden sm:block"
-        style={{
-          backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
-                     linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
-          backgroundSize: "50px 50px",
-          opacity: 0.2,
-        }}
-      />
-
-      {/* Glowing orbs */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-
-      <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-        {mounted && (
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            {decorations.map((p, i) => (
-              <div
-                key={i}
-                className="absolute w-px h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-                style={{
-                  left: p.left,
-                  top: p.top,
-                  opacity: 0.1,
-                  animation: `moveUpDown ${p.duration}s linear infinite`,
-                  animationDelay: `${p.delay}s`,
-                }}
-              />
-            ))}
+    <MotionConfig reducedMotion={prefersReduced ? "always" : "never"}>
+      <main className="py-5 overflow-hidden bg-black">
+        {/* Decorative grid / pattern */}
+        <DotPattern className="w-full h-[65vh] opacity-20" />
+        <section className="max-w-[77rem] mx-auto  relative text-white">
+          {/* Soft radial vignettes (desktop only for subtlety) */}
+          <div className="absolute inset-0 isolate opacity-65 hidden lg:block">
+            <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
+            <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
           </div>
-        )}
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-white/90">Welcome to Safe Solution</span>
-            </div>
+          {/* Radial shadow overlay to ground the text */}
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-20 bg-[radial-gradient(125%_125%_at_50%_100%,transparent_0%,#000_80%)]"
+          />
 
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                {topTitle || "Transforming Ideas"}{" "}
-                <span className="block py-3 mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  {bottomTittle || "Into Digital Reality"}
-                </span>
-              </h1>
+          {/* Content */}
+          <div className="my-10 relative mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
+            <div className="  ">
+              {/* Eyebrow pill */}
+              <AnimatedGroup variants={variants}>
+                <m.div variants={variants.item}>
+                  <Link
+                    href="#services"
+                    className="group flex w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
+                  >
+                    <span className="text-white text-sm">
+                      Modern Software Solutions
+                    </span>
+                    <span className="block h-4 w-0.5 bg-white/40" />
+                    <div className="bg-zinc-800 group-hover:bg-zinc-700 size-6 overflow-hidden rounded-full duration-500">
+                      <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
+                        <span className="flex size-6">
+                          <ArrowRight className="m-auto size-3 text-white" />
+                        </span>
+                        <span className="flex size-6">
+                          <ArrowRight className="m-auto size-3 text-white" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </m.div>
+              </AnimatedGroup>
 
-              <p className="text-xl text-white/80 max-w-xl">
-                {description ||
-                  "Learn who we are and why we excel in delivering innovative solutions that drive business growth and digital transformation."}
-              </p>
-            </div>
+              {/* Title */}
+              <TextEffect
+                preset="fade-in-blur"
+                speedSegment={0.25}
+                as="h1"
+                className="max-w-4xl text-5xl text-white md:text-7xl lg:mt-6 xl:text-7xl"
+              >
+                Transforming Ideas Into Digital Reality
+              </TextEffect>
 
-            <div className="flex flex-wrap gap-4">
-              {buttonText.length > 0 && (
-                <button
-                  className="relative group px-6 py-3 text-lg font-medium rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-white shadow-lg"
-                  onClick={() => navigate.push("/contact")}
+              {/* Subtitle */}
+              <TextEffect
+                per="line"
+                preset="fade-in-blur"
+                speedSegment={0.25}
+                delay={0.4}
+                as="p"
+                className=" mt-6 max-w-2xl text-balance text-lg text-zinc-300"
+              >
+                From concept to deployment — we build reliable, scalable, and
+                maintainable software that powers your business forward.
+              </TextEffect>
+
+              {/* Optional CTAs (kept minimal for subpages; uncomment if needed) */}
+              {/*
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  href="#contact"
+                  className="rounded-xl bg-white text-black hover:bg-zinc-200 px-5 py-2.5 text-base"
                 >
-                  {buttonText}
-                </button>
-              )}
+                  Get Started
+                </Link>
+                <Link
+                  href="#portfolio"
+                  className="h-10.5 rounded-xl px-5 text-white border border-white/20 inline-flex items-center justify-center"
+                >
+                  Our Work
+                </Link>
+              </div>
+              */}
             </div>
-          </motion.div>
-
-          {/* Right content placeholder (you can add 3D / graphics here) */}
-        </div>
-      </div>
-
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes moveUpDown {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(100px);
-          }
-        }
-      `}</style>
-    </div>
+          </div>
+        </section>
+      </main>
+    </MotionConfig>
   );
-};
-
-export default PageHeroSection;
+}

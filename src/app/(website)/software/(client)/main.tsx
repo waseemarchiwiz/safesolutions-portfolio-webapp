@@ -5,7 +5,6 @@ import { Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import { ServicesTypes } from "../../services/(client)";
 
 const SoftwareDetails = ({ serviceData }: { serviceData: ServicesTypes }) => {
@@ -150,8 +149,6 @@ const SoftwareDetails = ({ serviceData }: { serviceData: ServicesTypes }) => {
           </div>
         </div>
       </div>
-
-      <ScrollToTop />
     </>
   );
 };
