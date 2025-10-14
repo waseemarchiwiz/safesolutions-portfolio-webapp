@@ -5,8 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Loading from "../[slug]/loading";
 import PageHeroSection from "../../../(common)/hero-section";
-import { BlogTypes } from "../../blogs/page";
 import Image from "next/image";
+import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
+import { Badge } from "@/components/ui/badge";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay },
+  viewport: { once: true },
+});
 
 const Main = ({ blogData }: { blogData: BlogTypes }) => {
   // get images
@@ -33,7 +41,11 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
   return (
     <>
       {/* Hero Section (Kept from previous implementation) */}
-      <PageHeroSection />
+      <PageHeroSection
+        tag="Blog"
+        title={blogData.title}
+        description="Hear more about our stories and our achievements"
+      />
 
       <div className="w-full bg-white dark:bg-black py-20">
         <div className="container mx-auto px-4">
@@ -43,9 +55,12 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
             transition={{ duration: 0.8 }}
             className="max-w-7xl mx-auto lg:px-6"
           >
+            <Badge variant={"outline"} className="px-4  mb-3">
+              {blogData.slug}
+            </Badge>
             {/* Image Carousel */}
             {images.length > 0 && (
-              <div className="relative h-[500px] rounded-lg overflow-hidden   mb-12">
+              <div className=" shadow relative h-[500px] rounded-lg overflow-hidden   mb-12">
                 <AnimatePresence>
                   {images.map(
                     (slide, index) =>
@@ -62,7 +77,7 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
                           className="absolute w-full h-full"
                         >
                           <Image
-                            width={200}
+                            width={1000}
                             height={150}
                             src={slide.image as string}
                             alt={blogData.title as string}
@@ -108,14 +123,17 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
 
             {/* Blog Content */}
             <div className="prose dark:prose-invert max-w-none">
-              <h1 className="text-4xl font-bold mb-4">{blogData.title}</h1>
+              <h1 className="text-4xl font-semibold mb-4">{blogData.title}</h1>
               <h2 className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-                {blogData.shortDescription}
+                {blogData.description}
               </h2>
 
-              <div
-                className="text-lg leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: blogData.description }}
+              {/* Blog Content */}
+              <motion.section
+                {...fadeUp(0.2)}
+                id="section1"
+                className="prose prose-lg dark:prose-invert max-w-none leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: blogData.content }}
               />
             </div>
           </motion.div>

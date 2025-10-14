@@ -22,7 +22,7 @@ export default async function AboutPage() {
     // projects
     await prisma.project.findMany(),
     // blogs
-    await prisma.project.findMany(),
+    await prisma.blog.findMany(),
   ]);
 
   const teams = serializePrisma(teamsResult) || [];

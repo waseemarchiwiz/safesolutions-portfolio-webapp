@@ -1,6 +1,4 @@
 import ServiceCard from "./service.card";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ServicesTypes } from "./index";
 
 // const backofficeServices = [

@@ -56,10 +56,12 @@ const Services = ({ services }: { services: ServicesTypes[] }) => {
   const agriculture = services.filter((i) => i.tab === "Agriculture");
 
   return (
-    // Use a single container for the entire page content
     <>
-      <PageHeroSection />
-
+      <PageHeroSection
+        tag="Services"
+        title="Our services"
+        description="We offer best IT services from beginner to advance level"
+      />
       {/* Services Section Wrapper: Padding controlled here. */}
       <section className="bg-white dark:bg-black py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

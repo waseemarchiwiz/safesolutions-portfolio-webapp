@@ -27,7 +27,11 @@ const Main = ({ teams, projects, blogs }: AboutProps) => {
   return (
     <>
       {/* Hero Section */}
-      <PageHeroSection />
+      <PageHeroSection
+        tag="About"
+        title="Know about us"
+        description="This is a dedicated company providing best IT solutions"
+      />
       {/* Achievements Section */}
       <SectionWithReveal>
         <Achievements />

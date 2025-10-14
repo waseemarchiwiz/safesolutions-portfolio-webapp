@@ -26,8 +26,6 @@ import { toast } from "sonner";
 import { Send, Mail, User, MessageSquare, Building2 } from "lucide-react";
 import PageHeroSection from "../../(common)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
-import { apiClient } from "@/lib/api-config/client";
-import { AxiosError } from "axios";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { ContactUsAction } from "../(actions)/action";
 
@@ -73,9 +71,8 @@ const Main: React.FC<MainProps> = ({ companies }) => {
     <div className="bg-white dark:bg-gray-950 min-h-screen">
       {/* Hero Section */}
       <PageHeroSection
-        mainTitle="Contact us"
-        topTitle="We are always ready"
-        bottomTittle="to help you"
+        tag="Contact us"
+        title="Contact Us"
         description="Learn who we are and why we excel in delivering innovative solutions that drive business growth and digital transformation."
       />
 

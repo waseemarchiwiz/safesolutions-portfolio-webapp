@@ -226,7 +226,6 @@ export const Services = () => {
           <ServiceCard
             title="Web Application Development"
             description="Building robust, responsive web applications tailored to your business needs — using React, Next.js, Node.js and more."
-            link="#web"
           >
             <WebAppLogo className="w-10 h-10" />
           </ServiceCard>
@@ -234,7 +233,6 @@ export const Services = () => {
           <ServiceCard
             title="Mobile Application Development"
             description="Native & cross-platform mobile apps for iOS and Android. UI/UX focused, high performance, and enterprise ready."
-            link="#mobile"
           >
             <MobileAppLogo className="w-10 h-10" />
           </ServiceCard>
@@ -242,7 +240,6 @@ export const Services = () => {
           <ServiceCard
             title="Cloud & Infrastructure"
             description="Designing and maintaining scalable cloud architecture on AWS, Azure, or GCP — with security, monitoring & auto-scaling."
-            link="#cloud"
           >
             <CloudInfraLogo className="w-10 h-10" />
           </ServiceCard>
@@ -250,7 +247,6 @@ export const Services = () => {
           <ServiceCard
             title="API & System Integration"
             description="Connecting systems, implementing REST / GraphQL APIs, and ensuring smooth data flows between platforms and services."
-            link="#api"
           >
             <APIIntegrationLogo className="w-10 h-10" />
           </ServiceCard>
@@ -258,7 +254,6 @@ export const Services = () => {
           <ServiceCard
             title="DevOps & Automation"
             description="CI/CD pipelines, infrastructure as code, containerization, and monitoring — for faster releases and reliable operations."
-            link="#devops"
           >
             <DevOpsLogo className="w-10 h-10" />
           </ServiceCard>
@@ -266,7 +261,6 @@ export const Services = () => {
           <ServiceCard
             title="Maintenance & Support"
             description="Ongoing support, performance optimization, error fixing, updates, and enhancements to keep your software running smoothly."
-            link="#support"
           >
             <MaintenanceLogo className="w-10 h-10" />
           </ServiceCard>
@@ -282,11 +276,11 @@ interface ServiceCardProps {
   children: React.ReactNode;
   link?: string;
 }
-const ServiceCard = ({
+export const ServiceCard = ({
   title,
   description,
   children,
-  link = "#",
+  link = "/services",
 }: ServiceCardProps) => {
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow">

@@ -11,7 +11,11 @@ const MainBlogs = ({ blogs }: { blogs: BlogPostTypes[] }) => {
 
   return (
     <>
-      <PageHeroSection />
+      <PageHeroSection
+        tag="Blogs"
+        title="Our Stories"
+        description="Know more about this company achievements and stories"
+      />
       <Blogs blogs={blogs} />
     </>
   );

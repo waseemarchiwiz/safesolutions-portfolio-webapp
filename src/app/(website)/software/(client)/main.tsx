@@ -1,154 +1,135 @@
 "use client";
 
 import React from "react";
-import { Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { ArrowRight, CheckCircle2, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import PageHeroSection from "../../(common)/hero-section";
 import { ServicesTypes } from "../../services/(client)";
 
-const SoftwareDetails = ({ serviceData }: { serviceData: ServicesTypes }) => {
-  // icon
-  // const Icon = iconsMap[serviceData?.icon];
-  console.log("sserviceData--", serviceData);
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, delay },
+  viewport: { once: true },
+});
 
+const SoftwareDetails = ({ serviceData }: { serviceData: ServicesTypes }) => {
   return (
     <>
-      {/* Hero Section (Kept from previous implementation) */}
-      <div className="min-h-[85vh] flex items-center py-14 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
-        <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-white/90">Software Development</span>
-              </div>
+      {/* HERO */}
+      <PageHeroSection
+        tag="Software Engineering"
+        title={serviceData?.title || "Software Solutions"}
+        description={
+          serviceData?.overview ||
+          "We build reliable, scalable, and maintainable software tailored for your business goals."
+        }
+      />
 
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                  <span className="text-white">{serviceData?.title} </span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                    Services
-                  </span>
-                </h1>
-
-                <p className="text-xl text-white/80 max-w-xl">
-                  {serviceData?.description}
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Optional: Add service icon or illustration */}
-            <div className="hidden lg:flex justify-center items-center">
-              {/* <Icon
-                className="w-64 h-64 text-white/20 opacity-30"
-                strokeWidth={1}
-              /> */}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Detailed Service Information */}
-      <div className=" bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-5xl mx-auto">
-          {/* Overview Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+      {/* MAIN CONTENT */}
+      <section className="bg-white dark:bg-black py-20">
+        <div className="container mx-auto px-6 max-w-5xl space-y-20">
+          {/* OVERVIEW */}
+          <motion.div {...fadeUp(0.1)} className="space-y-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white">
               Service Overview
             </h2>
-            <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                {serviceData?.overview}
-              </p>
-            </div>
-          </section>
+            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              {serviceData?.overview ||
+                "Our software development process focuses on delivering clean code, intuitive design, and robust scalability — from MVPs to enterprise systems."}
+            </p>
+          </motion.div>
 
-          {/* Features Grid */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+          {/* FEATURES */}
+          <motion.div {...fadeUp(0.2)}>
+            <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6 text-center">
               Key Features
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {serviceData?.features.map((feature, index) => (
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {serviceData?.features?.map((feature, i) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-6 flex items-center"
+                  key={i}
+                  {...fadeUp(i * 0.1)}
+                  className="rounded-xl border border-border/40 bg-card/60 p-6 shadow-sm hover:shadow-md transition-all"
                 >
-                  <Check className="w-6 h-6 text-green-500 mr-4 flex-shrink-0" />
-                  <span className="text-gray-800 dark:text-white text-lg">
-                    {feature}
-                  </span>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle2 className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">
+                      {feature}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
-          </section>
+          </motion.div>
 
-          {/* Technologies Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+          {/* TECHNOLOGIES */}
+          <motion.div {...fadeUp(0.3)} className="space-y-6">
+            <h3 className="text-2xl font-semibold text-center text-slate-900 dark:text-white">
               Technologies We Use
-            </h2>
-            <div className="bg-[#FFFFFF] dark:bg-black rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 p-8">
-              <div className="flex flex-wrap gap-4">
-                {serviceData?.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-50 dark:bg-gray-700 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium"
+            </h3>
+            <Card className="border-border/40 bg-card/60 backdrop-blur-sm">
+              <CardContent className="p-8 flex flex-wrap justify-center gap-4">
+                {serviceData?.technologies?.map((tech, i) => (
+                  <motion.span
+                    key={i}
+                    {...fadeUp(i * 0.05)}
+                    className="px-5 py-2 text-sm rounded-full font-medium bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300"
                   >
                     {tech}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
-            </div>
-          </section>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          {/* Use Cases or Industries Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
-              {serviceData?.useCases ? "Use Cases" : "Industries Served"}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
+          {/* USE CASES / INDUSTRIES */}
+          <motion.div {...fadeUp(0.4)} className="space-y-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">
+                {serviceData?.useCases?.length
+                  ? "Use Cases"
+                  : "Industries Served"}
+              </h3>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-6">
               {(serviceData?.useCases || serviceData?.industries)?.map(
-                (item, index) => (
+                (item, i) => (
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-[#FFFFFF] dark:bg-black rounded-lg p-6 border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300 flex items-center"
+                    key={i}
+                    {...fadeUp(i * 0.1)}
+                    className="rounded-xl border border-border/40 bg-card/60 p-6 flex items-center gap-3 hover:bg-muted/50 transition-all"
                   >
-                    <ArrowRight className="w-5 h-5 text-blue-500 mr-4 flex-shrink-0" />
-                    <span className="text-gray-800 dark:text-white text-lg">
+                    <Layers className="text-sky-500 w-5 h-5 flex-shrink-0" />
+                    <span className="text-slate-700 dark:text-slate-200 text-base">
                       {item}
                     </span>
                   </motion.div>
                 )
               )}
             </div>
-          </section>
+          </motion.div>
 
-          {/* Call to Action */}
-          <div className="text-center">
+          {/* CTA */}
+          <motion.div
+            {...fadeUp(0.5)}
+            className="flex justify-center pt-6 border-t border-border/30"
+          >
             <Link href="/contact">
               <Button
-                variant="outline"
-                className="bg-indigo-500 px-20 py-5 text-white hover:bg-indigo-400 hover:text-white"
+                size="lg"
+                className="bg-sky-600 hover:bg-sky-700 text-white px-8"
               >
-                Discuss your project
-                <ArrowRight className="ml-3 -mr-1 h-5 w-5" />
+                Discuss Your Project
+                <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
     </>
   );
 };
