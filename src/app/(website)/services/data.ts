@@ -1,178 +1,257 @@
-import {
-  Rocket,
-  CodeIcon,
-  PaletteIcon,
-  ShieldCheckIcon,
-  DatabaseIcon,
-  ServerIcon,
-} from "lucide-react";
-
-export const iconsMap = {
-  Rocket,
-  CodeIcon,
-  PaletteIcon,
-  ShieldCheckIcon,
-  DatabaseIcon,
-  ServerIcon,
-};
-
-export interface SoftwareTypes {
-  id: number;
-  icon: keyof typeof iconsMap; // Reference to the icon component
-  title: string;
-  description: string;
-  features: string[];
-  details: {
-    overview: string;
-    technologies: string[];
-    industriesServed: string[];
-    useCases?: string[];
-  };
-}
-
-export const softwareData: SoftwareTypes[] = [
+export const servicesData = [
   {
     id: 1,
-    icon: "CodeIcon", // Reference to the icon component
-    title: "Web Development",
+    title: "Web Application Development",
     description:
-      "Custom web solutions tailored to your business needs, using modern technologies and responsive design.",
+      "We craft fast, secure, and scalable web applications tailored to your business — using React, Next.js, and Node.js.",
+    image:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
+
+    overview: {
+      summary:
+        "Our web development services deliver robust, scalable, and high-performing solutions customized to meet your unique business needs.",
+      goals: [
+        "Create responsive, SEO-friendly, and high-performance websites.",
+        "Build scalable architectures using modern frameworks.",
+        "Ensure optimal security and long-term maintainability.",
+      ],
+    },
+
     features: [
-      "Full-stack Development",
-      "Responsive Design",
-      "Performance Optimization",
-      "SEO-friendly Websites",
-      "E-commerce Platforms",
+      "Custom full-stack development",
+      "API integration and backend systems",
+      "Performance optimization and analytics setup",
+      "Responsive UI and accessibility compliance",
     ],
+
+    technologies: ["Next.js", "React", "Node.js", "PostgreSQL", "Tailwind CSS"],
+
     details: {
-      overview:
-        "We specialize in building modern, scalable, and user-friendly websites that help your business grow. Whether it's a simple landing page or a complex web application, we ensure top-notch quality.",
-      technologies: ["React", "Next.js", "Node.js", "MongoDB", "GraphQL"],
-      industriesServed: ["E-commerce", "Healthcare", "Education", "Startups"],
+      type: "Full-stack web development",
+      deployment: "Azure / Vercel",
+      framework: "Next.js (App Router)",
+      database: "PostgreSQL",
+      versionControl: "Git & GitHub Actions",
+    },
+
+    support: {
+      plan: "6 months free maintenance",
+      description:
+        "Includes bug fixes, minor feature updates, and security patching after project delivery.",
+      contact: "support@safesolutions.com",
     },
   },
+
   {
     id: 2,
-    icon: "PaletteIcon",
-    title: "Artificial Intelligence",
+    title: "Mobile App Development",
     description:
-      "Harness the power of AI to automate processes, gain insights, and drive innovation in your business.",
-    features: [
-      "Machine Learning Models",
-      "Natural Language Processing",
-      "Predictive Analytics",
-      "Computer Vision",
-      "Custom AI Solutions",
-    ],
-    details: {
-      overview:
-        "We develop AI-driven solutions that empower your business to make data-driven decisions, automate repetitive tasks, and create personalized user experiences.",
-      technologies: ["TensorFlow", "PyTorch", "OpenAI", "AWS SageMaker"],
-      useCases: [
-        "Chatbots and Virtual Assistants",
-        "Fraud Detection",
-        "Customer Segmentation",
-        "Image Recognition",
+      "Beautiful, high-performance apps for iOS and Android. Focused on UX, reliability, and speed.",
+    image:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80",
+
+    overview: {
+      summary:
+        "We design and build powerful cross-platform and native mobile apps that combine aesthetics with functionality.",
+      goals: [
+        "Deliver seamless cross-platform mobile experiences.",
+        "Optimize performance for low-latency user interactions.",
+        "Integrate analytics and push notifications.",
       ],
-      industriesServed: [],
+    },
+
+    features: [
+      "React Native & Expo-based apps",
+      "Offline storage & synchronization",
+      "Real-time API integration",
+      "Custom animations and micro-interactions",
+    ],
+
+    technologies: ["React Native", "Expo", "Firebase", "Redux", "TypeScript"],
+
+    details: {
+      type: "Cross-platform mobile app",
+      deployment: "App Store & Google Play",
+      framework: "React Native",
+      apiIntegration: "REST / GraphQL",
+    },
+
+    support: {
+      plan: "App monitoring & version updates",
+      description:
+        "Includes SDK upgrades, bug fixes, and periodic performance improvements.",
+      contact: "support@safesolutions.com",
     },
   },
+
   {
     id: 3,
-    icon: "Rocket",
-    title: "Game Development",
+    title: "Cloud & Infrastructure",
     description:
-      "End-to-end game development services to create immersive and engaging gaming experiences.",
+      "We design secure, scalable, and automated cloud solutions on Azure, AWS, and GCP.",
+    image:
+      "https://images.unsplash.com/photo-1591696205602-2f950c417cb9?auto=format&fit=crop&w=1200&q=80",
+
+    overview: {
+      summary:
+        "Our cloud solutions are designed for scalability, reliability, and security — ensuring optimal uptime and performance.",
+      goals: [
+        "Enable automated scaling for high-demand environments.",
+        "Ensure infrastructure security and compliance.",
+        "Leverage cost-optimized cloud deployments.",
+      ],
+    },
+
     features: [
-      "2D/3D Game Design",
-      "Cross-platform Development",
-      "Multiplayer Integration",
-      "UI/UX for Games",
-      "AR/VR Game Experiences",
+      "Azure / AWS / GCP setup & migration",
+      "Container orchestration with Kubernetes",
+      "Load balancing & CDN configuration",
+      "Cloud monitoring and security audits",
     ],
+
+    technologies: ["Azure", "AWS", "Docker", "Kubernetes", "Terraform"],
+
     details: {
-      overview:
-        "From concept to deployment, we bring your game ideas to life with state-of-the-art technology and stunning visuals, ensuring an engaging experience for your audience.",
-      technologies: ["Unity", "Unreal Engine", "Blender"],
-      useCases: ["Action", "Adventure", "Simulation", "Educational Gamess"],
-      industriesServed: [],
+      type: "Cloud architecture & DevOps",
+      deployment: "CI/CD pipelines",
+      monitoring: "Grafana, Prometheus",
+      storage: "Azure Blob, S3 Buckets",
+    },
+
+    support: {
+      plan: "24/7 monitoring",
+      description:
+        "Continuous health checks and cost optimization recommendations.",
+      contact: "cloud@safesolutions.com",
     },
   },
+
   {
     id: 4,
-    icon: "ShieldCheckIcon",
-    title: "App Development",
+    title: "API & Integration",
     description:
-      "Build secure, scalable, and feature-rich mobile applications tailored to your needs.",
+      "Seamlessly connect your systems and automate workflows using REST, GraphQL, and microservices.",
+    image:
+      "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=1200&q=80",
+
+    overview: {
+      summary:
+        "We specialize in creating and integrating APIs that power complex systems and automate business operations.",
+      goals: [
+        "Unify disparate systems via custom APIs.",
+        "Ensure data consistency and transactional reliability.",
+        "Build scalable microservice architectures.",
+      ],
+    },
+
     features: [
-      "iOS and Android Development",
-      "Cross-platform Apps",
-      "UI/UX for Mobile Apps",
-      "App Security Features",
-      "Push Notifications",
+      "RESTful & GraphQL API design",
+      "OAuth2 / JWT authentication",
+      "Third-party service integration",
+      "Webhooks and background jobs",
     ],
+
+    technologies: [
+      "Node.js",
+      "Express",
+      "GraphQL",
+      "Postman",
+      "Azure Functions",
+    ],
+
     details: {
-      overview:
-        "Our app development services include native and cross-platform solutions that deliver seamless performance and intuitive interfaces.",
-      technologies: ["Flutter", "React Native", "Swift", "Kotlin", "Firebase"],
-      industriesServed: ["Healthcare", "Finance", "Logistics", "Retail"],
+      type: "API development & integration",
+      deployment: "Azure App Services",
+      security: "JWT / OAuth2.0",
+      documentation: "OpenAPI / Swagger",
+    },
+
+    support: {
+      plan: "API monitoring & logging",
+      description:
+        "Includes API usage reports, uptime tracking, and log-based alerts.",
+      contact: "api@safesolutions.com",
     },
   },
+
   {
     id: 5,
-    icon: "DatabaseIcon",
-    title: "Cloud Solutions",
+    title: "DevOps & Automation",
     description:
-      "Scalable and secure cloud infrastructure to streamline your business operations.",
-    features: [
-      "Cloud Migration",
-      "Serverless Computing",
-      "Data Backups",
-      "Disaster Recovery",
-      "Cloud Security",
-    ],
-    details: {
-      overview:
-        "Leverage the power of the cloud to reduce costs, enhance scalability, and improve business continuity.",
-      technologies: ["AWS", "Google Cloud", "Azure", "DigitalOcean"],
-      industriesServed: [
-        "Cloud Architecture Design",
-        "Hybrid Cloud Solutions",
-        "Database Management",
-        "DevOps in the Cloud",
+      "We build CI/CD pipelines and containerized environments to automate deployments and scaling.",
+    image:
+      "https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?auto=format&fit=crop&w=1200&q=80",
+
+    overview: {
+      summary:
+        "Our DevOps services streamline development, automate testing, and accelerate releases with zero downtime.",
+      goals: [
+        "Implement automated CI/CD pipelines.",
+        "Ensure continuous testing & deployment.",
+        "Enable infrastructure as code.",
       ],
     },
+
+    features: [
+      "Jenkins, GitHub Actions & Azure Pipelines",
+      "Dockerized environments",
+      "Infrastructure as Code (Terraform)",
+      "Centralized logging and monitoring",
+    ],
+
+    technologies: ["Docker", "Terraform", "Kubernetes", "Azure DevOps"],
+
+    details: {
+      type: "DevOps implementation",
+      pipeline: "GitHub Actions / Jenkins",
+      monitoring: "Azure Monitor",
+    },
+
+    support: {
+      plan: "Proactive monitoring",
+      description:
+        "Includes log management, security scans, and auto-healing scripts.",
+      contact: "devops@safesolutions.com",
+    },
   },
+
   {
     id: 6,
-    icon: "ServerIcon",
-    title: "DevOps Services",
+    title: "Maintenance & Support",
     description:
-      "Accelerate your software development lifecycle with continuous integration and delivery solutions.",
+      "Continuous monitoring, updates, and performance tuning to keep your systems stable and efficient.",
+    image:
+      "https://images.unsplash.com/photo-1593642634443-44adaa06623a?auto=format&fit=crop&w=1200&q=80",
+    overview: {
+      summary:
+        "We ensure your software runs smoothly post-deployment through continuous monitoring and iterative improvements.",
+      goals: [
+        "Reduce downtime through preventive maintenance.",
+        "Ensure security compliance and data protection.",
+        "Enhance performance with regular optimizations.",
+      ],
+    },
+
     features: [
-      "CI/CD Pipeline Setup",
-      "Infrastructure Automation",
-      "Monitoring and Logging",
-      "Configuration Management",
-      "Containerization (Docker/Kubernetes)",
+      "Error tracking and patch management",
+      "Performance audits and optimization",
+      "Security updates and penetration testing",
+      "User support and training sessions",
     ],
+
+    technologies: ["Sentry", "New Relic", "Azure Monitor", "Postman"],
+
     details: {
-      overview:
-        "Our DevOps services ensure smooth collaboration between development and operations, enabling faster and more reliable software delivery.",
-      technologies: [
-        "Jenkins",
-        "GitHub Actions",
-        "Terraform",
-        "Ansible",
-        "Kubernetes",
-        "Docker",
-      ],
-      industriesServed: [
-        "Reduced Time to Market",
-        "Improved Code Quality",
-        "Streamlined Deployment",
-        "Enhanced Scalability",
-      ],
+      type: "Ongoing maintenance",
+      reporting: "Monthly performance reports",
+      updates: "Quarterly version updates",
+    },
+
+    support: {
+      plan: "Dedicated 24/7 support",
+      description:
+        "Includes ticket-based issue tracking, SLA adherence, and proactive health checks.",
+      contact: "support@safesolutions.com",
     },
   },
 ];

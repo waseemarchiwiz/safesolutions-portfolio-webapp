@@ -123,7 +123,7 @@ export default function HeroSection() {
                 },
                 ...transitionVariants,
               }}
-              className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
+              className="mt-12 flex items-center justify-center gap-2 md:flex-row"
             >
               <div key={1} className=" p-0.5">
                 <Button

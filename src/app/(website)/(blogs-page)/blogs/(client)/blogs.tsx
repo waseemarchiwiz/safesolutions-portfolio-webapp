@@ -25,29 +25,19 @@ const Blogs = ({ blogs }: { blogs: BlogPostTypes[] }) => {
   console.log("blogss- inside compoentn--", blogs);
 
   return (
-    <section className="py-30">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-16 lg:px-7">
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full">
           <div>
-            <div className="mb-3 flex items-center text-sm text-sky-600">
-              <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
-              <span className="font-semibold">Blogs</span>
-            </div>
-            <h2 className="text-4xl font-semibold text-slate-900">
+            <h2 className="text-4xl text-center font-semibold text-slate-900">
               Blog <span className="text-sky-600">Posts</span>
             </h2>
-            <p className="mt-3 max-w-2xl text-slate-600">
+            <p className="mt-3 text-center mx-auto max-w-2xl text-slate-600">
               Discover the latest trends, tips, and best practices in modern web
               development. From UI components to design systems, stay updated
               with our expert insights.
             </p>
           </div>
-          <Button variant="link" className="w-full sm:w-auto" asChild>
-            <Link href="/blogs">
-              View all
-              <ArrowRight className="ml-2 size-4" />
-            </Link>
-          </Button>
         </div>
         <div className="w-full">
           <div className="w-full grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
@@ -93,6 +83,16 @@ const Blogs = ({ blogs }: { blogs: BlogPostTypes[] }) => {
             ))}
           </div>
         </div>
+        <Button
+          variant="outline"
+          className="bg-sky-600 text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+          asChild
+        >
+          <Link href="/blogs">
+            View all
+            <ArrowRight className="ml-2 size-4" />
+          </Link>
+        </Button>
       </div>
     </section>
   );

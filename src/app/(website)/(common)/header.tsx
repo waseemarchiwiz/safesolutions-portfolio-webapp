@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import CustomLogo from "./logo";
 import { usePathname } from "next/navigation";
+import MobileNavDrawer from "./drawer";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -100,43 +101,26 @@ const Header = () => {
             </div>
 
             {/* ---------- RIGHT SIDE BUTTONS ---------- */}
-            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-              {/* Mobile Nav */}
-              <div className="lg:hidden">
-                <ul className="space-y-6 text-base">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Login Button */}
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Link href="/contact">
-                  <Button
-                    asChild
-                    size="sm"
-                    variant={isScrolled ? "default" : "outline"}
-                    className="border-sky-600 hover:bg-sky-700 bg-sky-600 text-white hover:text-white transition-all"
-                  >
-                    <span>
-                      Contact Us
-                      <ArrowRight />
-                    </span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <Link href="/blogs" className="hidden lg:block">
+              <Button
+                variant="outline"
+                className="bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+                asChild
+              >
+                <span>
+                  Contact Us
+                  <ArrowRight className=" size-4" />
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </nav>
+      <MobileNavDrawer
+        isOpen={menuState}
+        onOpenChange={() => setMenuState((prev) => !prev)}
+        direction="right"
+      />
     </header>
   );
 };

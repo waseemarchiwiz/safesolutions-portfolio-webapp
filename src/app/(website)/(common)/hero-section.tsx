@@ -53,8 +53,8 @@ export default function PageHeroSection({
           />
 
           {/* Content */}
-          <div className="my-10 relative mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
-            <div className="  ">
+          <div className="my-10 relative px-4 mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
+            <div className=" ">
               {/* Eyebrow pill */}
               <AnimatedGroup variants={variants}>
                 <m.div variants={variants.item}>
@@ -83,7 +83,7 @@ export default function PageHeroSection({
                 preset="fade-in-blur"
                 speedSegment={0.25}
                 as="h1"
-                className="max-w-4xl text-5xl text-white md:text-7xl lg:mt-6 xl:text-7xl"
+                className="max-w-4xl text-5xl text-white md:text-7xl mt-6 xl:text-7xl"
               >
                 {title}
               </TextEffect>

@@ -45,7 +45,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
 
   return (
     <div className=" dark:bg-black py-24">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-2">
         <motion.div
           className="px-4 "
           initial="hidden"

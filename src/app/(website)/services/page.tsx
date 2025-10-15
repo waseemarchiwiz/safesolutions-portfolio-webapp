@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import Main from "./(client)";
 import { serializePrisma } from "@/lib/utils";
+import { Services } from "./(client)";
 
 export default async function ServicesPage() {
   // result
@@ -10,5 +10,5 @@ export default async function ServicesPage() {
   console.log("services:---", services);
 
   // main
-  return <Main services={services} />;
+  return <Services view={false} />;
 }

@@ -57,6 +57,8 @@ export interface ProjectTypes {
   services: ServiceTypes[];
   projectDetails: ProjectDetailTypes[];
   supports: SupportTypes[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface columnsProps {

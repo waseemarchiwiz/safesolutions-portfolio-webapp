@@ -102,22 +102,6 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
-                  name="tab"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tab *</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="e.g. Software Development"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
                   name="title"
                   render={({ field }) => (
                     <FormItem>
@@ -144,33 +128,6 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="icon"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Icon</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value || ""}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select an icon" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {Object.keys(iconsMap).map((icon) => (
-                              <SelectItem key={icon} value={icon}>
-                                {icon}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <FormField
                   control={form.control}
                   name="description"

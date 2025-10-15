@@ -24,10 +24,7 @@ const CustomLogo = ({ color = "black" }: CustomLogoProps) => {
         width={70}
       />
       {/* <LogoIcon className="" /> */}
-      <span
-        style={{ color }}
-        className="hidden font-semibold sm:inline-block text-md"
-      >
+      <span style={{ color }} className="font-semibold sm:inline-block text-md">
         Safe <span className={accentColor}>Solution</span>
       </span>
     </Link>

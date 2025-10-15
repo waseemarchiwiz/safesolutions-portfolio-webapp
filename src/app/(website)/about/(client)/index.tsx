@@ -9,9 +9,9 @@ import Achievements from "./achievements";
 import { TeamTypes } from "../page";
 import { Banner } from "./banner";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
-import { Services } from "../../(home)/(client)/services";
 import SectionWithReveal from "../../(common)/fold";
 import Blogs, { BlogPostTypes } from "../../(blogs-page)/blogs/(client)/blogs";
+import PartnersSection from "./partners";
 
 interface AboutProps {
   teams: TeamTypes[];
@@ -41,9 +41,10 @@ const Main = ({ teams, projects, blogs }: AboutProps) => {
         <About />
       </SectionWithReveal>
       {/* Services */}
-      <SectionWithReveal className="bg-zinc-100">
-        <Services />
+      <SectionWithReveal className="px-5 bg-zinc-100 py-16">
+        <PartnersSection />
       </SectionWithReveal>
+
       {/* Projects Section */}
       <SectionWithReveal>
         <Projects projects={projects} />
@@ -53,7 +54,7 @@ const Main = ({ teams, projects, blogs }: AboutProps) => {
         <Teams teams={teams} />
       </SectionWithReveal>
       {/* blogs Section */}
-      <SectionWithReveal>
+      <SectionWithReveal className="px-5">
         <Blogs blogs={blogs} />
       </SectionWithReveal>
       {/* Banner Section */}
