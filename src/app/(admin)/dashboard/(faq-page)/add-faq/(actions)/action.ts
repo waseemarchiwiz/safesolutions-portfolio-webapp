@@ -12,7 +12,7 @@ import { FaqFormValues, FaqSchema } from "../(validation)/validation";
 export async function AddFAQsAction(
   values: FaqFormValues
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null; // track uploaded file path
+  const uploadedFilePath: string | null = null; // track uploaded file path
 
   try {
     const validation = FaqSchema.safeParse(values);

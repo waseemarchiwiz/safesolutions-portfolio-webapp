@@ -6,17 +6,14 @@ import WhyChoose from "./why-choose";
 import About from "./about";
 import Projects from "../../(common)/project-section";
 import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
-import {
-  ProjectTypes,
-  ServiceTypes,
-} from "@/app/(admin)/dashboard/(project-page)/projects/columns";
+import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { TestimonialTypes } from "@/app/(admin)/dashboard/(testimonial-page)/testimonials/columns";
 import Testimonials from "./testimonials";
 import OurStack from "./our-stack";
 import Faqs from "./faq";
 import SectionWithReveal from "../../(common)/fold";
-import { Services } from "../../services/(client)";
-// import { ServicesSection } from "./services";
+import { Services } from "../../(service-page)/services/(client)";
+import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
 
 interface MainPropTypes {
   faqs: FaqTypes[];
@@ -38,7 +35,7 @@ const Main = ({ faqs, projects, testimonials, services }: MainPropTypes) => (
     </SectionWithReveal>
 
     <SectionWithReveal>
-      <Services view={true} />
+      <Services services={services} view={true} />
     </SectionWithReveal>
 
     <SectionWithReveal className="bg-zinc-100">

@@ -16,17 +16,14 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import Image from "next/image";
-import { apiClient } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { Textarea } from "@/components/ui/textarea";
 import {
   TestimonialsFormValues,
   TestimonialsSchema,
 } from "../(validation)/validation";
-import { AddTeamAction } from "../../../(team-page)/add-team/(actions)/action";
 import { AddTestimonialsAction } from "../(actions)/action";
 
 export default function AddTestimonialForm() {

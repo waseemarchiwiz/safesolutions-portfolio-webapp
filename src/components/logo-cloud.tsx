@@ -1,7 +1,23 @@
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import Image from "next/image";
 
 export default function LogoCloud() {
+  // companies logos
+  const Logos = [
+    {
+      title: "Alpha Build",
+      image: "/projectlogos/alpha-removebg-preview.png",
+    },
+    {
+      title: "Archiwiz",
+      image: "/projectlogos/archiwiz.webp",
+    },
+    {
+      title: "Lumsden Trading",
+      image: "/projectlogos/lumsden.webp",
+    },
+  ];
   return (
     <section className=" text-white overflow-hidden py-12 relative">
       <div className="group relative m-auto max-w-7xl px-6">
@@ -9,33 +25,18 @@ export default function LogoCloud() {
           <div className="relative py-6 md:w-[calc(100%-11rem)]">
             {/* Infinite sliding logos */}
             <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
-              <div className="flex">
-                <img
-                  className="mx-auto h-10 w-fit"
-                  src="/projectlogos/alpha-removebg-preview.png"
-                  alt="Nvidia Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-10 w-fit"
-                  src="/projectlogos/archiwiz.webp"
-                  alt="Column Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-10 w-fit"
-                  src="/projectlogos/lumsden.webp"
-                  alt="GitHub Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
+              {Logos.map((item) => (
+                <div className="flex" key={item.title}>
+                  <Image
+                    className="mx-auto h-10 w-fit"
+                    src={item.image}
+                    alt={item.title}
+                    height={30}
+                    width={30}
+                  />
+                </div>
+              ))}
+
               {/* <div className="flex">
                 <img
                   className="mx-auto h-5 w-fit"

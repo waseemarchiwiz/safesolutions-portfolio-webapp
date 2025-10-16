@@ -149,7 +149,7 @@ export const blogPosts = [
   // },
 ];
 
-export const getProjectByBlog = (id) => {
+export const getProjectByBlog = (id: number) => {
   return blogPosts.find((blog) => blog.id === id);
 };
 

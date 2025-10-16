@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { DataTable, LinkTypes } from "@/components/data-table";
-import { useRouter } from "next/navigation";
 import { FaqTypes, getColumns } from "../columns";
 import { toast } from "sonner";
 import FaqDialog from "./faq.dialog";
@@ -20,7 +19,6 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<FaqTypes | null>(null);
   const [action, setAction] = useState<string>("");
-  const router = useRouter();
 
   // handle edit
   const handleEdit = (team: FaqTypes) => {

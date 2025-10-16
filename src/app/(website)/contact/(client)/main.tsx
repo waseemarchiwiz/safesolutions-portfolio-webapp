@@ -85,8 +85,8 @@ const Main: React.FC<MainProps> = ({ companies }) => {
               Get in Touch
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Ready to start your next project? Send us a message and we'll get
-              back to you as soon as possible.
+              Ready to start your next project? Send us a message and we&apos;ll
+              get back to you as soon as possible.
             </p>
           </div>
 
@@ -100,8 +100,8 @@ const Main: React.FC<MainProps> = ({ companies }) => {
                     Send us a message
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Fill out the form below and we'll get back to you within 24
-                    hours.
+                    Fill out the form below and we&apos;ll get back to you
+                    within 24 hours.
                   </p>
                 </div>
 

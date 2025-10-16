@@ -5,7 +5,6 @@ interface CardTypes {
   description: string;
   image: string;
 }
-[];
 
 // card data
 export const cardData: CardTypes[] = [
@@ -34,7 +33,6 @@ interface CompanyTypes {
   light: string;
   dark: string;
 }
-[];
 
 // Centralized project logos
 export const companiesData: CompanyTypes[] = [
@@ -75,7 +73,6 @@ interface OurProjectTypes {
   description: string;
   link?: string;
 }
-[];
 
 // Projects data remains the same
 export const ourProjectsData: OurProjectTypes[] = [
@@ -128,7 +125,6 @@ export interface testimonialsTypes {
   image?: string;
   bgColor?: string;
 }
-[];
 
 export const testimonialsData: testimonialsTypes[] = [
   {
@@ -175,7 +171,6 @@ export interface faqTypes {
   question: string;
   answer: string;
 }
-[];
 
 // FAQ data
 export const faqsData: faqTypes[] = [

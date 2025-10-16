@@ -21,19 +21,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect, useState } from "react";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
+
+import { onSaveTypes } from "../../../types";
 import { CompanyTypes } from "../columns";
 import {
-  CompanyFormValues,
-  companySchema,
-} from "../../add-company/(validation)/validation";
-import { onSaveTypes } from "../../../types";
+  EditCompanyFormValues,
+  EditCompanySchema,
+} from "../(validation)/validation";
 import { DeleteCompanyAction, UpdateCompanyAction } from "../(actions)/actions";
 
-interface CompanyDialogProps {
+interface EditCompanyDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   company: CompanyTypes | null;
@@ -47,45 +48,63 @@ export default function CompanyDialog({
   company,
   onSave,
   action,
-}: CompanyDialogProps) {
-  // form
-  const form = useForm<CompanyFormValues>({
-    resolver: zodResolver(companySchema),
+}: EditCompanyDialogProps) {
+  // use form
+  const form = useForm<EditCompanyFormValues>({
+    resolver: zodResolver(EditCompanySchema),
     defaultValues: {
       name: company?.name || "",
+      slug: company?.slug || "",
+      link: company?.link || "",
       email: company?.email || "",
+      description: company?.description || "",
+      image: undefined,
     },
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [preview, setPreview] = useState<string>(company?.image || "");
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const submitButtonText = action === "edit" ? "Save" : "Yes";
 
-  const formSubmit = async (values: CompanyFormValues) => {
-    //  Map fields to backend names
+  const formSubmit = async (values: EditCompanyFormValues) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("slug", values.slug);
+    formData.append("link", values.link as string);
+    formData.append("email", values.email);
+    formData.append("description", values.description);
 
-    const payload = {
-      ...values,
-      id: company?.id as number,
-    };
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
+    }
+
+    if (company?.id) {
+      formData.append("id", String(company?.id));
+    }
 
     try {
-      const result = await UpdateCompanyAction(payload);
-      console.log("Result===,", result);
+      const result = await UpdateCompanyAction(formData);
+      console.log("result--", result);
+
       if (result.success) {
-        onSave({
-          success: result.success,
-          message: result.message,
-        });
+        onSave({ success: result.success, message: result.message });
       } else {
-        onSave({
-          success: result.success,
-          message: result.message,
-        });
+        toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error updating company:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to update");
+      console.error("Error saving team member:", error);
+    }
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      form.setValue("image", file);
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -94,13 +113,19 @@ export default function CompanyDialog({
       form.reset({
         name: company.name || "",
         email: company.email || "",
+        slug: company.slug || "",
+        link: company.link || "",
+        description: company.description || "",
+        image: undefined,
       });
+      setPreview(company.image || "");
       setLoading(false);
     }
   }, [open, company, form]);
 
   const handleDialogClose = () => {
     form.reset();
+    setPreview("");
     onOpenChange(false);
   };
 
@@ -119,6 +144,19 @@ export default function CompanyDialog({
     }
   };
 
+  // Auto-generate slug from title
+  const watchedName = form.watch("name");
+  useEffect(() => {
+    if (watchedName) {
+      const slug = watchedName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+      form.setValue("slug", slug);
+    }
+  }, [watchedName, form]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -132,39 +170,126 @@ export default function CompanyDialog({
                 This is update company dialog
               </DialogDescription>
             </DialogHeader>
-            <Separator className="mt-2 mb-5" />
+            <Separator className="" />
 
             {action === "edit" ? (
               <>
-                {/* Title */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {/* Name */}
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* slug */}
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter slug" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* Email */}
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email *</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter your company email"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* Designation */}
+                  <FormField
+                    control={form.control}
+                    name="link"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Link </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter your company link"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Short Description */}
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company *</FormLabel>
+                      <FormLabel>Description *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter company name" {...field} />
+                        <Textarea
+                          placeholder="Enter short description"
+                          className="min-h-[100px]"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                {/* Full answer */}
+                {/* Image Upload */}
                 <FormField
                   control={form.control}
-                  name="email"
-                  render={({ field }) => (
+                  name="image"
+                  render={() => (
                     <FormItem>
-                      <FormLabel>Email *</FormLabel>
+                      <FormLabel>Image *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter email" {...field} />
+                        <Input
+                          ref={inputFileRef}
+                          type="file"
+                          accept="image/jpeg,image/jpg,image/png,image/webp"
+                          onChange={handleImageChange}
+                          className="cursor-pointer"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                {preview && (
+                  <div className="mt-2">
+                    <Image
+                      width={80}
+                      height={80}
+                      src={company?.image as string}
+                      alt="Preview"
+                      className="rounded border"
+                    />
+                  </div>
+                )}
               </>
             ) : (
               <h1 className="mt-5">
@@ -189,6 +314,7 @@ export default function CompanyDialog({
                 disabled={form.formState.isSubmitting}
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
+                className="bg-sky-600 hover:bg-sky-700"
                 onClick={() => action !== "edit" && handeDelete()}
               >
                 {loading || form.formState.isSubmitting

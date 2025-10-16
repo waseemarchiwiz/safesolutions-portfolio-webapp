@@ -5,65 +5,9 @@ import { ArrowUpRight, ScanText } from "lucide-react";
 import { motion, MotionConfig } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 
-export type PartnerType = {
-  id: number;
-  name: string;
-  slug: string;
-  logo: string;
-  description: string;
-  link: string;
-};
-
-const partnersData: PartnerType[] = [
-  {
-    id: 1,
-    name: "Backtelemed",
-    slug: "backtelemed",
-    logo: "/archiwizbuild.png",
-    description:
-      "Pioneering telehealth solutions for modern healthcare providers and patients.",
-    link: "/partners/backtelemed",
-  },
-  {
-    id: 3,
-    name: "Archiwiz Construction",
-    slug: "archiwiz-construction",
-    logo: "/archiwizfrontpage.png",
-    description:
-      "Bringing architectural visions to life with precision engineering and quality craftsmanship.",
-    link: "/partners/archiwiz-construction",
-  },
-  {
-    id: 4,
-    name: "Alpha Build",
-    slug: "alpha-build",
-    logo: "/alpha-build.png",
-    description:
-      "End-to-end construction management software for efficient and scalable project delivery.",
-    link: "/partners/alpha-build",
-  },
-  {
-    id: 5,
-    name: "Agro Futures",
-    slug: "agro-futures",
-    logo: "/hero.jpg",
-    description:
-      "Sustainable agriculture technology to optimize yield and promote environmental stewardship.",
-    link: "/partners/agro-futures",
-  },
-  {
-    id: 6,
-    name: "Lumsden Trading",
-    slug: "lumsden-trading",
-    logo: "/lumsden.png",
-    description:
-      "Your primary partner for custom software development and IT consultancy.",
-    link: "/services",
-  },
-];
-
-const PartnerCard = ({ partner }: { partner: PartnerType }) => {
+const PartnerCard = ({ partner }: { partner: CompanyTypes }) => {
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -82,7 +26,7 @@ const PartnerCard = ({ partner }: { partner: PartnerType }) => {
         {/* Full-cover background image */}
         <div className="absolute inset-0">
           <Image
-            src={partner.logo}
+            src={(partner.image as string) || "/placeholder.png"}
             alt={partner.name}
             fill
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -105,7 +49,7 @@ const PartnerCard = ({ partner }: { partner: PartnerType }) => {
   );
 };
 
-const PartnersSection = () => {
+const PartnersSection = ({ partners }: { partners: CompanyTypes[] }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -140,7 +84,7 @@ const PartnersSection = () => {
           variants={containerVariants}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"
         >
-          {partnersData.map((partner) => (
+          {partners.map((partner) => (
             <PartnerCard key={partner.id} partner={partner} />
           ))}
         </motion.div>

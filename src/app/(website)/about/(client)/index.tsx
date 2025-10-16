@@ -12,17 +12,20 @@ import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/co
 import SectionWithReveal from "../../(common)/fold";
 import Blogs, { BlogPostTypes } from "../../(blogs-page)/blogs/(client)/blogs";
 import PartnersSection from "./partners";
+import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 
 interface AboutProps {
   teams: TeamTypes[];
   projects: ProjectTypes[];
   blogs: BlogPostTypes[];
+  partners: CompanyTypes[];
 }
 
-const Main = ({ teams, projects, blogs }: AboutProps) => {
+const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
   console.log("teams--", teams);
   console.log("projects--", projects);
   console.log("blogs--", blogs);
+  console.log("partners---", partners);
 
   return (
     <>
@@ -42,7 +45,7 @@ const Main = ({ teams, projects, blogs }: AboutProps) => {
       </SectionWithReveal>
       {/* Services */}
       <SectionWithReveal className="px-5 bg-zinc-100 py-16">
-        <PartnersSection />
+        <PartnersSection partners={partners} />
       </SectionWithReveal>
 
       {/* Projects Section */}

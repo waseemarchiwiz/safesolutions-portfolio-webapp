@@ -6,8 +6,6 @@ import { DataTable, LinkTypes } from "@/components/data-table";
 import { useRouter } from "next/navigation";
 import { getColumns, ProjectTypes } from "../columns";
 import { toast } from "sonner";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
 import ProjectDialog from "./project.dialog";
 import { onSaveTypes } from "../../../types";
 

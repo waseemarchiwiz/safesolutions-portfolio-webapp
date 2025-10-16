@@ -24,7 +24,6 @@ import {
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TestimonialTypes } from "../columns";
-import { baseURL } from "@/lib/api-config/client";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {

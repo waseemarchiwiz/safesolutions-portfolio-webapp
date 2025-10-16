@@ -39,7 +39,7 @@ export default function PageHeroSection({
       <main className="py-5 overflow-hidden bg-black">
         {/* Decorative grid / pattern */}
         <DotPattern className="w-full h-[65vh] opacity-20" />
-        <section className="max-w-[77rem] mx-auto  relative text-white">
+        <section className="max-w-[77rem] mx-auto relative text-white">
           {/* Soft radial vignettes (desktop only for subtlety) */}
           <div className="absolute inset-0 isolate opacity-65 hidden lg:block">
             <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
@@ -53,7 +53,7 @@ export default function PageHeroSection({
           />
 
           {/* Content */}
-          <div className="my-10 relative px-4 mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
+          <div className="my-10 relative px-5 md:px-3 mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
             <div className=" ">
               {/* Eyebrow pill */}
               <AnimatedGroup variants={variants}>

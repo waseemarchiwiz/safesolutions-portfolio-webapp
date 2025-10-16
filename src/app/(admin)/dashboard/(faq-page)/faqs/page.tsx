@@ -1,11 +1,8 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
-import { axiosServer } from "@/lib/api-config/client";
-import { cookies } from "next/headers";
-import { ReturnPayload } from "@/lib/types";
 import { FaqTypes } from "./columns";
-import MainFaq from "./(client)/main";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
+import MainFaq from "./(client)/main";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;

@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FolderKanban, ArrowRight } from "lucide-react";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ProjectsComponentProps {
   background?: string;
@@ -49,7 +49,7 @@ const Projects = ({ background, projects }: ProjectsComponentProps) => {
               >
                 {/* Image */}
                 <div className="relative aspect-video overflow-hidden">
-                  <img
+                  <Image
                     src={"/project-img.png"}
                     alt={project.name}
                     width={600}

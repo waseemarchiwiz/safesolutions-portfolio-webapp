@@ -2,13 +2,10 @@
 
 import React, { useState } from "react";
 import { DataTable, LinkTypes } from "@/components/data-table";
-import { useRouter } from "next/navigation";
 import { CompanyTypes, getColumns } from "../columns";
 import { toast } from "sonner";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
-import CompanyDialog from "./company.dialog";
 import { onSaveTypes } from "../../../types";
+import CompanyDialog from "./company.dialog";
 
 interface MainTeamsProps {
   data: CompanyTypes[];
@@ -28,7 +25,6 @@ const MainCompany = ({
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<CompanyTypes | null>(null);
   const [action, setAction] = useState<string>("");
-  const router = useRouter();
 
   // handle edit
   const handleEdit = (company: CompanyTypes) => {

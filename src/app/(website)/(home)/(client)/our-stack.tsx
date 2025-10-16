@@ -6,37 +6,65 @@ import { InfiniteSlider } from "@/components/infinite-slider";
 
 export default function OurStack() {
   const languages = [
-    <StackIcon name="php" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="laravel" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="python" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="js" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="jquery" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="react" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="nodejs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="nextjs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="expressjs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="vuejs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="django" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={1} name="php" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={2} name="laravel" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={3} name="python" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={4} name="js" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={5} name="jquery" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={6} name="react" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={7} name="nodejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={8} name="nextjs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={9}
+      name="expressjs"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={10} name="vuejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={11} name="django" className="m-auto size-10 sm:size-12" />,
   ];
   const uiLibraries = [
-    <StackIcon name="html5" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="css3" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="tailwindcss" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="shadcnui" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="materialui" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="figma" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="headlessui" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="threejs" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={1} name="html5" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={2} name="css3" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={3}
+      name="tailwindcss"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={4} name="shadcnui" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={5}
+      name="materialui"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={6} name="figma" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={7}
+      name="headlessui"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={8} name="threejs" className="m-auto size-10 sm:size-12" />,
   ];
   const databaseAndServices = [
-    <StackIcon name="azure" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="microsoft" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="mongodb" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="postgresql" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="mysql" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="github" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="kubernetes" className="m-auto size-10 sm:size-12" />,
-    <StackIcon name="docker" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={1} name="azure" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={2}
+      name="microsoft"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={3} name="mongodb" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={4}
+      name="postgresql"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={5} name="mysql" className="m-auto size-10 sm:size-12" />,
+    <StackIcon key={6} name="github" className="m-auto size-10 sm:size-12" />,
+    <StackIcon
+      key={7}
+      name="kubernetes"
+      className="m-auto size-10 sm:size-12"
+    />,
+    <StackIcon key={8} name="docker" className="m-auto size-10 sm:size-12" />,
   ];
 
   return (

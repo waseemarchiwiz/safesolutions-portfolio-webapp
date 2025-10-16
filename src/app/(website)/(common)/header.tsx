@@ -42,9 +42,9 @@ const Header = () => {
       >
         <div
           className={cn(
-            "mx-auto mt-2 max-w-7xl px-6 transition-all duration-300 lg:px-5",
+            "mx-auto mt-2 max-w-7xl px-2 transition-all duration-300 lg:px-5",
             isScrolled &&
-              "bg-background/70 max-w-[1235px] rounded-2xl border backdrop-blur-lg shadow-sm dark:shadow-none lg:px-5"
+              "bg-background/70 max-w-[1235px] rounded-2xl px-2 border backdrop-blur-lg shadow-sm dark:shadow-none lg:px-5"
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
@@ -56,7 +56,7 @@ const Header = () => {
               <button
                 onClick={() => setMenuState(!menuState)}
                 aria-label={menuState ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+                className="relative z-20 -m-2.5 mr-1 block cursor-pointer p-2.5 lg:hidden"
                 style={{ color: isScrolled ? "black" : "white" }}
               >
                 <Menu className="m-auto size-6 transition-all duration-200 data-[state=active]:opacity-0" />

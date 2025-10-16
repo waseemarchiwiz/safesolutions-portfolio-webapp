@@ -1,4 +1,3 @@
-import { apiClient } from "@/lib/api-config/client";
 import ProjectDetails from "../(client)/project-details";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";

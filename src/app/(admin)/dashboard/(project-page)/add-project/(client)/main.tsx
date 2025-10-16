@@ -18,8 +18,6 @@ import {
 import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
-import { apiClient, baseURL } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import {
   AddProjectFormValues,
   buildProjectSchema,

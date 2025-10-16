@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import { DataTable, LinkTypes } from "@/components/data-table";
-import { useRouter } from "next/navigation";
 import { CareerTypes, getColumns } from "../columns";
 import { toast } from "sonner";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
 import TeamDialog from "./career.dialog";
 import { onSaveTypes } from "../../../types";
 
@@ -28,7 +25,6 @@ const MainCareers = ({
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<CareerTypes | null>(null);
   const [action, setAction] = useState<string>("");
-  const router = useRouter();
 
   // handle edit
   const handleEdit = (team: CareerTypes) => {

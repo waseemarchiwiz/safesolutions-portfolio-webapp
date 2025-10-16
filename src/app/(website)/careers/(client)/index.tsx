@@ -24,7 +24,7 @@ interface CareersProps {
 
 const Careers = ({ careers, companies }: CareersProps) => {
   // selected job
-  const [selectedJob, setSelectedJob] = useState<CareerTypes | {}>({}); // Loader state to track data fetching
+  const [selectedJob, setSelectedJob] = useState<CareerTypes | null>(null); // Loader state to track data fetching
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleApply = (job: CareerTypes) => {

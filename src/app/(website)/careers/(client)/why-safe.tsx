@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const WhySafe = () => {
@@ -57,7 +58,9 @@ const WhySafe = () => {
             {/* Image container */}
             <div className="relative rounded-2xl overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <img
+              <Image
+                width={400}
+                height={450}
                 src={"/careers.jpg"}
                 alt="About SafeSolution"
                 className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-500"

@@ -1,31 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, ScanText, TwitchIcon } from "lucide-react";
+import { ScanText } from "lucide-react";
 import { TeamTypes } from "../page";
-import { baseURL } from "@/lib/api-config/client";
-import Image from "next/image";
 import Link from "next/link";
-
-const members = [
-  {
-    name: "Liam Brown",
-    role: "Founder - CEO",
-    avatar: "https://alt.tailus.io/images/team/member-one.webp",
-    link: "#",
-  },
-  {
-    name: "Elijah Jones",
-    role: "Co-Founder - CTO",
-    avatar: "https://alt.tailus.io/images/team/member-two.webp",
-    link: "#",
-  },
-  {
-    name: "Isabella Garcia",
-    role: "Sales Manager",
-    avatar: "https://alt.tailus.io/images/team/member-three.webp",
-    link: "#",
-  },
-];
+import Image from "next/image";
 
 const Teams = ({ teams }: { teams: TeamTypes[] }) => {
   const headerVariants = {
@@ -73,7 +51,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
         <div className="px-4 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {teams.map((team, index) => (
             <div key={index} className="group overflow-hidden">
-              <img
+              <Image
                 className="h-96 w-full rounded-md object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[22.5rem] group-hover:rounded-xl"
                 src={team.image}
                 alt="team member"

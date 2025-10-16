@@ -1,68 +1,125 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import {
-  CompanyFormValues,
-  companySchema,
-} from "../../add-company/(validation)/validation";
-
-// update job form values
-interface CompanyUpdateTypes extends CompanyFormValues {
-  id: number;
-}
+import { ReturnPayload } from "@/lib/types";
+import path from "path";
+import fs from "fs/promises";
+import { revalidatePath } from "next/cache";
+import { EditCompanySchema } from "../(validation)/validation";
 
 // -----------------------------
 // Update Company Action
 // -----------------------------
 export async function UpdateCompanyAction(
-  values: CompanyUpdateTypes
+  formData: FormData
 ): Promise<ReturnPayload> {
-  try {
-    const validation = companySchema.safeParse(values);
+  let uploadedFilePath: string | null = null;
 
+  try {
+    const dataToParse = {
+      id: formData.get("id") as string,
+      name: formData.get("name") as string,
+      slug: formData.get("slug") as string,
+      link: formData.get("link") as string,
+      email: formData.get("email") as string,
+      description: formData.get("description") as string,
+      image: formData.get("image") as File | null,
+    };
+
+    const validation = EditCompanySchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
         success: false,
-        message: validation.error.issues.map((i) => i.message).join(", "),
+        message: validation.error.message,
       };
     }
 
-    console.log("validtion:--", validation);
+    const { id, name, slug, link, email, description, image } = dataToParse;
 
-    const { id, name, email } = values;
-
-    // Check duplicate For the name + slug
+    // Check if company exists
     const existingCompany = await prisma.companies.findUnique({
-      where: { id },
+      where: { id: Number(id) },
     });
 
     if (!existingCompany) {
       return { success: false, message: "Company record not found." };
     }
 
-    // Update DB
-    const updated = await prisma.companies.update({
-      where: { id },
-      data: {
-        name,
-        email,
+    // Check duplicate slug (excluding current company)
+    const duplicate = await prisma.companies.findFirst({
+      where: {
+        slug,
+        NOT: { id: Number(id) },
       },
     });
 
+    if (duplicate) {
+      return {
+        success: false,
+        message: "Another company with this slug already exists.",
+      };
+    }
+
+    // If new image uploaded
+    if (image && image.size > 0) {
+      const uploadDir = path.join(
+        process.cwd(),
+        "public",
+        "uploads",
+        "company"
+      );
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      const bytes = Buffer.from(await image.arrayBuffer());
+      const fileName = `${Date.now()}-${image.name}`;
+      uploadedFilePath = `/uploads/company/${fileName}`;
+      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
+      await fs.writeFile(filePath, bytes);
+
+      // Delete old image (if exists)
+      if (existingCompany.image) {
+        const oldImagePath = path.join(
+          process.cwd(),
+          "public",
+          existingCompany.image
+        );
+        await fs.unlink(oldImagePath).catch(() => {});
+      }
+    }
+
+    // Update company record
+    const updatedCompany = await prisma.companies.update({
+      where: { id: Number(id) },
+      data: {
+        name,
+        slug,
+        link,
+        email,
+        description,
+        image: uploadedFilePath || existingCompany.image,
+      },
+    });
+
+    // Revalidate dashboard page
     revalidatePath("/dashboard/companies");
 
     return {
       success: true,
-      message: "Companys record updated successfully",
-      data: updated,
+      message: "Company record updated successfully.",
+      data: updatedCompany,
     };
   } catch (error) {
+    // Cleanup uploaded file if DB update fails
+    if (uploadedFilePath) {
+      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
+      await fs.unlink(fullPath).catch(() => {});
+    }
+
     console.error("Update Company Action error:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
+      message:
+        error instanceof Error ? error.message : "Unknown error occurred.",
     };
   }
 }

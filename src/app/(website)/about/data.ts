@@ -97,3 +97,81 @@ export const Partners: PartnersTypes[] = [
     link: "https://archiwizbuild.com/",
   },
 ];
+
+export type PartnerType = {
+  id: number;
+  name: string;
+  slug: string;
+  logo: string;
+  description: string;
+  link: string;
+};
+
+export const partnersData: PartnerType[] = [
+  {
+    id: 1,
+    name: "Backtelemed",
+    slug: "backtelemed",
+    logo: "/archiwizbuild.png",
+    description:
+      "Pioneering telehealth solutions for modern healthcare providers and patients.",
+    link: "/partners/backtelemed",
+  },
+  {
+    id: 3,
+    name: "Archiwiz Construction",
+    slug: "archiwiz-construction",
+    logo: "/archiwizfrontpage.png",
+    description:
+      "Bringing architectural visions to life with precision engineering and quality craftsmanship.",
+    link: "/partners/archiwiz-construction",
+  },
+  {
+    id: 4,
+    name: "Alpha Build",
+    slug: "alpha-build",
+    logo: "/alpha-build.png",
+    description:
+      "End-to-end construction management software for efficient and scalable project delivery.",
+    link: "/partners/alpha-build",
+  },
+  {
+    id: 5,
+    name: "Agro Futures",
+    slug: "agro-futures",
+    logo: "/hero.jpg",
+    description:
+      "Sustainable agriculture technology to optimize yield and promote environmental stewardship.",
+    link: "/partners/agro-futures",
+  },
+  {
+    id: 6,
+    name: "Lumsden Trading",
+    slug: "lumsden-trading",
+    logo: "/lumsden.png",
+    description:
+      "Your primary partner for custom software development and IT consultancy.",
+    link: "/services",
+  },
+];
+
+export const members = [
+  {
+    name: "Liam Brown",
+    role: "Founder - CEO",
+    avatar: "https://alt.tailus.io/images/team/member-one.webp",
+    link: "#",
+  },
+  {
+    name: "Elijah Jones",
+    role: "Co-Founder - CTO",
+    avatar: "https://alt.tailus.io/images/team/member-two.webp",
+    link: "#",
+  },
+  {
+    name: "Isabella Garcia",
+    role: "Sales Manager",
+    avatar: "https://alt.tailus.io/images/team/member-three.webp",
+    link: "#",
+  },
+];

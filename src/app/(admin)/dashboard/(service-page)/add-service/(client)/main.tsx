@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,16 +23,8 @@ import {
 } from "../(validation)/validation";
 import { ServiceTypes } from "../../services/columns";
 import { TagsInput } from "@/components/common/tags-input";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { iconsMap } from "@/app/(website)/project/data";
 import { AddServiceAction, UpdateServiceAction } from "../(actions)/action";
+import Image from "next/image";
 
 interface ServiceFormPropTypes {
   service?: ServiceTypes;
@@ -42,14 +34,16 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("id");
+  const [preview, setPreview] = useState<string | null>(
+    service?.image as string
+  );
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<AddServiceFormValues>({
     resolver: zodResolver(buildServiceSchema(!!editId)),
     defaultValues: {
-      tab: service?.tab || "",
       title: service?.title || "",
       slug: service?.slug || "",
-      icon: service?.icon || "",
       description: service?.description || "",
       features: service?.features || [],
       link: service?.link || "",
@@ -57,19 +51,39 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
       technologies: service?.technologies || [],
       industries: service?.industries || [],
       useCases: service?.useCases || [],
+      image: service?.image || undefined,
     },
   });
 
   async function onSubmit(values: AddServiceFormValues) {
-    const editId = service?.id;
     try {
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("description", values.description);
+      formData.append("overview", values.overview || "");
+      formData.append("link", values.link || "");
+      formData.append("features", JSON.stringify(values.features || []));
+      formData.append(
+        "technologies",
+        JSON.stringify(values.technologies || [])
+      );
+      formData.append("industries", JSON.stringify(values.industries || []));
+      formData.append("useCases", JSON.stringify(values.useCases || []));
+
+      if (values.image instanceof File) {
+        formData.append("image", values.image);
+      } else if (typeof values.image === "string") {
+        formData.append("existingImage", values.image);
+      }
+
       const result = editId
-        ? await UpdateServiceAction(values, service?.id as number)
-        : await AddServiceAction(values);
-      console.log("resul-===--", result);
+        ? await UpdateServiceAction(formData, service?.id as number)
+        : await AddServiceAction(formData);
+
       if (result.success) {
         toast.success(result.message);
-        router.replace("services");
+        router.replace("/dashboard/services");
       } else {
         toast.error(result.message);
       }
@@ -91,6 +105,23 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
       form.setValue("slug", slug);
     }
   }, [watchedTitle, form]);
+
+  // handle image
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      form.setValue("image", file, { shouldValidate: true });
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFormReset = () => {
+    form.reset();
+    setPreview(null);
+    if (inputFileRef.current) inputFileRef.current.value = "";
+  };
 
   return (
     <div className="mx-6">
@@ -252,6 +283,38 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                 />
               </div>
 
+              {/* Image Upload */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Image *</FormLabel>
+                    <FormControl>
+                      <Input
+                        ref={inputFileRef}
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/webp"
+                        onChange={handleImageChange}
+                        className="cursor-pointer"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    {preview && (
+                      <div className="mt-2">
+                        <Image
+                          width={100}
+                          height={150}
+                          src={preview}
+                          alt="Preview"
+                          className="rounded border"
+                        />
+                      </div>
+                    )}
+                  </FormItem>
+                )}
+              />
+
               {/* Buttons */}
               <div className="flex justify-end space-x-4 mt-5">
                 {editId ? (
@@ -266,7 +329,7 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => form.reset()}
+                    onClick={handleFormReset}
                   >
                     Reset
                   </Button>

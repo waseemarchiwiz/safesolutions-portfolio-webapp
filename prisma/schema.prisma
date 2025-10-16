@@ -13,17 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Service {
   id           Int       @id @default(autoincrement())
-  tab          String
   title        String
   slug         String   @unique
-  icon         String?
   description  String
   features     String[]  // always an array (empty if nothing)
   link         String?
+  image         String
 
   // only filled for Software Development
   overview     String?
@@ -155,10 +152,15 @@ model Contact {
 }
 
 model Companies {
-  id        Int      @id @default(autoincrement())
-  email     String
-  name      String   @default("Unknown")
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  name          String   @default("unknown")
+  slug          String   @unique
+  link          String    
+  email         String   @unique
+  description   String  
+  image         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Blog {

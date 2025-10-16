@@ -14,7 +14,7 @@ const CustomLogo = ({ color = "black" }: CustomLogoProps) => {
     <Link
       href="/"
       aria-label="home"
-      className="flex items-center space-x-2 transition-colors duration-300"
+      className="flex items-center transition-colors duration-300"
     >
       <Image
         className="w-10 h-10 object-cover pointer-none:"
@@ -23,7 +23,6 @@ const CustomLogo = ({ color = "black" }: CustomLogoProps) => {
         height={70}
         width={70}
       />
-      {/* <LogoIcon className="" /> */}
       <span style={{ color }} className="font-semibold sm:inline-block text-md">
         Safe <span className={accentColor}>Solution</span>
       </span>
