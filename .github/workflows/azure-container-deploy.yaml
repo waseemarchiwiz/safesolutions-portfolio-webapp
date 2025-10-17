@@ -1,64 +1,44 @@
 name: Build and Deploy Staging Container
-
 on:
-  # Trigger only on push to the 'staging' branch
   push:
     branches: ["staging"]
-  # Allows manual running from the GitHub Actions tab
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
-    # Define environment variables to be used throughout the job
     env:
-      # These are used for the image tag naming convention
-      ACR_LOGIN_SERVER: ${{ secrets.ACR_ENDPOINT }} # e.g., safesolutionstagingregistry.azurecr.io
-      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-      
-      # The App Service name where the container will be deployed
-      APP_SERVICE_NAME: 'safesolution-portfolio-staging' # REPLACE with your actual staging App Service name
-      IMAGE_NAME: 'safesolution-portfolio-staging'
-      
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_ENDPOINT }} # e.g. safesolutionsstagingregistry.azurecr.io
+      APP_SERVICE_NAME: safesolution-portfolio-staging
+      IMAGE_NAME: safesolution-portfolio-staging
 
-      - name: Login to Azure Container Registry
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to ACR
         uses: azure/docker-login@v1
         with:
           login-server: ${{ env.ACR_LOGIN_SERVER }}
-          username: ${{ env.ACR_USERNAME }}
-          password: ${{ env.ACR_PASSWORD }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build and push Docker image to ACR
-        # Note: Next.js variables starting with NEXT_PUBLIC_ must be available 
-        # during the build phase (passed as build-args).
+      - name: Build & Push
         uses: docker/build-push-action@v5
         with:
-          push: true
-          # Use the commit SHA for a unique, traceable tag
-          tags: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          # Also tag with 'latest' for convenience
-          tags: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+          context: .
           file: ./Dockerfile
-          
-          # --- Next.js Build Arguments ---
-          # Pass only the NEXT_PUBLIC_ variables that are needed at build time.
-          # Sensitive server-side envs (DATABASE_URL, JWT_SECRET, etc.) MUST be set
-          # directly in the Azure App Service Configuration (Step 4 of the previous guide).
+          push: true
+          # NOTE: combine multiple tags with a block string
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
           build-args: |
-            "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
-            "NEXT_PUBLIC_TINYMCE_API_URL=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}"
-            # Add any other NEXT_PUBLIC_ variables here
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_TINYMCE_API_URL=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}
 
-      - name: Deploy container image to Azure App Service
+      - name: Deploy to App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_SERVICE_NAME }}
-          # The publish profile is used to authorize the deployment to App Service
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          # Deploy the image tagged with the commit SHA
-          images: '${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}'
+          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}

@@ -1,38 +1,32 @@
-# 1. Builder Stage
-FROM node:20-alpine AS builder
-
-# Set working directory
+# ---- builder ----
+FROM node:20-bookworm-slim AS builder
 WORKDIR /app
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
-# Copy package files and install dependencies
-COPY package.json package-lock.json ./
-RUN npm install
+RUN corepack enable && corepack prepare pnpm@latest --activate
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-# Copy Prisma schema and generate client
 COPY prisma ./prisma
-RUN npx prisma generate
+RUN pnpm prisma generate
 
-# Copy the rest of the source code
 COPY . .
+RUN pnpm build
 
-# Build the application
-RUN npm run build
-
-# 2. Runner Stage
-FROM node:20-alpine AS runner
+# ---- runner ----
+FROM node:20-bookworm-slim AS runner
 WORKDIR /app
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
-# Set NODE_ENV to production
 ENV NODE_ENV=production
-# Expose port 3000
 ENV PORT=3000
 EXPOSE 3000
 
-# Copy necessary files from builder stage
+RUN corepack enable && corepack prepare pnpm@latest --activate
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
 
-# Command to run the app
-CMD ["npm", "start"]
+CMD sh -c "pnpm dlx prisma migrate deploy && pnpm start"

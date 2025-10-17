@@ -21,4 +21,5 @@ export const auth = betterAuth({
       path: "/",
     },
   },
+  secret: process.env.BETTER_AUTH_SECRET,
 });

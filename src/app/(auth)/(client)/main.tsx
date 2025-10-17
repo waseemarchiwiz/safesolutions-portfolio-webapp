@@ -27,21 +27,22 @@ export default function SignInForm({
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "user.test@gmail.com",
-      password: "password",
+      email: "developer@gmail.com",
+      password: "superadmin123",
     },
   });
 
   const formSubmit = async (values: SignInFormValues) => {
     try {
-      // Call sign in on client side
       const { data, error } = await signIn.email({
         email: values.email,
         password: values.password,
         callbackURL: "/dashboard",
         rememberMe: false,
       });
-
+      if (error?.code) {
+        toast.error(error?.message);
+      }
       console.log("response-signin--", data);
       console.log("error-signin--", error);
     } catch (error) {

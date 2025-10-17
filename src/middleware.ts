@@ -1,32 +1,43 @@
 // middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
 
-export async function middleware(req: NextRequest) {
-  //  Edge-safe session check (cookie presence only)
-  const sessionCookie = getSessionCookie(req);
+//  Set this to your actual Better Auth session cookie name
+const SESSION_COOKIE_NAME = "better-auth.session_token"; // <-- change if needed
 
-  const { pathname } = req.nextUrl;
-  const dashboardRoute = pathname.startsWith("/dashboard");
-  const authRoute = pathname.startsWith("/signin");
+export function middleware(req: NextRequest) {
+  const { pathname, search } = req.nextUrl;
+  const isDashboard = pathname.startsWith("/dashboard");
+  const isAuthPage = pathname.startsWith("/signin");
 
-  // if not logged in
-  if (!sessionCookie && dashboardRoute) {
-    const signInUrl = req.nextUrl.clone();
-    signInUrl.pathname = "/signin";
-    return NextResponse.redirect(signInUrl);
+  // Read cookie directly (Edge-safe)
+  const hasSession = Boolean(req.cookies.get(SESSION_COOKIE_NAME)?.value);
+
+  // If not logged in and hitting a protected route, redirect to /signin (keep query)
+  if (!hasSession && isDashboard) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/signin";
+    url.search = search; // preserve ?next or any qs
+    return NextResponse.redirect(url);
   }
 
-  // if already logged in
-  if (sessionCookie && authRoute) {
-    const dashboardUrl = req.nextUrl.clone();
-    dashboardUrl.pathname = "/dashboard";
-    return NextResponse.redirect(dashboardUrl);
+  // If already logged in and visiting /signin, send to /dashboard
+  if (hasSession && isAuthPage) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
 }
 
+// Exclude static assets, API routes, favicon, and Next internals
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|public/).*)"],
+  matcher: [
+    // everything except:
+    // - _next (assets)
+    // - static files with extensions
+    // - api routes (avoid interfering with auth handlers)
+    // - favicon and robots
+    "/((?!_next/|.*\\..*|api/|favicon.ico|robots.txt).*)",
+  ],
 };
