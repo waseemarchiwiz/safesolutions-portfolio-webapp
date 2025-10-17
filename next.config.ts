@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // maximum 10 mb files
+  output: "standalone",
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
