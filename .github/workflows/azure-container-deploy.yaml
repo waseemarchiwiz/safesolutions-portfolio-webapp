@@ -1,44 +1,32 @@
-name: Build and Deploy Staging Container
+name: Build and Push to Azure Container Registry
+
 on:
   push:
-    branches: ["staging"]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    env:
-      ACR_LOGIN_SERVER: ${{ secrets.ACR_ENDPOINT }} # e.g. safesolutionsstagingregistry.azurecr.io
-      APP_SERVICE_NAME: safesolution-portfolio-staging
-      IMAGE_NAME: safesolution-portfolio-staging
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@main
 
-      - name: Login to ACR
+      - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          login-server: ${{ secrets.ACR_ENDPOINT }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build & Push
+      - name: Build and push container image to registry
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
           push: true
-          # NOTE: combine multiple tags with a block string
-          tags: |
-            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ secrets.ACR_ENDPOINT }}/safesolution-portfolio-prod:latest
+          file: ./Dockerfile
           build-args: |
-            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-            NEXT_PUBLIC_TINYMCE_API_URL=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}
-
-      - name: Deploy to App Service
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.APP_SERVICE_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            "VITE_API_URL=${{ secrets.VITE_API_URL }}"
+            "VITE_API_TOKEN=${{ secrets.VITE_API_TOKEN }}"
+            "VITE_USER_URL=${{ secrets.VITE_USER_URL }}"
