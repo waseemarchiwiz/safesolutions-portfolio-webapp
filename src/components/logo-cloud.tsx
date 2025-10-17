@@ -32,7 +32,7 @@ export default function LogoCloud() {
                     src={item.image}
                     alt={item.title}
                     height={30}
-                    width={30}
+                    width={60}
                   />
                 </div>
               ))}
