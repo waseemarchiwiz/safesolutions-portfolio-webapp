@@ -1,51 +1,44 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - safesolution-portfolio-staging
-
+name: Build and Deploy Staging Container
 on:
   push:
-    branches:
-      - staging
+    branches: ["staging"]
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: 'ubuntu-latest'
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Log in to registry
-      uses: docker/login-action@v2
-      with:
-        registry: https://portalfront.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_df1554662ff040e8853f0250f6f20df7 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_5752d87b383c42d09f21d395348d7551 }}
-
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: portalfront.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_df1554662ff040e8853f0250f6f20df7 }}/safesolution-stag-image:${{ github.sha }}
-        file: ./Dockerfile
-
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    env:
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_ENDPOINT }} # e.g. safesolutionsstagingregistry.azurecr.io
+      APP_SERVICE_NAME: safesolution-portfolio-staging
+      IMAGE_NAME: safesolution-portfolio-staging
 
     steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'safesolution-portfolio-staging'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f7c6c45f19684d9ca0a756b6cee98760 }}
-        images: 'portalfront.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_df1554662ff040e8853f0250f6f20df7 }}/safesolution-stag-image:${{ github.sha }}'
+      - uses: actions/checkout@v4
+
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build & Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          # NOTE: combine multiple tags with a block string
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_TINYMCE_API_URL=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}
+
+      - name: Deploy to App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.APP_SERVICE_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
