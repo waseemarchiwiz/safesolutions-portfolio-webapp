@@ -10,10 +10,10 @@ import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/co
 import { TestimonialTypes } from "@/app/(admin)/dashboard/(testimonial-page)/testimonials/columns";
 import Testimonials from "./testimonials";
 import OurStack from "./our-stack";
-import Faqs from "./faq";
 import SectionWithReveal from "../../(common)/fold";
 import { Services } from "../../(service-page)/services/(client)";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
+import Faqs from "./faq";
 
 interface MainPropTypes {
   faqs: FaqTypes[];
