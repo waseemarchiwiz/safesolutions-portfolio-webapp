@@ -13,7 +13,7 @@ import OurStack from "./our-stack";
 import SectionWithReveal from "../../(common)/fold";
 import { Services } from "../../(service-page)/services/(client)";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
-import Faqs from "./faq";
+import Faqs from "./faqs";
 
 interface MainPropTypes {
   faqs: FaqTypes[];
