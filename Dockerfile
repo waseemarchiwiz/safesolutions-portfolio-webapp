@@ -1,33 +1,38 @@
-# Use Node.js version 20 LTS as the base image
-FROM node:20
+# 1. Builder Stage
+FROM node:20-alpine AS builder
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
 
-# Install dependencies
-RUN npm install --force
+# Copy Prisma schema and generate client
+COPY prisma ./prisma
+RUN npx prisma generate
 
-# Copy the rest of the application files to the working directory
+# Copy the rest of the source code
 COPY . .
-
-# Set the environment variables
-ARG VITE_API_URL
-ARG VITE_API_TOKEN
-ARG VITE_USER_URL
-
-# Set the environment variables
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_API_TOKEN=$VITE_API_TOKEN
-ENV VITE_USER_URL=$VITE_USER_URL
 
 # Build the application
 RUN npm run build
 
-# Expose the port the app will run on
-EXPOSE 4173
+# 2. Runner Stage
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+# Set NODE_ENV to production
+ENV NODE_ENV=production
+# Expose port 3000
+ENV PORT=3000
+EXPOSE 3000
+
+# Copy necessary files from builder stage
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
 
 # Command to run the app
-CMD ["npm", "run", "preview", "--", "--host"]
+CMD ["npm", "start"]

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const WhySafe = () => {
@@ -12,7 +13,7 @@ const WhySafe = () => {
       {/* Animated background overlay */}
 
       {/* Main content */}
-      <div className="relative min-h-[600px] container dark:bg-black    mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+      <div className="relative min-h-[600px] max-w-7xl dark:bg-black mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
         {/* Left side - Image */}
 
         {/* Right side - Content */}
@@ -22,7 +23,7 @@ const WhySafe = () => {
           }`}
         >
           <div className="space-y-6">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white ">
+            <h2 className="text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white ">
               Why Work With Safe Solution
             </h2>
 
@@ -43,7 +44,7 @@ const WhySafe = () => {
         </div>
 
         <div
-          className={`w-full lg:w-1/2 transform transition-all duration-1000 ${
+          className={` w-full lg:w-1/2 transform transition-all duration-1000 ${
             isVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-20 opacity-0"
@@ -57,7 +58,9 @@ const WhySafe = () => {
             {/* Image container */}
             <div className="relative rounded-2xl overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <img
+              <Image
+                width={400}
+                height={450}
                 src={"/careers.jpg"}
                 alt="About SafeSolution"
                 className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-500"

@@ -1,12 +1,8 @@
-import Mainteams from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
-import { axiosServer } from "@/lib/api-config/client";
-import { cookies } from "next/headers";
 import { TeamTypes } from "./columns";
-import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import MainTeams from "./(client)/main";
 import { serializePrisma } from "@/lib/utils";
+import MainTeams from "./(client)/main";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;

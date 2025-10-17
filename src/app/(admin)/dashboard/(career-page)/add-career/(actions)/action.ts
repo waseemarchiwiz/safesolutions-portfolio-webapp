@@ -12,7 +12,7 @@ import { buildJobSchema, JobFormValues } from "../(validation)/validation";
 export async function AddCareerAction(
   values: JobFormValues
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null; // track uploaded file path
+  const uploadedFilePath: string | null = null; // track uploaded file path
 
   try {
     const validation = buildJobSchema.safeParse(values);

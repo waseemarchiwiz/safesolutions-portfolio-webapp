@@ -3,6 +3,7 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import { companiesData } from "@/app/(website)/(home)/data";
+import Image from "next/image";
 
 const ProjComp = () => {
   const { resolvedTheme } = useTheme();
@@ -17,7 +18,9 @@ const ProjComp = () => {
               key={idx}
               className="p-20 lg:border-r-[0.5px] lg:border-r-[#111827] last:border-none flex items-center justify-center"
             >
-              <img
+              <Image
+                width={60}
+                height={60}
                 src={isDark ? proj.dark : proj.light}
                 alt={proj.name}
                 className="max-h-16 object-contain"

@@ -120,7 +120,7 @@ export async function DeleteBlogAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Blog record not found" };
     }
 
-    let image = await prisma.blogImage.findMany({
+    const image = await prisma.blogImage.findMany({
       where: { blogId: id },
     });
 

@@ -1,7 +1,4 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
-import { axiosServer } from "@/lib/api-config/client";
-import { cookies } from "next/headers";
-import { ReturnPayload } from "@/lib/types";
 import { CompanyTypes } from "./columns";
 import MainCompany from "./(client)/main";
 import { prisma } from "@/lib/prisma";

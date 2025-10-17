@@ -1,6 +1,7 @@
 // src/app/dashboard/blogs/columns.tsx
 "use client";
 
+import React from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -13,16 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
-import { iconsMap } from "@/app/(website)/project/data";
-import React from "react";
+import Image from "next/image";
 
 // Define the shape of your ServiceTypes data
 export interface ServiceTypes {
   id: number;
-  tab: string;
   title: string;
   slug: string;
-  icon?: string;
   description: string;
   features?: string[];
   link?: string;
@@ -30,7 +28,7 @@ export interface ServiceTypes {
   technologies?: string[];
   industries?: string[];
   useCases?: string[];
-  image?: string; // if you decide to keep logo/image
+  image: string; // if you decide to keep logo/image
 }
 
 interface columnsProps {
@@ -71,23 +69,28 @@ export const getColumns = ({
     enableSorting: false,
     enableHiding: false,
   },
+
   // Column for Title
   {
     accessorKey: "image",
-    header: "Logo",
-    cell: ({ row }) => {
-      const Icon = iconsMap[row?.original?.icon as keyof typeof iconsMap];
-      return (
-        <span className=" text-indigo-600">
-          <Icon />
-        </span>
-      );
-    },
+    header: "Profile",
+    cell: ({ row }) => (
+      <div className="font-medium p-1">
+        <Image
+          width={100}
+          height={150}
+          src={(row.original.image as string) || "/placeholder.png"}
+          alt={row.original.image as string}
+          className=" rounded-full w-10 h-10"
+        />
+      </div>
+    ),
   },
+
   {
     accessorKey: "tab",
-    header: "Category",
-    cell: ({ row }) => <div className="font-medium">{row.original.tab}</div>,
+    header: "Service",
+    cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
   },
   // Column for Slug
   {

@@ -1,205 +1,172 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import {
-  ChevronRight,
-  Code2,
-  Cpu,
-  Database,
-  Globe2,
-  Terminal,
-  Binary,
-  Blocks,
-} from "lucide-react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { TextEffect } from "@/components/ui/text-effect";
+import { AnimatedGroup } from "@/components/ui/animated-group";
+import LogoCloud from "@/components/logo-cloud";
+import DotPattern from "@/components/ui/dot-pattern";
 
-const CodeBlock = ({ delay = 0 }) => (
-  <div className="flex flex-col space-y-1">
-    <motion.div
-      className="h-1.5 bg-blue-400/30 rounded-full w-16"
-      animate={{ width: ["2rem", "4rem", "2rem"] }}
-      transition={{ duration: 2, delay, repeat: Infinity }}
-    />
-    <motion.div
-      className="h-1.5 bg-purple-400/30 rounded-full w-12"
-      animate={{ width: ["4rem", "2rem", "4rem"] }}
-      transition={{ duration: 2, delay: delay + 0.3, repeat: Infinity }}
-    />
-    <motion.div
-      className="h-1.5 bg-cyan-400/30 rounded-full w-20"
-      animate={{ width: ["3rem", "5rem", "3rem"] }}
-      transition={{ duration: 2, delay: delay + 0.6, repeat: Infinity }}
-    />
-  </div>
-);
-
-const Hero = () => {
-  const [scrolled, setScrolled] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const position = window.scrollY;
-      setScrolled(Math.min(position / 500, 1));
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const router = useRouter();
-
-  return (
-    <div className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
-      {/* Previous background elements remain the same */}
-      <div
-        className="absolute inset-0 overflow-hidden hidden sm:block"
-        style={{
-          backgroundImage: `linear-gradient(transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px)),
-                       linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), rgba(255, 255, 255, 0.1) calc(100% - 1px))`,
-          backgroundSize: "50px 50px",
-          opacity: 0.2,
-        }}
-      />
-
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[128px] mix-blend-screen hidden sm:block" />
-
-      <div className="relative w-full container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-white/90">
-                Modern Development Solutions
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              <h1 className="text-3xl    md:text-6xl lg:text-7xl font-bold tracking-tight">
-                We Build
-                <span className="block py-2 mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
-                  Digital Future
-                </span>
-              </h1>
-
-              <p className="text-xl text-white/80 max-w-xl">
-                Empowering businesses with cutting-edge software solutions.
-                Where innovation meets excellence.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-              <button
-                className="relative group"
-                onClick={() => router.push("/contact")}
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
-                <div className="relative px-8 py-3 bg-gray-900 rounded-lg leading-none flex items-center">
-                  <span className="text-white">Start Project</span>
-                  <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
-
-              <button
-                onClick={() => router.push("/about")}
-                className="px-8 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition-colors backdrop-blur-sm"
-              >
-                Learn More
-              </button>
-            </div>
-
-            {/* Service cards */}
-            <div className="grid grid-cols-3 gap-4 pt-8">
-              {[
-                { icon: Code2, label: "Software Developement" },
-                { icon: Database, label: "Design And Archetecture" },
-                { icon: Globe2, label: "Backoffice Support" },
-              ].map((service, index) => (
-                <div
-                  key={index}
-                  className="group p-4 rounded-lg bg-white/10 border border-white/20 hover:border-white/30 transition-colors backdrop-blur-sm"
-                >
-                  <service.icon className="w-6 h-6 mb-2 text-blue-300 group-hover:text-blue-200 transition-colors" />
-                  <p className="text-sm text-white/80 group-hover:text-white/90 transition-colors">
-                    {service.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right content - Development Animation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative w-full aspect-square hidden lg:block"
-          >
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Central Terminal Window */}
-              <motion.div
-                animate={{
-                  y: [-10, 10, -10],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="relative w-96 h-96"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl opacity-20 blur-xl" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-black/30 border border-white/20 rounded-2xl p-4">
-                  {/* Terminal Header */}
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
-                  </div>
-
-                  {/* Code Lines */}
-                  <div className="space-y-6">
-                    <CodeBlock delay={0} />
-                    <CodeBlock delay={0.5} />
-                    <CodeBlock delay={1} />
-                  </div>
-
-                  {/* Floating Tech Icons */}
-                  {[Terminal, Binary, Blocks, Cpu].map((Icon, index) => (
-                    <motion.div
-                      key={index}
-                      className="absolute"
-                      animate={{
-                        x: [0, 20, 0],
-                        y: [0, -20, 0],
-                      }}
-                      transition={{
-                        duration: 3,
-                        delay: index * 0.5,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                      }}
-                      style={{
-                        top: `${20 + index * 20}%`,
-                        left: `${80 + (index % 2) * 10}%`,
-                      }}
-                    >
-                      <Icon className="w-8 h-8 text-blue-300/60" />
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
+const transitionVariants = {
+  item: {
+    hidden: { opacity: 0, filter: "blur(12px)", y: 12 } as const,
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      transition: { type: "spring", bounce: 0.3, duration: 1.2 } as const,
+    },
+  },
 };
 
-export default Hero;
+export default function Hero() {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+  if (!isMounted) return null;
+
+  return (
+    <main className="overflow-hidden bg-black">
+      <section className=" relative text-white">
+        <DotPattern className="w-full h-[70vh] opacity-20" />
+
+        <div className="absolute inset-0 isolate opacity-65 hidden lg:block">
+          <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
+          <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
+        </div>
+
+        <AnimatedGroup
+          variants={{
+            container: { visible: { transition: { delayChildren: 0.8 } } },
+            item: {
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { type: "spring", bounce: 0.3, duration: 1.8 },
+              },
+            },
+          }}
+          className="mask-b-from-35% mask-b-to-90% absolute inset-0 top-56 -z-10 lg:top-32"
+        >
+          <Image
+            src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
+            alt="background"
+            className="w-full h-full object-cover opacity-80"
+            width={3276}
+            height={4095}
+            priority
+          />
+        </AnimatedGroup>
+
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-20 bg-[radial-gradient(125%_125%_at_50%_100%,transparent_0%,#000_80%)]"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-6 pt-24 md:pt-36">
+          <div className="text-center sm:mx-auto lg:mr-auto">
+            <AnimatedGroup variants={transitionVariants}>
+              <Link
+                href="#services"
+                className="group mx-auto flex w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
+              >
+                <span className="text-white text-sm">
+                  Modern Software Solutions
+                </span>
+                <span className="block h-4 w-0.5 bg-white/40"></span>
+                <div className="bg-zinc-800 group-hover:bg-zinc-700 size-6 overflow-hidden rounded-full duration-500">
+                  <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
+                    <span className="flex size-6">
+                      <ArrowRight className="m-auto size-3 text-white" />
+                    </span>
+                    <span className="flex size-6">
+                      <ArrowRight className="m-auto size-3 text-white" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </AnimatedGroup>
+
+            <TextEffect
+              preset="fade-in-blur"
+              speedSegment={0.25}
+              as="h1"
+              className="mx-auto mt-8 max-w-4xl text-balance text-5xl font-semibold text-white md:text-7xl lg:mt-16 xl:text-[5.25rem]"
+            >
+              We Provide Modern Solutions
+            </TextEffect>
+
+            <TextEffect
+              per="line"
+              preset="fade-in-blur"
+              speedSegment={0.25}
+              delay={0.4}
+              as="p"
+              className="mx-auto mt-8 max-w-2xl text-balance text-lg text-zinc-300"
+            >
+              From concept to deployment — we build reliable, scalable, and
+              maintainable software that powers your business forward.
+            </TextEffect>
+
+            <AnimatedGroup
+              variants={{
+                container: {
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.04,
+                      delayChildren: 0.6,
+                    },
+                  },
+                },
+                ...transitionVariants,
+              }}
+              className="mt-12 flex items-center justify-center gap-2 md:flex-row"
+            >
+              <div key={1} className=" p-0.5">
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-xl px-5 bg-sky-600 text-white hover:bg-sky-700"
+                >
+                  <Link href="#contact">
+                    <span className="whitespace-nowrap">Get Started</span>
+                  </Link>
+                </Button>
+              </div>
+
+              <Button
+                key={2}
+                asChild
+                size="lg"
+                variant="ghost"
+                className="h-10.5 rounded-xl px-5 text-white border border-white/20 "
+              >
+                <Link href="#portfolio">
+                  <span className="whitespace-nowrap">Our Work</span>
+                </Link>
+              </Button>
+            </AnimatedGroup>
+          </div>
+        </div>
+      </section>
+
+      <AnimatedGroup
+        variants={{
+          container: {
+            visible: {
+              transition: { staggerChildren: 0.04, delayChildren: 0.6 },
+            },
+          },
+          ...transitionVariants,
+        }}
+      >
+        <div className="mt-32 lg:mt-25">
+          <LogoCloud />
+        </div>
+      </AnimatedGroup>
+    </main>
+  );
+}

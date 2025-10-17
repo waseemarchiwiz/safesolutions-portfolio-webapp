@@ -1,238 +1,126 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import CustomLogo from "./logo";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import MobileNavDrawer from "./drawer";
 
-const navigations = [
-  { title: "Home", href: "/" },
-  { title: "About", href: "/about" },
-  { title: "Services", href: "/services" },
-  { title: "Careers", href: "/careers" },
-  { title: "Blogs", href: "/blogs" },
+const menuItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Blogs", href: "/blogs" },
+  { name: "Careers", href: "/careers" },
 ];
 
 const Header = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false); // State to track mounting
+  const [menuState, setMenuState] = useState(false);
+
+  // inside Header component
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname === path;
-
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 80);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    // Ensures that theme is applied only after the initial render
-    setMounted(true);
-  }, []);
-
-  const toggleTheme = () => {
-    if (!resolvedTheme?.trim()) return;
-
-    if (resolvedTheme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-
-  if (!mounted) {
-    // Prevent rendering until the component is mounted on the client
-    return null;
-  }
+  // Logo color: white on top (dark hero), black after scroll (light sections)
+  const logoColor = isScrolled ? "black" : "white";
 
   return (
-    <header
-      className={`fixed w-full z-[999] transition-all duration-300 ${
-        scrolled ? "bg-blue-900" : ""
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center">
-              <img
-                className="h-24 w-auto transition-transform hover:scale-105"
-                src="/logo.png"
-                alt="safesolution"
-              />
-            </Link>
-          </div>
+    <header>
+      <nav
+        data-state={menuState && "active"}
+        className="fixed z-20 w-full px-2 transition-all duration-300"
+      >
+        <div
+          className={cn(
+            "mx-auto mt-2 max-w-7xl px-2 transition-all duration-300 lg:px-5",
+            isScrolled &&
+              "bg-background/70 max-w-[1235px] rounded-2xl px-2 border backdrop-blur-lg shadow-sm dark:shadow-none lg:px-5"
+          )}
+        >
+          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            {/* ---------- LOGO ---------- */}
+            <div className="flex w-full justify-between lg:w-auto">
+              <CustomLogo color={logoColor} />
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <nav className="flex items-center justify-center gap-2">
-              <ul className="flex items-center gap-5">
-                {navigations.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className={`relative py-2 text-sm font-medium transition-colors ${
-                        isActive(item.href)
-                          ? "text-blue-500 dark:text-white"
-                          : "text-white dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-                      }`}
-                      onClick={() => {
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                        if (menuOpen) setMenuOpen(false); // Close mobile menu if open
-                      }}
-                    >
-                      {item.title}
-                      {isActive(item.href) && (
-                        <span className="absolute bottom-0 left-0 h-0.5 w-full bg-blue-500 dark:bg-blue-400" />
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex items-center gap-4 ml-3 pl-8 border-l border-gray-200 dark:border-gray-700">
-                <Link href="/contact">
-                  <Button className="bg-blue-500 mt-2 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
-                    Contact us
-                  </Button>
-                </Link>
-
-                {/* Dark Mode Toggle */}
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                  aria-label="Toggle Dark Mode"
-                >
-                  {resolvedTheme === "dark" ? (
-                    <Sun className="w-5 h-5 text-yellow-500" />
-                  ) : (
-                    <Moon className="w-5 h-5 text-gray-700" />
-                  )}
-                </button>
-              </div>
-            </nav>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMenuOpen(true)}
-            className="p-2 rounded-lg md:hidden bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          >
-            <svg
-              className="w-6 h-6 text-gray-700 dark:text-gray-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm md:hidden">
-          <div className="fixed top-0 right-0 w-[300px] h-full bg-blue-900 dark:bg-black shadow-2xl transition-transform">
-            <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800">
-              <Image
-                className="h-12 w-auto"
-                src="/logo.png"
-                alt="safesolution"
-              />
+              {/* Mobile Menu Toggle */}
               <button
-                onClick={() => setMenuOpen(false)}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                onClick={() => setMenuState(!menuState)}
+                aria-label={menuState ? "Close Menu" : "Open Menu"}
+                className="relative z-20 -m-2.5 mr-1 block cursor-pointer p-2.5 lg:hidden"
+                style={{ color: isScrolled ? "black" : "white" }}
               >
-                <svg
-                  className="w-6 h-6 text-white dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <Menu className="m-auto size-6 transition-all duration-200 data-[state=active]:opacity-0" />
+                <X className="absolute inset-0 m-auto size-6 scale-0 opacity-0 transition-all duration-200 data-[state=active]:scale-100 data-[state=active]:opacity-100" />
               </button>
             </div>
 
-            <nav className="p-4 bg-blue-900 dark:bg-black">
-              <ul className="space-y-3">
-                {["Home", "About", "Services", "Careers", "Blogs"].map(
-                  (item) => (
-                    <li key={item}>
+            {/* ---------- NAV LINKS ---------- */}
+            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+              <ul className="flex items-center gap-6 text-sm">
+                {menuItems.map((item) => {
+                  const active =
+                    pathname === item.href ||
+                    (item.href !== "/" && pathname?.startsWith(item.href));
+                  return (
+                    <li key={item.href}>
                       <Link
-                        href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                        className={`block px-4 py-2 rounded-lg transition-colors ${
-                          isActive(
-                            item === "Home" ? "/" : `/${item.toLowerCase()}`
-                          )
-                            ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-                            : "text-white dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-                        }`}
-                        onClick={() => setMenuOpen(false)}
+                        href={item.href}
+                        className={cn(
+                          "relative block py-2 transition-colors",
+                          isScrolled
+                            ? "text-zinc-800 hover:text-sky-700 dark:text-zinc-200 dark:hover:text-sky-400"
+                            : "text-zinc-100 hover:text-white",
+                          active && "font-medium"
+                        )}
+                        aria-current={active ? "page" : undefined}
                       >
-                        {item}
+                        <span>{item.name}</span>
+                        {/* Active underline */}
+                        <span
+                          className={cn(
+                            "absolute left-0 right-0 -bottom-0.5 mx-auto h-0.5 w-0 rounded-full transition-all",
+                            active ? "w-10 bg-current" : "w-0"
+                          )}
+                          aria-hidden
+                        />
                       </Link>
                     </li>
-                  )
-                )}
+                  );
+                })}
               </ul>
+            </div>
 
-              <div className="mt-6 p-4 border-t border-gray-200 dark:border-gray-800">
-                <Link href="/contact" onClick={() => setMenuOpen(false)}>
-                  <Button className="bg-blue-500 mt-2 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
-                    Contact us
-                  </Button>
-                </Link>
-
-                {/* Dark Mode Toggle */}
-                <button
-                  onClick={() => {
-                    toggleTheme();
-                    setMenuOpen(false);
-                  }}
-                  className="flex items-center gap-3 w-full px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  {resolvedTheme === "dark" ? (
-                    <>
-                      <Sun className="w-5 h-5 text-yellow-500" />
-                      <span className="text-white dark:text-gray-300">
-                        Light Mode
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="w-5 h-5 text-white" />
-                      <span className="text-white dark:text-gray-300">
-                        Dark Mode
-                      </span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </nav>
+            {/* ---------- RIGHT SIDE BUTTONS ---------- */}
+            <Link href="/blogs" className="hidden lg:block">
+              <Button
+                variant="outline"
+                className="bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+                asChild
+              >
+                <span>
+                  Contact Us
+                  <ArrowRight className=" size-4" />
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
-      )}
+      </nav>
+      <MobileNavDrawer
+        isOpen={menuState}
+        onOpenChange={() => setMenuState((prev) => !prev)}
+        direction="right"
+      />
     </header>
   );
 };

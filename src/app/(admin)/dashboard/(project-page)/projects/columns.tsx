@@ -16,7 +16,6 @@ import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
 import { iconsMap } from "@/app/(website)/project/data";
 import Image from "next/image";
-import { baseURL } from "@/lib/api-config/client";
 
 // Define the shape of your ServiceTypes data
 
@@ -57,6 +56,8 @@ export interface ProjectTypes {
   services: ServiceTypes[];
   projectDetails: ProjectDetailTypes[];
   supports: SupportTypes[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface columnsProps {

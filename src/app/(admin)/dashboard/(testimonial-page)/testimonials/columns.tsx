@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import Image from "next/image";
-import { baseURL } from "@/lib/api-config/client";
 import { shortText } from "@/lib/utils";
 
 // Define the shape of your TestimonialTypes data

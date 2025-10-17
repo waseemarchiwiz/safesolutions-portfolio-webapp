@@ -21,7 +21,6 @@ const Home = ({
   totalTeams,
   totalServices,
   totalProjects,
-  totalFAQs,
   totalContacts,
   totalCompanies,
 }: StatTypes) => {

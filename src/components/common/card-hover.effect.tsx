@@ -3,14 +3,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
-interface Item {
+export interface Item {
   title: string;
   description: string;
   link?: string;
 }
 
 interface HoverEffectProps {
-  items: any[];
+  items: Item[];
   className?: string;
 }
 

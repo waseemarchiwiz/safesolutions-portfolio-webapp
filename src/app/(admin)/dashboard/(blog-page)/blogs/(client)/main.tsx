@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import BlogDialog from "./blog.dialog";
 import { BlogTypes, getColumns } from "../columns";
 import { toast } from "sonner";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
 import { onSaveTypes } from "../../../types";
 
 interface MainBlogsProps {

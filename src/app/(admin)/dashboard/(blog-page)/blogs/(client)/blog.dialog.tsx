@@ -15,7 +15,6 @@ import { BlogTypes } from "../columns";
 import { onSaveTypes } from "../../../types";
 import { DeleteBlogAction } from "../(actions)/actions";
 import { useEffect, useState } from "react";
-import Loading from "../loading";
 
 interface BlogDialogProps {
   open: boolean;

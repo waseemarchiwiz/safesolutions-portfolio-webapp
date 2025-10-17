@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -23,8 +22,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useEffect, useState } from "react";
-import { ReturnPayload } from "@/lib/types";
-import { apiClient } from "@/lib/api-config/client";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { FaqTypes } from "../columns";

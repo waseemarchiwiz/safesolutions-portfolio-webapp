@@ -2,52 +2,62 @@
 
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from "@/components/ui/accordion";
-import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
+import { DynamicIcon } from "lucide-react/dynamic";
+import Link from "next/link";
+import { faqTypes } from "../data";
 
-const Faq = ({ faqs }: { faqs: FaqTypes[] }) => {
+export default function Faqs({ faqs }: { faqs: faqTypes[] }) {
   return (
-    <>
-      <section
-        id="faqs"
-        className="gap-10 justify-center items-center p-10 bg-white dark:bg-black"
-      >
-        <div className="flex justify-center items-center mb-6">
-          <div className=" inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <h2 className="text-purple-600 dark:text-white text-sm font-medium">
-              Frequently Asked Questions (FAQs)
-            </h2>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto sm:px-8 px-4">
-          <div className="w-full">
-            <Accordion type="multiple">
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={faq.answer}
-                  className="w-full flex flex-col"
+    <section className="dark:bg-background py-20">
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="flex flex-col gap-10 md:flex-row md:gap-16">
+          <div className="md:w-1/3">
+            <div className="sticky top-20">
+              <h2 className="mt-4 text-3xl font-bold">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-muted-foreground mt-4">
+                Can&apos;t find what you&apos;re looking for? Contact our{" "}
+                <Link
+                  href="#"
+                  className="text-primary font-medium hover:underline"
                 >
-                  <AccordionTrigger className="p-6 w-full text-base text-left text-gray-800 dark:text-white flex items-center">
-                    <span className="mr-4">{faq.question}</span>
+                  customer support team
+                </Link>
+              </p>
+            </div>
+          </div>
+          <div className="md:w-2/3">
+            <Accordion type="single" collapsible className="w-full space-y-2">
+              {faqs.map((item) => (
+                <AccordionItem
+                  key={item.id}
+                  value={String(item.id)}
+                  className="bg-background shadow-xs rounded-lg border px-4 last:border-b"
+                >
+                  <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-6">
+                        <DynamicIcon name={"clock"} className="m-auto size-4" />
+                      </div>
+                      <span className="text-base">{item.question}</span>
+                    </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 overflow-hidden transition-all duration-300 ease-in-out max-w-full">
-                    <p className="text-sm text-gray-500 dark:text-white">
-                      {faq.answer}
-                    </p>
+                  <AccordionContent className="pb-5">
+                    <div className="px-9">
+                      <p className="text-base">{item.answer}</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
-};
-
-export default Faq;
+}

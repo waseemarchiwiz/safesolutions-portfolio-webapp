@@ -1,6 +1,4 @@
-import { apiClient } from "@/lib/api-config/client";
 import ProjectDetails from "../(client)/project-details";
-import { ProjectTypes } from "../data";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
 
@@ -42,7 +40,7 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
 
   return (
     <div className="dark:bg-[#18181b]">
-      <ProjectDetails data={(project as ProjectTypes) || {}} />
+      <ProjectDetails data={project || {}} />
     </div>
   );
 }

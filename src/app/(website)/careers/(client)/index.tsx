@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Briefcase, MapPin } from "lucide-react";
+import { Briefcase, MapPin, ScanText, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import PageHeroSection from "../../(common)/hero-section";
 import WhySafe from "./why-safe";
 import ApplyModal from "./application-dialog";
-import ScrollToTop from "@/components/common/scroll-to-top";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
@@ -25,7 +24,7 @@ interface CareersProps {
 
 const Careers = ({ careers, companies }: CareersProps) => {
   // selected job
-  const [selectedJob, setSelectedJob] = useState<CareerTypes | {}>({}); // Loader state to track data fetching
+  const [selectedJob, setSelectedJob] = useState<CareerTypes | null>(null); // Loader state to track data fetching
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleApply = (job: CareerTypes) => {
@@ -42,30 +41,28 @@ const Careers = ({ careers, companies }: CareersProps) => {
   };
 
   return (
-    <div>
+    <>
       {/* Hero Section */}
       <PageHeroSection
-        mainTitle="Join Our Team"
-        topTitle="We Seek"
-        bottomTittle="Dreamers."
-        description="Learn who we are and why we excel in delivering innovative solutions that drive business growth and digital transformation."
-        buttonText="Get Started"
+        tag="Careers"
+        title="Top Opportunities"
+        description="We provide opportunities for it professionals"
       />
       <WhySafe />
-      <div className="min-h-screen bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                Trending Oppurtunities
-              </span>
+      <div className="my-10 bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[76.5rem] mx-auto">
+          {/* Header Section */}
+          <div className="mb-8">
+            <div className="mb-3 flex items-center text-sm text-sky-600">
+              <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
+              <span className="font-semibold">Job openings</span>
             </div>
-
-            <p className="text-xl text-gray-600 dark:text-white max-w-2xl mx-auto mt-4">
-              We promise you a dynamic and collaborative work environment where
-              innovation thrives, and every challenge becomes an opportunity to
-              grow and excel
+            <h2 className="text-4xl font-semibold text-slate-900 dark:text-white">
+              Current Available <span className="text-sky-600">Positions</span>
+            </h2>
+            <p className="mt-3 max-w-2xl text-slate-600 dark:text-gray-400">
+              Great teams are built on shared goals and a sense of purpose. When
+              everyone is aligned with a clear mission.
             </p>
           </div>
 
@@ -87,35 +84,62 @@ const Careers = ({ careers, companies }: CareersProps) => {
               {careers?.map((job, index) => (
                 <div
                   key={index}
-                  className="bg-[#FFFFFF] dark:bg-black p-6 rounded-lg  border-2  hover:shadow-lg hover:shadow-slate-500 transition-shadow duration-300"
+                  className="group relative h-full bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-500 hover:border-sky-600"
                 >
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                    {job.title}
-                  </h2>
-                  <div className="space-y-2 mt-5 mb-4 text-gray-600 dark:text-white">
-                    <div className="flex items-center">
-                      <Briefcase className="h-5 w-5 mr-2 text-gray-500 dark:text-white" />
-                      <span>{job.jobDescription}</span>
+                  <div className="relative p-6 h-full flex flex-col">
+                    {/* Title */}
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300 group-hover:text-sky-600">
+                      {job.title}
+                    </h2>
+
+                    {/* Job Details */}
+                    <div className="space-y-3 mb-4 flex-grow">
+                      <div className="flex items-start text-gray-600 dark:text-gray-400 transition-all duration-300 group-hover:translate-x-1">
+                        <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-3 rounded-full bg-sky-600/10 dark:bg-sky-600/20 flex items-center justify-center transition-all duration-300 group-hover:bg-sky-600 group-hover:scale-110">
+                          <Briefcase className="w-3 h-3 text-sky-600 transition-colors duration-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-sm leading-relaxed">
+                          {job.jobDescription}
+                        </span>
+                      </div>
+
+                      <div
+                        className="flex items-start text-gray-600 dark:text-gray-400 transition-all duration-300 group-hover:translate-x-1"
+                        style={{ transitionDelay: "50ms" }}
+                      >
+                        <div className="flex-shrink-0 w-5 h-5 mt-0.5 mr-3 rounded-full bg-sky-600/10 dark:bg-sky-600/20 flex items-center justify-center transition-all duration-300 group-hover:bg-sky-600 group-hover:scale-110">
+                          <MapPin className="w-3 h-3 text-sky-600 transition-colors duration-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-sm leading-relaxed">
+                          {job.location}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mt-4 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200">
+                        {job.shortDescription}
+                      </p>
+                    </div>
+
+                    {/* Apply Button */}
+                    <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+                      <Button
+                        variant="outline"
+                        onClick={() => handleApply(job)}
+                        className="w-full cursor-pointer relative overflow-hidden border-sky-600 text-white bg-sky-600 hover:bg-sky-700 hover:text-white"
+                      >
+                        <span className="relative z-10 flex items-center justify-center">
+                          Apply Now
+                          <ArrowRight className="w-4 h-4 ml-2 " />
+                        </span>
+                        <div className="absolute inset-0 bg-sky-600 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-300" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="space-y-2 mt-[-10px] mb-4 text-gray-600 dark:text-white">
-                    <div className="flex items-center">
-                      <MapPin className="h-5 w-5 mr-2 text-gray-500 dark:text-white" />
-                      <span>{job.location}</span>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 dark:text-white mb-4">
-                    {job.shortDescription}
-                  </p>
-                  <div className="mt-4">
-                    <Button
-                      variant="outline"
-                      // to={job.link}
-                      // target="_blank"
-                      onClick={() => handleApply(job)}
-                    >
-                      Apply Now
-                    </Button>
+
+                  {/* Shimmer Effect on Hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none">
+                    <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
                   </div>
                 </div>
               ))}
@@ -131,8 +155,7 @@ const Careers = ({ careers, companies }: CareersProps) => {
         companies={companies}
         onSave={handleSubmit}
       />
-      <ScrollToTop />
-    </div>
+    </>
   );
 };
 

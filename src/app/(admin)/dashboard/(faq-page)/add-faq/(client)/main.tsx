@@ -16,8 +16,6 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { apiClient } from "@/lib/api-config/client";
-import { ReturnPayload } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { FaqFormValues, FaqSchema } from "../(validation)/validation";
 import { Textarea } from "@/components/ui/textarea";

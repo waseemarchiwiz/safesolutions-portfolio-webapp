@@ -139,7 +139,9 @@ export function DataTable<TData, TValue>({
   limit,
   page,
   linkInfo,
-  getRowId = (original: any) => original.id,
+  // FIXED: Replace this line
+  getRowId = (original: TData) =>
+    (original as Record<string, unknown>).id as UniqueIdentifier,
 }: DataTableProps<TData, TValue>) {
   // total pages
   const totalPages = Math.ceil(total / limit);
@@ -327,7 +329,7 @@ export function DataTable<TData, TValue>({
                       />
                     </SelectTrigger>
                     <SelectContent side="top">
-                      {[5, 10, 20, 30, 40, 50].map((pageSize, index) => (
+                      {[5, 10, 20, 30, 40, 50].map((pageSize) => (
                         <SelectItem
                           key={pageSize}
                           value={`${pageSize}`}

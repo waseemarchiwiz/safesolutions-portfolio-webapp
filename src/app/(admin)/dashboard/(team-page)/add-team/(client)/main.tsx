@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import Image from "next/image";
 import { buildTeamSchema, TeamFormValues } from "../(validation)/validation";
-import { baseURL } from "@/lib/api-config/client";
+import { baseURL } from "@/lib/consts";
 import { useRouter } from "next/navigation";
 import { TeamTypes } from "../../teams/columns";
 import { AddTeamAction } from "../(actions)/action";
