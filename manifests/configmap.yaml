@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: testing-react-app-config
-  namespace: dev
-  labels:
-    app.kubernetes.io/name: testing-react-app
-    kubernetes.azure.com/generator: devhub
-data:
