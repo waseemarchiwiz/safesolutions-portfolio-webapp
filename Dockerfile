@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json ./
-RUN npm ci --legacy-peer-deps --ignore-scripts && \
+RUN npm i --legacy-peer-deps --ignore-scripts && \
     npm i sharp --legacy-peer-deps
 
 # Rebuild the source code only when needed
