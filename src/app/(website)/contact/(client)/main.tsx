@@ -78,11 +78,11 @@ const Main: React.FC<MainProps> = ({ companies }) => {
 
       {/* Contact Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[77rem] mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Get in Touch
+              Get in <span className="text-sky-600">Touch</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Ready to start your next project? Send us a message and we&apos;ll

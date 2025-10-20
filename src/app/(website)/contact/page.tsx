@@ -9,6 +9,6 @@ export default async function ContactPage() {
 
   console.log("companies: ", companies);
 
-  // teams
+  // Contact
   return <Main companies={companies || []} />;
 }

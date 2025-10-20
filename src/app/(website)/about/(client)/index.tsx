@@ -29,11 +29,10 @@ const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
 
   return (
     <>
-      {/* Hero Section */}
       <PageHeroSection
-        tag="About"
-        title="Know about us"
-        description="This is a dedicated company providing best IT solutions"
+        tag="About Us"
+        title="Transforming Ideas Into Digital Excellence"
+        description="We're a passionate team of innovators dedicated to delivering cutting-edge IT solutions that drive your business forward"
       />
       {/* Achievements Section */}
       <SectionWithReveal>

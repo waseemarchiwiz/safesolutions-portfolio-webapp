@@ -37,30 +37,6 @@ export default function Hero() {
           <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
         </div>
 
-        <AnimatedGroup
-          variants={{
-            container: { visible: { transition: { delayChildren: 0.8 } } },
-            item: {
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { type: "spring", bounce: 0.3, duration: 1.8 },
-              },
-            },
-          }}
-          className="mask-b-from-35% mask-b-to-90% absolute inset-0 top-56 -z-10 lg:top-32"
-        >
-          <Image
-            src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
-            alt="background"
-            className="w-full h-full object-cover opacity-80"
-            width={3276}
-            height={4095}
-            priority
-          />
-        </AnimatedGroup>
-
         <div
           aria-hidden
           className="absolute inset-0 -z-20 bg-[radial-gradient(125%_125%_at_50%_100%,transparent_0%,#000_80%)]"

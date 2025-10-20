@@ -101,7 +101,7 @@ const Header = () => {
             </div>
 
             {/* ---------- RIGHT SIDE BUTTONS ---------- */}
-            <Link href="/blogs" className="hidden lg:block">
+            <Link href="/contact" className="hidden lg:block">
               <Button
                 variant="outline"
                 className="bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"

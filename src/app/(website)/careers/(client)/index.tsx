@@ -45,8 +45,8 @@ const Careers = ({ careers, companies }: CareersProps) => {
       {/* Hero Section */}
       <PageHeroSection
         tag="Careers"
-        title="Top Opportunities"
-        description="We provide opportunities for it professionals"
+        title="Unlock Your Potential"
+        description="Join our growing team and advance your career with challenging projects, continuous learning, and competitive benefits"
       />
       <WhySafe />
       <div className="my-10 bg-[#FFFFFF] dark:bg-black py-12 px-4 sm:px-6 lg:px-8">

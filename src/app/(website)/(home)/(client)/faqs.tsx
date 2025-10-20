@@ -12,13 +12,13 @@ import { faqTypes } from "../data";
 
 export default function Faqs({ faqs }: { faqs: faqTypes[] }) {
   return (
-    <section className="dark:bg-background py-20">
+    <section className="dark:bg-background py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex flex-col gap-10 md:flex-row md:gap-16">
           <div className="md:w-1/3">
             <div className="sticky top-20">
-              <h2 className="mt-4 text-3xl font-bold">
-                Frequently Asked Questions
+              <h2 className="text-3xl font-bold">
+                Frequently Asked <span className="text-sky-600">Questions</span>
               </h2>
               <p className="text-muted-foreground mt-4">
                 Can&apos;t find what you&apos;re looking for? Contact our{" "}

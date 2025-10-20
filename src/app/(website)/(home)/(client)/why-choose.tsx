@@ -13,11 +13,12 @@ export default function Features() {
             <span className="font-semibold">Choose</span>
           </div>
           <h2 className="text-4xl font-semibold text-slate-900">
-            Why choose <span className="text-sky-600">Safe Solutions ?</span>
+            Why choose <span className="text-sky-600">Safe Solutions?</span>
           </h2>
           <p className="mt-3 max-w-2xl text-slate-600">
-            Explore a what we offer at Safe Solutions — crafted with precision,
-            creativity, and a focus on real-world results.
+            Discover why businesses trust Safe Solutions for cutting-edge
+            software development — delivering innovative solutions with
+            precision, reliability, and exceptional results.
           </p>
         </div>
 
@@ -27,13 +28,13 @@ export default function Features() {
               <CardDecorator>
                 <Zap className="size-6" aria-hidden />
               </CardDecorator>
-              <h3 className="mt-6 font-medium">Customizable</h3>
+              <h3 className="mt-6 font-medium">Scalable Solutions</h3>
             </CardHeader>
 
             <CardContent>
               <p className="text-sm">
-                Extensive customization options, allowing you to tailor every
-                aspect to meet your specific needs.
+                Build software that grows with your business. Our solutions are
+                designed to scale seamlessly from startup to enterprise.
               </p>
             </CardContent>
           </div>
@@ -44,13 +45,13 @@ export default function Features() {
                 <Settings2 className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">You have full control</h3>
+              <h3 className="mt-6 font-medium">Expert Development Team</h3>
             </CardHeader>
 
             <CardContent>
               <p className="mt-3 text-sm">
-                From design elements to functionality, you have complete control
-                to create a unique and personalized experience.
+                Work with experienced developers who bring technical excellence
+                and industry best practices to every project.
               </p>
             </CardContent>
           </div>
@@ -61,13 +62,13 @@ export default function Features() {
                 <Sparkles className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Powered By AI</h3>
+              <h3 className="mt-6 font-medium">AI-Powered Innovation</h3>
             </CardHeader>
 
             <CardContent>
               <p className="mt-3 text-sm">
-                Elements to functionality, you have complete control to create a
-                unique experience.
+                Leverage cutting-edge artificial intelligence and machine
+                learning to create smarter, more efficient software solutions.
               </p>
             </CardContent>
           </div>
