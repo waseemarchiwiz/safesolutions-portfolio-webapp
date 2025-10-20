@@ -39,12 +39,12 @@ jobs:
           tags: ${{ secrets.ACR_ENDPOINT }}/safesolution-portfolio:${{ env.IMAGE_TAG }}
           file: ./Dockerfile
           secrets: |
-            NEXT_PUBLIC_TINYMCE_API_URL=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}
-            DATABASE_URL=${{ secrets.DATABASE_URL }}         
-            BETTER_AUTH_SECRET=${{ secrets.BETTER_AUTH_SECRET }}
-            MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}
-            MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}
-            MAIL_HOST=${{ secrets.MAIL_HOST }}
-            MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
-            MAIL_PORT=${{ secrets.MAIL_PORT }}
-            MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
+            "next_public_tinymce_api_url"=${{ secrets.NEXT_PUBLIC_TINYMCE_API_URL }}
+            "database_url"=${{ secrets.DATABASE_URL }}         
+            "better_auth_secret"=${{ secrets.BETTER_AUTH_SECRET }}
+            "mail_from_address"=${{ secrets.MAIL_FROM_ADDRESS }}
+            "mail_from_name"=${{ secrets.MAIL_FROM_NAME }}
+            "mail_host"=${{ secrets.MAIL_HOST }}
+            "mail_password"=${{ secrets.MAIL_PASSWORD }}
+            "mail_port"=${{ secrets.MAIL_PORT }}
+            "mail_username"=${{ secrets.MAIL_USERNAME }}
