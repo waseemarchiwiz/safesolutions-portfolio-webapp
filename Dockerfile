@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 # Multi-stage build for Next.js application
 FROM node:22-alpine AS base
 
