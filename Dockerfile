@@ -40,7 +40,7 @@ RUN --mount=type=secret,id=next_public_tinymce_api_url \
     --mount=type=secret,id=mail_password \
     --mount=type=secret,id=mail_port \
     --mount=type=secret,id=mail_username \
-    export NEXT_PUBLIC_TINYMCE_API_URL="$(cat /run/secrets/next_public_tinymce_api_url)" && 
+    export NEXT_PUBLIC_TINYMCE_API_URL="$(cat /run/secrets/next_public_tinymce_api_url)" && \
     export DATABASE_URL="$(cat /run/secrets/database_url)" && \
     export BETTER_AUTH_SECRET="$(cat /run/secrets/better_auth_secret)" && \
     export MAIL_FROM_ADDRESS="$(cat /run/secrets/mail_from_address)" && \
