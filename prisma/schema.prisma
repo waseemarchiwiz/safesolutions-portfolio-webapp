@@ -1,0 +1,242 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id           Int       @id @default(autoincrement())
+  title        String
+  slug         String   @unique
+  description  String
+  features     String[]  // always an array (empty if nothing)
+  link         String?
+  image         String
+
+  // only filled for Software Development
+  overview     String?
+  technologies String[]
+  industries   String[]
+  useCases     String[]
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+
+model Career {
+  id                Int      @id @default(autoincrement())
+  title             String
+  slug              String   @unique
+  jobDescription    String
+  location          String
+  shortDescription  String
+  link              String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model FAQ {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  designation String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  slug      String   @unique
+  github    String
+  twitter   String
+  linkedin  String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChooseUs {
+  id        Int      @id @default(autoincrement())
+  title     String
+  sub_title String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Project {
+  id           Int              @id @default(autoincrement())
+  name         String
+  description  String
+  slug         String           @unique
+  img          String
+  type         String           // "detailed" or "external"
+  link         String?          // optional external URL
+
+  services        ProjectService[]        // 1-N
+  projectDetails  ProjectDetail[]         // 1-N
+  supports        ProjectSupport[]        // 1-N
+
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model ProjectService {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  features    String[]
+  icon        String
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectDetail {
+  id             Int      @id @default(autoincrement())
+  name           String
+  deploymentType String
+  projectId      Int
+  project        Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectSupport {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  icon        String
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Companies {
+  id            Int      @id @default(autoincrement())
+  name          String   @default("unknown")
+  slug          String   @unique
+  link          String    
+  email         String   @unique
+  description   String  
+  image         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Blog {
+  id              Int         @id @default(autoincrement())
+  title           String      @unique
+  slug            String      @unique
+  description     String      // Replace 'Text' with 'String'
+  content         String      @default("")
+  images          BlogImage[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model BlogImage {
+  id      Int    @id @default(autoincrement())
+  image   String
+  blogId  Int
+  blog    Blog   @relation(fields: [blogId], references: [id]) // Relationship with Blog
+}
+
+
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
