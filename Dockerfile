@@ -1,32 +1,82 @@
-# ---- builder ----
-FROM node:20-bookworm-slim AS builder
+# syntax=docker/dockerfile:1
+# Multi-stage build for Next.js application
+FROM node:22-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+
+RUN apk update && apk upgrade && apk add --no-cache libc6-compat
+
 WORKDIR /app
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+# Install dependencies based on the preferred package manager
+COPY package.json ./
+RUN npm ci --legacy-peer-deps --ignore-scripts && \
+    npm i sharp --legacy-peer-deps
 
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+COPY next.config.ts postcss.config.mjs tsconfig.json ./
+COPY components.json ./
 COPY prisma ./prisma
-RUN pnpm prisma generate
+COPY src ./src
+COPY public ./public
 
-COPY . .
-RUN pnpm build
 
-# ---- runner ----
-FROM node:20-bookworm-slim AS runner
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Build with secrets mounted securely
+RUN --mount=type=secret,id=next_public_tinymce_api_url \
+    --mount=type=secret,id=database_url \
+    --mount=type=secret,id=better_auth_secret \
+    --mount=type=secret,id=mail_from_address \
+    --mount=type=secret,id=mail_from_name \
+    --mount=type=secret,id=mail_host \
+    --mount=type=secret,id=mail_password \
+    --mount=type=secret,id=mail_port \
+    --mount=type=secret,id=mail_username \
+    export NEXT_PUBLIC_TINYMCE_API_URL="$(cat /run/secrets/next_public_tinymce_api_url)" && 
+    export DATABASE_URL="$(cat /run/secrets/database_url)" && \
+    export BETTER_AUTH_SECRET="$(cat /run/secrets/better_auth_secret)" && \
+    export MAIL_FROM_ADDRESS="$(cat /run/secrets/mail_from_address)" && \
+    export MAIL_FROM_NAME="$(cat /run/secrets/mail_from_name)" && \
+    export MAIL_HOST="$(cat /run/secrets/mail_host)" && \
+    export MAIL_PASSWORD="$(cat /run/secrets/mail_password)" && \
+    export MAIL_PORT="$(cat /run/secrets/mail_port)" && \
+    export MAIL_USERNAME="$(cat /run/secrets/mail_username)" && \
+    npx prisma generate && \
+    npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Copy static assets (read-only)
+COPY --from=builder --chmod=555 /app/public ./public
+COPY --from=builder --chmod=555 /app/.next/standalone ./
+COPY --from=builder --chmod=555 /app/.next/static ./.next/static
+
+# Prepare writable .next/cache directory
+RUN mkdir -p .next/cache && \
+    chown -R nextjs:nodejs .next/cache && \
+    chmod -R 755 .next/cache
+
+USER nextjs
+
 EXPOSE 3000
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/prisma ./prisma
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-CMD sh -c "pnpm dlx prisma migrate deploy && pnpm start"
+CMD ["node", "server.js"]
