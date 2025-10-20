@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, Pen, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
+import Image from "next/image";
 
 // Define the shape of your BlogTypes data
 export type BlogTypes = {
@@ -27,8 +28,8 @@ export type BlogTypes = {
   images: [
     {
       id: number;
-      image: string;
-      blog_id: number;
+      url: string;
+      publicId: number;
     }
   ];
 };
@@ -70,6 +71,21 @@ export const getColumns = ({
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "image",
+    header: "Profile",
+    cell: ({ row }) => (
+      <div className="font-medium p-1">
+        <Image
+          width={100}
+          height={150}
+          src={(row.original.images?.[0]?.url || "/placeholder.png") as string}
+          alt={(row.original.images?.[0]?.url as string) || ""}
+          className="rounded-full w-10 h-10"
+        />
+      </div>
+    ),
   },
   // Column for Title
   {

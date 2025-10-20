@@ -20,7 +20,9 @@ model Service {
   description  String
   features     String[]  // always an array (empty if nothing)
   link         String?
-  image         String
+
+  url     String
+  publicId String
 
   // only filled for Software Development
   overview     String?
@@ -59,7 +61,10 @@ model Testimonial {
   slug        String   @unique
   designation String
   description String
-  image       String
+  
+  url     String
+  publicId String
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -72,7 +77,10 @@ model Team {
   github    String
   twitter   String
   linkedin  String
-  image     String
+ 
+  url     String
+  publicId String
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -81,7 +89,10 @@ model ChooseUs {
   id        Int      @id @default(autoincrement())
   title     String
   sub_title String
-  image     String
+
+  url     String
+  publicId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -92,7 +103,10 @@ model Project {
   name         String
   description  String
   slug         String           @unique
-  img          String
+  
+  url     String
+  publicId String
+  
   type         String           // "detailed" or "external"
   link         String?          // optional external URL
 
@@ -158,29 +172,34 @@ model Companies {
   link          String    
   email         String   @unique
   description   String  
-  image         String
+
+  url     String
+  publicId String
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
 
 model Blog {
-  id              Int         @id @default(autoincrement())
-  title           String      @unique
-  slug            String      @unique
-  description     String      // Replace 'Text' with 'String'
-  content         String      @default("")
-  images          BlogImage[]
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  title       String
+  slug        String      @unique
+  description String
+  content     String      @db.Text
+  images      BlogImage[] // ✅ This allows cascade
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model BlogImage {
-  id      Int    @id @default(autoincrement())
-  image   String
-  blogId  Int
-  blog    Blog   @relation(fields: [blogId], references: [id]) // Relationship with Blog
+  id        Int      @id @default(autoincrement())
+  blogId    Int
+  image     String
+  publicId  String?
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade) // ✅ Add this
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
 
 
 model User {
