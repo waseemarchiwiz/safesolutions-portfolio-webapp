@@ -40,6 +40,8 @@ RUN --mount=type=secret,id=next_public_tinymce_api_url \
     --mount=type=secret,id=mail_password \
     --mount=type=secret,id=mail_port \
     --mount=type=secret,id=mail_username \
+    --mount=type=secret,id=azure_storage_connection_string \
+    --mount=type=secret,id=azure_storage_container_name \
     export NEXT_PUBLIC_TINYMCE_API_URL="$(cat /run/secrets/next_public_tinymce_api_url)" && \
     export DATABASE_URL="$(cat /run/secrets/database_url)" && \
     export BETTER_AUTH_SECRET="$(cat /run/secrets/better_auth_secret)" && \
@@ -49,6 +51,8 @@ RUN --mount=type=secret,id=next_public_tinymce_api_url \
     export MAIL_PASSWORD="$(cat /run/secrets/mail_password)" && \
     export MAIL_PORT="$(cat /run/secrets/mail_port)" && \
     export MAIL_USERNAME="$(cat /run/secrets/mail_username)" && \
+    export AZURE_STORAGE_CONNECTION_STRING="$(cat /run/secrets/azure_storage_connection_string)" && \
+    export AZURE_STORAGE_CONTAINER_NAME="$(cat /run/secrets/azure_storage_container_name)" && \
     npx prisma generate && \
     npm run build
 
