@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { IconInnerShadowTop } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -25,6 +24,7 @@ import {
   Users2,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   {
@@ -175,7 +175,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/dashboard">
-                <IconInnerShadowTop className="!size-5" />
+                {/* <CustomLogo /> */}
+                {/* <IconInnerShadowTop className="!size-5" /> */}
+                <Image
+                  src={"/updated-logo.png"}
+                  width={40}
+                  height={40}
+                  alt="Logo"
+                  className="object-cover"
+                />
                 <span className="text-base font-semibold">Safe Solutions.</span>
               </Link>
             </SidebarMenuButton>

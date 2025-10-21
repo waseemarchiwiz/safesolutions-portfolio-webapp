@@ -10,14 +10,15 @@ import { TeamTypes } from "../page";
 import { Banner } from "./banner";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import SectionWithReveal from "../../(common)/fold";
-import Blogs, { BlogPostTypes } from "../../(blogs-page)/blogs/(client)/blogs";
+import Blogs from "../../(blogs-page)/blogs/(client)/blogs";
 import PartnersSection from "./partners";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
+import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 
 interface AboutProps {
   teams: TeamTypes[];
   projects: ProjectTypes[];
-  blogs: BlogPostTypes[];
+  blogs: BlogTypes[];
   partners: CompanyTypes[];
 }
 

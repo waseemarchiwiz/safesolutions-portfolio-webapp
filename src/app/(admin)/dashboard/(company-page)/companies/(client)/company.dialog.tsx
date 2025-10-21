@@ -63,7 +63,7 @@ export default function CompanyDialog({
   });
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [preview, setPreview] = useState<string>(company?.image || "");
+  const [preview, setPreview] = useState<string>(company?.url || "");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const submitButtonText = action === "edit" ? "Save" : "Yes";
@@ -118,7 +118,7 @@ export default function CompanyDialog({
         description: company.description || "",
         image: undefined,
       });
-      setPreview(company.image || "");
+      setPreview(company.url || "");
       setLoading(false);
     }
   }, [open, company, form]);
@@ -161,7 +161,7 @@ export default function CompanyDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-4">
             <DialogHeader>
               <DialogTitle>
                 {action === "edit" ? "Update company" : "Confirmation"}
@@ -284,7 +284,7 @@ export default function CompanyDialog({
                     <Image
                       width={80}
                       height={80}
-                      src={company?.image as string}
+                      src={company?.url as string}
                       alt="Preview"
                       className="rounded border"
                     />

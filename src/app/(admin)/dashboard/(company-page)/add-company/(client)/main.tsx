@@ -218,7 +218,7 @@ export default function AddCompanyForm() {
                     {preview && (
                       <div className="mt-2">
                         <Image
-                          width={250}
+                          width={150}
                           height={250}
                           src={preview}
                           alt="Preview"

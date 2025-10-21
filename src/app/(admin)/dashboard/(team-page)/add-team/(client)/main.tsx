@@ -47,12 +47,12 @@ export default function TeamForm({ member }: TeamFormProps) {
 
   // Load existing image for edit
   useEffect(() => {
-    if (member?.image) {
-      setPreview(`${baseURL}/${member.image}`);
+    if (member?.url) {
+      setPreview(`${baseURL}/${member.url}`);
     } else {
       setPreview(null);
     }
-  }, [member?.image]);
+  }, [member?.url]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

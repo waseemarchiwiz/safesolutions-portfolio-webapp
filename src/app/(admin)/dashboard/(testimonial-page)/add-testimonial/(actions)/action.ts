@@ -2,17 +2,16 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
-import path from "path";
-import fs from "fs/promises";
 import { TestimonialsSchema } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
-// Add Testimonials Action
+// Add Testimonials Action (Azure Blob Storage)
 // -----------------------------
 export async function AddTestimonialsAction(
   formData: FormData
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null; // track uploaded file path
+  let uploadedPublicId: string | null = null; // for cleanup if needed
 
   try {
     const dataToParse = {
@@ -23,6 +22,7 @@ export async function AddTestimonialsAction(
       image: formData.get("image") as File | null,
     };
 
+    // ✅ Validation
     const validation = TestimonialsSchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
@@ -31,57 +31,62 @@ export async function AddTestimonialsAction(
       };
     }
 
-    console.log("validtion:--", validation);
-
     const { name, slug, designation, description, image } = validation.data;
 
-    // Check duplicate For the name
+    // ✅ Check duplicate
     const existingTestimonials = await prisma.testimonial.findFirst({
       where: { slug },
     });
     if (existingTestimonials) {
-      return { success: false, message: "Testimonials member already exists" };
+      return {
+        success: false,
+        message: "Testimonial already exists",
+      };
     }
 
-    // Save image
+    // ✅ Upload image to Azure
+    let imageUrl: string | null = null;
+
     if (image) {
-      const uploadDir = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
-        "testimonials"
-      );
-      await fs.mkdir(uploadDir, { recursive: true });
-
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/testimonials/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.writeFile(filePath, bytes);
+      const uploadResult = await uploadFile(bytes, "testimonials");
+
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Failed to upload image" };
+      }
+
+      imageUrl = uploadResult.data.secure_url;
+      uploadedPublicId = uploadResult.data.public_id;
     }
 
-    const newTestimonials = await prisma.testimonial.create({
+    // ✅ Save in database
+    const newTestimonial = await prisma.testimonial.create({
       data: {
         name,
         slug,
         designation,
         description,
-        image: uploadedFilePath as string,
+        url: imageUrl as string,
+        publicId: uploadedPublicId as string, // store for future update/delete
       },
     });
 
     return {
       success: true,
-      message: "Testimonials added successfully",
-      data: newTestimonials,
+      message: "Testimonial added successfully",
+      data: newTestimonial,
     };
   } catch (error) {
-    // Cleanup uploaded file if DB create fails
-    if (uploadedFilePath) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.unlink(fullPath).catch(() => {});
+    // Rollback Azure image if DB fails
+    if (uploadedPublicId) {
+      try {
+        await deleteFile(uploadedPublicId);
+      } catch (err) {
+        console.error("Azure rollback delete failed:", err);
+      }
     }
-    console.error("Add TestimonialsAction error:", error);
+
+    console.error("AddTestimonialsAction error:", error);
     return {
       success: false,
       message: error instanceof Error ? error.message : "Unknown error",

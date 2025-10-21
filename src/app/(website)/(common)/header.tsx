@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import CustomLogo from "./logo";
@@ -104,13 +104,10 @@ const Header = () => {
             <Link href="/contact" className="hidden lg:block">
               <Button
                 variant="outline"
-                className="bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+                className="rounded-full bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
                 asChild
               >
-                <span>
-                  Contact Us
-                  <ArrowRight className=" size-4" />
-                </span>
+                <span>Contact Us</span>
               </Button>
             </Link>
           </div>

@@ -6,7 +6,8 @@ export interface TeamTypes {
   id: number;
   name: string;
   role: string;
-  image: string;
+  url: string;
+  publicId: string;
   github: string;
   linkedin: string;
   twitter: string;

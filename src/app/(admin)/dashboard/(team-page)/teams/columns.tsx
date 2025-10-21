@@ -20,7 +20,10 @@ export type TeamTypes = {
   name: string;
   role: string;
   slug: string;
-  image: string;
+
+  url: string;
+  publicId: string;
+
   github: string;
   linkedin: string;
   twitter: string;
@@ -75,8 +78,8 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={row.original.image as string}
-          alt={row.original.image}
+          src={row.original.url}
+          alt={row.original.url}
           className="rounded-full w-10 h-10"
         />
       </div>

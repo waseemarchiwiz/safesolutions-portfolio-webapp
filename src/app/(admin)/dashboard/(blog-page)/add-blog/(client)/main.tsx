@@ -25,7 +25,7 @@ import { BlogTypes } from "../../blogs/columns";
 import { AddBlogAction, UpdateBlogAction } from "../(actions)/action";
 
 // Types
-export type ImagesTypes = { id: number; image: string; blog_id: number };
+export type ImagesTypes = { id: number; url: string; publicId: number };
 
 type PreviewType = ImagesTypes | { image: string }; // backend or new upload
 
@@ -130,7 +130,7 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
   // 🔹 Load previews if blog has images
   useEffect(() => {
     if (blog?.images) {
-      setPreviews(blog.images as ImagesTypes[]);
+      setPreviews(blog.images);
     } else {
       setPreviews([]);
     }
@@ -213,12 +213,13 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
                     {previews.length > 0 && (
                       <div className="mt-2 flex items-center gap-5 flex-wrap">
                         {previews.map((p, idx) => {
+                          const src = "image" in p ? p.image : p.url;
                           return (
                             <Image
                               key={"id" in p ? p.id : idx}
                               width={250}
                               height={250}
-                              src={p.image as string}
+                              src={src}
                               alt={`Preview ${idx + 1}`}
                               className="w-50 h-50 rounded border object-cover"
                             />

@@ -48,7 +48,10 @@ export interface ProjectTypes {
   name: string;
   description: string;
   slug: string;
-  img: string;
+
+  url: string;
+  publicId: string;
+
   version?: string;
   lastUpdated?: string;
   type: "detailed" | "external";
@@ -108,8 +111,8 @@ export const getColumns = ({
           <Image
             width={100}
             height={150}
-            src={`${row.original.img as string}`}
-            alt={row.original.img}
+            src={`${row.original.url as string}`}
+            alt={row.original.name}
             className=" rounded-full w-10 h-10"
           />
         </div>

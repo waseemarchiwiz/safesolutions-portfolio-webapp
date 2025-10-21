@@ -2,10 +2,11 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
+import { deleteFile } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
 
 // -----------------------------
-// Delete Service Action
+// Delete Service Action (Azure Blob Storage)
 // -----------------------------
 export async function DeleteServiceAction(id: number): Promise<ReturnPayload> {
   try {
@@ -18,20 +19,31 @@ export async function DeleteServiceAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Service not found" };
     }
 
-    // ✅ Delete service
+    // ✅ Delete Azure Blob image if exists
+    if (existing.publicId) {
+      try {
+        await deleteFile(existing.publicId);
+      } catch (error) {
+        console.error("Failed to delete image from Azure Blob:", error);
+      }
+    }
+
+    // ✅ Delete the service record
     await prisma.service.delete({ where: { id } });
 
+    // ✅ Revalidate dashboard services page
     revalidatePath("/dashboard/services");
 
     return {
       success: true,
-      message: "Service deleted successfully",
+      message: "Service deleted successfully.",
     };
   } catch (error) {
     console.error("DeleteServiceAction error:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
+      message:
+        error instanceof Error ? error.message : "Failed to delete service.",
     };
   }
 }

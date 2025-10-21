@@ -3,20 +3,19 @@
 import { revalidatePath } from "next/cache";
 import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import fs from "fs";
-import path from "path";
 import { EditBuildTeamSchema } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
-// Update Team Action
+// Update Team Action (Azure)
 // -----------------------------
 export async function UpdateTeamAction(
   formData: FormData
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null;
+  let newPublicId: string | null = null;
 
   try {
-    // Build data
+    // Extract form data
     const dataToParse = {
       id: formData.get("id") as string,
       name: formData.get("name") as string,
@@ -29,12 +28,9 @@ export async function UpdateTeamAction(
     };
 
     const editId = Number(dataToParse.id);
+    if (!editId) return { success: false, message: "Please provide ID" };
 
-    if (!editId) {
-      return { success: false, message: "Please provide id" };
-    }
-
-    // Validate
+    // Validation
     const validation = EditBuildTeamSchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
@@ -47,36 +43,37 @@ export async function UpdateTeamAction(
       validation.data;
 
     const existing = await prisma.team.findUnique({ where: { id: editId } });
-    if (!existing) {
-      return { success: false, message: "Team member not found" };
-    }
+    if (!existing) return { success: false, message: "Team member not found" };
 
-    // Handle image update
+    let imageUrl = existing.url;
+    let publicId = existing.publicId;
+
+    // --- Replace image if a new file is uploaded ---
     if (image instanceof File) {
-      // upload new file
-      const uploadDir = path.join(process.cwd(), "public", "uploads", "teams");
-      fs.mkdir(uploadDir, { recursive: true }, () =>
-        console.log("image added")
-      );
-
+      // Upload new image
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/teams/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
-      fs.writeFile(filePath, bytes, () => console.log("image added"));
+      const uploadResult = await uploadFile(bytes, "teams");
 
-      // remove old image if exists
-      if (existing.image) {
-        const oldPath = path.join(process.cwd(), "public", existing.image);
-        fs.unlink(oldPath, () => console.log("image added"));
+      if (!uploadResult.success || !uploadResult.data)
+        return { success: false, message: "Failed to upload image" };
+
+      imageUrl = uploadResult.data.secure_url;
+      newPublicId = uploadResult.data.public_id;
+
+      // Delete old image from Azure if exists
+      if (existing.publicId) {
+        try {
+          await deleteFile(existing.publicId);
+        } catch (err) {
+          console.error("Failed to delete old Azure file:", err);
+        }
       }
-    } else if (typeof image === "string") {
-      uploadedFilePath = image; // keep old string path
-    } else {
-      uploadedFilePath = existing.image; // no change
+
+      // Update publicId reference
+      publicId = newPublicId;
     }
 
-    // Update DB
+    // --- Update team record in DB ---
     const updated = await prisma.team.update({
       where: { id: editId },
       data: {
@@ -86,7 +83,8 @@ export async function UpdateTeamAction(
         github,
         linkedin,
         twitter,
-        image: uploadedFilePath,
+        url: imageUrl,
+        publicId,
       },
     });
 
@@ -98,11 +96,15 @@ export async function UpdateTeamAction(
       data: updated,
     };
   } catch (error) {
-    // rollback new file if uploaded but update failed
-    if (uploadedFilePath && uploadedFilePath.startsWith("/uploads/teams/")) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      fs.unlink(fullPath, () => console.log("image added"));
+    // Rollback new upload if something fails
+    if (newPublicId) {
+      try {
+        await deleteFile(newPublicId);
+      } catch (err) {
+        console.error("Failed to rollback Azure upload:", err);
+      }
     }
+
     console.error("UpdateTeamAction error:", error);
     return {
       success: false,
@@ -111,42 +113,35 @@ export async function UpdateTeamAction(
   }
 }
 
-// Server-side validation for FormData
+// -----------------------------
+// Delete Team Action (Azure)
+// -----------------------------
 export async function DeleteTeamAction(id: number): Promise<ReturnPayload> {
   try {
-    // Validate Id
-    if (!id) {
-      return {
-        success: false,
-        message: "please provide id",
-      };
-    }
+    if (!id) return { success: false, message: "Please provide ID" };
 
-    // delete Team in the database
     const team = await prisma.team.findUnique({ where: { id } });
+    if (!team) return { success: false, message: "Team record not found" };
 
-    if (!team) {
-      return { success: false, message: "Team record not found" };
+    // Delete from Azure Blob if exists
+    if (team.publicId) {
+      try {
+        await deleteFile(team.publicId);
+      } catch (error) {
+        console.error("Failed to delete Azure file:", error);
+      }
     }
 
-    // Delete
-    const result = await prisma.team.delete({ where: { id } });
-
-    if (!result) {
-      // delete image
-      fs.unlink(team.image as string, (err) => {
-        if (err) console.error(`Failed to delete image: ${err.message}`);
-      });
-    }
-
+    // Delete DB record
+    await prisma.team.delete({ where: { id } });
     revalidatePath("/dashboard/teams");
 
     return {
       success: true,
-      message: `Team record deleted successfully`,
+      message: "Team member deleted successfully",
     };
   } catch (error) {
-    console.error("Add team error:", error);
+    console.error("DeleteTeamAction error:", error);
     return {
       success: false,
       message:

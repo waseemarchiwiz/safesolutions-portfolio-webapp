@@ -7,7 +7,6 @@ const serviceSchema = z.object({
     .string()
     .min(5, "Service description must be at least 5 characters"),
   features: z.array(z.string()).optional(),
-  icon: z.string().min(1, "Icon is required"),
 });
 
 // Project Detail inside Project
@@ -23,7 +22,6 @@ const supportSchema = z.object({
   description: z
     .string()
     .min(5, "Support description must be at least 5 characters"),
-  icon: z.string().min(1, "Icon is required"),
 });
 
 export const buildProjectSchema = (isEdit: boolean) =>
@@ -36,7 +34,7 @@ export const buildProjectSchema = (isEdit: boolean) =>
     version: z.string().optional(),
     lastUpdated: z.string().optional(),
     type: z.enum(["detailed", "external"]),
-    link: z.string().url("Invalid URL").optional(),
+    link: z.string().url("Invalid URL").optional().or(z.literal("")),
 
     services: z.array(serviceSchema).optional(),
     projectDetails: z.array(projectDetailSchema).optional(),

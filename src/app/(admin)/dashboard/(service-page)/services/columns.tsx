@@ -28,7 +28,10 @@ export interface ServiceTypes {
   technologies?: string[];
   industries?: string[];
   useCases?: string[];
-  image: string; // if you decide to keep logo/image
+  url: string; // if you decide to keep logo/image
+  publicId: string;
+  createdAt: string; // if you decide to keep createdAt
+  updatedAt: string; // if you decide to keep updatedAt
 }
 
 interface columnsProps {
@@ -79,8 +82,8 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={(row.original.image as string) || "/placeholder.png"}
-          alt={row.original.image as string}
+          src={(row.original.url as string) || "/placeholder.png"}
+          alt={row.original.title as string}
           className=" rounded-full w-10 h-10"
         />
       </div>

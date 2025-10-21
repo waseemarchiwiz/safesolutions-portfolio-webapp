@@ -1,4 +1,4 @@
-import Loader from "@/app/(website)/(common)/loader";
+import Loader from "@/components/common/loader";
 
 export default function Loading() {
   return <Loader />;

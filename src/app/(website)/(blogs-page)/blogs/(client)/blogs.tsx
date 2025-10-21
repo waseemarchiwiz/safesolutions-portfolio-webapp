@@ -8,20 +8,9 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 
-export interface BlogPostTypes {
-  id: 3;
-  img: string;
-  link: string;
-  name: string;
-  slug: string;
-  description: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-const Blogs = ({ blogs }: { blogs: BlogPostTypes[] }) => {
+const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
   console.log("blogss- inside compoentn--", blogs);
 
   return (
@@ -46,24 +35,24 @@ const Blogs = ({ blogs }: { blogs: BlogPostTypes[] }) => {
                 key={blog.id}
                 className="grid grid-rows-[auto_auto_1fr_auto] pt-0"
               >
-                <div className="aspect-16/9 w-full">
+                <div className=" w-full">
                   <Link
                     href={"/blogs"}
                     className="fade-in transition-opacity duration-200 hover:opacity-70"
                   >
                     <Image
                       width={150}
-                      height={200}
-                      src={blog.img || "/placeholder.png"}
-                      alt={(blog.name as string) || "title"}
-                      className=" object-cover object-center"
+                      height={150}
+                      src={blog.images?.[0]?.url || "/placeholder.png"}
+                      alt={(blog.title as string) || "title"}
+                      className=""
                     />
                   </Link>
                 </div>
                 <CardHeader>
                   <Link href={`/blog/${blog.id}`}>
                     <h3 className="text-lg font-semibold hover:underline md:text-xl">
-                      {blog.name}
+                      {blog.title}
                     </h3>
                   </Link>
                 </CardHeader>

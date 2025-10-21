@@ -64,7 +64,7 @@ export default function TestimonialDialog({
   });
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [preview, setPreview] = useState<string>(testimonial?.image || "");
+  const [preview, setPreview] = useState<string>(testimonial?.url || "");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const submitButtonText = action === "edit" ? "Save" : "Yes";
@@ -117,7 +117,7 @@ export default function TestimonialDialog({
         description: testimonial.description || "",
         image: undefined,
       });
-      setPreview(testimonial.image || "");
+      setPreview(testimonial.url || "");
       setLoading(false);
     }
   }, [open, testimonial, form]);
@@ -169,7 +169,7 @@ export default function TestimonialDialog({
                 This is update testimonial dialog
               </DialogDescription>
             </DialogHeader>
-            <Separator className="" />
+            <Separator />
 
             {action === "edit" ? (
               <>
@@ -266,7 +266,7 @@ export default function TestimonialDialog({
                     <Image
                       width={80}
                       height={80}
-                      src={testimonial?.image as string}
+                      src={testimonial?.url as string}
                       alt="Preview"
                       className="rounded border"
                     />

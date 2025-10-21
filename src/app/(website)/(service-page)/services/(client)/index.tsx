@@ -67,7 +67,7 @@ export function Services({ services, view }: ServicePropsTypes) {
                 <Card className="group relative overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl h-[400px] flex flex-col">
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
-                      src={service.image}
+                      src={service.url}
                       alt={service.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"

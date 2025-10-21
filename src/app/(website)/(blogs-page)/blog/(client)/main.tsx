@@ -79,7 +79,7 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
                           <Image
                             width={1000}
                             height={150}
-                            src={slide.image as string}
+                            src={slide.url as string}
                             alt={blogData.title as string}
                             className="w-full h-full object-contain"
                           />

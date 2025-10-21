@@ -27,7 +27,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
               {/* Project Image */}
               <div className="mb-8 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
                 <Image
-                  src={data.img}
+                  src={data.url}
                   alt={data.name}
                   width={1200}
                   height={600}

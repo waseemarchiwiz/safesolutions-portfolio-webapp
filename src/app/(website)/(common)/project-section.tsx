@@ -50,7 +50,7 @@ const Projects = ({ background, projects }: ProjectsComponentProps) => {
                 {/* Image */}
                 <div className="relative aspect-video overflow-hidden">
                   <Image
-                    src={"/project-img.png"}
+                    src={project.url as string}
                     alt={project.name}
                     width={600}
                     height={400}

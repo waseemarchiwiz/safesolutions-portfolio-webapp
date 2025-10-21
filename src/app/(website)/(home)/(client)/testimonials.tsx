@@ -81,7 +81,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
                       <div className="flex items-center gap-4 mb-6">
                         <Avatar className="size-12 ring-2 ring-sky-200">
                           <AvatarImage
-                            src={testimonial.image as string}
+                            src={testimonial.url as string}
                             alt={testimonial.name as string}
                           />
                           <AvatarFallback>

@@ -2,20 +2,21 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
-import path from "path";
-import fs from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { EditCompanySchema } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
 // Update Company Action
 // -----------------------------
+
 export async function UpdateCompanyAction(
   formData: FormData
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null;
+  let newPublicId: string | null = null;
 
   try {
+    // Extract form data
     const dataToParse = {
       id: formData.get("id") as string,
       name: formData.get("name") as string,
@@ -26,33 +27,27 @@ export async function UpdateCompanyAction(
       image: formData.get("image") as File | null,
     };
 
+    // Validate inputs
     const validation = EditCompanySchema.safeParse(dataToParse);
     if (!validation.success) {
-      return {
-        success: false,
-        message: validation.error.message,
-      };
+      return { success: false, message: validation.error.message };
     }
 
     const { id, name, slug, link, email, description, image } = dataToParse;
+    const companyId = Number(id);
 
-    // Check if company exists
+    // Find existing record
     const existingCompany = await prisma.companies.findUnique({
-      where: { id: Number(id) },
+      where: { id: companyId },
     });
-
     if (!existingCompany) {
       return { success: false, message: "Company record not found." };
     }
 
-    // Check duplicate slug (excluding current company)
+    // Prevent slug duplication
     const duplicate = await prisma.companies.findFirst({
-      where: {
-        slug,
-        NOT: { id: Number(id) },
-      },
+      where: { slug, NOT: { id: companyId } },
     });
-
     if (duplicate) {
       return {
         success: false,
@@ -60,47 +55,47 @@ export async function UpdateCompanyAction(
       };
     }
 
-    // If new image uploaded
+    let imageUrl = existingCompany.url;
+    let publicId = existingCompany.publicId;
+
+    // ✅ If new image uploaded, replace the old one
     if (image && image.size > 0) {
-      const uploadDir = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
-        "company"
-      );
-      await fs.mkdir(uploadDir, { recursive: true });
-
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/company/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.writeFile(filePath, bytes);
+      const uploadResult = await uploadFile(bytes, "companies");
 
-      // Delete old image (if exists)
-      if (existingCompany.image) {
-        const oldImagePath = path.join(
-          process.cwd(),
-          "public",
-          existingCompany.image
-        );
-        await fs.unlink(oldImagePath).catch(() => {});
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Failed to upload image." };
       }
+
+      imageUrl = uploadResult.data.secure_url;
+      newPublicId = uploadResult.data.public_id;
+
+      // Delete old image from Azure
+      if (existingCompany.publicId) {
+        try {
+          await deleteFile(existingCompany.publicId);
+        } catch (error) {
+          console.error("Failed to delete old company logo:", error);
+        }
+      }
+
+      publicId = newPublicId;
     }
 
-    // Update company record
+    // ✅ Update the company record
     const updatedCompany = await prisma.companies.update({
-      where: { id: Number(id) },
+      where: { id: companyId },
       data: {
         name,
         slug,
         link,
         email,
         description,
-        image: uploadedFilePath || existingCompany.image,
+        url: imageUrl,
+        publicId,
       },
     });
 
-    // Revalidate dashboard page
     revalidatePath("/dashboard/companies");
 
     return {
@@ -109,13 +104,16 @@ export async function UpdateCompanyAction(
       data: updatedCompany,
     };
   } catch (error) {
-    // Cleanup uploaded file if DB update fails
-    if (uploadedFilePath) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.unlink(fullPath).catch(() => {});
+    // Rollback if upload succeeded but DB failed
+    if (newPublicId) {
+      try {
+        await deleteFile(newPublicId);
+      } catch (err) {
+        console.error("Azure rollback delete failed:", err);
+      }
     }
 
-    console.error("Update Company Action error:", error);
+    console.error("UpdateCompanyAction error:", error);
     return {
       success: false,
       message:
@@ -124,43 +122,44 @@ export async function UpdateCompanyAction(
   }
 }
 
-// Server-side validation for FormData
+// -----------------------------
+// Delete Company Action
+// -----------------------------
 export async function DeleteCompanyAction(id: number): Promise<ReturnPayload> {
   try {
-    // Validate Id
     if (!id) {
-      return {
-        success: false,
-        message: "please provide id",
-      };
+      return { success: false, message: "Please provide id." };
     }
 
-    // delete Company in the database
-    const Company = await prisma.companies.findUnique({ where: { id } });
-
-    if (!Company) {
-      return { success: false, message: "Company record not found" };
+    const company = await prisma.companies.findUnique({ where: { id } });
+    if (!company) {
+      return { success: false, message: "Company record not found." };
     }
 
-    // Delete
-    const result = await prisma.companies.delete({ where: { id } });
-
-    if (!result) {
-      return { success: false, message: "Failed to delete team member" };
+    // ✅ Delete logo from Azure if exists
+    if (company.publicId) {
+      try {
+        await deleteFile(company.publicId);
+      } catch (error) {
+        console.error("Failed to delete Azure blob:", error);
+      }
     }
+
+    // ✅ Delete record from DB
+    await prisma.companies.delete({ where: { id } });
 
     revalidatePath("/dashboard/companies");
 
     return {
       success: true,
-      message: `Company record deleted successfully`,
+      message: "Company record deleted successfully.",
     };
   } catch (error) {
-    console.error("delete Company error:", error);
+    console.error("DeleteCompanyAction error:", error);
     return {
       success: false,
       message:
-        error instanceof Error ? error.message : "Failed to delete record",
+        error instanceof Error ? error.message : "Failed to delete record.",
     };
   }
 }

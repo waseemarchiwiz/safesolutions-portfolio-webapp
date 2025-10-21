@@ -3,20 +3,21 @@
 import { revalidatePath } from "next/cache";
 import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import fs from "fs";
-import path from "path";
+
 import { EditTestimonialsSchema } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
 // Update testimonials Action
 // -----------------------------
+
 export async function UpdateTestimonialsAction(
   formData: FormData
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null;
+  let newPublicId: string | null = null;
 
   try {
-    // Build data
+    // Extract data
     const dataToParse = {
       id: formData.get("id") as string,
       name: formData.get("name") as string,
@@ -27,12 +28,11 @@ export async function UpdateTestimonialsAction(
     };
 
     const editId = Number(dataToParse.id);
-
     if (!editId) {
       return { success: false, message: "Please provide id" };
     }
 
-    // Validate
+    // ✅ Validate input
     const validation = EditTestimonialsSchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
@@ -51,37 +51,34 @@ export async function UpdateTestimonialsAction(
       return { success: false, message: "Testimonial not found" };
     }
 
-    // Handle image update
+    let imageUrl = existing.url;
+    let publicId = existing.publicId;
+
+    // ✅ Replace image if new File uploaded
     if (image instanceof File) {
-      // upload new file
-      const uploadDir = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
-        "testimonials"
-      );
-      fs.mkdir(uploadDir, { recursive: true }, () =>
-        console.log("image added")
-      );
-
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/testimonials/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
-      fs.writeFile(filePath, bytes, () => console.log("image added"));
+      const uploadResult = await uploadFile(bytes, "testimonials");
 
-      // remove old image if exists
-      if (existing.image) {
-        const oldPath = path.join(process.cwd(), "public", existing.image);
-        fs.unlink(oldPath, () => console.log("image added"));
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Failed to upload image" };
       }
-    } else if (typeof image === "string") {
-      uploadedFilePath = image; // keep old string path
-    } else {
-      uploadedFilePath = existing.image; // no change
+
+      imageUrl = uploadResult.data.secure_url;
+      newPublicId = uploadResult.data.public_id;
+
+      // Delete old image from Azure
+      if (existing.publicId) {
+        try {
+          await deleteFile(existing.publicId);
+        } catch (err) {
+          console.error("Failed to delete old image:", err);
+        }
+      }
+
+      publicId = newPublicId;
     }
 
-    // Update DB
+    // ✅ Update DB record
     const updated = await prisma.testimonial.update({
       where: { id: editId },
       data: {
@@ -89,7 +86,8 @@ export async function UpdateTestimonialsAction(
         slug,
         designation,
         description,
-        image: uploadedFilePath,
+        url: imageUrl,
+        publicId,
       },
     });
 
@@ -97,19 +95,20 @@ export async function UpdateTestimonialsAction(
 
     return {
       success: true,
-      message: "Testimonials updated successfully",
+      message: "Testimonial updated successfully",
       data: updated,
     };
   } catch (error) {
-    // rollback new file if uploaded but update failed
-    if (
-      uploadedFilePath &&
-      uploadedFilePath.startsWith("/uploads/testimonials/")
-    ) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      fs.unlink(fullPath, () => console.log("image added"));
+    // Rollback new upload if DB update fails
+    if (newPublicId) {
+      try {
+        await deleteFile(newPublicId);
+      } catch (err) {
+        console.error("Azure rollback delete failed:", err);
+      }
     }
-    console.error("UpdateTeamAction error:", error);
+
+    console.error("UpdateTestimonialsAction error:", error);
     return {
       success: false,
       message: error instanceof Error ? error.message : "Unknown error",
@@ -117,46 +116,41 @@ export async function UpdateTestimonialsAction(
   }
 }
 
-// Server-side validation for FormData
+// -----------------------------
+// Delete Testimonials Action (Azure)
+// -----------------------------
 export async function DeleteTestimonialsAction(
   id: number
 ): Promise<ReturnPayload> {
   try {
-    // Validate Id
     if (!id) {
-      return {
-        success: false,
-        message: "please provide id",
-      };
+      return { success: false, message: "Please provide id" };
     }
 
-    // delete testimonials in the database
-    const testimonials = await prisma.testimonial.findUnique({
-      where: { id },
-    });
-
-    if (!testimonials) {
-      return { success: false, message: "testimonials record not found" };
+    const testimonial = await prisma.testimonial.findUnique({ where: { id } });
+    if (!testimonial) {
+      return { success: false, message: "Testimonial record not found" };
     }
 
-    // Delete
-    const result = await prisma.testimonial.delete({ where: { id } });
-
-    if (!result) {
-      // delete image
-      fs.unlink(testimonials?.image as string, (err) => {
-        if (err) console.error(`Failed to delete image: ${err.message}`);
-      });
+    // ✅ Delete image from Azure if it exists
+    if (testimonial.publicId) {
+      try {
+        await deleteFile(testimonial.publicId);
+      } catch (err) {
+        console.error("Failed to delete image from Azure:", err);
+      }
     }
 
+    // ✅ Delete DB record
+    await prisma.testimonial.delete({ where: { id } });
     revalidatePath("/dashboard/testimonials");
 
     return {
       success: true,
-      message: `testimonials record deleted successfully`,
+      message: "Testimonial deleted successfully",
     };
   } catch (error) {
-    console.error("Add testimonials error:", error);
+    console.error("DeleteTestimonialsAction error:", error);
     return {
       success: false,
       message:

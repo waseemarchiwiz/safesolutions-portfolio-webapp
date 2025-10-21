@@ -38,9 +38,5 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
     );
   }
 
-  return (
-    <div className="dark:bg-[#18181b]">
-      <ProjectDetails data={project || {}} />
-    </div>
-  );
+  return <ProjectDetails data={project || {}} />;
 }

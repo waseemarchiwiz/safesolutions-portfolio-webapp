@@ -60,7 +60,9 @@ export default function EditTeamDialog({
     },
   });
 
-  const [preview, setPreview] = useState<string>(team?.image || "");
+  console.log("team in dialog:----", team);
+
+  const [preview, setPreview] = useState<string>(team?.url || "");
   const inputFileRef = useRef<HTMLInputElement>(null);
   const submitButtonText = action === "edit" ? "Save" : "Yes";
 
@@ -131,7 +133,7 @@ export default function EditTeamDialog({
         twitter: team.twitter || "",
         image: undefined,
       });
-      setPreview(team.image || "");
+      setPreview(team.url || "");
       setLoading(false);
     }
   }, [open, team, form]);
@@ -300,7 +302,7 @@ export default function EditTeamDialog({
                     <Image
                       width={80}
                       height={80}
-                      src={team?.image as string}
+                      src={team?.url as string}
                       alt="Preview"
                       className="rounded border"
                     />

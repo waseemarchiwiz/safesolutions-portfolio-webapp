@@ -77,7 +77,7 @@ export async function AddBlogAction(
           prisma.blogImage.create({
             data: {
               blogId: blog.id,
-              image: url as string,
+              url: url as string,
               publicId: publicIds[index], // Store public_id for deletion
             },
           })
@@ -98,6 +98,7 @@ export async function AddBlogAction(
 // -----------------------------
 // Update Blog Action
 // -----------------------------
+
 export async function UpdateBlogAction(
   formData: FormData
 ): Promise<ReturnPayload> {
@@ -111,12 +112,11 @@ export async function UpdateBlogAction(
       images: formData.getAll("images") as File[],
     };
 
-    // id validation
-    if (!dataToParse.id || dataToParse.id === null) {
+    if (!dataToParse.id) {
       return { success: false, message: "Please provide edit id" };
     }
 
-    // Validation
+    // Validate data
     const validation = buildBlogSchema(true).safeParse(dataToParse);
     if (!validation.success) {
       return { success: false, message: validation.error.message };
@@ -125,76 +125,57 @@ export async function UpdateBlogAction(
     const { title, slug, description, content, images } = validation.data;
     const blogId = Number(dataToParse.id);
 
-    const existing = await prisma.blog.findUnique({ where: { id: blogId } });
+    const existing = await prisma.blog.findUnique({
+      where: { id: blogId },
+      include: { images: true },
+    });
+
     if (!existing) {
       return { success: false, message: "Blog not found" };
     }
 
-    // Upload new images to Azure if provided
-    let imageUrls: string[] = [];
-    let publicIds: string[] = [];
-
-    if (images && images.length > 0) {
-      const uploadResults = await Promise.all(
-        images.map(async (file) => {
-          try {
-            const bytes = Buffer.from(await file.arrayBuffer());
-            const result = await uploadFile(bytes, "blogs");
-
-            if (result.success && result.data) {
-              return {
-                url: result.data.secure_url,
-                publicId: result.data.public_id,
-              };
-            }
-            throw new Error("Upload failed");
-          } catch (error) {
-            console.error("Failed to upload image:", error);
-            throw error;
-          }
-        })
-      );
-
-      imageUrls = uploadResults.map((r) => r.url);
-      publicIds = uploadResults.map((r) => r.publicId);
-    }
-
+    // --- Update core fields ---
     const updated = await prisma.blog.update({
       where: { id: blogId },
       data: { title, slug, description, content },
     });
 
-    // Delete old images from Azure and database
-    if (imageUrls.length > 0) {
-      const oldImages = await prisma.blogImage.findMany({ where: { blogId } });
+    // --- Handle image update (replace previous image) ---
+    if (images && images.length > 0) {
+      const newImageFile = images[0]; // ✅ take only the first image
 
-      await Promise.all(
-        oldImages.map(async (img) => {
+      // Upload new image to Azure
+      const bytes = Buffer.from(await newImageFile.arrayBuffer());
+      const result = await uploadFile(bytes, "blogs");
+
+      if (!result.success || !result.data) {
+        return { success: false, message: "Image upload failed" };
+      }
+
+      const newImageUrl = result.data.secure_url;
+      const newPublicId = result.data.public_id;
+
+      // Delete old image if exists
+      if (existing.images.length > 0) {
+        const oldImg = existing.images[0];
+        if (oldImg.publicId) {
           try {
-            // Delete from Azure Blob Storage using publicId
-            if (img.publicId) {
-              await deleteFile(img.publicId);
-            }
-            // Delete from database
-            await prisma.blogImage.delete({ where: { id: img.id } });
+            await deleteFile(oldImg.publicId); // remove from Azure
           } catch (error) {
-            console.error("Failed to delete old image:", error);
+            console.error("Failed to delete old image from Azure:", error);
           }
-        })
-      );
+        }
+        await prisma.blogImage.deleteMany({ where: { blogId } }); // remove from DB
+      }
 
-      // Add new images to database
-      await Promise.all(
-        imageUrls.map((url, index) =>
-          prisma.blogImage.create({
-            data: {
-              blogId,
-              image: url as string,
-              publicId: publicIds[index],
-            },
-          })
-        )
-      );
+      // Save new image in DB
+      await prisma.blogImage.create({
+        data: {
+          blogId,
+          url: newImageUrl,
+          publicId: newPublicId,
+        },
+      });
     }
 
     return {

@@ -22,7 +22,8 @@ export type TestimonialTypes = {
   slug: string;
   description: string;
   designation: string;
-  image: string;
+  url: string;
+  publicId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -74,8 +75,8 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={`${row.original.image as string}`}
-          alt={row.original.image}
+          src={`${row.original.url as string}`}
+          alt={row.original.name}
           className=" rounded-full w-10 h-10"
         />
       </div>

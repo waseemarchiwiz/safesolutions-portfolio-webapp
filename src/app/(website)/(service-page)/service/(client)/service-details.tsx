@@ -32,7 +32,7 @@ const ServiceDetails = ({ data }: { data: ServiceTypes }) => {
               {/* Service Image */}
               <div className="mb-8 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
                 <Image
-                  src={data.image as string}
+                  src={data.url as string}
                   alt={data.title}
                   width={1200}
                   height={600}

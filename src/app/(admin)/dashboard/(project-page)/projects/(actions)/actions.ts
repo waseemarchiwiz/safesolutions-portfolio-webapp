@@ -2,16 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
-import path from "path";
-import fs from "fs/promises";
+import { deleteFile } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
 
 // -----------------------------
-// Delete Project Action
+// Delete Project Action (Azure Blob Storage)
 // -----------------------------
 export async function DeleteProjectAction(id: number): Promise<ReturnPayload> {
   try {
-    // Check if project exists
+    // ✅ Check if project exists
     const existing = await prisma.project.findUnique({
       where: { id },
     });
@@ -20,26 +19,31 @@ export async function DeleteProjectAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Project not found" };
     }
 
-    // Remove project image if exists
-    if (existing.img) {
-      const fullPath = path.join(process.cwd(), "public", existing.img);
-      await fs.unlink(fullPath).catch(() => {}); // don’t crash if missing
+    // ✅ Delete image from Azure Blob Storage (if exists)
+    if (existing.publicId) {
+      try {
+        await deleteFile(existing.publicId);
+      } catch (error) {
+        console.error("Failed to delete image from Azure Blob Storage:", error);
+      }
     }
 
-    // Delete project
+    // ✅ Delete the project from DB
     await prisma.project.delete({ where: { id } });
 
+    // ✅ Revalidate page cache
     revalidatePath("/dashboard/projects");
 
     return {
       success: true,
-      message: "Project deleted successfully",
+      message: "Project deleted successfully.",
     };
   } catch (error) {
     console.error("DeleteProjectAction error:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
+      message:
+        error instanceof Error ? error.message : "Unknown error occurred.",
     };
   }
 }

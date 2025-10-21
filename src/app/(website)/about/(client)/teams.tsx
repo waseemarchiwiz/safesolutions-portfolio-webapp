@@ -53,7 +53,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
             <div key={index} className="group overflow-hidden">
               <Image
                 className="h-96 w-full rounded-md object-cover object-top grayscale transition-all duration-500 hover:grayscale-0 group-hover:h-[22.5rem] group-hover:rounded-xl"
-                src={team.image}
+                src={team.url}
                 alt="team member"
                 width="826"
                 height="1239"

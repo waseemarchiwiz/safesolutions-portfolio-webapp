@@ -47,6 +47,8 @@ const MainTeams = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
 
   const columns = getColumns({ onEdit: handleEdit, onDelete: handleDelete });
 
+  console.log("team--", data);
+
   return (
     <>
       <DataTable

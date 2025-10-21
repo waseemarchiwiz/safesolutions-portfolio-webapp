@@ -2,17 +2,16 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
-import path from "path";
-import fs from "fs/promises";
 import { buildTeamSchema } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
-// Add Team Action
+// Add Team Action (with Azure Blob Storage)
 // -----------------------------
 export async function AddTeamAction(
   formData: FormData
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null; // track uploaded file path
+  let uploadedPublicId: string | null = null;
 
   try {
     const dataToParse = {
@@ -25,6 +24,7 @@ export async function AddTeamAction(
       image: formData.get("image") as File | null,
     };
 
+    // Validate inputs
     const validation = buildTeamSchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
@@ -33,29 +33,31 @@ export async function AddTeamAction(
       };
     }
 
-    console.log("validtion:--", validation);
-
     const { name, role, slug, github, linkedin, twitter, image } =
       validation.data;
 
-    // Check duplicate For the name
+    // Check duplicate team member by slug
     const existingTeam = await prisma.team.findFirst({ where: { slug } });
     if (existingTeam) {
       return { success: false, message: "Team member already exists" };
     }
 
-    // Save image
-    if (image) {
-      const uploadDir = path.join(process.cwd(), "public", "uploads", "teams");
-      await fs.mkdir(uploadDir, { recursive: true });
+    // Upload image to Azure Blob Storage
+    let imageUrl: string | null = null;
 
+    if (image) {
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/teams/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.writeFile(filePath, bytes);
+      const uploadResult = await uploadFile(bytes, "teams"); // ✅ Folder name = teams
+
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Image upload failed" };
+      }
+
+      imageUrl = uploadResult.data.secure_url;
+      uploadedPublicId = uploadResult.data.public_id;
     }
 
+    // Create new team record in database
     const newTeam = await prisma.team.create({
       data: {
         name,
@@ -64,7 +66,8 @@ export async function AddTeamAction(
         github: github ?? "",
         linkedin: linkedin ?? "",
         twitter: twitter ?? "",
-        image: uploadedFilePath as string,
+        url: imageUrl as string,
+        publicId: uploadedPublicId as string, // ✅ store publicId for future delete/update
       },
     });
 
@@ -74,11 +77,15 @@ export async function AddTeamAction(
       data: newTeam,
     };
   } catch (error) {
-    // Cleanup uploaded file if DB create fails
-    if (uploadedFilePath) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.unlink(fullPath).catch(() => {});
+    // Cleanup Azure file if DB save fails
+    if (uploadedPublicId) {
+      try {
+        await deleteFile(uploadedPublicId);
+      } catch (err) {
+        console.error("Failed to clean up Azure Blob file:", err);
+      }
     }
+
     console.error("AddTeamAction error:", error);
     return {
       success: false,

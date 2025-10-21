@@ -26,7 +26,7 @@ const PartnerCard = ({ partner }: { partner: CompanyTypes }) => {
         {/* Full-cover background image */}
         <div className="absolute inset-0">
           <Image
-            src={(partner.image as string) || "/placeholder.png"}
+            src={(partner.url as string) || "/placeholder.png"}
             alt={partner.name}
             fill
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"

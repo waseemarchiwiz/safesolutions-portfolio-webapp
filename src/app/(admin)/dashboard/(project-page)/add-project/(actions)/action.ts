@@ -2,20 +2,19 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
-import path from "path";
-import fs from "fs/promises";
 import {
   AddProjectFormValues,
   buildProjectSchema,
 } from "../(validation)/validation";
+import { deleteFile, uploadFile } from "@/lib/upload";
 
 // -----------------------------
-// Add Project Action
+// Add Project Action (Azure)
 // -----------------------------
 export async function AddProjectAction(
   values: AddProjectFormValues
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null;
+  let uploadedPublicId: string | null = null;
 
   try {
     // Validate input
@@ -45,22 +44,19 @@ export async function AddProjectAction(
       return { success: false, message: "Slug already exists" };
     }
 
-    // Handle image upload
+    // Upload project image to Azure
+    let imageUrl: string | null = null;
+
     if (image instanceof File) {
-      const uploadDir = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
-        "projects"
-      );
-      await fs.mkdir(uploadDir, { recursive: true });
-
       const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/projects/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
+      const uploadResult = await uploadFile(bytes, "projects");
 
-      await fs.writeFile(filePath, bytes);
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Failed to upload image to Azure." };
+      }
+
+      imageUrl = uploadResult.data.secure_url;
+      uploadedPublicId = uploadResult.data.public_id;
     }
 
     // Create project with nested data
@@ -69,9 +65,10 @@ export async function AddProjectAction(
         name,
         description,
         slug,
-        img: uploadedFilePath as string,
         type,
         link,
+        url: imageUrl as string,
+        publicId: uploadedPublicId as string, // ✅ store Azure blob ID
         services: services ? { create: services } : undefined,
         projectDetails: projectDetails ? { create: projectDetails } : undefined,
         supports: supports ? { create: supports } : undefined,
@@ -81,31 +78,35 @@ export async function AddProjectAction(
 
     return {
       success: true,
-      message: "Project created successfully",
+      message: "Project created successfully.",
       data: project,
     };
   } catch (error) {
-    // rollback uploaded image if DB fails
-    if (uploadedFilePath) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.unlink(fullPath).catch(() => {});
+    // Rollback uploaded image if DB fails
+    if (uploadedPublicId) {
+      try {
+        await deleteFile(uploadedPublicId);
+      } catch (err) {
+        console.error("Azure rollback delete failed:", err);
+      }
     }
+
     console.error("AddProjectAction error:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Unknown error.",
     };
   }
 }
 
 // -----------------------------
-// Update Project Action
+// Update Project Action (Azure)
 // -----------------------------
 export async function UpdateProjectAction(
   id: number,
   values: AddProjectFormValues
 ): Promise<ReturnPayload> {
-  let uploadedFilePath: string | null = null;
+  let newPublicId: string | null = null;
 
   try {
     // Validate input
@@ -129,38 +130,51 @@ export async function UpdateProjectAction(
       image,
     } = validation.data;
 
-    // Check existing project
+    // Find existing project
     const existing = await prisma.project.findUnique({
       where: { id },
       include: { services: true, projectDetails: true, supports: true },
     });
     if (!existing) {
-      return { success: false, message: "Project not found" };
+      return { success: false, message: "Project not found." };
     }
 
-    // Handle image replacement
+    // Prevent duplicate slug (excluding current)
+    const duplicate = await prisma.project.findFirst({
+      where: { slug, NOT: { id } },
+    });
+    if (duplicate) {
+      return {
+        success: false,
+        message: "Another project with this slug already exists.",
+      };
+    }
+
+    let imageUrl = existing.url;
+    let publicId = existing.publicId;
+
+    // ✅ Replace image if a new one is uploaded
     if (image instanceof File) {
-      // delete old image
-      if (existing.img) {
-        const oldPath = path.join(process.cwd(), "public", existing.img);
-        await fs.unlink(oldPath).catch(() => {});
+      const bytes = Buffer.from(await image.arrayBuffer());
+      const uploadResult = await uploadFile(bytes, "projects");
+
+      if (!uploadResult.success || !uploadResult.data) {
+        return { success: false, message: "Failed to upload new image." };
       }
 
-      // save new image
-      const uploadDir = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
-        "projects"
-      );
-      await fs.mkdir(uploadDir, { recursive: true });
+      imageUrl = uploadResult.data.secure_url;
+      newPublicId = uploadResult.data.public_id;
 
-      const bytes = Buffer.from(await image.arrayBuffer());
-      const fileName = `${Date.now()}-${image.name}`;
-      uploadedFilePath = `/uploads/projects/${fileName}`;
-      const filePath = path.join(process.cwd(), "public", uploadedFilePath);
+      // Delete old image from Azure
+      if (existing.publicId) {
+        try {
+          await deleteFile(existing.publicId);
+        } catch (err) {
+          console.error("Failed to delete old Azure project image:", err);
+        }
+      }
 
-      await fs.writeFile(filePath, bytes);
+      publicId = newPublicId;
     }
 
     // Clear old nested relations
@@ -168,16 +182,17 @@ export async function UpdateProjectAction(
     await prisma.projectDetail.deleteMany({ where: { projectId: id } });
     await prisma.projectSupport.deleteMany({ where: { projectId: id } });
 
-    // Update project
+    // ✅ Update project record
     const updated = await prisma.project.update({
       where: { id },
       data: {
         name,
         description,
         slug,
-        img: uploadedFilePath || existing.img,
         type,
         link,
+        url: imageUrl,
+        publicId,
         services: services ? { create: services } : undefined,
         projectDetails: projectDetails ? { create: projectDetails } : undefined,
         supports: supports ? { create: supports } : undefined,
@@ -187,19 +202,23 @@ export async function UpdateProjectAction(
 
     return {
       success: true,
-      message: "Project updated successfully",
+      message: "Project updated successfully.",
       data: updated,
     };
   } catch (error) {
-    // rollback uploaded image if DB fails
-    if (uploadedFilePath) {
-      const fullPath = path.join(process.cwd(), "public", uploadedFilePath);
-      await fs.unlink(fullPath).catch(() => {});
+    // Rollback new upload if DB fails
+    if (newPublicId) {
+      try {
+        await deleteFile(newPublicId);
+      } catch (err) {
+        console.error("Azure rollback delete failed:", err);
+      }
     }
+
     console.error("UpdateProjectAction error:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Unknown error.",
     };
   }
 }

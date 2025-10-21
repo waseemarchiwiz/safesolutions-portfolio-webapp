@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import LogoCloud from "@/components/logo-cloud";
@@ -105,25 +104,25 @@ export default function Hero() {
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-xl px-5 bg-sky-600 text-white hover:bg-sky-700"
+                  className="rounded-full px-5 bg-sky-600 text-white hover:bg-sky-700"
                 >
-                  <Link href="#contact">
+                  <Link href="/contact">
                     <span className="whitespace-nowrap">Get Started</span>
                   </Link>
                 </Button>
               </div>
 
-              <Button
-                key={2}
-                asChild
-                size="lg"
-                variant="ghost"
-                className="h-10.5 rounded-xl px-5 text-white border border-white/20 "
-              >
-                <Link href="#portfolio">
+              <Link href="/services">
+                <Button
+                  key={2}
+                  asChild
+                  size="lg"
+                  variant="ghost"
+                  className="h-10.5 transition-all duration-300 rounded-full px-5 text-white border border-white/20 "
+                >
                   <span className="whitespace-nowrap">Our Work</span>
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </AnimatedGroup>
           </div>
         </div>

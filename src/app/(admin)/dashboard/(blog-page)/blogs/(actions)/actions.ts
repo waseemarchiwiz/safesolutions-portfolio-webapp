@@ -2,7 +2,6 @@
 
 import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import fs from "fs";
 import { deleteFile } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
 

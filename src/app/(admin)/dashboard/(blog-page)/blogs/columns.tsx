@@ -80,7 +80,7 @@ export const getColumns = ({
         <Image
           width={100}
           height={150}
-          src={(row.original.images?.[0]?.url || "/placeholder.png") as string}
+          src={row.original.images?.[0]?.url as string}
           alt={(row.original.images?.[0]?.url as string) || ""}
           className="rounded-full w-10 h-10"
         />

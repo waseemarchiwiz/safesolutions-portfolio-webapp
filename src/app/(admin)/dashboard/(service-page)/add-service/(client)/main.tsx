@@ -34,9 +34,7 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("id");
-  const [preview, setPreview] = useState<string | null>(
-    service?.image as string
-  );
+  const [preview, setPreview] = useState<string | null>(service?.url as string);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<AddServiceFormValues>({
@@ -51,7 +49,7 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
       technologies: service?.technologies || [],
       industries: service?.industries || [],
       useCases: service?.useCases || [],
-      image: service?.image || undefined,
+      image: service?.url || undefined,
     },
   });
 

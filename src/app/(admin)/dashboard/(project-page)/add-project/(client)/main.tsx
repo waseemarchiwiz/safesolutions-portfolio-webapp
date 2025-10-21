@@ -30,7 +30,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TagsInput } from "@/components/common/tags-input";
-import { iconsMap } from "@/app/(website)/project/data";
 import { AddProjectAction, UpdateProjectAction } from "../(actions)/action";
 import { ProjectTypes } from "../../projects/columns";
 
@@ -45,7 +44,7 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
   const editId = searchParams.get("id");
 
   const [preview, setPreview] = useState<string | null>(
-    (project?.img as string) || null
+    (project?.url as string) || null
   );
 
   const form = useForm<AddProjectFormValues>({
@@ -212,19 +211,21 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="link"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>External Link</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {watchedType === "external" && (
+                  <FormField
+                    control={form.control}
+                    name="link"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>External Link</FormLabel>
+                        <FormControl>
+                          <Input placeholder="https://example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
 
               {watchedType === "detailed" && (
@@ -269,25 +270,6 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                                     field.onChange(updated);
                                   }}
                                 />
-                                <Select
-                                  value={service.icon}
-                                  onValueChange={(val) => {
-                                    const updated = [...(field.value || [])];
-                                    updated[idx].icon = val;
-                                    field.onChange(updated);
-                                  }}
-                                >
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select icon" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {Object.keys(iconsMap).map((icon) => (
-                                      <SelectItem key={icon} value={icon}>
-                                        {icon}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
                               </div>
                             ))}
                             <Button
@@ -406,25 +388,6 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                                     field.onChange(updated);
                                   }}
                                 />
-                                <Select
-                                  value={support.icon}
-                                  onValueChange={(val) => {
-                                    const updated = [...(field.value || [])];
-                                    updated[idx].icon = val;
-                                    field.onChange(updated);
-                                  }}
-                                >
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select icon" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {Object.keys(iconsMap).map((icon) => (
-                                      <SelectItem key={icon} value={icon}>
-                                        {icon}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
                               </div>
                             ))}
                             <Button
@@ -464,10 +427,10 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                       />
                     </FormControl>
                     <FormMessage />
-                    {preview || project?.img ? (
+                    {preview || project?.url ? (
                       <div className="mt-3">
                         <Image
-                          src={preview || (project?.img as string)}
+                          src={preview || (project?.url as string)}
                           width={120}
                           height={120}
                           alt="Preview"
