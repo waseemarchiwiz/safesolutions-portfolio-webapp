@@ -27,7 +27,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
               {/* Project Image */}
               <div className="mb-8 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
                 <Image
-                  src={data.url}
+                  src={data.url as string}
                   alt={data.name}
                   width={1200}
                   height={600}
@@ -64,16 +64,12 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
                   <div className="">
                     {data?.services?.length > 0 ? (
                       data.services.map((service, index) => {
-                        const Icon = iconsMap[service.icon];
                         return (
                           <div
                             key={index}
-                            className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-600 transition-all duration-300"
+                            className="bg-white my-4 dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-600 transition-all duration-300"
                           >
                             <div className="flex items-center gap-3 mb-4">
-                              <div className="w-10 h-10 rounded-lg bg-sky-600/10 dark:bg-sky-600/20 flex items-center justify-center">
-                                <Icon className="w-5 h-5 text-sky-600" />
-                              </div>
                               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                                 {service.title}
                               </h3>
@@ -114,7 +110,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
                       data.projectDetails.map((detail, index) => (
                         <div
                           key={index}
-                          className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6"
+                          className="bg-white my-4 dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6"
                         >
                           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                             {detail.name || "Deployment Information"}
@@ -145,16 +141,12 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
                   <div className="">
                     {data?.supports?.length > 0 ? (
                       data.supports.map((item, index) => {
-                        const Icon = iconsMap[item.icon];
                         return (
                           <div
                             key={index}
-                            className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-600 transition-all duration-300"
+                            className="bg-white my-4 dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-600 transition-all duration-300"
                           >
                             <div className="flex items-center gap-3 mb-3">
-                              <div className="w-10 h-10 rounded-lg bg-sky-600/10 dark:bg-sky-600/20 flex items-center justify-center">
-                                <Icon className="w-5 h-5 text-sky-600" />
-                              </div>
                               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                                 {item.title}
                               </h3>

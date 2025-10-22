@@ -1,6 +1,6 @@
-import ProjectDetails from "../(client)/project-details";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
+import ProjectDetails from "../(client)/project-details";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
