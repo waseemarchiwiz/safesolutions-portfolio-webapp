@@ -9,7 +9,6 @@ type ParamsProps = {
 export default async function ServiceDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;
-
   // Service data
   const result = await prisma.service.findUnique({
     where: { slug },

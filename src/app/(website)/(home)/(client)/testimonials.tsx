@@ -110,7 +110,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
           </CarouselContent>
 
           {/* Bottom-Centered Navigation */}
-          <div className="flex justify-center items-center mt-8 gap-6">
+          {/* <div className="flex justify-center items-center mt-8 gap-6">
             <CarouselPrevious className="relative left-0  bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 p-3 rounded-full shadow hover:scale-110 transition-transform duration-300">
               <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
             </CarouselPrevious>
@@ -118,7 +118,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
             <CarouselNext className="relative right-0 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 p-3 rounded-full shadow hover:scale-110 transition-transform duration-300">
               <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
             </CarouselNext>
-          </div>
+          </div> */}
         </Carousel>
       </motion.div>
     </section>

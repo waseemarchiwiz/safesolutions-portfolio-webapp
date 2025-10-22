@@ -46,7 +46,7 @@ export default function Hero() {
             <AnimatedGroup variants={transitionVariants}>
               <Link
                 href="#services"
-                className="group mx-auto flex w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
+                className=" group sm:mx-auto flex w-64 sm:w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
               >
                 <span className="text-white text-sm">
                   Modern Software Solutions
@@ -69,7 +69,7 @@ export default function Hero() {
               preset="fade-in-blur"
               speedSegment={0.25}
               as="h1"
-              className="mx-auto mt-8 max-w-4xl text-balance text-5xl font-semibold text-white md:text-7xl lg:mt-16 xl:text-[5.25rem]"
+              className="text-left sm:text-center mx-auto mt-8 sm:max-w-4xl sm:text-balance text-[2.625rem] font-semibold text-white md:text-7xl lg:mt-16 xl:text-[5.25rem]"
             >
               We Provide Modern Solutions
             </TextEffect>
@@ -80,7 +80,7 @@ export default function Hero() {
               speedSegment={0.25}
               delay={0.4}
               as="p"
-              className="mx-auto mt-8 max-w-2xl text-balance text-lg text-zinc-300"
+              className="text-left sm:text-center mx-auto mt-8 max-w-2xl sm:text-balance text-lg text-zinc-300"
             >
               From concept to deployment — we build reliable, scalable, and
               maintainable software that powers your business forward.
@@ -98,7 +98,7 @@ export default function Hero() {
                 },
                 ...transitionVariants,
               }}
-              className="mt-12 flex items-center justify-center gap-2 md:flex-row"
+              className="mt-12 flex items-center sm:justify-center gap-2 md:flex-row"
             >
               <div key={1} className=" p-0.5">
                 <Button
@@ -138,7 +138,7 @@ export default function Hero() {
           ...transitionVariants,
         }}
       >
-        <div className="mt-32 lg:mt-25">
+        <div className="mt-6 sm:mt-32 lg:mt-25">
           <LogoCloud />
         </div>
       </AnimatedGroup>

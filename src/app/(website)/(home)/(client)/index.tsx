@@ -2,7 +2,6 @@
 
 import React from "react";
 import Hero from "./hero";
-import WhyChoose from "./why-choose";
 import About from "./about";
 import Projects from "../../(common)/project-section";
 import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
@@ -14,6 +13,7 @@ import SectionWithReveal from "../../(common)/fold";
 import { Services } from "../../(service-page)/services/(client)";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
 import Faqs from "./faqs";
+import WhyChoose from "./why-choose";
 
 interface MainPropTypes {
   faqs: FaqTypes[];

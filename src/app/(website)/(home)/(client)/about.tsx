@@ -22,10 +22,10 @@ export default function About() {
 
         <div className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:gap-24">
           <div className="relative mb-6 sm:mb-0">
-            <div className="bg-linear-to-b aspect-76/59 relative rounded-2xl from-zinc-300 to-transparent p-px dark:from-zinc-700">
+            <div className="bg-linear-to-b aspect-76/59 relative rounded-2xl from-zinc-300 to-transparent p-px">
               <Image
                 src="/about-main.jpg"
-                className="h-full object-cover rounded-[15px] shadow dark:hidden"
+                className="h-full object-cover rounded-[15px] shadow"
                 alt="Safe Solutions office workspace"
                 width={1207}
                 height={1200}
@@ -55,9 +55,9 @@ export default function About() {
                 <p>
                   At Safe Solutions, our mission is to empower organizations
                   with cutting-edge digital tools that accelerate innovation and
-                  enhance productivity. We don’t just create software — we build
-                  solutions that evolve with your business and shape a smarter
-                  tomorrow.
+                  enhance productivity. We don&apos;t just create software — we
+                  build solutions that evolve with your business and shape a
+                  smarter tomorrow.
                 </p>
 
                 <div className="mt-6 space-y-3">

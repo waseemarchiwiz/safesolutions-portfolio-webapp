@@ -83,7 +83,7 @@ export default function PageHeroSection({
                 preset="fade-in-blur"
                 speedSegment={0.25}
                 as="h1"
-                className="max-w-4xl text-5xl text-white md:text-7xl mt-6 xl:text-7xl"
+                className="max-w-4xl text-4xl sm:text-5xl text-white md:text-7xl mt-6 xl:text-7xl"
               >
                 {title}
               </TextEffect>

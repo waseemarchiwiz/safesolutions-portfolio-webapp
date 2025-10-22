@@ -2,6 +2,14 @@ import Main from "./(client)";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
 
+/**
+ * This page is dynamically generated at build time.
+ * on Every request, the page is revalidated.
+ * This is done to ensure that the page is always up-to-date.
+ */
+
+export const revalidate = 0;
+
 export interface TeamTypes {
   id: number;
   name: string;

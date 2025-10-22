@@ -7,6 +7,7 @@ import {
   Code,
   Layers,
   Briefcase,
+  CircleSmall,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,7 +61,7 @@ const ServiceDetails = ({ data }: { data: ServiceTypes }) => {
                     Technologies
                   </TabsTrigger>
                   <TabsTrigger value="industries" className="px-4 py-2">
-                    Industries / Use Cases
+                    Industries
                   </TabsTrigger>
                 </TabsList>
 
@@ -74,7 +75,7 @@ const ServiceDetails = ({ data }: { data: ServiceTypes }) => {
                             key={idx}
                             className="flex items-start bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl p-4 hover:border-sky-600 transition-all duration-300"
                           >
-                            <ChevronRight className="w-5 h-5 text-sky-600 mr-3 mt-1 flex-shrink-0" />
+                            <CircleSmall className="w-5 h-5 text-sky-600 mr-3 mt-1 flex-shrink-0" />
                             <span className="text-gray-700 dark:text-gray-300 leading-relaxed">
                               {feature}
                             </span>
@@ -130,7 +131,7 @@ const ServiceDetails = ({ data }: { data: ServiceTypes }) => {
                               key={i}
                               className="text-gray-700 dark:text-gray-300 flex items-start"
                             >
-                              <ChevronRight className="w-4 h-4 text-sky-600 mr-2 mt-0.5" />
+                              <CircleSmall className="w-4 h-4 text-sky-600 mr-2 mt-0.5" />
                               {industry}
                             </li>
                           ))}

@@ -2,6 +2,14 @@ import { serializePrisma } from "@/lib/utils";
 import Main from "./(client)";
 import { prisma } from "@/lib/prisma";
 
+/**
+ * This page is dynamically generated at build time.
+ * on Every request, the page is revalidated.
+ * This is done to ensure that the page is always up-to-date.
+ */
+
+export const revalidate = 0;
+
 export default async function HomePage() {
   // fetch teams + projects
   const [faqsResult, projectsResult, testimonialResult, serviceResult] =
