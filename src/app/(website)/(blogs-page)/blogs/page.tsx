@@ -1,3 +1,4 @@
+import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 import MainBlogs from "./(client)/main";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
@@ -10,25 +11,6 @@ import { serializePrisma } from "@/lib/utils";
 
 export const revalidate = 0;
 
-export interface BlogTypes {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  shortDescription: string;
-  category: string;
-  tags: string;
-  createdAt: string;
-  updatedAt: string;
-  images: [
-    {
-      id: number;
-      image: string;
-      blog_id: number;
-    }
-  ];
-}
-
 export default async function BlogsPage() {
   // api client
   const result = await prisma.blog.findMany({
@@ -37,6 +19,8 @@ export default async function BlogsPage() {
   });
 
   const blogs = serializePrisma(result);
+
+  console.log("blogs- inpage--", blogs);
 
   // blogs
   return <MainBlogs blogs={blogs} />;

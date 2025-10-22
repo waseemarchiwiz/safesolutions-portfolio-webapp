@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
+import { shortText } from "@/lib/utils";
 
 const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
   console.log("blogss- inside compoentn--", blogs);
@@ -57,7 +58,9 @@ const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
                   </Link>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{blog.description}</p>
+                  <p className="text-muted-foreground">
+                    {shortText(blog.description, 100)}
+                  </p>
                 </CardContent>
                 <CardFooter>
                   <Link
