@@ -57,12 +57,12 @@ export default function SignInForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6 mx-5", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid grid-cols-1">
           <Form {...form}>
             <form
-              className="px-1.5 py-8"
+              className="sm:px-1.5 py-8"
               onSubmit={form.handleSubmit(formSubmit)}
             >
               <div className="flex flex-col gap-6">
@@ -141,7 +141,7 @@ export default function SignInForm({
           </Form>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground text-center text-xs text-balance">
+      <div className="text-muted-foreground text-center text-xs sm:text-balance">
         By clicking continue, you agree to our{" "}
         <a href="#" className="underline underline-offset-4 hover:text-primary">
           Terms of Service

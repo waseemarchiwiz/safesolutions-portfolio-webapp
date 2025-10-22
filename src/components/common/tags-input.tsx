@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "../ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface TagsInputProps {
   value: string[];
@@ -26,7 +27,7 @@ export function TagsInput({ value = [], onChange }: TagsInputProps) {
 
   return (
     <div className="space-y-2">
-      <div className="flex gap-2 flex-wrap ">
+      <div className="flex gap-2 flex-wrap">
         {value.map((tag, i) => (
           <Badge
             key={i}
@@ -35,7 +36,7 @@ export function TagsInput({ value = [], onChange }: TagsInputProps) {
             {tag}
             <button
               type="button"
-              className=" hover:bg-gray-300 rounded-full px-0.5"
+              className="hover:bg-gray-300 rounded-full px-0.5"
               onClick={() => removeTag(tag)}
             >
               ✕
@@ -43,6 +44,7 @@ export function TagsInput({ value = [], onChange }: TagsInputProps) {
           </Badge>
         ))}
       </div>
+
       <div className="flex gap-2">
         <Input
           value={input}
@@ -50,9 +52,16 @@ export function TagsInput({ value = [], onChange }: TagsInputProps) {
           onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
           placeholder="Type and press Enter"
         />
-        {/* <Button type="button" onClick={addTag} variant="outline">
+
+        {/* Visible only on small/mobile screens */}
+        <Button
+          type="button"
+          onClick={addTag}
+          className="sm:hidden"
+          variant="secondary"
+        >
           Add
-        </Button> */}
+        </Button>
       </div>
     </div>
   );
