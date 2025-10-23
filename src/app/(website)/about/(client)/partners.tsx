@@ -58,6 +58,8 @@ const PartnersSection = ({ partners }: { partners: CompanyTypes[] }) => {
     },
   };
 
+  console.log("partners---", partners);
+
   return (
     <div className="max-w-7xl mx-auto lg:px-6">
       {/* Header */}
