@@ -58,7 +58,7 @@ const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
       </SectionWithReveal>
       {/* blogs Section */}
       <SectionWithReveal className="px-5">
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs} view={true} />
       </SectionWithReveal>
       {/* Banner Section */}
       <SectionWithReveal className="mt-10 mb-30">

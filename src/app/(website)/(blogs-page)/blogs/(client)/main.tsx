@@ -15,7 +15,7 @@ const MainBlogs = ({ blogs }: { blogs: BlogTypes[] }) => {
         title="Our Stories"
         description="Know more about this company achievements and stories"
       />
-      <Blogs blogs={blogs} />
+      <Blogs blogs={blogs} view={false} />
     </>
   );
 };

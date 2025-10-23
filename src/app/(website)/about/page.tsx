@@ -32,7 +32,7 @@ export default async function AboutPage() {
       // projects
       await prisma.project.findMany(),
       // blogs
-      await prisma.blog.findMany(),
+      await prisma.blog.findMany({ include: { images: true } }),
       // companies
       await prisma.companies.findMany(),
     ]);

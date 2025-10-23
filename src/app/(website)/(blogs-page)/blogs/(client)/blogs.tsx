@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ScanText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,24 +11,47 @@ import Image from "next/image";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 import { shortText } from "@/lib/utils";
 
-const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
+interface BlogProps {
+  blogs: BlogTypes[];
+  view: boolean;
+}
+
+const Blogs = ({ blogs, view }: BlogProps) => {
   console.log("blogss- inside compoentn--", blogs);
 
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-16 lg:px-7">
-        <div className="w-full">
-          <div>
-            <h2 className="text-4xl text-center font-semibold text-slate-900">
+        {view === true ? (
+          <div className="w-full space-y-3 mb-5">
+            <div className="mb-3 flex items-center text-sm text-sky-600">
+              <ScanText size={15} className="mr-2" aria-hidden />
+              <span className="font-semibold tracking-wide">Blogs</span>
+            </div>
+            <h2 className="text-4xl font-semibold text-slate-900">
               Blog <span className="text-sky-600">Posts</span>
             </h2>
-            <p className="mt-3 text-center mx-auto max-w-2xl text-slate-600">
+            <p className="text-slate-500 max-w-2xl">
               Discover the latest trends, tips, and best practices in modern web
               development. From UI components to design systems, stay updated
               with our expert insights.
             </p>
           </div>
-        </div>
+        ) : (
+          <div className="w-full">
+            <div>
+              <h2 className="text-4xl text-center font-semibold text-slate-900">
+                Blog <span className="text-sky-600">Posts</span>
+              </h2>
+              <p className="mt-3 text-center mx-auto max-w-2xl text-slate-600">
+                Discover the latest trends, tips, and best practices in modern
+                web development. From UI components to design systems, stay
+                updated with our expert insights.
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="w-full">
           <div className="w-full grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {blogs.map((blog) => (
@@ -42,8 +65,8 @@ const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
                     className="fade-in transition-opacity duration-200 hover:opacity-70"
                   >
                     <Image
-                      width={150}
-                      height={150}
+                      width={400}
+                      height={300}
                       src={blog.images?.[0]?.url || "/placeholder.png"}
                       alt={(blog.title as string) || "title"}
                       className=""
@@ -51,11 +74,9 @@ const Blogs = ({ blogs }: { blogs: BlogTypes[] }) => {
                   </Link>
                 </div>
                 <CardHeader>
-                  <Link href={`/blog/${blog.id}`}>
-                    <h3 className="text-lg font-semibold hover:underline md:text-xl">
-                      {blog.title}
-                    </h3>
-                  </Link>
+                  <h3 className="text-lg font-semibold md:text-xl">
+                    {blog.title}
+                  </h3>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
