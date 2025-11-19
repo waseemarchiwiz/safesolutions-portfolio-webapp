@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { XIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import CustomLogo from "./logo";
 import { usePathname } from "next/navigation";
+import CustomLogo from "./logo";
 
 const menuItems = [
   { name: "Home", href: "/" },

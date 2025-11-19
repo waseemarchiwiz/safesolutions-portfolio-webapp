@@ -1,4 +1,3 @@
-import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 import MainBlogs from "./(client)/main";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";

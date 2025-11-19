@@ -2,15 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Quote, ChevronLeft, ChevronRight, ScanText } from "lucide-react";
+import { Quote, ScanText } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { TestimonialTypes } from "@/app/(admin)/dashboard/(testimonial-page)/testimonials/columns";
 

@@ -113,6 +113,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      {/* mobile nav drawer */}
       <MobileNavDrawer
         isOpen={menuState}
         onOpenChange={() => setMenuState((prev) => !prev)}

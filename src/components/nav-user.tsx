@@ -1,6 +1,6 @@
 "use client";
 
-import { IconDotsVertical, IconLogout, IconUser } from "@tabler/icons-react";
+import { IconDotsVertical, IconLogout } from "@tabler/icons-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

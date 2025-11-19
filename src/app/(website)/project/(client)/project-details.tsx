@@ -2,7 +2,6 @@
 
 import React from "react";
 import { ChevronRight, ExternalLink } from "lucide-react";
-import { iconsMap } from "../data";
 import Image from "next/image";
 import PageHeroSection from "../../(common)/hero-section";
 import Link from "next/link";
