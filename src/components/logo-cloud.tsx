@@ -2,22 +2,23 @@ import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import Image from "next/image";
 
+// companies logos
+const Logos = [
+  {
+    title: "Alpha Build",
+    image: "/projectlogos/alpha-removebg-preview.png",
+  },
+  {
+    title: "Archiwiz",
+    image: "/projectlogos/archiwiz.webp",
+  },
+  {
+    title: "Lumsden Trading",
+    image: "/projectlogos/lumsden.webp",
+  },
+];
+
 export default function LogoCloud() {
-  // companies logos
-  const Logos = [
-    {
-      title: "Alpha Build",
-      image: "/projectlogos/alpha-removebg-preview.png",
-    },
-    {
-      title: "Archiwiz",
-      image: "/projectlogos/archiwiz.webp",
-    },
-    {
-      title: "Lumsden Trading",
-      image: "/projectlogos/lumsden.webp",
-    },
-  ];
   return (
     <section className=" text-white overflow-hidden py-12 relative">
       <div className="group relative m-auto max-w-7xl px-6">
@@ -36,52 +37,6 @@ export default function LogoCloud() {
                   />
                 </div>
               ))}
-
-              {/* <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit"
-                  src="https://html.tailus.io/blocks/customers/nike.svg"
-                  alt="Nike Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div> */}
-              {/* <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit"
-                  src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
-                  alt="Lemon Squeezy Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div> */}
-              {/* <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit"
-                  src="https://html.tailus.io/blocks/customers/laravel.svg"
-                  alt="Laravel Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div> */}
-              {/* <div className="flex">
-                <img
-                  className="mx-auto h-7 w-fit"
-                  src="https://html.tailus.io/blocks/customers/lilly.svg"
-                  alt="Lilly Logo"
-                  height="28"
-                  width="auto"
-                />
-              </div> */}
-              {/* <div className="flex">
-                <img
-                  className="mx-auto h-6 w-fit"
-                  src="https://html.tailus.io/blocks/customers/openai.svg"
-                  alt="OpenAI Logo"
-                  height="24"
-                  width="auto"
-                />
-              </div> */}
             </InfiniteSlider>
 
             {/* Edge blur effects */}

@@ -15,7 +15,7 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh every day
     cookie: {
-      name: "better-auth.session_token", // ✅ must match your cookie
+      name: "better-auth.session_token", // must match your cookie
       secure: process.env.NODE_ENV === "production", // false in dev
       sameSite: "lax",
       path: "/",

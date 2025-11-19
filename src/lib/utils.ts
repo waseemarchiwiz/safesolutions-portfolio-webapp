@@ -28,7 +28,7 @@ export function shortText(text: string, limit: number) {
 export function serializePrisma<T>(data: T): any {
   if (data === null || data === undefined) return data;
 
-  // ✅ Handle Decimal
+  // Handle Decimal
   if (
     typeof data === "object" &&
     data !== null &&
@@ -38,7 +38,7 @@ export function serializePrisma<T>(data: T): any {
     return (data as any).toNumber();
   }
 
-  // ✅ Handle Date
+  // Handle Date
   if (data instanceof Date) {
     return data.toISOString();
   }

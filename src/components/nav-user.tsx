@@ -97,17 +97,6 @@ export function NavUser() {
 
             <DropdownMenuSeparator />
 
-            {/* Optional: Profile or Settings */}
-            <DropdownMenuItem
-              onClick={() => router.push("/profile")}
-              className="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-muted/60 cursor-pointer"
-            >
-              <IconUser size={16} />
-              Profile
-            </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-
             {/* Logout */}
             <DropdownMenuItem
               onClick={handleSignOut}
