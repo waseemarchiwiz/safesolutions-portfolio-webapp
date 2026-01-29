@@ -38,13 +38,13 @@ const Header = () => {
     <header>
       <nav
         data-state={menuState && "active"}
-        className="fixed z-20 w-full px-2 transition-all duration-300"
+        className=" fixed z-20 w-full px-2 transition-all duration-300"
       >
         <div
           className={cn(
-            "mx-auto mt-2 max-w-7xl px-2 transition-all duration-300 lg:px-5",
+            " mx-auto mt-2 max-w-7xl px-2 transition-all duration-300 lg:px-5",
             isScrolled &&
-              "bg-background/70 max-w-[1235px] rounded-2xl px-2 border backdrop-blur-lg shadow-sm dark:shadow-none lg:px-5"
+              "dark:bg-white dark:shadow-sm bg-background/70 max-w-[1235px] rounded-2xl px-2 border backdrop-blur-lg shadow-sm lg:px-5",
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
@@ -78,9 +78,9 @@ const Header = () => {
                         className={cn(
                           "relative block py-2 transition-colors",
                           isScrolled
-                            ? "text-zinc-800 hover:text-sky-700 dark:text-zinc-200 dark:hover:text-sky-400"
+                            ? "dark:text-black text-zinc-800 hover:text-sky-700 "
                             : "text-zinc-100 hover:text-white",
-                          active && "font-medium"
+                          active && "font-medium",
                         )}
                         aria-current={active ? "page" : undefined}
                       >
@@ -89,7 +89,7 @@ const Header = () => {
                         <span
                           className={cn(
                             "absolute left-0 right-0 -bottom-0.5 mx-auto h-0.5 w-0 rounded-full transition-all",
-                            active ? "w-10 bg-current" : "w-0"
+                            active ? "w-10 bg-current" : "w-0",
                           )}
                           aria-hidden
                         />
@@ -104,7 +104,7 @@ const Header = () => {
             <Link href="/contact" className="hidden lg:block">
               <Button
                 variant="outline"
-                className="rounded-full bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+                className="dark:bg-sky-700 rounded-full bg-sky-600 border-none text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
                 asChild
               >
                 <span>Contact Us</span>

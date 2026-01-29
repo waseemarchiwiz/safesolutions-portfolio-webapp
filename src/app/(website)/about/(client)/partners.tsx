@@ -21,7 +21,7 @@ const PartnerCard = ({ partner }: { partner: CompanyTypes }) => {
     <motion.div variants={cardVariants}>
       <Link
         href={partner.link}
-        className="group relative block aspect-square w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-sky-500/10"
+        className="group relative block aspect-square w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100  transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg hover:shadow-sky-500/10"
       >
         {/* Full-cover background image */}
         <div className="absolute inset-0">
@@ -68,7 +68,7 @@ const PartnersSection = ({ partners }: { partners: CompanyTypes[] }) => {
           <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
           <span className="font-semibold">Our Ecosystem</span>
         </div>
-        <h2 className="text-4xl font-semibold text-slate-900 dark:text-white">
+        <h2 className="text-4xl font-semibold text-slate-900">
           Explore Our <span className="text-sky-600">Strategic Partners</span>
         </h2>
         <p className="mt-3 max-w-2xl text-slate-600 dark:text-slate-400">

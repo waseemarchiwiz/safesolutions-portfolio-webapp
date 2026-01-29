@@ -4,7 +4,6 @@ import React from "react";
 import Teams from "./teams";
 import Projects from "../../(common)/project-section";
 import PageHeroSection from "../../(common)/hero-section";
-import About from "../../(home)/(client)/about";
 import Achievements from "./achievements";
 import { TeamTypes } from "../page";
 import { Banner } from "./banner";
@@ -14,6 +13,7 @@ import Blogs from "../../(blogs-page)/blogs/(client)/blogs";
 import PartnersSection from "./partners";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
+import About from "../../(home)/(client)/about";
 
 interface AboutProps {
   teams: TeamTypes[];
@@ -40,28 +40,27 @@ const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
         <Achievements />
       </SectionWithReveal>
       {/* About Section */}
-      <SectionWithReveal>
+      <SectionWithReveal className="dark:bg-white">
         <About />
       </SectionWithReveal>
       {/* Services */}
       <SectionWithReveal className="px-5 bg-zinc-100 py-16">
         <PartnersSection partners={partners} />
       </SectionWithReveal>
-
       {/* Projects Section */}
-      <SectionWithReveal>
+      <SectionWithReveal className="dark:bg-white">
         <Projects projects={projects} />
       </SectionWithReveal>
       {/* Teams Section */}
-      <SectionWithReveal className="bg-zinc-100">
+      <SectionWithReveal className=" bg-zinc-100">
         <Teams teams={teams} />
       </SectionWithReveal>
       {/* blogs Section */}
-      <SectionWithReveal className="px-5">
+      <SectionWithReveal className="px-5 bg-white">
         <Blogs blogs={blogs} view={true} />
       </SectionWithReveal>
       {/* Banner Section */}
-      <SectionWithReveal className="mt-10 mb-30">
+      <SectionWithReveal className="mt-10 mb-30 ">
         <Banner />
       </SectionWithReveal>
     </>

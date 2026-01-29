@@ -23,7 +23,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
   };
 
   return (
-    <div className="dark:bg-black py-24">
+    <div className=" py-24">
       <div className="max-w-7xl mx-auto px-2">
         <motion.div
           className="px-4"
@@ -40,7 +40,7 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
               <ScanText size={15} className="text-sky-600 mr-2" aria-hidden />
               <span className="font-semibold">Leadership</span>
             </div>
-            <h2 className="text-4xl font-semibold text-slate-900 dark:text-white">
+            <h2 className="text-4xl font-semibold text-slate-900 ">
               Meet Our <span className="text-sky-600">Leaders</span>
             </h2>
             <p className="mt-3 max-w-2xl text-slate-600 dark:text-slate-400">
@@ -55,11 +55,11 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
         <div className="px-4 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {teams.map(
             (
-              team // Removed index, using team.name or a unique team.id for keys is better if available
+              team, // Removed index, using team.name or a unique team.id for keys is better if available
             ) => (
               <div
                 key={team.name} // Use a unique key like name or ID
-                className="group overflow-hidden rounded-lg border dark:border-slate-800 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+                className="group overflow-hidden rounded-lg border shadow-sm transition-shadow duration-300 hover:shadow-lg"
               >
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
@@ -84,15 +84,13 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
 
                 {/* Text Content */}
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-lg font-semibold text-slate-900">
                     {team.name}
                   </h3>
-                  <p className="text-sm text-sky-600 dark:text-sky-500">
-                    {team.role}
-                  </p>
+                  <p className="text-sm text-sky-600">{team.role}</p>
                 </div>
               </div>
-            )
+            ),
           )}
         </div>
       </div>

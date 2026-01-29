@@ -1,7 +1,7 @@
 import Home from "./(client)";
 import { prisma } from "@/lib/prisma";
 
-export const runtime = "nodejs"; // ✅ force Node runtime (not Edge)
+export const runtime = "nodejs"; // force Node runtime (not Edge)
 
 export default async function HomePage() {
   try {

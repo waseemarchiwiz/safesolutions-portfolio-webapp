@@ -64,7 +64,7 @@ export function Services({ services, view }: ServicePropsTypes) {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <Card className="group relative overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl h-[400px] flex flex-col">
+                <Card className="group relative overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300 bg-white/60 backdrop-blur-sm rounded-2xl h-[400px] flex flex-col">
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
                       src={service.url}
@@ -76,10 +76,10 @@ export function Services({ services, view }: ServicePropsTypes) {
                   </div>
 
                   <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    <h3 className="text-lg font-semibold text-slate-900 ">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                    <p className="text-sm text-slate-600">
                       {service.description}
                     </p>
                   </div>

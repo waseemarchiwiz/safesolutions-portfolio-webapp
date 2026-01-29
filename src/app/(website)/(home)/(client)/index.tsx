@@ -23,7 +23,7 @@ interface MainPropTypes {
 }
 
 const Main = ({ faqs, projects, testimonials, services }: MainPropTypes) => (
-  <div className="bg-[#FFFFFF] dark:bg-black dark:text-gray-200 overflow-hidden">
+  <div className="bg-[#FFFFFF] overflow-hidden">
     <Hero />
 
     <SectionWithReveal>

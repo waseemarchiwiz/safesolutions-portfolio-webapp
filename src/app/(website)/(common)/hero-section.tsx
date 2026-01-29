@@ -36,7 +36,7 @@ export default function PageHeroSection({
 
   return (
     <MotionConfig reducedMotion={prefersReduced ? "always" : "never"}>
-      <main className="py-5 overflow-hidden bg-black">
+      <main className=" py-5 overflow-hidden bg-black">
         {/* Decorative grid / pattern */}
         <DotPattern className="w-full h-[65vh] opacity-20" />
         <section className="max-w-[77rem] mx-auto relative text-white">

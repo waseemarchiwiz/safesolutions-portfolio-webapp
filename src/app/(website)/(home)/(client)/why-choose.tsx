@@ -26,7 +26,7 @@ const Data = [
 
 export default function WhyChoose() {
   return (
-    <section className="bg-zinc-100 py-16 md:py-32 dark:bg-transparent">
+    <section className="bg-zinc-100 dark:bg-zinc-100 py-16 md:py-32">
       <div className="@container mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="mb-8">
@@ -44,9 +44,12 @@ export default function WhyChoose() {
           </p>
         </div>
 
-        <Card className="@min-4xl:max-w-full @min-4xl:grid-cols-3 @min-4xl:divide-x @min-4xl:divide-y-0 mx-auto mt-8 grid max-w-sm divide-y overflow-hidden shadow-zinc-950/5 *:text-center md:mt-16">
+        <Card className="dark:bg-white  dark:text-gray-600 @min-4xl:max-w-full @min-4xl:grid-cols-3 @min-4xl:divide-x @min-4xl:divide-y-0 mx-auto mt-8 grid max-w-sm divide-y overflow-hidden shadow-zinc-950/5 *:text-center md:mt-16">
           {Data.map((item) => (
-            <div key={item.title} className="group shadow-zinc-950/5 ">
+            <div
+              key={item.title}
+              className="dark:border-r dark:border-gray-200 group  shadow-zinc-950/5 "
+            >
               <CardHeader className="pb-3">
                 <CardDecorator>{item.icon}</CardDecorator>
                 <h3 className="mt-6 font-medium">{item.title}</h3>
@@ -64,13 +67,13 @@ export default function WhyChoose() {
 }
 
 const CardDecorator = ({ children }: { children: ReactNode }) => (
-  <div className="mask-radial-from-40% mask-radial-to-60% relative mx-auto size-36 duration-200 [--color-border:color-mix(in_oklab,var(--color-zinc-950)10%,transparent)] group-hover:[--color-border:color-mix(in_oklab,var(--color-zinc-950)20%,transparent)] ">
+  <div className=" mask-radial-from-40% mask-radial-to-60% relative mx-auto size-36 duration-200 [--color-border:color-mix(in_oklab,var(--color-zinc-950)10%,transparent)] group-hover:[--color-border:color-mix(in_oklab,var(--color-zinc-950)20%,transparent)] ">
     <div
       aria-hidden
-      className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px] dark:opacity-50"
+      className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)]   bg-[size:24px_24px]"
     />
 
-    <div className="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
+    <div className="dark:bg-white bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">
       {children}
     </div>
   </div>

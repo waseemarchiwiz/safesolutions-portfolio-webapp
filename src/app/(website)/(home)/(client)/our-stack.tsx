@@ -137,7 +137,7 @@ export default function OurStack() {
           <Button
             asChild
             variant="outline"
-            className="border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white transition-all"
+            className="dark:bg-sky-600 dark:text-white dark:hover:bg-sky-700 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white transition-all"
           >
             <Link href="#">Learn More</Link>
           </Button>

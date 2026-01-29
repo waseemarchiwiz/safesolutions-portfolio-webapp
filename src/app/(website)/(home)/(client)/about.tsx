@@ -34,8 +34,8 @@ export default function About() {
           </div>
 
           <div className="relative space-y-4">
-            <p className="text-muted-foreground">
-              <span className="text-accent-foreground font-bold">
+            <p className="text-muted-foreground dark:text-gray-500">
+              <span className="dark:text-gray-500 font-bold">
                 Safe Solutions
               </span>{" "}
               is a leading software development and technology solutions company
@@ -44,15 +44,15 @@ export default function About() {
               simplify operations and drive growth.
             </p>
 
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground dark:text-gray-500">
               From enterprise software and cloud-based applications to AI-driven
               automation and analytics, our expert team delivers tailored
               solutions that combine innovation.
             </p>
 
             <div className="pt-6">
-              <blockquote className="border-l-4 pl-4">
-                <p>
+              <blockquote className="dark:border-gray-200 border-l-4 pl-4 text-muted-foreground">
+                <p className="text-muted-foreground">
                   At Safe Solutions, our mission is to empower organizations
                   with cutting-edge digital tools that accelerate innovation and
                   enhance productivity. We don&apos;t just create software — we
@@ -61,9 +61,11 @@ export default function About() {
                 </p>
 
                 <div className="mt-6 space-y-3">
-                  <cite className="block font-medium">Jahangir Khan, CEO</cite>
+                  <cite className="dark:text-gray-500 block font-medium">
+                    Jahangir Khan, CEO
+                  </cite>
                   <Image
-                    className="h-full object-cover"
+                    className=" h-full object-cover"
                     src="/updated-logo.png"
                     alt="Logo"
                     height={70}

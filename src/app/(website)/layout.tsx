@@ -20,15 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="relative">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <Footer />
+        <ThemeProvider disableTransitionOnChange>
+          <main>
+            <Header />
+            {children}
+            <Footer />
+          </main>
         </ThemeProvider>
         {/* Toast */}
         <Toaster richColors position="top-right" />

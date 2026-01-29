@@ -22,34 +22,34 @@ type Props = {
 
 const Achievements = () => {
   return (
-    <div className="dark:bg-black">
-      <section className="bg-muted py-12 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <Card className="grid gap-0.5 divide-y *:py-8 *:text-center md:grid-cols-3 md:divide-x md:divide-y-0">
-            <div>
-              <div className="text-foreground text-4xl font-bold">
-                <CountUpFM end={1200} prefix="+" duration={1.2} />
-              </div>
-              <p className="text-muted-foreground">Stars on GitHub</p>
+    <section className="dark:bg-zinc-100 bg-muted py-12 md:py-20">
+      <div className=" mx-auto max-w-7xl px-6">
+        <Card className="dark:bg-white grid gap-0.5 divide-y *:py-8 *:text-center md:grid-cols-3 md:divide-x md:divide-y-0">
+          <div>
+            <div className="dark:text-gray-800 text-foreground text-4xl font-bold">
+              <CountUpFM end={1200} prefix="+" duration={1.2} />
             </div>
+            <p className="dark:text-gray-500 text-muted-foreground">
+              Stars on GitHub
+            </p>
+          </div>
 
-            <div>
-              <div className="text-foreground text-4xl font-bold">
-                <CountUpFM end={56} suffix="%" duration={1.2} />
-              </div>
-              <p className="text-muted-foreground">Conversion rate</p>
+          <div>
+            <div className=" dark:text-gray-800 text-foreground text-4xl font-bold">
+              <CountUpFM end={56} suffix="%" duration={1.2} />
             </div>
+            <p className="text-muted-foreground">Conversion rate</p>
+          </div>
 
-            <div>
-              <div className="text-foreground text-4xl font-bold">
-                <CountUpFM end={500} prefix="+" duration={1.2} />
-              </div>
-              <p className="text-muted-foreground">Powered Apps</p>
+          <div>
+            <div className="dark:text-gray-800 text-foreground text-4xl font-bold">
+              <CountUpFM end={500} prefix="+" duration={1.2} />
             </div>
-          </Card>
-        </div>
-      </section>
-    </div>
+            <p className="text-muted-foreground">Powered Apps</p>
+          </div>
+        </Card>
+      </div>
+    </section>
   );
 };
 
@@ -73,7 +73,7 @@ function CountUpFM({
   // motion value drives the number
   const mv = useMotionValue(start);
   const [text, setText] = useState(() =>
-    format(end, start, prefix, suffix, locale)
+    format(end, start, prefix, suffix, locale),
   );
 
   // subscribe to mv changes and round -> text
@@ -115,7 +115,7 @@ function format(
   value: number,
   prefix: string,
   suffix: string,
-  locale?: string
+  locale?: string,
 ) {
   const n = Number.isFinite(value) ? Math.round(value) : end;
   const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 });

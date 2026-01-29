@@ -27,7 +27,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
   };
 
   return (
-    <section className="bg-zinc-100 dark:bg-black py-20 px-4 relative overflow-hidden">
+    <section className="bg-zinc-100 dark:bg-zinc-100 py-20 px-4 relative overflow-hidden">
       <motion.div
         className="max-w-[77rem] mx-auto relative"
         initial="hidden"
@@ -72,7 +72,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
                     ease: "easeOut",
                   }}
                 >
-                  <Card className=" shadow-md  hover:shadow-lg transition-shadow duration-300">
+                  <Card className="dark:bg-white dark:shadow-md shadow-md  hover:shadow-lg transition-shadow duration-300">
                     <CardContent className="p-8 relative">
                       <Quote className="absolute top-6 right-6 w-6 h-6 text-sky-300 opacity-40" />
 
@@ -88,16 +88,16 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
                         </Avatar>
 
                         <div>
-                          <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                          <h3 className=" font-semibold text-lg text-gray-900">
                             {testimonial.name}
                           </h3>
-                          <span className="text-gray-500 dark:text-gray-400 text-sm">
+                          <span className="text-gray-500 text-sm">
                             {testimonial.designation}
                           </span>
                         </div>
                       </div>
 
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      <p className="text-gray-700 leading-relaxed">
                         “{testimonial.description}”
                       </p>
                     </CardContent>

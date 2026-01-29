@@ -28,7 +28,7 @@ const Blogs = ({ blogs, view }: BlogProps) => {
               <ScanText size={15} className="mr-2" aria-hidden />
               <span className="font-semibold tracking-wide">Blogs</span>
             </div>
-            <h2 className="text-4xl font-semibold text-slate-900">
+            <h2 className=" text-4xl font-semibold text-slate-900">
               Blog <span className="text-sky-600">Posts</span>
             </h2>
             <p className="text-slate-500 max-w-2xl">
@@ -57,7 +57,7 @@ const Blogs = ({ blogs, view }: BlogProps) => {
             {blogs.map((blog) => (
               <Card
                 key={blog.id}
-                className="grid grid-rows-[auto_auto_1fr_auto] pt-0"
+                className="bg-white grid grid-rows-[auto_auto_1fr_auto] pt-0"
               >
                 <div className=" w-full">
                   <Link
@@ -74,7 +74,7 @@ const Blogs = ({ blogs, view }: BlogProps) => {
                   </Link>
                 </div>
                 <CardHeader>
-                  <h3 className="text-lg font-semibold md:text-xl">
+                  <h3 className="dark:text-slate-800 text-lg font-semibold md:text-xl">
                     {blog.title}
                   </h3>
                 </CardHeader>
@@ -86,7 +86,7 @@ const Blogs = ({ blogs, view }: BlogProps) => {
                 <CardFooter>
                   <Link
                     href={`/blog/${blog.slug}`}
-                    className="text-foreground flex items-center hover:underline"
+                    className="dark:text-slate-800 text-foreground flex items-center hover:underline"
                   >
                     Read more
                     <ArrowRight className="ml-2 size-4" />
