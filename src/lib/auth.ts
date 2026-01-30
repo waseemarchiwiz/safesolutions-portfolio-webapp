@@ -11,6 +11,9 @@ export const auth = betterAuth({
     requireEmailVerification: false,
   },
 
+  baseURL: process.env.BETTER_AUTH_URL,
+  trustedOrigins: process.env.BETTER_AUTH_TRUSTED_ORIGINS?.split(","),
+
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh every day
