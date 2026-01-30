@@ -2,7 +2,6 @@
 
 import React from "react";
 import Hero from "./hero";
-import About from "./about";
 import Projects from "../../(common)/project-section";
 import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
@@ -14,6 +13,7 @@ import { Services } from "../../(service-page)/services/(client)";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
 import Faqs from "./faqs";
 import WhyChoose from "./why-choose";
+import AboutSection from "../../(common)/about-section";
 
 interface MainPropTypes {
   faqs: FaqTypes[];
@@ -27,7 +27,7 @@ const Main = ({ faqs, projects, testimonials, services }: MainPropTypes) => (
     <Hero />
 
     <SectionWithReveal>
-      <About />
+      <AboutSection />
     </SectionWithReveal>
 
     <SectionWithReveal>

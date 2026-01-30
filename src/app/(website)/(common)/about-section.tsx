@@ -1,7 +1,7 @@
 import { ScanText } from "lucide-react";
 import Image from "next/image";
 
-export default function About() {
+export default function AboutSection() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-7xl space-y-8 px-6 md:space-y-16">

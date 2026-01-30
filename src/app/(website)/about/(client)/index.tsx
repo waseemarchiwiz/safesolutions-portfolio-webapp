@@ -13,7 +13,7 @@ import Blogs from "../../(blogs-page)/blogs/(client)/blogs";
 import PartnersSection from "./partners";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
-import About from "../../(home)/(client)/about";
+import AboutSection from "../../(common)/about-section";
 
 interface AboutProps {
   teams: TeamTypes[];
@@ -41,7 +41,7 @@ const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
       </SectionWithReveal>
       {/* About Section */}
       <SectionWithReveal className="dark:bg-white">
-        <About />
+        <AboutSection />
       </SectionWithReveal>
       {/* Services */}
       <SectionWithReveal className="px-5 bg-zinc-100 py-16">
