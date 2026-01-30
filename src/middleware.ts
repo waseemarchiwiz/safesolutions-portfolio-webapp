@@ -2,7 +2,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
 //  Set this to your actual Better Auth session cookie name
-const SESSION_COOKIE_NAME = "better-auth.session_token"; // <-- change if needed
+const SESSION_COOKIE_NAME =
+  process.env.NODE_ENV === "production"
+    ? "__Secure-better-auth.session_token"
+    : "better-auth.session_token"; // <-- change if needed
 
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
