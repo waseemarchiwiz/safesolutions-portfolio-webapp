@@ -7,7 +7,7 @@ const SESSION_COOKIE_NAME =
     ? "__Secure-better-auth.session_token"
     : "better-auth.session_token"; // <-- change if needed
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const isDashboard = pathname.startsWith("/dashboard");
   const isAuthPage = pathname.startsWith("/signin");

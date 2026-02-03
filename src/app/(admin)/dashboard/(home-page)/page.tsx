@@ -28,17 +28,19 @@ export default async function HomePage() {
     ]);
 
     return (
-      <Home
-        totalBlogs={totalBlogs}
-        totalCareers={totalCareers}
-        totalTestimonials={totalTestimonials}
-        totalTeams={totalTeams}
-        totalServices={totalServices}
-        totalProjects={totalProjects}
-        totalFAQs={totalFAQs}
-        totalContacts={totalContacts}
-        totalCompanies={totalCompanies}
-      />
+      <div className="w-full max-w-7xl mx-auto">
+        <Home
+          totalBlogs={totalBlogs}
+          totalCareers={totalCareers}
+          totalTestimonials={totalTestimonials}
+          totalTeams={totalTeams}
+          totalServices={totalServices}
+          totalProjects={totalProjects}
+          totalFAQs={totalFAQs}
+          totalContacts={totalContacts}
+          totalCompanies={totalCompanies}
+        />
+      </div>
     );
   } catch (error) {
     console.error("Dashboard count fetch failed:", error);
