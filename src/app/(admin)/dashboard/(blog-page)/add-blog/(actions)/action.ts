@@ -4,12 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { buildBlogSchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Blog Action
 // -----------------------------
 export async function AddBlogAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   try {
     const dataToParse = {
@@ -60,7 +61,7 @@ export async function AddBlogAction(
             console.error("Failed to upload image:", error);
             throw error;
           }
-        })
+        }),
       );
 
       imageUrls = uploadResults.map((r) => r.url);
@@ -80,10 +81,15 @@ export async function AddBlogAction(
               url: url as string,
               publicId: publicIds[index], // Store public_id for deletion
             },
-          })
-        )
+          }),
+        ),
       );
     }
+
+    // update blog count
+    revalidatePath("/dashboard/blogs");
+    revalidatePath("/blogs");
+    revalidatePath("/about");
 
     return { success: true, message: "Blog added successfully", data: blog };
   } catch (error) {
@@ -100,7 +106,7 @@ export async function AddBlogAction(
 // -----------------------------
 
 export async function UpdateBlogAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   try {
     const dataToParse = {
@@ -142,7 +148,7 @@ export async function UpdateBlogAction(
 
     // --- Handle image update (replace previous image) ---
     if (images && images.length > 0) {
-      const newImageFile = images[0]; // ✅ take only the first image
+      const newImageFile = images[0]; // take only the first image
 
       // Upload new image to Azure
       const bytes = Buffer.from(await newImageFile.arrayBuffer());
@@ -177,6 +183,11 @@ export async function UpdateBlogAction(
         },
       });
     }
+
+    // update blog count
+    revalidatePath("/dashboard/blogs");
+    revalidatePath("/blogs");
+    revalidatePath("/about");
 
     return {
       success: true,
