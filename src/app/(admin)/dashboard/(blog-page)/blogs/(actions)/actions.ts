@@ -30,14 +30,16 @@ export async function DeleteBlogAction(blogId: number): Promise<ReturnPayload> {
           } catch (error) {
             console.error("Failed to delete image from Azure:", error);
           }
-        })
+        }),
       );
     }
 
     // Delete blog and related images from database (cascade delete)
     await prisma.blog.delete({ where: { id: blogId } });
-
+    // update blog count
     revalidatePath("/dashboard/blogs");
+    revalidatePath("/blogs");
+    revalidatePath("/about");
 
     return { success: true, message: "Blog deleted successfully" };
   } catch (error) {
