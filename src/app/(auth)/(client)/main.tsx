@@ -16,9 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { SignInFormValues, signInSchema } from "../(validation)/schema";
-import { LoaderCircle, LogInIcon } from "lucide-react";
+import { Eye, EyeClosed, LoaderCircle, LogInIcon } from "lucide-react";
 import { toast } from "sonner";
 import { signIn } from "@/lib/auth-client";
+import { useState } from "react";
 
 export default function SignInForm({
   className,
@@ -33,6 +34,10 @@ export default function SignInForm({
     },
   });
 
+  // show password
+  const [showPassword, setShowPassword] = useState(false);
+
+  // form submit
   const formSubmit = async (values: SignInFormValues) => {
     try {
       const { data, error } = await signIn.email({
@@ -51,7 +56,7 @@ export default function SignInForm({
       toast.error(
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again."
+          : "Something went wrong. Please try again.",
       );
     }
   };
@@ -106,13 +111,25 @@ export default function SignInForm({
                         Password
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          id="password"
-                          type="password"
-                          placeholder="Enter your password"
-                          className="py-5 mt-1 focus:ring-0 focus:shadow-none focus:border-sky-600"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter your password"
+                            className=" py-5 mt-1 focus:ring-0 focus:shadow-none focus:border-sky-600"
+                            {...field}
+                          />
+                          <span
+                            className="cursor-pointer absolute top-0 right-3 my-4"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                          >
+                            {showPassword ? (
+                              <Eye className="w-5 h-5 text-gray-500 hover:text-gray-400" />
+                            ) : (
+                              <EyeClosed className="w-5 h-5 text-gray-500 hover:text-gray-400" />
+                            )}
+                          </span>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
