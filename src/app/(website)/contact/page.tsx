@@ -7,7 +7,6 @@ export default async function ContactPage() {
   const companiesResult = await prisma.companies.findMany();
   // companies
   const companies = serializePrisma(companiesResult) || [];
-  console.log("companies: ", companies);
   // companies
   return <Main companies={companies || []} />;
 }

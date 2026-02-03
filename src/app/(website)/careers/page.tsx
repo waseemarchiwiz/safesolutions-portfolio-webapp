@@ -12,8 +12,5 @@ export default async function CareersPage() {
   const careers = serializePrisma(careersResult) || [];
   const companies = serializePrisma(companiesResult) || [];
 
-  console.log("careers: ", careers);
-  console.log("companies: ", companies);
-
   return <Main careers={careers} companies={companies} />;
 }

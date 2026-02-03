@@ -21,8 +21,6 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
   });
   const project = serializePrisma(result);
 
-  console.log("Project Data: ", project);
-
   if (!project) {
     return (
       <div className="flex items-center justify-center min-h-screen">

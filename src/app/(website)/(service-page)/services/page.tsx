@@ -7,7 +7,6 @@ export default async function ServicesPage() {
   const result = await prisma.service.findMany({});
   // services
   const services = serializePrisma(result);
-  console.log("services:---", services);
 
   // main
   return <Services view={false} services={services} />;

@@ -15,8 +15,6 @@ export default async function ServiceDetailsPage({ params }: ParamsProps) {
   });
   const service = serializePrisma(result);
 
-  console.log("Service Data: ", service);
-
   if (!service) {
     return (
       <div className="flex items-center justify-center min-h-screen">

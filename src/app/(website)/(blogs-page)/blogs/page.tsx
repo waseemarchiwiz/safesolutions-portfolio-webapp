@@ -17,8 +17,6 @@ export default async function BlogsPage() {
 
   const blogs = serializePrisma(result);
 
-  console.log("blogs- inpage--", blogs);
-
   // blogs
   return <MainBlogs blogs={blogs} />;
 }
