@@ -4,12 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { companySchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Company Action (Azure Blob Storage)
 // -----------------------------
 export async function AddCompanyAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let uploadedPublicId: string | null = null; // Track uploaded blob for rollback
 
@@ -65,6 +66,10 @@ export async function AddCompanyAction(
         publicId: uploadedPublicId as string,
       },
     });
+
+    // update the teams page in dashboard
+    revalidatePath("/contact");
+    revalidatePath("/about");
 
     return {
       success: true,

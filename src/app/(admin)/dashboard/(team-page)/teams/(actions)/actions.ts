@@ -10,7 +10,7 @@ import { deleteFile, uploadFile } from "@/lib/upload";
 // Update Team Action (Azure)
 // -----------------------------
 export async function UpdateTeamAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let newPublicId: string | null = null;
 
@@ -88,7 +88,10 @@ export async function UpdateTeamAction(
       },
     });
 
+    // update the teams page in dashboard
     revalidatePath("/dashboard/teams");
+    // update the about page
+    revalidatePath("/about");
 
     return {
       success: true,
@@ -134,7 +137,11 @@ export async function DeleteTeamAction(id: number): Promise<ReturnPayload> {
 
     // Delete DB record
     await prisma.team.delete({ where: { id } });
+
+    // update the teams page in dashboard
     revalidatePath("/dashboard/teams");
+    // update the about page
+    revalidatePath("/about");
 
     return {
       success: true,

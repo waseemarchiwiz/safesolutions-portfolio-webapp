@@ -17,7 +17,7 @@ interface fAQUpdateTypes extends FaqFormValues {
 // Update fAQ Action
 // -----------------------------
 export async function UpdateFAQAction(
-  values: fAQUpdateTypes
+  values: fAQUpdateTypes,
 ): Promise<ReturnPayload> {
   try {
     const validation = FaqSchema.safeParse(values);
@@ -49,7 +49,10 @@ export async function UpdateFAQAction(
       },
     });
 
+    // update the faqs page in dashboard
     revalidatePath("/dashboard/faqs");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,
@@ -90,7 +93,10 @@ export async function DeleteFAQAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Failed to delete team member" };
     }
 
+    // update the faqs page in dashboard
     revalidatePath("/dashboard/faqs");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,

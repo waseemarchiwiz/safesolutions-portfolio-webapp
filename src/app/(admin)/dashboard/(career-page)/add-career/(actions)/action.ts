@@ -5,12 +5,13 @@ import { ReturnPayload } from "@/lib/types";
 import path from "path";
 import fs from "fs/promises";
 import { buildJobSchema, JobFormValues } from "../(validation)/validation";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Career Action
 // -----------------------------
 export async function AddCareerAction(
-  values: JobFormValues
+  values: JobFormValues,
 ): Promise<ReturnPayload> {
   const uploadedFilePath: string | null = null; // track uploaded file path
 
@@ -45,6 +46,9 @@ export async function AddCareerAction(
         jobDescription: description,
       },
     });
+
+    // update the teams page in dashboard
+    revalidatePath("/careers");
 
     return {
       success: true,

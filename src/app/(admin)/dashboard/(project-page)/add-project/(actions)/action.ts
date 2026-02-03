@@ -7,12 +7,13 @@ import {
   buildProjectSchema,
 } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Project Action (Azure)
 // -----------------------------
 export async function AddProjectAction(
-  values: AddProjectFormValues
+  values: AddProjectFormValues,
 ): Promise<ReturnPayload> {
   let uploadedPublicId: string | null = null;
 
@@ -68,13 +69,18 @@ export async function AddProjectAction(
         type,
         link,
         url: imageUrl as string,
-        publicId: uploadedPublicId as string, // ✅ store Azure blob ID
+        publicId: uploadedPublicId as string, // store Azure blob ID
         services: services ? { create: services } : undefined,
         projectDetails: projectDetails ? { create: projectDetails } : undefined,
         supports: supports ? { create: supports } : undefined,
       },
       include: { services: true, projectDetails: true, supports: true },
     });
+
+    // Revalidate page cache
+    revalidatePath("/about");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,
@@ -104,7 +110,7 @@ export async function AddProjectAction(
 // -----------------------------
 export async function UpdateProjectAction(
   id: number,
-  values: AddProjectFormValues
+  values: AddProjectFormValues,
 ): Promise<ReturnPayload> {
   let newPublicId: string | null = null;
 
@@ -153,7 +159,7 @@ export async function UpdateProjectAction(
     let imageUrl = existing.url;
     let publicId = existing.publicId;
 
-    // ✅ Replace image if a new one is uploaded
+    // Replace image if a new one is uploaded
     if (image instanceof File) {
       const bytes = Buffer.from(await image.arrayBuffer());
       const uploadResult = await uploadFile(bytes, "projects");
@@ -182,7 +188,7 @@ export async function UpdateProjectAction(
     await prisma.projectDetail.deleteMany({ where: { projectId: id } });
     await prisma.projectSupport.deleteMany({ where: { projectId: id } });
 
-    // ✅ Update project record
+    // Update project record
     const updated = await prisma.project.update({
       where: { id },
       data: {
@@ -199,6 +205,11 @@ export async function UpdateProjectAction(
       },
       include: { services: true, projectDetails: true, supports: true },
     });
+
+    // Revalidate page cache
+    revalidatePath("/about");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,

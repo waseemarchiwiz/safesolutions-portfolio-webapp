@@ -21,7 +21,7 @@ export interface EasyApplyTypes {
 // Easy Apply Action
 // -----------------------------
 export async function EasyApplyAction(
-  values: EasyApplyTypes
+  values: EasyApplyTypes,
 ): Promise<ReturnPayload> {
   try {
     const {
@@ -37,12 +37,12 @@ export async function EasyApplyAction(
       portfolioFile,
     } = values;
 
-    // ✅ Validate required fields
+    // Validate required fields
     if (!name || !email || !experience || !message) {
       return { success: false, message: "All fields are required." };
     }
 
-    // ✅ Validate portfolio
+    // Validate portfolio
     if (portfolioType === "file") {
       if (!file || !portfolioFile) {
         return {
@@ -58,7 +58,7 @@ export async function EasyApplyAction(
       };
     }
 
-    // ✅ Fetch recipient email
+    // Fetch recipient email
     const getMail = await prisma.companies.findFirst({
       where: { email: sender_email },
     });
@@ -69,7 +69,7 @@ export async function EasyApplyAction(
       };
     }
 
-    // ✅ Configure transporter
+    // Configure transporter
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST, // "smtp-mail.outlook.com"
       port: Number(process.env.MAIL_PORT) || 587,
@@ -80,7 +80,7 @@ export async function EasyApplyAction(
       },
     });
 
-    // ✅ Build attachments
+    // Build attachments
     const attachments: { filename: string; content: Buffer }[] = [];
     if (file instanceof File) {
       attachments.push({
@@ -95,7 +95,7 @@ export async function EasyApplyAction(
       });
     }
 
-    // ✅ Build email
+    // Build email
     const mailOptions = {
       from: `${process.env.MAIL_FROM_NAME} <${process.env.MAIL_FROM_ADDRESS}>`,
       to: getMail.email,
@@ -125,7 +125,7 @@ export async function EasyApplyAction(
       attachments,
     };
 
-    // ✅ Send mail
+    // Send mail
     const result = await transporter.sendMail(mailOptions);
 
     return {

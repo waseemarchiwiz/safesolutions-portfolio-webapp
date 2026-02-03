@@ -8,8 +8,6 @@ import { serializePrisma } from "@/lib/utils";
  * This is done to ensure that the page is always up-to-date.
  */
 
-// export const revalidate = 0;
-
 export default async function BlogsPage() {
   // api client
   const result = await prisma.blog.findMany({

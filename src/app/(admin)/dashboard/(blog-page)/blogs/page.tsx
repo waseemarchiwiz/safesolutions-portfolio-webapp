@@ -15,7 +15,7 @@ export default async function AllBlogsPage({
   const page = Number(params?.page) || 1;
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
-
+  // result
   const result = await prisma.blog.findMany({
     include: { images: true },
     skip,

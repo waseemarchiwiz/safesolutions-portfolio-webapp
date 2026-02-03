@@ -1,4 +1,7 @@
 import React from "react";
+import { Button } from "../ui/button";
+import { authClient } from "@/lib/auth-client";
+import { usePathname } from "next/navigation";
 
 export interface ErrorPageProps {
   error: Error;
@@ -6,13 +9,25 @@ export interface ErrorPageProps {
 }
 
 const ErrorComponent = ({ error, reset }: ErrorPageProps) => {
+  const pathname = usePathname();
+
+  // redirect to home page
+  const handleGoHome = () => {
+    // redirect to dashboard if on dashboard
+    if (pathname.startsWith("/dashboard")) {
+      window.location.href = "/dashboard";
+    } else {
+      window.location.href = "/";
+    }
+  };
+
   return (
-    <main className="relative flex min-h-[70vh] w-full flex-col items-center justify-center overflow-hidden px-6">
+    <main className="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden px-6">
       {/* Decorative Background Blur */}
       <div className="absolute -top-24 -z-10 h-64 w-64 rounded-full bg-sky-500/10 blur-[120px]" />
       <div className="absolute -bottom-24 -z-10 h-64 w-64 rounded-full bg-indigo-500/10 blur-[120px]" />
 
-      <div className="w-full max-w-md text-center">
+      <div className="w-full max-w-lg text-center">
         {/* Subtle Icon/Label */}
         <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 dark:bg-red-500/10">
           <svg
@@ -47,12 +62,14 @@ const ErrorComponent = ({ error, reset }: ErrorPageProps) => {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <button
-            onClick={reset}
-            className="w-full rounded-xl bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-sky-500 hover:shadow-lg active:scale-95 sm:w-auto"
+          <Button
+            variant="outline"
+            className="cursor-pointer bg-sky-600 hover:bg-sky-700 text-white hover:text-white"
+            onClick={handleGoHome}
           >
-            Try Again
-          </button>
+            Go Home
+          </Button>
+          <Button onClick={reset}>Try Again</Button>
         </div>
       </div>
     </main>

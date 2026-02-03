@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 // -----------------------------
 export async function DeleteServiceAction(id: number): Promise<ReturnPayload> {
   try {
-    // ✅ Check if service exists
+    // Check if service exists
     const existing = await prisma.service.findUnique({
       where: { id },
     });
@@ -19,7 +19,7 @@ export async function DeleteServiceAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Service not found" };
     }
 
-    // ✅ Delete Azure Blob image if exists
+    // Delete Azure Blob image if exists
     if (existing.publicId) {
       try {
         await deleteFile(existing.publicId);
@@ -28,11 +28,17 @@ export async function DeleteServiceAction(id: number): Promise<ReturnPayload> {
       }
     }
 
-    // ✅ Delete the service record
+    // Delete the service record
     await prisma.service.delete({ where: { id } });
 
-    // ✅ Revalidate dashboard services page
+    // Revalidate dashboard services page
+
+    // update the services page in website
     revalidatePath("/dashboard/services");
+    // update the services page
+    revalidatePath("/services");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,

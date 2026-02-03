@@ -12,7 +12,7 @@ import { deleteFile, uploadFile } from "@/lib/upload";
 // -----------------------------
 
 export async function UpdateTestimonialsAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let newPublicId: string | null = null;
 
@@ -32,7 +32,7 @@ export async function UpdateTestimonialsAction(
       return { success: false, message: "Please provide id" };
     }
 
-    // ✅ Validate input
+    // Validate input
     const validation = EditTestimonialsSchema.safeParse(dataToParse);
     if (!validation.success) {
       return {
@@ -54,7 +54,7 @@ export async function UpdateTestimonialsAction(
     let imageUrl = existing.url;
     let publicId = existing.publicId;
 
-    // ✅ Replace image if new File uploaded
+    // Replace image if new File uploaded
     if (image instanceof File) {
       const bytes = Buffer.from(await image.arrayBuffer());
       const uploadResult = await uploadFile(bytes, "testimonials");
@@ -78,7 +78,7 @@ export async function UpdateTestimonialsAction(
       publicId = newPublicId;
     }
 
-    // ✅ Update DB record
+    // Update DB record
     const updated = await prisma.testimonial.update({
       where: { id: editId },
       data: {
@@ -91,7 +91,10 @@ export async function UpdateTestimonialsAction(
       },
     });
 
+    // update the careers page in dashboard
     revalidatePath("/dashboard/testimonials");
+    // update the careers page in website
+    revalidatePath("/");
 
     return {
       success: true,
@@ -120,7 +123,7 @@ export async function UpdateTestimonialsAction(
 // Delete Testimonials Action (Azure)
 // -----------------------------
 export async function DeleteTestimonialsAction(
-  id: number
+  id: number,
 ): Promise<ReturnPayload> {
   try {
     if (!id) {
@@ -132,7 +135,7 @@ export async function DeleteTestimonialsAction(
       return { success: false, message: "Testimonial record not found" };
     }
 
-    // ✅ Delete image from Azure if it exists
+    // Delete image from Azure if it exists
     if (testimonial.publicId) {
       try {
         await deleteFile(testimonial.publicId);
@@ -141,9 +144,13 @@ export async function DeleteTestimonialsAction(
       }
     }
 
-    // ✅ Delete DB record
+    // Delete DB record
     await prisma.testimonial.delete({ where: { id } });
+
+    // update the careers page in dashboard
     revalidatePath("/dashboard/testimonials");
+    // update the careers page in website
+    revalidatePath("/");
 
     return {
       success: true,

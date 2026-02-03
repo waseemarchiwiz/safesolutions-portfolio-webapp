@@ -3,12 +3,13 @@
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Service Action (Azure)
 // -----------------------------
 export async function AddServiceAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let uploadedPublicId: string | null = null;
 
@@ -20,10 +21,10 @@ export async function AddServiceAction(
     const link = formData.get("link") as string;
     const features = JSON.parse((formData.get("features") as string) || "[]");
     const technologies = JSON.parse(
-      (formData.get("technologies") as string) || "[]"
+      (formData.get("technologies") as string) || "[]",
     );
     const industries = JSON.parse(
-      (formData.get("industries") as string) || "[]"
+      (formData.get("industries") as string) || "[]",
     );
     const useCases = JSON.parse((formData.get("useCases") as string) || "[]");
     const imageFile = formData.get("image") as File | null;
@@ -46,7 +47,7 @@ export async function AddServiceAction(
       };
     }
 
-    // ✅ Upload image to Azure
+    // Upload image to Azure
     const bytes = Buffer.from(await imageFile.arrayBuffer());
     const uploadResult = await uploadFile(bytes, "services");
 
@@ -57,7 +58,7 @@ export async function AddServiceAction(
     const imageUrl = uploadResult.data.secure_url;
     uploadedPublicId = uploadResult.data.public_id;
 
-    // ✅ Create DB record
+    // Create DB record
     const newService = await prisma.service.create({
       data: {
         slug,
@@ -70,9 +71,14 @@ export async function AddServiceAction(
         industries,
         useCases,
         url: imageUrl,
-        publicId: uploadedPublicId, // ✅ store Azure publicId for future updates/deletes
+        publicId: uploadedPublicId, // store Azure publicId for future updates/deletes
       },
     });
+
+    // update the services page
+    revalidatePath("/services");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,
@@ -102,7 +108,7 @@ export async function AddServiceAction(
 // -----------------------------
 export async function UpdateServiceAction(
   formData: FormData,
-  id: number
+  id: number,
 ): Promise<ReturnPayload> {
   let newPublicId: string | null = null;
 
@@ -114,22 +120,22 @@ export async function UpdateServiceAction(
     const link = formData.get("link") as string;
     const features = JSON.parse((formData.get("features") as string) || "[]");
     const technologies = JSON.parse(
-      (formData.get("technologies") as string) || "[]"
+      (formData.get("technologies") as string) || "[]",
     );
     const industries = JSON.parse(
-      (formData.get("industries") as string) || "[]"
+      (formData.get("industries") as string) || "[]",
     );
     const useCases = JSON.parse((formData.get("useCases") as string) || "[]");
     const imageFile = formData.get("image") as File | null;
     const existingImage = formData.get("existingImage") as string | null;
 
-    // ✅ Check if service exists
+    // Check if service exists
     const existing = await prisma.service.findUnique({ where: { id } });
     if (!existing) {
       return { success: false, message: "Service not found." };
     }
 
-    // ✅ Prevent duplicate slug (exclude current)
+    // Prevent duplicate slug (exclude current)
     const duplicate = await prisma.service.findFirst({
       where: { slug, NOT: { id } },
     });
@@ -143,7 +149,7 @@ export async function UpdateServiceAction(
     let imageUrl = existing.url;
     let publicId = existing.publicId;
 
-    // ✅ Handle new image upload (replace old one)
+    // Handle new image upload (replace old one)
     if (imageFile && imageFile.size > 0) {
       const bytes = Buffer.from(await imageFile.arrayBuffer());
       const uploadResult = await uploadFile(bytes, "services");
@@ -169,7 +175,7 @@ export async function UpdateServiceAction(
       imageUrl = existingImage; // Keep old image
     }
 
-    // ✅ Update record
+    // Update record
     const updatedService = await prisma.service.update({
       where: { id },
       data: {
@@ -186,6 +192,11 @@ export async function UpdateServiceAction(
         publicId,
       },
     });
+
+    // update the services page
+    revalidatePath("/services");
+    // update the home page
+    revalidatePath("/");
 
     return {
       success: true,

@@ -4,12 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { buildTeamSchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { revalidatePath } from "next/cache";
 
 // -----------------------------
 // Add Team Action (with Azure Blob Storage)
 // -----------------------------
 export async function AddTeamAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let uploadedPublicId: string | null = null;
 
@@ -47,7 +48,7 @@ export async function AddTeamAction(
 
     if (image) {
       const bytes = Buffer.from(await image.arrayBuffer());
-      const uploadResult = await uploadFile(bytes, "teams"); // ✅ Folder name = teams
+      const uploadResult = await uploadFile(bytes, "teams"); // Folder name = teams
 
       if (!uploadResult.success || !uploadResult.data) {
         return { success: false, message: "Image upload failed" };
@@ -67,9 +68,12 @@ export async function AddTeamAction(
         linkedin: linkedin ?? "",
         twitter: twitter ?? "",
         url: imageUrl as string,
-        publicId: uploadedPublicId as string, // ✅ store publicId for future delete/update
+        publicId: uploadedPublicId as string, // store publicId for future delete/update
       },
     });
+
+    // update the about page
+    revalidatePath("/about");
 
     return {
       success: true,

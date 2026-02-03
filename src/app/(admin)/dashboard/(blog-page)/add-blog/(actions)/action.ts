@@ -185,7 +185,6 @@ export async function UpdateBlogAction(
     }
 
     // update blog count
-    revalidatePath("/dashboard/blogs");
     revalidatePath("/blogs");
     revalidatePath("/about");
 

@@ -11,7 +11,7 @@ import { deleteFile, uploadFile } from "@/lib/upload";
 // -----------------------------
 
 export async function UpdateCompanyAction(
-  formData: FormData
+  formData: FormData,
 ): Promise<ReturnPayload> {
   let newPublicId: string | null = null;
 
@@ -58,7 +58,7 @@ export async function UpdateCompanyAction(
     let imageUrl = existingCompany.url;
     let publicId = existingCompany.publicId;
 
-    // ✅ If new image uploaded, replace the old one
+    // If new image uploaded, replace the old one
     if (image && image.size > 0) {
       const bytes = Buffer.from(await image.arrayBuffer());
       const uploadResult = await uploadFile(bytes, "companies");
@@ -82,7 +82,7 @@ export async function UpdateCompanyAction(
       publicId = newPublicId;
     }
 
-    // ✅ Update the company record
+    // Update the company record
     const updatedCompany = await prisma.companies.update({
       where: { id: companyId },
       data: {
@@ -96,7 +96,10 @@ export async function UpdateCompanyAction(
       },
     });
 
+    // update the teams page in dashboard
     revalidatePath("/dashboard/companies");
+    revalidatePath("/contact");
+    revalidatePath("/about");
 
     return {
       success: true,
@@ -136,7 +139,7 @@ export async function DeleteCompanyAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Company record not found." };
     }
 
-    // ✅ Delete logo from Azure if exists
+    // Delete logo from Azure if exists
     if (company.publicId) {
       try {
         await deleteFile(company.publicId);
@@ -145,10 +148,13 @@ export async function DeleteCompanyAction(id: number): Promise<ReturnPayload> {
       }
     }
 
-    // ✅ Delete record from DB
+    // Delete record from DB
     await prisma.companies.delete({ where: { id } });
 
+    // update the teams page in dashboard
     revalidatePath("/dashboard/companies");
+    revalidatePath("/contact");
+    revalidatePath("/about");
 
     return {
       success: true,

@@ -17,7 +17,7 @@ interface CareerUpdateTypes extends JobFormValues {
 // Update career Action
 // -----------------------------
 export async function UpdateCareerAction(
-  values: CareerUpdateTypes
+  values: CareerUpdateTypes,
 ): Promise<ReturnPayload> {
   try {
     // return when id not found
@@ -70,7 +70,10 @@ export async function UpdateCareerAction(
       },
     });
 
+    // update the careers page in dashboard
     revalidatePath("/dashboard/careers");
+    // update the careers page in website
+    revalidatePath("/careers");
 
     return {
       success: true,
@@ -111,7 +114,10 @@ export async function DeleteCareerAction(id: number): Promise<ReturnPayload> {
       return { success: false, message: "Failed to delete team member" };
     }
 
+    // update the careers page in dashboard
     revalidatePath("/dashboard/careers");
+    // update the careers page in website
+    revalidatePath("/careers");
 
     return {
       success: true,
