@@ -76,10 +76,10 @@ const Header = () => {
                       <Link
                         href={item.href}
                         className={cn(
-                          "relative block py-2 transition-colors",
+                          " relative block py-2 transition-colors",
                           isScrolled
                             ? "dark:text-black text-zinc-800 hover:text-sky-700 "
-                            : "text-zinc-100 hover:text-white",
+                            : "text-zinc-100 hover:text-white ",
                           active && "font-medium",
                         )}
                         aria-current={active ? "page" : undefined}
