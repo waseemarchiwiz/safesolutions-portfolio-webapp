@@ -55,7 +55,7 @@ export default function PageHeroSection({
 
           {/* Content */}
           <div
-            className={`${isNotFound && "my-14 md:my-24  "} relative px-5 md:px-3 mx-auto max-w-7xl pt-10 pb-16 md:pt-16`}
+            className={`${isNotFound && "md:my-18  "} my-10 relative px-5 md:px-3 mx-auto max-w-7xl pt-10 pb-16 md:pt-16`}
           >
             <div className=" ">
               {/* Eyebrow pill */}
