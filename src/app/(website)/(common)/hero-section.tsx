@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { MotionConfig, useReducedMotion, m } from "framer-motion";
@@ -11,13 +10,15 @@ import DotPattern from "@/components/ui/dot-pattern";
 interface PageHeroPropTypes {
   tag: string;
   title: string;
-  description: string;
+  description?: string;
+  isNotFound?: boolean;
 }
 
 export default function PageHeroSection({
   tag,
   title,
   description,
+  isNotFound = false,
 }: PageHeroPropTypes) {
   // reduce motion
   const prefersReduced = useReducedMotion();
@@ -36,7 +37,7 @@ export default function PageHeroSection({
 
   return (
     <MotionConfig reducedMotion={prefersReduced ? "always" : "never"}>
-      <main className=" py-5 overflow-hidden bg-black">
+      <main className="py-5 overflow-hidden bg-black">
         {/* Decorative grid / pattern */}
         <DotPattern className="w-full h-[65vh] opacity-20" />
         <section className="max-w-[77rem] mx-auto relative text-white">
@@ -53,7 +54,9 @@ export default function PageHeroSection({
           />
 
           {/* Content */}
-          <div className="my-10 relative px-5 md:px-3 mx-auto max-w-7xl pt-10 pb-16 md:pt-16">
+          <div
+            className={`${isNotFound && "my-14 md:my-24  "} relative px-5 md:px-3 mx-auto max-w-7xl pt-10 pb-16 md:pt-16`}
+          >
             <div className=" ">
               {/* Eyebrow pill */}
               <AnimatedGroup variants={variants}>
@@ -97,8 +100,19 @@ export default function PageHeroSection({
                 as="p"
                 className="mt-6 max-w-2xl text-balance text-lg text-zinc-300"
               >
-                {description}
+                {description ? description : ""}
               </TextEffect>
+
+              {isNotFound && (
+                <div className="mt-10 flex items-center gap-x-6">
+                  <Link
+                    href="/"
+                    className="rounded-lg bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 transition-colors"
+                  >
+                    Go back home
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </section>
