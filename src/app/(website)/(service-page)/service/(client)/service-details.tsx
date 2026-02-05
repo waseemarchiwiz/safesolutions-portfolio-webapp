@@ -186,7 +186,7 @@ const ServiceDetails = ({ data }: { data: ServiceTypes }) => {
                     <div>{data.title}</div>
                   </div>
 
-                  {data.link && (
+                  {data.link && !data.link.startsWith("http://localhost") && (
                     <div className="border-t border-gray-200 dark:border-gray-800 pt-4">
                       <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
                         Service Link
