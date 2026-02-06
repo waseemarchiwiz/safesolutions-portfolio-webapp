@@ -1,6 +1,6 @@
 "use client";
 
-import { IconDotsVertical, IconLogout } from "@tabler/icons-react";
+import { IconLogout, IconSettings, IconUser } from "@tabler/icons-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,11 +29,10 @@ export function NavUser() {
     router.push("/");
   };
 
-  // Example user data
   const user = {
     name: "Admin User",
     email: "admin@gmail.com",
-    image: "https://avatars.githubusercontent.com/u/9919?s=200&v=4", // example avatar (GitHub logo)
+    image: "https://avatars.githubusercontent.com/u/9919?s=200&v=4",
   };
 
   return (
@@ -43,67 +42,109 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-muted/60 hover:bg-muted/40 transition-colors rounded-lg px-2 py-2 flex items-center gap-3"
+              className="
+                group
+                data-[state=open]:bg-slate-100 
+                hover:bg-slate-100 
+                transition-all duration-200
+                rounded-xl
+                px-3 py-3
+                border border-transparent
+                hover:border-slate-200
+              "
             >
-              {/* Avatar */}
-              <Avatar className="h-9 w-9 border border-gray-200 dark:border-gray-700">
-                <AvatarImage src={user.image} alt={user.name} />
-                <AvatarFallback className="bg-sky-600 text-white text-sm font-medium">
-                  {user.name.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-
-              {/* User Info */}
-              <div className="grid text-left text-sm leading-tight">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {user.name}
-                </span>
-                <span className="text-xs text-gray-500 truncate">
-                  {user.email}
-                </span>
+              {/* Avatar with online status */}
+              <div className="relative">
+                <Avatar className="h-10 w-10 ring-2 ring-slate-200 ring-offset-2">
+                  <AvatarImage src={user.image} alt={user.name} />
+                  <AvatarFallback className="bg-gradient-to-br from-sky-500 to-sky-600 text-white text-sm font-semibold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                {/* Online status indicator */}
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
               </div>
 
-              {/* Dots icon */}
-              <IconDotsVertical className="ml-auto size-4 text-gray-500" />
+              {/* User Info */}
+              <div className="flex-1 text-left">
+                <p className="text-sm font-semibold text-slate-900 leading-tight">
+                  {user.name}
+                </p>
+                <p className="text-xs text-slate-500 truncate">{user.email}</p>
+              </div>
+
+              {/* Chevron */}
+              <svg
+                className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                />
+              </svg>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
 
           {/* Dropdown Content */}
           <DropdownMenuContent
-            className="w-60 rounded-lg border border-gray-200 dark:border-gray-800 shadow-lg bg-white dark:bg-gray-900"
+            className="w-64 rounded-xl border border-slate-200 shadow-xl bg-white p-2"
             side={isMobile ? "bottom" : "right"}
             align="end"
-            sideOffset={6}
+            sideOffset={8}
           >
-            {/* User Header */}
-            <DropdownMenuLabel className="p-3">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-9 w-9 border border-gray-200 dark:border-gray-700">
-                  <AvatarImage src={user.image} alt={user.name} />
-                  <AvatarFallback className="bg-sky-600 text-white text-sm font-medium">
-                    {user.name.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid text-sm leading-tight">
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">
-                    {user.name}
-                  </span>
-                  <span className="text-xs text-gray-500 truncate">
-                    {user.email}
-                  </span>
+            {/* User Header with gradient background */}
+            <DropdownMenuLabel className="p-0">
+              <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-sky-50 to-blue-50 p-4 mb-2">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-12 w-12 ring-2 ring-white shadow-md">
+                    <AvatarImage src={user.image} alt={user.name} />
+                    <AvatarFallback className="bg-gradient-to-br from-sky-500 to-sky-600 text-white font-semibold">
+                      {user.name.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">
+                      {user.name}
+                    </p>
+                    <p className="text-xs text-slate-600 truncate">
+                      {user.email}
+                    </p>
+                  </div>
                 </div>
               </div>
             </DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
+            {/* Menu Items */}
+            <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
+              <IconUser className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
+              <span className="text-sm">Profile</span>
+            </DropdownMenuItem>
 
-            {/* Logout */}
+            <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
+              <IconSettings className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
+              <span className="text-sm">Settings</span>
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator className="my-2" />
+
+            {/* Logout with distinct styling */}
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="flex items-center gap-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 cursor-pointer"
+              className="
+                rounded-lg cursor-pointer group px-3 py-2.5
+                text-red-600 
+                hover:bg-red-50 
+                focus:bg-red-50
+                transition-colors
+              "
             >
-              <IconLogout size={16} />
-              Log out
+              <IconLogout className="w-4 h-4 mr-3" />
+              <span className="text-sm font-medium">Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

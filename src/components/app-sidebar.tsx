@@ -33,7 +33,6 @@ const navItems = [
     icon: LayoutDashboard,
     isActive: true,
   },
-
   {
     title: "Blogs",
     url: "/dashboard/blogs",
@@ -166,34 +165,47 @@ const navItems = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
+    <Sidebar
+      collapsible="offcanvas"
+      className=" border border-slate-200/80 shadow-sm rounded-2xl rounded-r-none overflow-hidden"
+      {...props}
+    >
+      <SidebarHeader className="border-b border-slate-200/80">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-0 hover:bg-transparent "
             >
-              <Link href="/dashboard">
-                {/* <CustomLogo /> */}
-                {/* <IconInnerShadowTop className="!size-5" /> */}
-                <Image
-                  src={"/updated-logo.png"}
-                  width={40}
-                  height={40}
-                  alt="Logo"
-                  className="object-cover"
-                />
-                <span className="text-base font-semibold">Safe Solutions.</span>
+              <Link href="/dashboard" className="flex items-center gap-3 group">
+                <div className="relative">
+                  <Image
+                    src={"/updated-logo.png"}
+                    width={36}
+                    height={36}
+                    alt="Logo"
+                    className="object-cover rounded-lg"
+                  />
+                  {/* Subtle glow effect on hover */}
+                  <div className="absolute inset-0 bg-sky-400/10 rounded-lg transition-colors" />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <span className="text-base font-semibold text-slate-900">
+                    Safe Solutions
+                  </span>
+                  {/* <span className="text-xs text-slate-500">Admin Panel</span> */}
+                </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+
+      <SidebarContent className="px-3 py-4">
         <NavMain items={navItems} />
       </SidebarContent>
-      <SidebarFooter>
+
+      <SidebarFooter className="border-t border-slate-200/80 p-3">
         <NavUser />
       </SidebarFooter>
     </Sidebar>
