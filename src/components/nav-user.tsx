@@ -18,7 +18,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import Link from "next/link";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -61,8 +61,6 @@ export function NavUser() {
                     {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                {/* Online status indicator */}
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full" />
               </div>
 
               {/* User Info */}
@@ -120,15 +118,12 @@ export function NavUser() {
             </DropdownMenuLabel>
 
             {/* Menu Items */}
-            <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
-              <IconUser className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
-              <span className="text-sm">Profile</span>
-            </DropdownMenuItem>
-
-            <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
-              <IconSettings className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
-              <span className="text-sm">Settings</span>
-            </DropdownMenuItem>
+            <Link href="profile">
+              <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
+                <IconUser className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
+                <span className="text-sm">Profile</span>
+              </DropdownMenuItem>
+            </Link>
 
             <DropdownMenuSeparator className="my-2" />
 
