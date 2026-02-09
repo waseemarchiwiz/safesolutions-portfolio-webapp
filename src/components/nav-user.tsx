@@ -118,7 +118,7 @@ export function NavUser() {
             </DropdownMenuLabel>
 
             {/* Menu Items */}
-            <Link href="profile">
+            <Link href="/dashboard/profile">
               <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
                 <IconUser className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
                 <span className="text-sm">Profile</span>
