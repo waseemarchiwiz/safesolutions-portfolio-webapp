@@ -6,8 +6,6 @@ import Blogs from "@/app/(website)/(blogs-page)/blogs/(client)/blogs";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 
 const MainBlogs = ({ blogs }: { blogs: BlogTypes[] }) => {
-  console.log("blogss-in client:-", blogs);
-
   return (
     <>
       <PageHeroSection
