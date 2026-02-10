@@ -97,9 +97,9 @@ export function NavUser() {
           >
             {/* User Header with gradient background */}
             <DropdownMenuLabel className="p-0">
-              <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-sky-50 to-blue-50 p-4 mb-2">
+              <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-sky-50 to-blue-50 p-3 mb-2">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 ring-2 ring-white shadow-md">
+                  <Avatar className="h-8 w-8 ring-2 ring-white shadow-md">
                     <AvatarImage src={user.image} alt={user.name} />
                     <AvatarFallback className="bg-gradient-to-br from-sky-500 to-sky-600 text-white font-semibold">
                       {user.name.charAt(0).toUpperCase()}
@@ -119,8 +119,8 @@ export function NavUser() {
 
             {/* Menu Items */}
             <Link href="/dashboard/profile">
-              <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 py-2.5">
-                <IconUser className="w-4 h-4 mr-3 text-slate-500 group-hover:text-slate-700" />
+              <DropdownMenuItem className="rounded-lg cursor-pointer group px-3 hover:bg-gray-100">
+                <IconUser className=" mr-1 text-slate-500 group-hover:text-slate-700 " />
                 <span className="text-sm">Profile</span>
               </DropdownMenuItem>
             </Link>
@@ -131,14 +131,14 @@ export function NavUser() {
             <DropdownMenuItem
               onClick={handleSignOut}
               className="
-                rounded-lg cursor-pointer group px-3 py-2.5
+                rounded-lg cursor-pointer group px-3 
                 text-red-600 
                 hover:bg-red-50 
                 focus:bg-red-50
                 transition-colors
               "
             >
-              <IconLogout className="w-4 h-4 mr-3" />
+              <IconLogout className=" mr-1" />
               <span className="text-sm font-medium">Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
