@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ShieldCheck,
@@ -10,6 +10,7 @@ import {
   BadgeCheck,
   BadgeX,
   Copy,
+  CopyCheckIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,7 @@ import {
 
 // Adjust these imports to your project
 import { authClient, signOut } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 // Session Types
 type UserSessionTypes = {
@@ -60,14 +62,23 @@ function toTextDate(value?: Date | string | null) {
   if (!value) return "—";
   const d = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(d.getTime())) return String(value);
-  return d.toLocaleString();
+  return d.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+    hour: "numeric",
+    minute: "numeric",
+  });
 }
 
 async function copyToClipboard(text: string) {
   try {
     await navigator.clipboard.writeText(text);
+    toast.success("Text copied to clipboard");
   } catch {
     // ignore
+    toast.error("Failed to copy");
   }
 }
 
@@ -227,6 +238,7 @@ function InfoRow({
   copyValue?: string | null;
   helper?: string;
 }) {
+  const [isCopied, setIsCopied] = useState(false);
   return (
     <div className="flex items-start justify-between gap-3 rounded-xl border bg-card p-3">
       <div className="min-w-0">
@@ -256,10 +268,17 @@ function InfoRow({
               variant="ghost"
               size="icon"
               className="shrink-0"
-              onClick={() => copyToClipboard(copyValue)}
+              onClick={() => {
+                copyToClipboard(copyValue);
+                setIsCopied((prev) => !prev);
+              }}
               aria-label={`Copy ${label}`}
             >
-              <Copy className="h-4 w-4" />
+              {isCopied ? (
+                <CopyCheckIcon className="h-4 w-4 text-emerald-600" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
             </Button>
           </TooltipTrigger>
           <TooltipContent>Copy</TooltipContent>
