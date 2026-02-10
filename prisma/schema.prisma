@@ -160,6 +160,7 @@ model Contact {
   email     String
   subject   String
   message   String
+  sender    String
   createdAt DateTime @default(now())
 }
 

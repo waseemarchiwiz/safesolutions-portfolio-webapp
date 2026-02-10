@@ -22,6 +22,7 @@ import {
   Quote,
   Store,
   Users2,
+  MailQuestionMark,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -158,6 +159,18 @@ const navItems = [
       {
         title: "All project",
         url: "/dashboard/projects",
+      },
+    ],
+  },
+  {
+    title: "Queries",
+    url: "/dashboard/queries",
+    icon: MailQuestionMark,
+    isActive: false,
+    items: [
+      {
+        title: "All Queries",
+        url: "/dashboard/queries",
       },
     ],
   },

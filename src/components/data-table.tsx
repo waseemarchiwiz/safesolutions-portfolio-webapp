@@ -158,7 +158,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [pagination, setPagination] = React.useState({
@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
     () => data.map((item) => getRowId(item)),
-    [data, getRowId]
+    [data, getRowId],
   );
 
   // sync with the parent data
@@ -213,7 +213,7 @@ export function DataTable<TData, TValue>({
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {})
+    useSensor(KeyboardSensor, {}),
   );
 
   return (
@@ -232,7 +232,7 @@ export function DataTable<TData, TValue>({
               .filter(
                 (column) =>
                   typeof column.accessorFn !== "undefined" &&
-                  column.getCanHide()
+                  column.getCanHide(),
               )
               .map((column) => (
                 <DropdownMenuCheckboxItem
@@ -246,12 +246,16 @@ export function DataTable<TData, TValue>({
               ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Link href={linkInfo?.link as string}>
-          <Button variant="outline" size="sm">
-            <Plus />
-            <span className="hidden lg:inline">{linkInfo?.text as string}</span>
-          </Button>
-        </Link>
+        {linkInfo?.link !== undefined && (
+          <Link href={linkInfo?.link as string}>
+            <Button variant="outline" size="sm">
+              <Plus />
+              <span className="hidden lg:inline">
+                {linkInfo?.text as string}
+              </span>
+            </Button>
+          </Link>
+        )}
       </div>
       <TabsContent
         value="all"
@@ -274,7 +278,7 @@ export function DataTable<TData, TValue>({
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                       </TableHead>
                     ))}

@@ -16,7 +16,7 @@ interface ContactUsValues {
 // Contact Us Action
 // -----------------------------
 export async function ContactUsAction(
-  values: ContactUsValues
+  values: ContactUsValues,
 ): Promise<ReturnPayload> {
   try {
     const { name, email, subject, message, sender_email } = values;
@@ -72,12 +72,32 @@ export async function ContactUsAction(
       `,
     };
 
+    // add in db
+    const contact = await prisma.contact.create({
+      data: {
+        name,
+        email,
+        subject,
+        message,
+        sender: sender_email,
+      },
+    });
+
+    // if contact is failed
+    if (!contact) {
+      return {
+        success: false,
+        message: "Failed to save contact message to the database.",
+      };
+    }
+
     // Send mail
     await transporter.sendMail(mailOptions);
 
     return {
       success: true,
-      message: "Email sent successfully!",
+      message: "Your query has been submitted successfully.",
+      data: contact,
     };
   } catch (error) {
     console.error("ContactUsAction error:", error);
