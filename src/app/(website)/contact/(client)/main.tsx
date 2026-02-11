@@ -50,7 +50,6 @@ const Main: React.FC<MainProps> = ({ companies }) => {
     console.log("values to submit:", values);
     try {
       const result = await ContactUsAction(values);
-
       if (result.success) {
         toast.success(result?.message || "message sent successfully");
         form.reset();
@@ -62,7 +61,7 @@ const Main: React.FC<MainProps> = ({ companies }) => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Unexpected error submitting form"
+          : "Unexpected error submitting form",
       );
     }
   };
