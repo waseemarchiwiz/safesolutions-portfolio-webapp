@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
 
 interface ContactUsValues {
@@ -93,6 +94,9 @@ export async function ContactUsAction(
 
     // Send mail
     await transporter.sendMail(mailOptions);
+
+    // update the dashboard home page
+    revalidatePath("/dashboard/home");
 
     return {
       success: true,
