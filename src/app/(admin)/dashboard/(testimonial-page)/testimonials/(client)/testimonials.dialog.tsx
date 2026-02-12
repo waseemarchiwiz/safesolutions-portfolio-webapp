@@ -35,6 +35,8 @@ import {
   DeleteTestimonialsAction,
   UpdateTestimonialsAction,
 } from "../(actions)/actions";
+import Loader from "@/components/common/loader";
+import { Loader2 } from "lucide-react";
 
 interface EditTestimonialDialogProps {
   open: boolean;
@@ -297,10 +299,13 @@ export default function TestimonialDialog({
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
                 onClick={() => action !== "edit" && handeDelete()}
+                className="bg-sky-600 hover:bg-sky-600"
               >
-                {loading || form.formState.isSubmitting
-                  ? "Loading..."
-                  : submitButtonText}
+                {loading || form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin h-5 w-5" />
+                ) : (
+                  submitButtonText
+                )}
               </Button>
             </div>
           </form>

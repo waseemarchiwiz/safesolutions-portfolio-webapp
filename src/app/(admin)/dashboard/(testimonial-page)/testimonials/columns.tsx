@@ -77,7 +77,7 @@ export const getColumns = ({
           height={150}
           src={`${row.original.url as string}`}
           alt={row.original.name}
-          className=" rounded-full w-10 h-10"
+          className="object-cover rounded-full w-10 h-10"
         />
       </div>
     ),

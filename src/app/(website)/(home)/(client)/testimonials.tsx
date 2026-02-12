@@ -81,6 +81,7 @@ const Testimonials = ({ testimonials }: TestimonialPropTypes) => {
                           <AvatarImage
                             src={testimonial.url as string}
                             alt={testimonial.name as string}
+                            className="object-cover rounded-full "
                           />
                           <AvatarFallback>
                             {testimonial.name?.slice(0, 2).toUpperCase()}

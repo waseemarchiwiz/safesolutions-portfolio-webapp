@@ -31,6 +31,7 @@ import {
 } from "../../add-faq/(validation)/validation";
 import { onSaveTypes } from "../../../types";
 import { DeleteFAQAction, UpdateFAQAction } from "../(actions)/actions";
+import { Loader2 } from "lucide-react";
 
 interface EditfaqDialogProps {
   open: boolean;
@@ -49,7 +50,7 @@ export default function FaqDialog({
 }: EditfaqDialogProps) {
   // use form
   const form = useForm<FaqFormValues>({
-    resolver: zodResolver(FaqSchema), // ✅ allow edit mode (image optional)
+    resolver: zodResolver(FaqSchema), // allow edit mode (image optional)
     defaultValues: {
       question: faq?.question || "",
       answer: faq?.answer || "",
@@ -192,10 +193,13 @@ export default function FaqDialog({
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
                 onClick={() => action !== "edit" && handeDelete()}
+                className="bg-sky-600 hover:bg-sky-600"
               >
-                {loading || form.formState.isSubmitting
-                  ? "Loading..."
-                  : submitButtonText}
+                {loading || form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin h-5 w-5" />
+                ) : (
+                  submitButtonText
+                )}
               </Button>
             </div>
           </form>

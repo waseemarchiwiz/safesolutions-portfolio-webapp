@@ -31,6 +31,7 @@ import {
 import { toast } from "sonner";
 import { DeleteTeamAction, UpdateTeamAction } from "../(actions)/actions";
 import { onSaveTypes } from "../../../types";
+import { Loader2 } from "lucide-react";
 
 interface EditTeamDialogProps {
   open: boolean;
@@ -333,10 +334,13 @@ export default function EditTeamDialog({
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
                 onClick={() => action !== "edit" && handeDelete()}
+                className="bg-sky-600 hover:bg-sky-600"
               >
-                {loading || form.formState.isSubmitting
-                  ? "Loading..."
-                  : submitButtonText}
+                {loading || form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin h-5 w-5" />
+                ) : (
+                  submitButtonText
+                )}
               </Button>
             </div>
           </form>
