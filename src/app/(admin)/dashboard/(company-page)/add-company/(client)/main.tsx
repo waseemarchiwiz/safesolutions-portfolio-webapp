@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { CompanyFormValues, companySchema } from "../(validation)/validation";
 import { AddCompanyAction } from "../(action)/action";
+import { LoaderCircle } from "@/components/common/loader";
 
 export default function AddCompanyForm() {
   const [preview, setPreview] = useState<string | null>(null);
@@ -244,10 +245,14 @@ export default function AddCompanyForm() {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                  className=" bg-sky-600 hover:bg-sky-700"
                   onClick={() => console.log("Add Company clicked")}
                 >
-                  {form.formState.isSubmitting ? "Processing" : "Add Company"}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={20} />
+                  ) : (
+                    "Add Company"
+                  )}
                 </Button>
               </div>
             </form>

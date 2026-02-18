@@ -32,6 +32,7 @@ import {
 import { onSaveTypes } from "../../../types";
 import { DeleteFAQAction, UpdateFAQAction } from "../(actions)/actions";
 import { Loader2 } from "lucide-react";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface EditfaqDialogProps {
   open: boolean;
@@ -193,10 +194,10 @@ export default function FaqDialog({
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
                 onClick={() => action !== "edit" && handeDelete()}
-                className="bg-sky-600 hover:bg-sky-600"
+                className={`${action === "edit" && "bg-sky-600 hover:bg-sky-700"}`}
               >
                 {loading || form.formState.isSubmitting ? (
-                  <Loader2 className="animate-spin h-5 w-5" />
+                  <LoaderCircle size={30} />
                 ) : (
                   submitButtonText
                 )}

@@ -15,6 +15,7 @@ import { ServiceTypes } from "../columns";
 import { onSaveTypes } from "../../../types";
 import { useEffect, useState } from "react";
 import { DeleteServiceAction } from "../(actions)/actions";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface serviceDialogProps {
   open: boolean;
@@ -81,7 +82,7 @@ export default function ServiceDialog({
             Cancel
           </Button>
           <Button type={"button"} variant={"destructive"} onClick={handeDelete}>
-            {loading ? "Loading..." : "Yes"}
+            {loading ? <LoaderCircle size={30} /> : "Yes"}
           </Button>
         </DialogFooter>
       </DialogContent>

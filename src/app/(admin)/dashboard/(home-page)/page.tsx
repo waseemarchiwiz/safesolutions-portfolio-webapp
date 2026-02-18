@@ -26,6 +26,18 @@ export default async function HomePage() {
     prisma.companies.count(),
   ]);
 
+  // recent messages
+  const recentMessages = await prisma.contact.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 5,
+  });
+
+  // serialized recent messages
+  const recentSerialized = recentMessages.map((msg) => ({
+    ...msg,
+    createdAt: msg.createdAt.toISOString(),
+  }));
+
   return (
     <div className="w-full max-w-7xl mx-auto">
       <Home
@@ -38,6 +50,7 @@ export default async function HomePage() {
         totalFAQs={totalFAQs}
         totalContacts={totalContacts}
         totalCompanies={totalCompanies}
+        recentMessages={recentSerialized}
       />
     </div>
   );

@@ -33,7 +33,7 @@ import {
   EditCompanySchema,
 } from "../(validation)/validation";
 import { DeleteCompanyAction, UpdateCompanyAction } from "../(actions)/actions";
-import { Loader2 } from "lucide-react";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface EditCompanyDialogProps {
   open: boolean;
@@ -315,11 +315,11 @@ export default function CompanyDialog({
                 disabled={form.formState.isSubmitting}
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
-                className="bg-sky-600 hover:bg-sky-700"
+                className={`${action === "edit" && "bg-sky-600 hover:bg-sky-700"}`}
                 onClick={() => action !== "edit" && handeDelete()}
               >
                 {loading || form.formState.isSubmitting ? (
-                  <Loader2 className="animate-spin h-5 w-5" />
+                  <LoaderCircle size={30} />
                 ) : (
                   submitButtonText
                 )}

@@ -31,6 +31,7 @@ import { CareerTypes } from "../columns";
 import { Textarea } from "@/components/ui/textarea";
 import { DeleteCareerAction, UpdateCareerAction } from "../(actions)/actions";
 import { onSaveTypes } from "../../../types";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface EditCareerDialogProps {
   open: boolean;
@@ -49,7 +50,7 @@ export default function EditCareerDialog({
 }: EditCareerDialogProps) {
   // use form
   const form = useForm<JobFormValues>({
-    resolver: zodResolver(buildJobSchema), // ✅ allow edit mode (image optional)
+    resolver: zodResolver(buildJobSchema), // allow edit mode (image optional)
     defaultValues: {
       title: career?.title || "",
       shortDescription: career?.shortDescription || "",
@@ -268,9 +269,11 @@ export default function EditCareerDialog({
                 variant={action === "edit" ? "default" : "destructive"}
                 onClick={() => action !== "edit" && handeDelete()}
               >
-                {loading || form.formState.isSubmitting
-                  ? "Loading..."
-                  : submitButtonText}
+                {loading || form.formState.isSubmitting ? (
+                  <LoaderCircle size={20} />
+                ) : (
+                  submitButtonText
+                )}
               </Button>
             </div>
           </form>

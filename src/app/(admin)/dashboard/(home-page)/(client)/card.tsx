@@ -112,7 +112,7 @@ const Statistics = ({ title, value, change = "5.2%" }: StatisticsTypes) => {
         >
           {title}
         </h3>
-        <div className="text-3xl font-bold text-gray-800 mb-1">{value}</div>
+        <div className="text-3xl font-bold text-gray-600 mb-1">{value}</div>
         <div className={`${config.textColor} text-xs opacity-60`}>
           {config.description}
         </div>

@@ -15,6 +15,7 @@ import { BlogTypes } from "../columns";
 import { onSaveTypes } from "../../../types";
 import { DeleteBlogAction } from "../(actions)/actions";
 import { useEffect, useState } from "react";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface BlogDialogProps {
   open: boolean;
@@ -87,7 +88,7 @@ export default function BlogDialog({
               variant={"destructive"}
               onClick={handeDelete}
             >
-              {loading ? "Deleting..." : "Yes"}
+              {loading ? <LoaderCircle size={30} /> : "Yes"}
             </Button>
           </div>
         </DialogFooter>

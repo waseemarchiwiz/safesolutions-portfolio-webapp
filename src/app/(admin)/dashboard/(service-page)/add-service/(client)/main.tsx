@@ -25,6 +25,7 @@ import { ServiceTypes } from "../../services/columns";
 import { TagsInput } from "@/components/common/tags-input";
 import { AddServiceAction, UpdateServiceAction } from "../(actions)/action";
 import Image from "next/image";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface ServiceFormPropTypes {
   service?: ServiceTypes;
@@ -64,7 +65,7 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
       formData.append("features", JSON.stringify(values.features || []));
       formData.append(
         "technologies",
-        JSON.stringify(values.technologies || [])
+        JSON.stringify(values.technologies || []),
       );
       formData.append("industries", JSON.stringify(values.industries || []));
       formData.append("useCases", JSON.stringify(values.useCases || []));
@@ -337,9 +338,11 @@ export default function AddServiceForm({ service }: ServiceFormPropTypes) {
                   disabled={form.formState.isSubmitting}
                   className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
                 >
-                  {form.formState.isSubmitting
-                    ? "Processing..."
-                    : `${editId ? "Update" : "Add"} Service`}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={30} />
+                  ) : (
+                    `${editId ? "Update" : "Add"} Service`
+                  )}
                 </Button>
               </div>
             </form>

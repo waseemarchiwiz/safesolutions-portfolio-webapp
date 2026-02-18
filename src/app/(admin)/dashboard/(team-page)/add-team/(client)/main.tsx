@@ -22,6 +22,7 @@ import { baseURL } from "@/lib/consts";
 import { useRouter } from "next/navigation";
 import { TeamTypes } from "../../teams/columns";
 import { AddTeamAction } from "../(actions)/action";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface TeamFormProps {
   member?: TeamTypes;
@@ -274,9 +275,13 @@ export default function TeamForm({ member }: TeamFormProps) {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                  className={`bg-sky-600 hover:bg-sky-700`}
                 >
-                  {form.formState.isSubmitting ? "Processing" : `Add Member`}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={30} />
+                  ) : (
+                    "Add Team"
+                  )}
                 </Button>
               </div>
             </form>

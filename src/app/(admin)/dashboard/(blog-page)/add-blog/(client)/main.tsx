@@ -23,6 +23,7 @@ import EditorClient from "./editor";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BlogTypes } from "../../blogs/columns";
 import { AddBlogAction, UpdateBlogAction } from "../(actions)/action";
+import { LoaderCircle } from "@/components/common/loader";
 
 // Types
 export type ImagesTypes = { id: number; url: string; publicId: number };
@@ -43,7 +44,7 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
   const editId = searchParams.get("id");
 
   const form = useForm<AddBlogFormValues>({
-    resolver: zodResolver(buildBlogSchema(!!editId)), // ✅ pass true if editing
+    resolver: zodResolver(buildBlogSchema(!!editId)), // pass true if editing
     defaultValues: {
       title: blog?.title || "",
       description: blog?.description || "",
@@ -65,7 +66,7 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
             reader.onloadend = () =>
               resolve({ image: reader.result as string });
             reader.readAsDataURL(file);
-          })
+          }),
       );
       Promise.all(readers).then((urls) => setPreviews(urls));
     }
@@ -278,9 +279,11 @@ export default function BlogForm({ blog }: BlogFormPropTypes) {
                   disabled={form.formState.isSubmitting}
                   className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
                 >
-                  {form.formState.isSubmitting
-                    ? "Processing"
-                    : `${editId ? "Update" : "Add"} Blog`}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={30} />
+                  ) : (
+                    `${editId ? "Update" : "Add"} Blog`
+                  )}
                 </Button>
               </div>
             </form>

@@ -4,69 +4,45 @@ import StackIcon from "tech-stack-icons";
 import { Button } from "@/components/ui/button";
 import { InfiniteSlider } from "@/components/infinite-slider";
 
-export default function OurStack() {
-  const languages = [
-    <StackIcon key={1} name="php" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={2} name="laravel" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={3} name="python" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={4} name="js" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={5} name="jquery" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={6} name="react" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={7} name="nodejs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={8} name="nextjs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={9}
-      name="expressjs"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={10} name="vuejs" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={11} name="django" className="m-auto size-10 sm:size-12" />,
-  ];
-  const uiLibraries = [
-    <StackIcon key={1} name="html5" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={2} name="css3" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={3}
-      name="tailwindcss"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={4} name="shadcnui" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={5}
-      name="materialui"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={6} name="figma" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={7}
-      name="headlessui"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={8} name="threejs" className="m-auto size-10 sm:size-12" />,
-  ];
-  const databaseAndServices = [
-    <StackIcon key={1} name="azure" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={2}
-      name="microsoft"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={3} name="mongodb" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={4}
-      name="postgresql"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={5} name="mysql" className="m-auto size-10 sm:size-12" />,
-    <StackIcon key={6} name="github" className="m-auto size-10 sm:size-12" />,
-    <StackIcon
-      key={7}
-      name="kubernetes"
-      className="m-auto size-10 sm:size-12"
-    />,
-    <StackIcon key={8} name="docker" className="m-auto size-10 sm:size-12" />,
-  ];
+const languages = [
+  <StackIcon key={1} name="php" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={2} name="laravel" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={3} name="python" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={4} name="js" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={5} name="jquery" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={6} name="react" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={7} name="nodejs" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={8} name="nextjs" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={9} name="expressjs" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={10} name="vuejs" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={11} name="django" className="m-auto size-10 sm:size-12" />,
+];
+const uiLibraries = [
+  <StackIcon key={1} name="html5" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={2} name="css3" className="m-auto size-10 sm:size-12" />,
+  <StackIcon
+    key={3}
+    name="tailwindcss"
+    className="m-auto size-10 sm:size-12"
+  />,
+  <StackIcon key={4} name="shadcnui" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={5} name="materialui" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={6} name="figma" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={7} name="headlessui" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={8} name="threejs" className="m-auto size-10 sm:size-12" />,
+];
+const databaseAndServices = [
+  <StackIcon key={1} name="azure" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={2} name="microsoft" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={3} name="mongodb" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={4} name="postgresql" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={5} name="mysql" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={6} name="github" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={7} name="kubernetes" className="m-auto size-10 sm:size-12" />,
+  <StackIcon key={8} name="docker" className="m-auto size-10 sm:size-12" />,
+];
 
+export default function OurStack() {
   return (
     <section className="py-24 bg-transparent">
       <div className="mx-auto max-w-7xl px-6">
@@ -96,6 +72,10 @@ export default function OurStack() {
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"
+                  title={
+                    logo.props.name.charAt(0).toUpperCase() +
+                    logo.props.name.slice(1)
+                  }
                 >
                   {logo}
                 </div>
@@ -110,6 +90,10 @@ export default function OurStack() {
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"
+                  title={
+                    logo.props.name.charAt(0).toUpperCase() +
+                    logo.props.name.slice(1)
+                  }
                 >
                   {logo}
                 </div>
@@ -124,6 +108,10 @@ export default function OurStack() {
                 <div
                   key={i}
                   className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-sky-200 transition-all duration-300"
+                  title={
+                    logo.props.name.charAt(0).toUpperCase() +
+                    logo.props.name.slice(1)
+                  }
                 >
                   {logo}
                 </div>
