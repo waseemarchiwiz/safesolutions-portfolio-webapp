@@ -35,7 +35,7 @@ import {
   DeleteTestimonialsAction,
   UpdateTestimonialsAction,
 } from "../(actions)/actions";
-import Loader from "@/components/common/loader";
+import { Loader } from "@/components/common/loader";
 import { Loader2 } from "lucide-react";
 
 interface EditTestimonialDialogProps {
