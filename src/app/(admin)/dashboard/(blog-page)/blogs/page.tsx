@@ -1,7 +1,6 @@
 import MainBlogs from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAllBlogs } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -16,15 +15,7 @@ export default async function AllBlogsPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
   // result
-  const result = await prisma.blog.findMany({
-    include: { images: true },
-    skip,
-    take: limit,
-  });
-
-  const totalBlogs = await prisma.blog.count();
-
-  const blogs = serializePrisma(result);
+  const { data: blogs, total: totalBlogs } = await GetAllBlogs({ skip, limit });
 
   return (
     <div className="flex flex-1 flex-col">

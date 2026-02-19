@@ -5,6 +5,47 @@ import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
 import { EditBuildTeamSchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { serializePrisma } from "@/lib/utils";
+
+// -----------------------------
+// All Teams Action
+// -----------------------------
+export async function GetAllTeams({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalTeams] = await Promise.all([
+      prisma.team.findMany({
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: limit,
+      }),
+      prisma.team.count(),
+    ]);
+    // serialize data
+    const teams = serializePrisma(result);
+    // return the Teams data
+    return {
+      success: true,
+      message: "Teams fetched successfully.",
+      data: teams,
+      total: totalTeams as number,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch testmonials.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Update Team Action (Azure)

@@ -32,6 +32,7 @@ import {
 import { TagsInput } from "@/components/common/tags-input";
 import { AddProjectAction, UpdateProjectAction } from "../(actions)/action";
 import { ProjectTypes } from "../../projects/columns";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface ProjectFormProps {
   project?: ProjectTypes; // extend later with ProjectTypes
@@ -44,7 +45,7 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
   const editId = searchParams.get("id");
 
   const [preview, setPreview] = useState<string | null>(
-    (project?.url as string) || null
+    (project?.url as string) || null,
   );
 
   const form = useForm<AddProjectFormValues>({
@@ -106,7 +107,7 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
     formData.append("services", JSON.stringify(values.services || []));
     formData.append(
       "projectDetails",
-      JSON.stringify(values.projectDetails || [])
+      JSON.stringify(values.projectDetails || []),
     );
     formData.append("supports", JSON.stringify(values.supports || []));
 
@@ -464,11 +465,13 @@ export default function AddProjectForm({ project }: ProjectFormProps) {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                  className=" bg-sky-600 hover:bg-sky-700"
                 >
-                  {form.formState.isSubmitting
-                    ? "Processing..."
-                    : `${editId ? "Update" : "Add"} Project`}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={30} />
+                  ) : (
+                    `${editId ? "Update" : "Add"} Project`
+                  )}
                 </Button>
               </div>
             </form>

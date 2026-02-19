@@ -1,8 +1,7 @@
 import MainTestimonials from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { TestimonialTypes } from "./columns";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAllTestmonials } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -17,14 +16,8 @@ export default async function AllTestimonialsPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
 
-  const result = await prisma.testimonial.findMany({
-    skip,
-    take: limit,
-  });
-
-  const totalTestimonials = await prisma.testimonial.count();
-
-  const testimonials = serializePrisma(result);
+  const { data: testimonials, total: totalTestimonials } =
+    await GetAllTestmonials({ skip, limit });
 
   return (
     <div className="flex flex-1 flex-col">

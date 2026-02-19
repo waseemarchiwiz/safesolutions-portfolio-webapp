@@ -3,7 +3,44 @@
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { deleteFile } from "@/lib/upload";
+import { serializePrisma } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
+
+// -----------------------------
+// Get All Services Action
+// -----------------------------
+export async function GetAllServices(
+  skip: number,
+  take: number,
+): Promise<ReturnPayload> {
+  try {
+    const [result, total] = await Promise.all([
+      await prisma.service.findMany({
+        skip,
+        take,
+      }),
+      await prisma.service.count(),
+    ]);
+    // serialize data
+    const services = serializePrisma(result);
+    // return the services data
+    return {
+      success: true,
+      message: "Services fetched successfully.",
+      data: services,
+      total,
+    };
+  } catch (error) {
+    console.log("error--", error);
+    // return the services data
+    return {
+      success: false,
+      message: "Failed to fetch services.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Delete Service Action (Azure Blob Storage)

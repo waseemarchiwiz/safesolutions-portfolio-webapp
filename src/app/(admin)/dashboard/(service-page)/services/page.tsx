@@ -1,8 +1,7 @@
 import MainServices from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { ServiceTypes } from "./columns";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAllServices } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -17,13 +16,8 @@ export default async function AllServicesPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
 
-  const result = await prisma.service.findMany({
-    skip,
-    take: limit,
-  });
-
-  const totalSerivces = await prisma.service.count();
-  const services = serializePrisma(result);
+  // get data
+  const { data: services, total } = await GetAllServices(skip, limit);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -38,7 +32,7 @@ export default async function AllServicesPage({
             data={services as ServiceTypes[]}
             page={page}
             limit={limit}
-            total={totalSerivces}
+            total={total as number}
             linkInfo={{ text: "Add Service", link: "add-service" }}
           />
         </div>

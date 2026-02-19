@@ -53,59 +53,85 @@ const Blogs = ({ blogs, view }: BlogProps) => {
         )}
 
         <div className="w-full">
-          <div className="w-full grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {blogs.map((blog) => (
-              <Card
-                key={blog.id}
-                className="bg-white grid grid-rows-[auto_auto_1fr_auto] pt-0"
-              >
-                <div className=" w-full">
-                  <Link
-                    href={"/blogs"}
-                    className="fade-in transition-opacity duration-200 hover:opacity-70"
-                  >
-                    <Image
-                      width={400}
-                      height={300}
-                      src={blog.images?.[0]?.url || "/placeholder.png"}
-                      alt={(blog.title as string) || "title"}
-                      className=""
-                    />
-                  </Link>
-                </div>
-                <CardHeader>
-                  <h3 className="dark:text-slate-800 text-lg font-semibold md:text-xl">
-                    {blog.title}
-                  </h3>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    {shortText(blog.description, 100)}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Link
-                    href={`/blog/${blog.slug}`}
-                    className="dark:text-slate-800 text-foreground flex items-center hover:underline"
-                  >
-                    Read more
-                    <ArrowRight className="ml-2 size-4" />
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+          {blogs.length > 0 ? (
+            <div className="w-full grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {blogs.map((blog) => (
+                <Card
+                  key={blog.id}
+                  className="bg-white grid grid-rows-[auto_auto_1fr_auto] pt-0"
+                >
+                  <div className=" w-full">
+                    <Link
+                      href={"/blogs"}
+                      className="fade-in transition-opacity duration-200 hover:opacity-70"
+                    >
+                      <Image
+                        width={400}
+                        height={300}
+                        src={blog.images?.[0]?.url || "/placeholder.png"}
+                        alt={(blog.title as string) || "title"}
+                        className=""
+                      />
+                    </Link>
+                  </div>
+                  <CardHeader>
+                    <h3 className="dark:text-slate-800 text-lg font-semibold md:text-xl">
+                      {blog.title}
+                    </h3>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      {shortText(blog.description, 100)}
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Link
+                      href={`/blog/${blog.slug}`}
+                      className="dark:text-slate-800 text-foreground flex items-center hover:underline"
+                    >
+                      Read more
+                      <ArrowRight className="ml-2 size-4" />
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="max-w-2xl mx-auto shadow flex flex-col items-center justify-center py-16 text-center px-6">
+              <div className="shadow flex items-center justify-center w-14 h-14 rounded-2xl mb-4">
+                <svg
+                  className="w-10 h-10 text-sky-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                  />
+                </svg>
+              </div>
+              <p className="text-md font-medium text-slate-500">No blogs yet</p>
+              <p className="text-xs text-slate-400 mt-1">
+                Check back later for new posts.
+              </p>
+            </div>
+          )}
         </div>
-        <Button
-          variant="outline"
-          className="bg-sky-600 text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
-          asChild
-        >
-          <Link href="/blogs">
-            View all
-            <ArrowRight className="ml-2 size-4" />
-          </Link>
-        </Button>
+        {view === true && (
+          <Button
+            variant="outline"
+            className="bg-sky-600 text-white hover:bg-sky-700 hover:text-white w-full sm:w-auto"
+            asChild
+          >
+            <Link href="/blogs">
+              View all
+              <ArrowRight className="ml-2 size-4" />
+            </Link>
+          </Button>
+        )}
       </div>
     </section>
   );

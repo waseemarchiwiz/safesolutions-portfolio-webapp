@@ -1,8 +1,7 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { TeamTypes } from "./columns";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 import MainTeams from "./(client)/main";
+import { GetAllTeams } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -18,16 +17,7 @@ export default async function AllTeamsPage({
   const skip = (page - 1) * limit;
 
   // result
-  const result = await prisma.team.findMany({
-    orderBy: { createdAt: "desc" },
-    skip,
-    take: limit,
-  });
-
-  // count
-  const totalTeams = await prisma.team.count();
-  // convert date objects to string
-  const teams = serializePrisma(result);
+  const { data: teams, total: totalTeams } = await GetAllTeams({ skip, limit });
 
   return (
     <div className="flex flex-1 flex-col">

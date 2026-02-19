@@ -5,6 +5,44 @@ import { ReturnPayload } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { EditCompanySchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { serializePrisma } from "@/lib/utils";
+
+// Get all companies with pagination
+export async function GetAllCompanies({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalCompanies] = await Promise.all([
+      prisma.companies.findMany({
+        skip,
+        take: limit,
+      }),
+      prisma.companies.count(),
+    ]);
+    // serialize data
+    const companies = serializePrisma(result);
+    // return the companies data
+    return {
+      success: true,
+      message: "Companies fetched successfully.",
+      data: companies,
+      total: totalCompanies,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch companies.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Update Company Action

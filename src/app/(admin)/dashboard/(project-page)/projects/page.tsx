@@ -1,8 +1,7 @@
 import MainProjects from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { ProjectTypes } from "./columns";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAllProjects } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -16,16 +15,11 @@ export default async function AllProjectsPage({
   const page = Number(params?.page) || 1;
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
-
-  const result = await prisma.project.findMany({
-    include: { projectDetails: true, services: true, supports: true },
+  // get projects and total
+  const { data: projects, total: totalProjects } = await GetAllProjects({
     skip,
-    take: limit,
+    limit,
   });
-
-  const totalProjects = await prisma.project.count();
-
-  const projects = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -40,7 +34,7 @@ export default async function AllProjectsPage({
             data={projects as ProjectTypes[]}
             page={page}
             limit={limit}
-            total={totalProjects}
+            total={totalProjects as number}
             linkInfo={{ text: "Add Project", link: "add-project" }}
           />
         </div>

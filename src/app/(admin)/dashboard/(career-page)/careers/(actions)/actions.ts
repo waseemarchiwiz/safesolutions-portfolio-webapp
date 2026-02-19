@@ -7,10 +7,51 @@ import {
   buildJobSchema,
   JobFormValues,
 } from "../../add-career/(validation)/validation";
+import { serializePrisma } from "@/lib/utils";
 
 // update job form values
 interface CareerUpdateTypes extends JobFormValues {
   id: number;
+}
+
+// -----------------------------
+// All Careers Action
+// -----------------------------
+export async function GetAllCareers({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalCareers] = await Promise.all([
+      prisma.career.findMany({
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: limit,
+      }),
+      prisma.career.count(),
+    ]);
+    // serialize data
+    const careers = serializePrisma(result);
+    // return the careers data
+    return {
+      success: true,
+      message: "Careers fetched successfully.",
+      data: careers,
+      total: totalCareers,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch careers.",
+      data: [],
+      total: 0,
+    };
+  }
 }
 
 // -----------------------------
@@ -89,7 +130,9 @@ export async function UpdateCareerAction(
   }
 }
 
-// Server-side validation for FormData
+// -----------------------------
+// Delete career Action
+// -----------------------------
 export async function DeleteCareerAction(id: number): Promise<ReturnPayload> {
   try {
     // Validate Id

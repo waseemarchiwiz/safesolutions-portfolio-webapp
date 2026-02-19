@@ -1,7 +1,6 @@
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { FaqTypes } from "./columns";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAllfaqs } from "./(actions)/actions";
 import MainFaq from "./(client)/main";
 
 export interface PaginationUrlProps {
@@ -17,14 +16,9 @@ export default async function AllFaqsPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
 
-  const result = await prisma.fAQ.findMany({
-    skip,
-    take: limit,
-  });
-
-  const totalFAQs = await prisma.fAQ.count();
-
-  const faqs = serializePrisma(result);
+  // get all faqs
+  const { data: faqs, total: totalFAQs } = await GetAllfaqs({ skip, limit });
+  // return
   return (
     <div className="flex flex-1 flex-col">
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">

@@ -1,8 +1,6 @@
-import { Breadcrumbs } from "@/components/common/breadcrumbs";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 import MainFaq from "./(client)/main";
 import { QueryTypes } from "./columns";
+import { GetAllQueries } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -16,15 +14,12 @@ export default async function AllQueriesPage({
   const page = Number(params?.page) || 1;
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
-
-  const result = await prisma.contact.findMany({
+  // get Queries and total
+  const { data: queries, total: totalQueries } = await GetAllQueries({
     skip,
-    take: limit,
+    limit,
   });
 
-  const totalQueries = await prisma.contact.count();
-
-  const queries = serializePrisma(result) || [];
   return (
     <div className="flex flex-1 flex-col">
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">
@@ -37,7 +32,7 @@ export default async function AllQueriesPage({
             data={(queries as QueryTypes[]) || []}
             page={page}
             limit={limit}
-            total={totalQueries}
+            total={totalQueries as number}
           />
         </div>
       </div>

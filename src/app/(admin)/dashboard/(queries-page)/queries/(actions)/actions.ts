@@ -3,8 +3,51 @@
 import { revalidatePath } from "next/cache";
 import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
+import { serializePrisma } from "@/lib/utils";
 
-// Server-side validation for FormData
+// -----------------------------
+// All Queries Action
+// -----------------------------
+export async function GetAllQueries({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}): Promise<ReturnPayload> {
+  try {
+    const [result, totalQueries] = await Promise.all([
+      prisma.contact.findMany({
+        skip,
+        take: limit,
+      }),
+      prisma.contact.count(),
+    ]);
+    // Queries
+    const Queries = serializePrisma(result);
+
+    // return the Queries data
+    return {
+      success: true,
+      message: "Queries fetched successfully.",
+      data: Queries,
+      total: totalQueries as number,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch queries.",
+      data: [],
+      total: 0,
+    };
+  }
+}
+
+// -----------------------------
+// Delete Query Action
+// -----------------------------
 export async function DeleteQueryAction(id: number): Promise<ReturnPayload> {
   try {
     // Validate Id

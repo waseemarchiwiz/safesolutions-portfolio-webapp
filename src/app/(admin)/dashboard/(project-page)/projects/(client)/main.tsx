@@ -50,8 +50,6 @@ const MainBlogs = ({ data, page, limit, total, linkInfo }: MainBlogsProps) => {
     }
   };
 
-  console.log("data in main: ", data);
-
   // columns
   const columns = getColumns({ onEdit: handleEdit, onDelete: handleDelete });
   return (

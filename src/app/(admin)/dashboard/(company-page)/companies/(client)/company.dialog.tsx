@@ -165,7 +165,7 @@ export default function CompanyDialog({
           <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-4">
             <DialogHeader>
               <DialogTitle>
-                {action === "edit" ? "Update company" : "Confirmation"}
+                {action === "edit" ? "Update Company" : "Confirmation"}
               </DialogTitle>
               <DialogDescription className="sr-only">
                 This is update company dialog

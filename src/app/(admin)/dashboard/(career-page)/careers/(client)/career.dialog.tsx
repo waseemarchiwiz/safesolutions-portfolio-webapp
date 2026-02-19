@@ -267,6 +267,7 @@ export default function EditCareerDialog({
                 disabled={form.formState.isSubmitting}
                 type={action === "edit" ? "submit" : "button"}
                 variant={action === "edit" ? "default" : "destructive"}
+                className={`${action === "edit" && "bg-sky-600 hover:bg-sky-700"} `}
                 onClick={() => action !== "edit" && handeDelete()}
               >
                 {loading || form.formState.isSubmitting ? (

@@ -1,42 +1,24 @@
+import { GetStats } from "./(actions)/action";
 import Home from "./(client)";
-import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs"; // force Node runtime (not Edge)
 
 export default async function HomePage() {
-  const [
-    totalBlogs,
-    totalCareers,
-    totalTestimonials,
-    totalTeams,
-    totalServices,
-    totalProjects,
-    totalFAQs,
-    totalContacts,
-    totalCompanies,
-  ] = await Promise.all([
-    prisma.blog.count(),
-    prisma.career.count(),
-    prisma.testimonial.count(),
-    prisma.team.count(),
-    prisma.service.count(),
-    prisma.project.count(),
-    prisma.fAQ.count(),
-    prisma.contact.count(),
-    prisma.companies.count(),
-  ]);
-
-  // recent messages
-  const recentMessages = await prisma.contact.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 5,
-  });
-
-  // serialized recent messages
-  const recentSerialized = recentMessages.map((msg) => ({
-    ...msg,
-    createdAt: msg.createdAt.toISOString(),
-  }));
+  // get stats data
+  const {
+    data: {
+      totalBlogs,
+      totalCareers,
+      totalTestimonials,
+      totalTeams,
+      totalServices,
+      totalProjects,
+      totalFAQs,
+      totalContacts,
+      totalCompanies,
+      recentMessages,
+    },
+  } = await GetStats();
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -50,7 +32,7 @@ export default async function HomePage() {
         totalFAQs={totalFAQs}
         totalContacts={totalContacts}
         totalCompanies={totalCompanies}
-        recentMessages={recentSerialized}
+        recentMessages={recentMessages}
       />
     </div>
   );

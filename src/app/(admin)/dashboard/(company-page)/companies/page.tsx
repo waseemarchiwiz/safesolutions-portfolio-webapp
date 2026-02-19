@@ -3,6 +3,7 @@ import { CompanyTypes } from "./columns";
 import MainCompany from "./(client)/main";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
+import { GetAllCompanies } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -17,14 +18,8 @@ export default async function AllCompanysPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
 
-  const result = await prisma.companies.findMany({
-    skip,
-    take: limit,
-  });
-
-  const totalCompanies = await prisma.companies.count();
-
-  const companies = serializePrisma(result);
+  // get all companies
+  const { data: companies, total } = await GetAllCompanies({ skip, limit });
 
   return (
     <div className="flex flex-1 flex-col">
@@ -39,7 +34,7 @@ export default async function AllCompanysPage({
             data={(companies as CompanyTypes[]) || []}
             page={page}
             limit={limit}
-            total={totalCompanies}
+            total={total as number}
             linkInfo={{ text: "Add Company", link: "add-company" }}
           />
         </div>

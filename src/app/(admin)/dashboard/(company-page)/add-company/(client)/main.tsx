@@ -246,7 +246,6 @@ export default function AddCompanyForm() {
                   type="submit"
                   disabled={form.formState.isSubmitting}
                   className=" bg-sky-600 hover:bg-sky-700"
-                  onClick={() => console.log("Add Company clicked")}
                 >
                   {form.formState.isSubmitting ? (
                     <LoaderCircle size={20} />

@@ -25,6 +25,7 @@ import {
   TestimonialsSchema,
 } from "../(validation)/validation";
 import { AddTestimonialsAction } from "../(actions)/action";
+import { LoaderCircle } from "@/components/common/loader";
 
 export default function AddTestimonialForm() {
   const [preview, setPreview] = useState<string | null>(null);
@@ -225,12 +226,14 @@ export default function AddTestimonialForm() {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="min-w-[120px] bg-indigo-500 hover:bg-indigo-400"
+                  className=" bg-sky-600 hover:bg-sky-700"
                   onClick={() => console.log("Add Testimonial clicked")}
                 >
-                  {form.formState.isSubmitting
-                    ? "Processing"
-                    : "Add testimonial"}
+                  {form.formState.isSubmitting ? (
+                    <LoaderCircle size={30} />
+                  ) : (
+                    "Add testimonial"
+                  )}
                 </Button>
               </div>
             </form>

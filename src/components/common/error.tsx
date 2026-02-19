@@ -1,6 +1,6 @@
-import React from "react";
+"use client";
+
 import { Button } from "../ui/button";
-import { authClient } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 
 export interface ErrorPageProps {
@@ -9,6 +9,7 @@ export interface ErrorPageProps {
 }
 
 const ErrorComponent = ({ error, reset }: ErrorPageProps) => {
+  // get the current path
   const pathname = usePathname();
 
   // redirect to home page
@@ -19,6 +20,13 @@ const ErrorComponent = ({ error, reset }: ErrorPageProps) => {
     } else {
       window.location.href = "/";
     }
+  };
+
+  // handle retry
+  const handleRetry = () => {
+    // console.log("retry clicked--", pathname);
+    // window.location.href = pathname;
+    reset();
   };
 
   return (
@@ -69,7 +77,7 @@ const ErrorComponent = ({ error, reset }: ErrorPageProps) => {
           >
             Go Home
           </Button>
-          <Button onClick={reset}>Try Again</Button>
+          <Button onClick={handleRetry}>Try Again</Button>
         </div>
       </div>
     </main>

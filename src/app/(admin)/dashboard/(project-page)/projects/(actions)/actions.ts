@@ -3,7 +3,49 @@
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
 import { deleteFile } from "@/lib/upload";
+import { serializePrisma } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
+
+// -----------------------------
+// All Projects Action
+// -----------------------------
+export async function GetAllProjects({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}): Promise<ReturnPayload> {
+  try {
+    const [result, totalProjects] = await Promise.all([
+      prisma.project.findMany({
+        include: { projectDetails: true, services: true, supports: true },
+        skip,
+        take: limit,
+      }),
+      prisma.project.count(),
+    ]);
+    // projects
+    const projects = serializePrisma(result);
+
+    // return the projects data
+    return {
+      success: true,
+      message: "Projects fetched successfully.",
+      data: projects,
+      total: totalProjects as number,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch faqs.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Delete Project Action (Azure Blob Storage)

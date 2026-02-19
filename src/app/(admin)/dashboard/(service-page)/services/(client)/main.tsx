@@ -57,8 +57,6 @@ const MainServices = ({
     }
   };
 
-  console.log("data in main: ", data);
-
   // columns
   const columns = getColumns({ onEdit: handleEdit, onDelete: handleDelete });
   return (

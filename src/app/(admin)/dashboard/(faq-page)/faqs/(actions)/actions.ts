@@ -7,10 +7,50 @@ import {
   FaqFormValues,
   FaqSchema,
 } from "../../add-faq/(validation)/validation";
+import { serializePrisma } from "@/lib/utils";
 
 // update job form values
 interface fAQUpdateTypes extends FaqFormValues {
   id: number;
+}
+
+// -----------------------------
+// All Faqs Action
+// -----------------------------
+export async function GetAllfaqs({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalfaqs] = await Promise.all([
+      prisma.fAQ.findMany({
+        skip,
+        take: limit,
+      }),
+      prisma.fAQ.count(),
+    ]);
+    // serialize data
+    const faqs = serializePrisma(result);
+    // return the faqs data
+    return {
+      success: true,
+      message: "faqs fetched successfully.",
+      data: faqs,
+      total: totalfaqs,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch faqs.",
+      data: [],
+      total: 0,
+    };
+  }
 }
 
 // -----------------------------

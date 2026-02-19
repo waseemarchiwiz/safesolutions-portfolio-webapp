@@ -6,6 +6,46 @@ import { prisma } from "@/lib/prisma";
 
 import { EditTestimonialsSchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
+import { serializePrisma } from "@/lib/utils";
+
+// -----------------------------
+// All Testimonials Action
+// -----------------------------
+export async function GetAllTestmonials({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalTestmonials] = await Promise.all([
+      prisma.testimonial.findMany({
+        skip,
+        take: limit,
+      }),
+      prisma.testimonial.count(),
+    ]);
+    // serialize data
+    const testmonials = serializePrisma(result);
+    // return the Testmonials data
+    return {
+      success: true,
+      message: "Testmonials fetched successfully.",
+      data: testmonials,
+      total: totalTestmonials,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch testmonials.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Update testimonials Action

@@ -1,6 +1,5 @@
+import { GetAllBlogs } from "@/app/(admin)/dashboard/(blog-page)/blogs/(actions)/actions";
 import MainBlogs from "./(client)/main";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 
 /**
  * This page is dynamically generated at build time.
@@ -9,14 +8,8 @@ import { serializePrisma } from "@/lib/utils";
  */
 
 export default async function BlogsPage() {
-  // api client
-  const result = await prisma.blog.findMany({
-    take: 10,
-    include: { images: true },
-  });
-
-  const blogs = serializePrisma(result);
-
+  // Get all blogs
+  const { data: blogs } = await GetAllBlogs({ skip: 0, limit: 10 });
   // blogs
   return <MainBlogs blogs={blogs} />;
 }

@@ -4,6 +4,47 @@ import { ReturnPayload } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
 import { deleteFile } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
+import { serializePrisma } from "@/lib/utils";
+
+// -----------------------------
+// All Blogs Action
+// -----------------------------
+export async function GetAllBlogs({
+  skip,
+  limit,
+}: {
+  skip: number;
+  limit: number;
+}) {
+  try {
+    const [result, totalBlogs] = await Promise.all([
+      prisma.blog.findMany({
+        skip,
+        take: limit,
+        include: { images: true },
+      }),
+      prisma.blog.count(),
+    ]);
+    // serialize data
+    const blogs = serializePrisma(result);
+    // return the blogs data
+    return {
+      success: true,
+      message: "Blogs fetched successfully.",
+      data: blogs,
+      total: totalBlogs,
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch Blogs.",
+      data: [],
+      total: 0,
+    };
+  }
+}
 
 // -----------------------------
 // Delete Blog Action (Optional - with Azure cleanup)

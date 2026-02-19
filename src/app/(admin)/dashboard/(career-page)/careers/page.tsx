@@ -3,6 +3,7 @@ import { CareerTypes } from "./columns";
 import { prisma } from "@/lib/prisma";
 import { serializePrisma } from "@/lib/utils";
 import MainCareers from "./(client)/main";
+import { GetAllCareers } from "./(actions)/actions";
 
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
@@ -17,17 +18,11 @@ export default async function AllTeamsPage({
   const limit = Number(params?.limit) || 5;
   const skip = (page - 1) * limit;
 
-  // result
-  const result = await prisma.career.findMany({
-    orderBy: { createdAt: "desc" },
+  // get all careers
+  const { data: careers, total: totalCareers } = await GetAllCareers({
     skip,
-    take: limit,
+    limit,
   });
-
-  // count
-  const totalCareers = await prisma.team.count();
-  // convert date objects to string
-  const careers = serializePrisma(result);
 
   return (
     <div className="flex flex-1 flex-col">
