@@ -3,7 +3,7 @@
 import React from "react";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
-import PageHeroSection from "../../(common)/hero-section";
+import PageHeroSection from "../../(shared)/hero-section";
 import Link from "next/link";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -221,7 +221,7 @@ const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }
+                        },
                       )}
                     </div>
                   </div>

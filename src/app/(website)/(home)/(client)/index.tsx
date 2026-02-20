@@ -2,18 +2,18 @@
 
 import React from "react";
 import Hero from "./hero";
-import Projects from "../../(common)/project-section";
+import Projects from "../../(shared)/project-section";
 import { FaqTypes } from "@/app/(admin)/dashboard/(faq-page)/faqs/columns";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { TestimonialTypes } from "@/app/(admin)/dashboard/(testimonial-page)/testimonials/columns";
 import Testimonials from "./testimonials";
 import OurStack from "./our-stack";
-import SectionWithReveal from "../../(common)/fold";
+import SectionWithReveal from "../../(shared)/fold";
 import { Services } from "../../(service-page)/services/(client)";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
 import Faqs from "./faqs";
 import WhyChoose from "./why-choose";
-import AboutSection from "../../(common)/about-section";
+import AboutSection from "../../(shared)/about-section";
 
 interface MainPropTypes {
   faqs: FaqTypes[];

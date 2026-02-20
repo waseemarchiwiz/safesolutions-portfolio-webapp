@@ -1,3 +1,4 @@
+import LiveDate from "@/app/(admin)/dashboard/(shared)/live-date";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -12,7 +13,8 @@ export function SiteHeader() {
         />
         <h1 className="text-base font-medium">Welcome, Admin</h1>
         <div className="ml-auto flex items-center gap-2">
-          {new Date().toDateString()}
+          {/* clock */}
+          <LiveDate />
         </div>
       </div>
     </header>

@@ -1,6 +1,7 @@
 import { Facebook, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import CustomLogo from "./logo";
+import CopyRightSection from "./copyright";
 
 const links = [
   {
@@ -162,7 +163,7 @@ export default function FooterSection() {
         {/* Bottom Section */}
         <div className="mt-8 flex items-center justify-center gap-6 border-t border-gray-800 py-6">
           <small className="text-gray-500 order-last block text-center text-sm md:order-first">
-            © {new Date().getFullYear()} Safe Solutions. All rights reserved.
+            © {<CopyRightSection />} Safe Solutions. All rights reserved.
           </small>
         </div>
       </div>

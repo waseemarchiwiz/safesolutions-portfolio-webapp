@@ -2,18 +2,18 @@
 
 import React from "react";
 import Teams from "./teams";
-import Projects from "../../(common)/project-section";
-import PageHeroSection from "../../(common)/hero-section";
+import Projects from "../../(shared)/project-section";
+import PageHeroSection from "../../(shared)/hero-section";
 import Achievements from "./achievements";
 import { TeamTypes } from "../page";
 import { Banner } from "./banner";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
-import SectionWithReveal from "../../(common)/fold";
+import SectionWithReveal from "../../(shared)/fold";
 import Blogs from "../../(blogs-page)/blogs/(client)/blogs";
 import PartnersSection from "./partners";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
-import AboutSection from "../../(common)/about-section";
+import AboutSection from "../../(shared)/about-section";
 
 interface AboutProps {
   teams: TeamTypes[];

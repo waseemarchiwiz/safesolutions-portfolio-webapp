@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Loading from "../[slug]/loading";
-import PageHeroSection from "../../../(common)/hero-section";
+import PageHeroSection from "../../../(shared)/hero-section";
 import Image from "next/image";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 import { Badge } from "@/components/ui/badge";
@@ -84,7 +84,7 @@ const Main = ({ blogData }: { blogData: BlogTypes }) => {
                             className="w-full h-full object-contain"
                           />
                         </motion.div>
-                      )
+                      ),
                   )}
                 </AnimatePresence>
 

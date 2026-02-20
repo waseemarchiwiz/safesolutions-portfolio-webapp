@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/app/styles/globals.css";
-import Footer from "./(common)/footer";
+import Footer from "./(shared)/footer";
 import { Toaster } from "@/components/ui/sonner";
-import Header from "./(common)/header";
-import ScrollToTop from "./(common)/scroll-to-top";
+import Header from "./(shared)/header";
+import ScrollToTop from "./(shared)/scroll-to-top";
 import { description, title } from "../meta";
-import PageHeroSection from "./(common)/hero-section";
+import PageHeroSection from "./(shared)/hero-section";
 
 export const metadata: Metadata = {
   title,

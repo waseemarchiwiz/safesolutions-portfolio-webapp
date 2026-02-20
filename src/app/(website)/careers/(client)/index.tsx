@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Briefcase, MapPin, ScanText, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import PageHeroSection from "../../(common)/hero-section";
+import PageHeroSection from "../../(shared)/hero-section";
 import WhySafe from "./why-safe";
 import ApplyModal from "./application-dialog";
 import { Button } from "@/components/ui/button";

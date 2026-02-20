@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import PageHeroSection from "../../../(common)/hero-section";
+import PageHeroSection from "../../../(shared)/hero-section";
 import { Card } from "@/components/ui/card";
 import { ScanText } from "lucide-react";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";

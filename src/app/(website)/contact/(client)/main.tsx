@@ -24,7 +24,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Send, Mail, User, MessageSquare, Building2 } from "lucide-react";
-import PageHeroSection from "../../(common)/hero-section";
+import PageHeroSection from "../../(shared)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { ContactUsAction } from "../(actions)/action";

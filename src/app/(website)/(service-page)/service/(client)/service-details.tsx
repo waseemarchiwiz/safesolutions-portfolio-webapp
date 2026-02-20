@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PageHeroSection from "@/app/(website)/(common)/hero-section";
+import PageHeroSection from "@/app/(website)/(shared)/hero-section";
 import { ServiceTypes } from "@/app/(admin)/dashboard/(service-page)/services/columns";
 
 const ServiceDetails = ({ data }: { data: ServiceTypes }) => {

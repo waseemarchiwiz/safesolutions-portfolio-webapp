@@ -1,4 +1,4 @@
-import PageHeroSection from "@/app/(website)/(common)/hero-section";
+import PageHeroSection from "@/app/(website)/(shared)/hero-section";
 /**
  * We've used catch all route to handle 404 error page
  **/

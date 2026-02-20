@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import PageHeroSection from "../../../(common)/hero-section";
+import PageHeroSection from "../../../(shared)/hero-section";
 import Blogs from "@/app/(website)/(blogs-page)/blogs/(client)/blogs";
 import { BlogTypes } from "@/app/(admin)/dashboard/(blog-page)/blogs/columns";
 
