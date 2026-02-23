@@ -35,6 +35,7 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { CareerTypes } from "@/app/(admin)/dashboard/(career-page)/careers/columns";
 import { EasyApplyAction, EasyApplyTypes } from "../(actions)/action";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface ApplyModalProp {
   modalOpen: boolean;
@@ -55,15 +56,15 @@ const ApplyModal = ({
   const form = useForm<ApplicationTypes>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
-      name: "test",
-      email: "test@gmail.com",
-      phone: "1234567890",
+      name: "", // test
+      email: "", // test@gmail.com
+      phone: "", // 1234567890
       file: null,
-      experience: "mid",
-      message: "testing",
-      portfolioType: "URL",
-      portfolioUrl: "http://unsplash.com",
-      portfolioFile: null,
+      experience: "", // mid
+      message: "", // testing
+      portfolioType: "", // URL
+      portfolioUrl: "", // http://unsplash.com
+      portfolioFile: null, // null
     },
   });
 
@@ -115,7 +116,7 @@ const ApplyModal = ({
       if (error && (error as AxiosError).isAxiosError) {
         const axiosError = error as AxiosError<{ message?: string }>;
         toast.error(
-          axiosError.response?.data?.message || "Failed to send your message"
+          axiosError.response?.data?.message || "Failed to send your message",
         );
       } else {
         toast.error("Unexpected error submitting form");
@@ -327,9 +328,13 @@ const ApplyModal = ({
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                onClick={() => console.log("buttion clilced: ")}
+                className="bg-sky-600 hover:bg-sky-700 cursor-pointer"
               >
-                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                {form.formState.isSubmitting ? (
+                  <LoaderCircle size={30} />
+                ) : (
+                  "Submit"
+                )}
               </Button>
             </DialogFooter>
           </form>
