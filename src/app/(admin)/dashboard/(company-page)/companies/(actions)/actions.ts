@@ -7,7 +7,9 @@ import { EditCompanySchema } from "../(validation)/validation";
 import { deleteFile, uploadFile } from "@/lib/upload";
 import { serializePrisma } from "@/lib/utils";
 
-// Get all companies with pagination
+// -----------------------------
+// Get All Companies Action
+// -----------------------------
 export async function GetAllCompanies({
   skip,
   limit,

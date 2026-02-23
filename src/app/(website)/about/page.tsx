@@ -1,6 +1,5 @@
 import Main from "./(client)";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
+import { GetAboutPageData } from "./(actions)/actions";
 
 export interface TeamTypes {
   id: number;
@@ -17,23 +16,10 @@ export interface TeamTypes {
 
 export default async function AboutPage() {
   // fetch teams + projects
-  const [teamsResult, projectsResult, blogsResult, companiesResult] =
-    await Promise.all([
-      // teams
-      await prisma.team.findMany(),
-      // projects
-      await prisma.project.findMany(),
-      // blogs
-      await prisma.blog.findMany({ include: { images: true } }),
-      // companies
-      await prisma.companies.findMany(),
-    ]);
-
-  const teams = serializePrisma(teamsResult) || [];
-  const projects = serializePrisma(projectsResult) || [];
-  const blogs = serializePrisma(blogsResult) || [];
-  const companies = serializePrisma(companiesResult) || [];
-
+  const {
+    data: { teams, projects, blogs, companies },
+  } = await GetAboutPageData();
+  // return the component
   return (
     <Main
       teams={teams}

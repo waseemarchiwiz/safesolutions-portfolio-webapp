@@ -1,6 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 import ProjectDetails from "../(client)/project-details";
+import { GetProjectBySlug } from "../(actions)/actions";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
@@ -11,16 +10,9 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
   const { slug } = await params;
 
   // Project data
-  const result = await prisma.project.findUnique({
-    where: { slug },
-    include: {
-      services: true,
-      projectDetails: true,
-      supports: true,
-    },
-  });
-  const project = serializePrisma(result);
+  const { data: project } = await GetProjectBySlug(slug);
 
+  // if no Project found return this page
   if (!project) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -35,6 +27,6 @@ export default async function ProjectDetailsPage({ params }: ParamsProps) {
       </div>
     );
   }
-
+  // return the component
   return <ProjectDetails data={project || {}} />;
 }

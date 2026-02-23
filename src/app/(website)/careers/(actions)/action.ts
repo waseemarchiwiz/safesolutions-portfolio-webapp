@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { ReturnPayload } from "@/lib/types";
+import { serializePrisma } from "@/lib/utils";
 import nodemailer from "nodemailer";
 
 export interface EasyApplyTypes {
@@ -138,6 +139,37 @@ export async function EasyApplyAction(
     return {
       success: false,
       message: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+// -----------------------------
+// Get Careers + Companies Info
+// -----------------------------
+export async function GetAllCareers() {
+  try {
+    const [careersResult, companiesResult] = await Promise.all([
+      await prisma.career.findMany(),
+      await prisma.companies.findMany(),
+    ]);
+
+    // serialize data
+    const careers = serializePrisma(careersResult) || [];
+    const companies = serializePrisma(companiesResult) || [];
+
+    // return the companies data
+    return {
+      success: true,
+      message: "Companies fetched successfully.",
+      data: { companies, careers },
+    };
+  } catch (error) {
+    console.log("error:- ", error);
+    // return
+    return {
+      success: false,
+      message: "Failed to fetch companies.",
+      data: { careers: [], companies: [] },
     };
   }
 }

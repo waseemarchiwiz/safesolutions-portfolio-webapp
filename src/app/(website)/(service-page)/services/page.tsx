@@ -1,13 +1,9 @@
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 import { Services } from "./(client)";
+import { GetAllServices } from "@/app/(admin)/dashboard/(service-page)/services/(actions)/actions";
 
 export default async function ServicesPage() {
   // result
-  const result = await prisma.service.findMany({});
-  // services
-  const services = serializePrisma(result);
-
+  const { data: services } = await GetAllServices(0, 10000); // get all services
   // main
   return <Services view={false} services={services} />;
 }

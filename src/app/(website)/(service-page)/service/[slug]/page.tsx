@@ -1,6 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
 import ServiceDetails from "../(client)/service-details";
+import { GetServiceBySlug } from "../(actions)/actions";
 
 type ParamsProps = {
   params: Promise<{ slug: string }>;
@@ -10,11 +9,8 @@ export default async function ServiceDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;
   // Service data
-  const result = await prisma.service.findUnique({
-    where: { slug },
-  });
-  const service = serializePrisma(result);
-
+  const { data: service } = await GetServiceBySlug(slug);
+  // if no Service found return this page
   if (!service) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -29,7 +25,7 @@ export default async function ServiceDetailsPage({ params }: ParamsProps) {
       </div>
     );
   }
-
+  // return the component
   return (
     <div className="dark:bg-[#18181b]">
       <ServiceDetails data={service || {}} />

@@ -1,16 +1,11 @@
 import Main from "./(client)";
-import { prisma } from "@/lib/prisma";
-import { serializePrisma } from "@/lib/utils";
-
+import { GetAllCareers } from "./(actions)/action";
+// Careers Page
 export default async function CareersPage() {
-  // careers + Companies
-  const [careersResult, companiesResult] = await Promise.all([
-    await prisma.career.findMany(),
-    await prisma.companies.findMany(),
-  ]);
-
-  const careers = serializePrisma(careersResult) || [];
-  const companies = serializePrisma(companiesResult) || [];
-
+  // careers + companies
+  const {
+    data: { careers, companies },
+  } = await GetAllCareers();
+  // return the component
   return <Main careers={careers} companies={companies} />;
 }
