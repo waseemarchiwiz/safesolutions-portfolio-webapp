@@ -6,22 +6,28 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { title, description } from "@/app/meta";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title,
   description,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const sidebarState = cookieStore.get("sidebar_state");
+  const defaultOpen = sidebarState ? sidebarState.value === "true" : true;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider disableTransitionOnChange>
           <SidebarProvider
+            defaultOpen={defaultOpen}
             style={
               {
                 "--sidebar-width": "calc(var(--spacing) * 72)",

@@ -23,10 +23,10 @@ interface AboutProps {
 }
 
 const Main = ({ teams, projects, blogs, partners }: AboutProps) => {
-  console.log("teams--", teams);
-  console.log("projects--", projects);
-  console.log("blogs--", blogs);
-  console.log("partners---", partners);
+  // console.log("teams--", teams);
+  // console.log("projects--", projects);
+  // console.log("blogs--", blogs);
+  // console.log("partners---", partners);
 
   return (
     <>

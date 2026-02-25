@@ -5,17 +5,22 @@ import { Calendar1, Clock } from "lucide-react";
 // Live Date
 const LiveDate = () => {
   // now
-  const [now, setNow] = useState<Date>(new Date());
+  const [now, setNow] = useState<Date | null>(null);
 
-  // change date every second
+  // when component mounts
   useEffect(() => {
-    // intervalue
+    // set the current date
+    setNow(new Date());
+    // then change it after every second
     const interval = setInterval(() => {
       setNow(new Date());
     }, 1000);
     // clean up interval
     return () => clearInterval(interval);
   }, []);
+
+  // if no date, return null
+  if (!now) return null;
 
   return (
     <div className="flex justify-center items-center gap-2 text-muted-foreground">

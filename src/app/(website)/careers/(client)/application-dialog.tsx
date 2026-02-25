@@ -32,7 +32,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { CareerTypes } from "@/app/(admin)/dashboard/(career-page)/careers/columns";
 import { EasyApplyAction, EasyApplyTypes } from "../(actions)/action";
 import { LoaderCircle } from "@/components/common/loader";
@@ -113,11 +112,10 @@ const ApplyModal = ({
         toast.error(response.message || "Failed to submit application..");
       }
     } catch (error) {
-      if (error && (error as AxiosError).isAxiosError) {
-        const axiosError = error as AxiosError<{ message?: string }>;
-        toast.error(
-          axiosError.response?.data?.message || "Failed to send your message",
-        );
+      if (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error";
+        toast.error(errorMessage || "Failed to send your message");
       } else {
         toast.error("Unexpected error submitting form");
       }

@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "./(shared)/header";
 import ScrollToTop from "./(shared)/scroll-to-top";
 import { description, title } from "../meta";
-import PageHeroSection from "./(shared)/hero-section";
 
 export const metadata: Metadata = {
   title,
