@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { ScanText } from "lucide-react";
 import StackIcon from "tech-stack-icons";
-import { Button } from "@/components/ui/button";
 import { InfiniteSlider } from "@/components/infinite-slider";
 
 const languages = [
@@ -17,6 +15,7 @@ const languages = [
   <StackIcon key={10} name="vuejs" className="m-auto size-10 sm:size-12" />,
   <StackIcon key={11} name="django" className="m-auto size-10 sm:size-12" />,
 ];
+
 const uiLibraries = [
   <StackIcon key={1} name="html5" className="m-auto size-10 sm:size-12" />,
   <StackIcon key={2} name="css3" className="m-auto size-10 sm:size-12" />,
@@ -31,6 +30,7 @@ const uiLibraries = [
   <StackIcon key={7} name="headlessui" className="m-auto size-10 sm:size-12" />,
   <StackIcon key={8} name="threejs" className="m-auto size-10 sm:size-12" />,
 ];
+
 const databaseAndServices = [
   <StackIcon key={1} name="azure" className="m-auto size-10 sm:size-12" />,
   <StackIcon key={2} name="microsoft" className="m-auto size-10 sm:size-12" />,
@@ -121,7 +121,7 @@ export default function OurStack() {
         </div>
 
         {/* CTA Button */}
-        <div className="mt-20 text-center">
+        {/* <div className="mt-20 text-center">
           <Button
             asChild
             variant="outline"
@@ -129,7 +129,7 @@ export default function OurStack() {
           >
             <Link href="#">Learn More</Link>
           </Button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

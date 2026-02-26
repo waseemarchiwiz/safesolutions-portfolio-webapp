@@ -11,6 +11,7 @@ interface ContactUsValues {
   subject: string;
   message: string;
   sender_email: string;
+  captchaToken: string;
 }
 
 // -----------------------------
@@ -20,6 +21,25 @@ export async function ContactUsAction(
   values: ContactUsValues,
 ): Promise<ReturnPayload> {
   try {
+
+    // verify captcha
+    const verifyCaptcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `secret=${process.env.RECAPTCHA_COPY_SECRET_KEY}&response=${values.captchaToken}`
+    })
+    // response from captcha
+    const captchaResponse = await verifyCaptcha.json();
+
+    // if fails
+    if (!captchaResponse.success) {
+      return { success: false, message: "Captcha verification failed, please try again." };
+    }
+
+    console.log("captchaResponse:-", captchaResponse);
+
     const { name, email, subject, message, sender_email } = values;
 
     // Basic validation
@@ -41,7 +61,7 @@ export async function ContactUsAction(
 
     // Configure Nodemailer
     const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST, // e.g., smtp-mail.outlook.com
+      host: process.env.MAIL_HOST,
       port: Number(process.env.MAIL_PORT) || 587,
       secure: false,
       auth: {
@@ -101,7 +121,7 @@ export async function ContactUsAction(
     return {
       success: true,
       message: "Your query has been submitted successfully.",
-      data: contact,
+      data: [],
     };
   } catch (error) {
     console.error("ContactUsAction error:", error);

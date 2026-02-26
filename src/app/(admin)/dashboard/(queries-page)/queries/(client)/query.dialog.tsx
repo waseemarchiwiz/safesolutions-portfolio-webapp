@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { QueryTypes } from "../columns";
 import { onSaveTypes } from "../../../types";
 import { DeleteQueryAction } from "../(actions)/actions";
+import { LoaderCircle } from "@/components/common/loader";
 
 interface EditQueryDialogProps {
   open: boolean;
@@ -82,7 +83,7 @@ export default function QueryDialog({
           </Button>
 
           <Button variant="destructive" onClick={() => handeDelete()}>
-            {loading ? "Loading..." : "Yes"}
+            {loading ? <LoaderCircle size={30} /> : "Yes"}
           </Button>
         </div>
       </DialogContent>

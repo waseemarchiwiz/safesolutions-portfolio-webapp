@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import dynamic from "next/dynamic";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -28,12 +29,21 @@ import PageHeroSection from "../../(shared)/hero-section";
 import { ContactFormValues, contactSchema } from "../(validation)/schema";
 import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/columns";
 import { ContactUsAction } from "../(actions)/action";
+import { LoaderCircle } from "@/components/common/loader";
+// recaptcha
+const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"))
 
 interface MainProps {
   companies: CompanyTypes[];
 }
 
 const Main: React.FC<MainProps> = ({ companies }) => {
+
+  // captcha token
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // captcha key
+  const [captchaKey, setCaptchaKey] = useState(0); // used to reset widget
+
   // use form
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -50,11 +60,16 @@ const Main: React.FC<MainProps> = ({ companies }) => {
     console.log("values to submit:", values);
     try {
       const result = await ContactUsAction(values);
+      console.log("result--", result);
+
       if (result.success) {
         toast.success(result?.message || "message sent successfully");
         form.reset();
+        resetCaptcha();
+
       } else {
         toast.error(result?.message || "Failed to send message");
+        resetCaptcha();
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -63,8 +78,14 @@ const Main: React.FC<MainProps> = ({ companies }) => {
           ? error.message
           : "Unexpected error submitting form",
       );
+      resetCaptcha();
     }
   };
+
+  const resetCaptcha = () => {
+    setCaptchaKey((prev) => prev + 1);
+    setCaptchaToken(null);
+  }
 
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
@@ -234,6 +255,15 @@ const Main: React.FC<MainProps> = ({ companies }) => {
                       )}
                     />
 
+                    {/* Captcha Form */}
+                    <ReCAPTCHA
+                      key={captchaKey}
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+                      onChange={(token) => form.setValue("captchaToken", token as string)}
+                      onExpired={() => setCaptchaToken(null)}
+                      theme="light"
+                    />
+
                     {/* Submit Button */}
                     <Button
                       type="submit"
@@ -242,7 +272,7 @@ const Main: React.FC<MainProps> = ({ companies }) => {
                     >
                       {form.formState.isSubmitting ? (
                         <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
+                          <LoaderCircle size={20} />
                           Sending...
                         </>
                       ) : (
