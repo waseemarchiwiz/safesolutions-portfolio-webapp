@@ -38,7 +38,11 @@ const Header = () => {
     <header>
       <nav
         data-state={menuState && "active"}
-        className=" fixed z-20 w-full px-2 transition-all duration-300"
+        className={cn(
+          "fixed z-20 w-full px-2 transition-all duration-300",
+          !isScrolled &&
+            "before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-24 before:bg-gradient-to-b before:from-black/50 before:to-transparent",
+        )}
       >
         <div
           className={cn(

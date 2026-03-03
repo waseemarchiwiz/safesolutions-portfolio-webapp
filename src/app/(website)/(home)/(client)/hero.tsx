@@ -24,7 +24,10 @@ const transitionVariants = {
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
-  if (!isMounted) return null;
+
+  if (!isMounted) {
+    return <main className="overflow-hidden bg-black min-h-screen" />;
+  }
 
   return (
     <main className="overflow-hidden bg-black">
