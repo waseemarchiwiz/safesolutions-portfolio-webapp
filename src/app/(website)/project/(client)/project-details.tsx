@@ -7,7 +7,7 @@ import PageHeroSection from "../../(shared)/hero-section";
 import Link from "next/link";
 import { ProjectTypes } from "@/app/(admin)/dashboard/(project-page)/projects/columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+// Project Details
 const ProjectDetails = ({ data }: { data: ProjectTypes }) => {
   return (
     <>

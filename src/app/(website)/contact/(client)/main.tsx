@@ -31,16 +31,13 @@ import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/c
 import { ContactUsAction } from "../(actions)/action";
 import { LoaderCircle } from "@/components/common/loader";
 // recaptcha
-const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"))
+const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"));
 
 interface MainProps {
   companies: CompanyTypes[];
 }
 
 const Main: React.FC<MainProps> = ({ companies }) => {
-
-  // captcha token
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   // captcha key
   const [captchaKey, setCaptchaKey] = useState(0); // used to reset widget
 
@@ -66,7 +63,6 @@ const Main: React.FC<MainProps> = ({ companies }) => {
         toast.success(result?.message || "message sent successfully");
         form.reset();
         resetCaptcha();
-
       } else {
         toast.error(result?.message || "Failed to send message");
         resetCaptcha();
@@ -84,8 +80,7 @@ const Main: React.FC<MainProps> = ({ companies }) => {
 
   const resetCaptcha = () => {
     setCaptchaKey((prev) => prev + 1);
-    setCaptchaToken(null);
-  }
+  };
 
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
@@ -258,9 +253,12 @@ const Main: React.FC<MainProps> = ({ companies }) => {
                     {/* Captcha Form */}
                     <ReCAPTCHA
                       key={captchaKey}
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-                      onChange={(token) => form.setValue("captchaToken", token as string)}
-                      onExpired={() => setCaptchaToken(null)}
+                      sitekey={
+                        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string
+                      }
+                      onChange={(token) =>
+                        form.setValue("captchaToken", token as string)
+                      }
                       theme="light"
                     />
 
@@ -299,11 +297,10 @@ const Main: React.FC<MainProps> = ({ companies }) => {
                     meetings.
                   </p>
                 </div>
-
+                {/* Office Location */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d245.9139237984189!2d71.42526032296398!3d33.97685736402653!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d91100057fe28b%3A0x3e8ccd00be764f0b!2sSafe%20Solution%20Consultants%20Pvt.%20(Peshawar)!5e0!3m2!1sen!2sus!4v1770887005366!5m2!1sen!2sus"
                   width="600"
-                  height="450"
                   loading="lazy"
                   className="w-full h-96 border-0"
                   referrerPolicy="no-referrer-when-downgrade"

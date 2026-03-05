@@ -4,7 +4,7 @@ import { GetProjectBySlug } from "../(actions)/actions";
 type ParamsProps = {
   params: Promise<{ slug: string }>;
 };
-
+// Project Details Page
 export default async function ProjectDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;

@@ -36,12 +36,12 @@ import {
   Boxes,
   TruckElectricIcon,
   Headphones,
-  Map, // FaMapMarkedAlt
-  Waves, // FaWater
-  Leaf, // FaLeaf
-  LineChart, // FaChartLine
-  Tractor, // FaTractor
-  Plane, // FaHelicopter (no helicopter, closest is Plane)
+  Map,
+  Waves,
+  Leaf,
+  LineChart,
+  Tractor,
+  Plane,
 } from "lucide-react";
 
 // icons maps

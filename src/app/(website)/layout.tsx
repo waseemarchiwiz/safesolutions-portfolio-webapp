@@ -7,6 +7,7 @@ import Header from "./(shared)/header";
 import ScrollToTop from "./(shared)/scroll-to-top";
 import { description, title } from "../meta";
 
+// meta data
 export const metadata: Metadata = {
   title,
   description,
