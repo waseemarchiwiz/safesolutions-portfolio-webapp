@@ -1,27 +1,22 @@
 import { prisma } from "@/lib/prisma";
 import SignInForm from "../(client)/signin";
 import SignUpForm from "../(client)/signup";
+import { unstable_noStore as noStore } from "next/cache";
 
-// check if there is one admin user
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function hasAdminUser(): Promise<boolean> {
   try {
-    const user = await prisma.user.count();
-    return user > 0;
+    return (await prisma.user.count()) > 0;
   } catch (error) {
-    console.error("Database error:", error);
-    return false;
+    console.error("[SignInPage] Database error:", error);
+    return true; // fail closed: show signin on error
   }
 }
 
 export default async function SignInPage() {
-  // check if there is one admin user
+  noStore();
   const adminUser = await hasAdminUser();
-  console.log("adminUser---", adminUser);
-
-  // if there is an admin user return signin page
-  if (adminUser) {
-    return <SignInForm />;
-  }
-  // if there is no user return signup page
-  return <SignUpForm />;
+  return adminUser ? <SignInForm /> : <SignUpForm />;
 }
