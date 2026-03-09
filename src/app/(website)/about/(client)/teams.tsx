@@ -51,12 +51,9 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
           </div>
         </motion.div>
 
-        {/* Team Grid */}
-        <div className="px-4 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {teams.map(
-            (
-              team, // Removed index, using team.name or a unique team.id for keys is better if available
-            ) => (
+        {teams.length > 0 ? (
+          <div className="px-4 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {teams.map((team) => (
               <div
                 key={team.name} // Use a unique key like name or ID
                 className="group overflow-hidden rounded-lg border shadow-sm transition-shadow duration-300 hover:shadow-lg"
@@ -90,9 +87,31 @@ const Teams = ({ teams }: { teams: TeamTypes[] }) => {
                   <p className="text-sm text-sky-600">{team.role}</p>
                 </div>
               </div>
-            ),
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="w-full shadow bg-white flex flex-col items-center justify-center py-16 text-center px-6">
+            <div className="shadow flex items-center justify-center w-14 h-14 rounded-2xl mb-4">
+              <svg
+                className="w-10 h-10 text-sky-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                />
+              </svg>
+            </div>
+            <p className="text-md font-medium text-slate-500">No Teams Yet</p>
+            <p className="text-xs text-slate-400 mt-1">
+              Check back later for new teams.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

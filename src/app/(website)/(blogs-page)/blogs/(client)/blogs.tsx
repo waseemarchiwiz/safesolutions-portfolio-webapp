@@ -97,7 +97,7 @@ const Blogs = ({ blogs, view }: BlogProps) => {
               ))}
             </div>
           ) : (
-            <div className="max-w-2xl mx-auto shadow flex flex-col items-center justify-center py-16 text-center px-6">
+            <div className="mx-auto shadow flex flex-col items-center justify-center py-16 text-center px-6">
               <div className="shadow flex items-center justify-center w-14 h-14 rounded-2xl mb-4">
                 <svg
                   className="w-10 h-10 text-sky-600"

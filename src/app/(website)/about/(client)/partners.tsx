@@ -79,17 +79,43 @@ const PartnersSection = ({ partners }: { partners: CompanyTypes[] }) => {
 
       {/* Partners Grid */}
       <MotionConfig reducedMotion="user">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={containerVariants}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"
-        >
-          {partners.map((partner) => (
-            <PartnerCard key={partner.id} partner={partner} />
-          ))}
-        </motion.div>
+        {partners.length > 0 ? (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"
+          >
+            {partners.map((partner) => (
+              <PartnerCard key={partner.id} partner={partner} />
+            ))}
+          </motion.div>
+        ) : (
+          <div className="w-full shadow bg-white flex flex-col items-center justify-center py-16 text-center px-6">
+            <div className="shadow flex items-center justify-center w-14 h-14 rounded-2xl mb-4">
+              <svg
+                className="w-10 h-10 text-sky-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                />
+              </svg>
+            </div>
+            <p className="text-md font-medium text-slate-500">
+              No Partners Yet
+            </p>
+            <p className="text-xs text-slate-400 mt-1">
+              Check back later for new partners.
+            </p>
+          </div>
+        )}
       </MotionConfig>
     </div>
   );
