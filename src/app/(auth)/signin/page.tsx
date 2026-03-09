@@ -6,23 +6,10 @@ import SignUpForm from "../(client)/signup";
 // check if there is one admin user
 async function FindUserAction(): Promise<ReturnPayload> {
   try {
-    // get the user
     const [user, total] = await Promise.all([
-      // get the user
       prisma.user.findMany(),
-      // get the user count
       prisma.user.count(),
     ]);
-    // if there is no user return
-    if (!user) {
-      return {
-        success: false,
-        message: "No admin user found",
-        data: null,
-        total: 0,
-      };
-    }
-    // return the user
     return {
       success: true,
       message: "Admin user found",
@@ -30,10 +17,10 @@ async function FindUserAction(): Promise<ReturnPayload> {
       total: total,
     };
   } catch (error) {
-    // return the user
+    console.error("[FindUserAction] Database error:", error);
     return {
       success: false,
-      message: "No admin user found",
+      message: "Database connection failed",
       data: null,
       total: 0,
     };
