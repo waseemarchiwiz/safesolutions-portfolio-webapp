@@ -31,7 +31,7 @@ import { CompanyTypes } from "@/app/(admin)/dashboard/(company-page)/companies/c
 import { ContactUsAction } from "../(actions)/action";
 import { LoaderCircle } from "@/components/common/loader";
 // recaptcha
-const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"));
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface MainProps {
   companies: CompanyTypes[];
