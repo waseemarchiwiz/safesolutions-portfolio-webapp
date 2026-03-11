@@ -25,13 +25,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname:
-          "safesolution-portfolio-backend-h6a6esaxema6g4hm.eastus-01.azurewebsites.net",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
         pathname: "/**",
