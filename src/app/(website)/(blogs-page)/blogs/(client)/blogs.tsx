@@ -17,8 +17,6 @@ interface BlogProps {
 }
 
 const Blogs = ({ blogs, view }: BlogProps) => {
-  console.log("blogss- inside compoentn--", blogs);
-
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-16 lg:px-7">
