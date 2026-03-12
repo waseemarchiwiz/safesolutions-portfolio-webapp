@@ -9,6 +9,24 @@ const nextConfig: NextConfig = {
     },
   },
 
+  // redirect to main domain
+  async redirects() {
+    return [
+      {
+        source: "/",
+        has: [
+          {
+            type: "header",
+            key: "host",
+            value: "www.safesolutionsconsultants.com",
+          },
+        ],
+        destination: "https://safesolutionsconsultants.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   images: {
     remotePatterns: [
       {
