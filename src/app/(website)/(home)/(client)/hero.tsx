@@ -47,10 +47,7 @@ export default function Hero() {
         <div className="relative mx-auto max-w-7xl px-6 pt-24 md:pt-36">
           <div className="text-center sm:mx-auto lg:mr-auto">
             <AnimatedGroup variants={transitionVariants}>
-              <Link
-                href="#services"
-                className=" group sm:mx-auto flex w-64 sm:w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors"
-              >
+              <div className="cursor-default group sm:mx-auto flex w-64 sm:w-fit items-center gap-4 rounded-full border border-white/10 bg-zinc-900 p-1 pl-4 shadow-lg shadow-black/30 hover:bg-zinc-800 transition-colors">
                 <span className="text-white text-sm">
                   Modern Software Solutions
                 </span>
@@ -65,7 +62,7 @@ export default function Hero() {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </div>
             </AnimatedGroup>
 
             <TextEffect

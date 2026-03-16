@@ -2,10 +2,11 @@ import MainBlogs from "./(client)/main";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { GetAllBlogs } from "./(actions)/actions";
 
+// Pagination Url Props
 export interface PaginationUrlProps {
   searchParams: Promise<{ page?: string; limit?: string }>;
 }
-
+// All Blogs Page
 export default async function AllBlogsPage({
   searchParams,
 }: PaginationUrlProps) {
@@ -16,7 +17,6 @@ export default async function AllBlogsPage({
   const skip = (page - 1) * limit;
   // result
   const { data: blogs, total: totalBlogs } = await GetAllBlogs({ skip, limit });
-
   return (
     <div className="flex flex-1 flex-col">
       <div className="md:w-7xl md:mx-auto flex flex-1 flex-col gap-2">
