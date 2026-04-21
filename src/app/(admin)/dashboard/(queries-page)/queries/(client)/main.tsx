@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { DataTable, LinkTypes } from "@/components/data-table";
 import { getColumns, QueryTypes } from "../columns";
 import { toast } from "sonner";
 import QueryDialog from "./query.dialog";
 import { onSaveTypes } from "../../../types";
+import QuerySheet from "./query-sheet";
 
 interface MainTeamsProps {
   data: QueryTypes[];
@@ -15,28 +16,33 @@ interface MainTeamsProps {
   linkInfo?: LinkTypes;
 }
 
-const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
+const MainQueries = ({
+  data,
+  page,
+  limit,
+  total,
+  linkInfo,
+}: MainTeamsProps) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<QueryTypes | null>(null);
   const [action, setAction] = useState<string>("");
 
-  // handle edit
-  const handleEdit = (team: QueryTypes) => {
-    setOpen(true);
-    setAction("edit");
-    setSelectedItem(team);
+  const handlePreview = (query: QueryTypes) => {
+    setSelectedItem(query);
+    setSheetOpen(true);
   };
 
-  // handle delete
-  const handleDelete = (team: QueryTypes) => {
+  const handleDelete = (query: QueryTypes) => {
     setAction("delete");
+    setSheetOpen(false);
     setOpen(true);
-    setSelectedItem(team);
+    setSelectedItem(query);
   };
 
-  // handle save
   const onSave = async (result: onSaveTypes) => {
     setOpen(false);
+
     if (result.success) {
       toast.success(result.message);
     } else {
@@ -44,7 +50,7 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
     }
   };
 
-  const columns = getColumns({ onEdit: handleEdit, onDelete: handleDelete });
+  const columns = getColumns({ onDelete: handleDelete });
 
   return (
     <>
@@ -55,6 +61,17 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
         limit={limit}
         total={total}
         linkInfo={linkInfo ? linkInfo : undefined}
+        onRowClick={handlePreview}
+        getRowClassName={() =>
+          "group transition-colors hover:bg-sky-50/70 data-[state=selected]:bg-sky-50"
+        }
+      />
+
+      <QuerySheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        query={selectedItem}
+        onDelete={handleDelete}
       />
 
       <QueryDialog
@@ -68,4 +85,4 @@ const MainFaq = ({ data, page, limit, total, linkInfo }: MainTeamsProps) => {
   );
 };
 
-export default MainFaq;
+export default MainQueries;

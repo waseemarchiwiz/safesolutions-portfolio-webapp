@@ -1,4 +1,4 @@
-import MainFaq from "./(client)/main";
+import MainQueries from "./(client)/main";
 import { QueryTypes } from "./columns";
 import { GetAllQueries } from "./(actions)/actions";
 
@@ -28,7 +28,7 @@ export default async function AllQueriesPage({
             <h1 className="text-lg">All Queries</h1>
           </div>
           {/* All Queries */}
-          <MainFaq
+          <MainQueries
             data={(queries as QueryTypes[]) || []}
             page={page}
             limit={limit}

@@ -70,6 +70,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface LinkTypes {
   text: string;
@@ -87,6 +88,8 @@ interface DataTableProps<TData, TValue> {
   linkInfo?: LinkTypes;
   // Optional function to get the unique ID from a row for D&D and selection
   getRowId?: (original: TData) => UniqueIdentifier;
+  onRowClick?: (row: TData) => void;
+  getRowClassName?: (row: TData) => string | undefined;
 }
 
 // A generic DragHandle that can be used in a column definition
@@ -107,7 +110,36 @@ export function DragHandle({ id }: { id: UniqueIdentifier }) {
 }
 
 // A generic DraggableRow component
-function DraggableRow<TData>({ row }: { row: Row<TData> }) {
+function shouldIgnoreRowClick(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  return Boolean(
+    target.closest(
+      [
+        "button",
+        "a",
+        "input",
+        "select",
+        "textarea",
+        "[role='checkbox']",
+        "[data-slot='checkbox']",
+        "[data-row-action]",
+      ].join(","),
+    ),
+  );
+}
+
+function DraggableRow<TData>({
+  row,
+  onRowClick,
+  getRowClassName,
+}: {
+  row: Row<TData>;
+  onRowClick?: (row: TData) => void;
+  getRowClassName?: (row: TData) => string | undefined;
+}) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.id,
   });
@@ -117,10 +149,35 @@ function DraggableRow<TData>({ row }: { row: Row<TData> }) {
       data-state={row.getIsSelected() && "selected"}
       data-dragging={isDragging}
       ref={setNodeRef}
-      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
+      className={cn(
+        "relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80",
+        onRowClick &&
+          "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300",
+        getRowClassName?.(row.original),
+      )}
       style={{
         transform: CSS.Transform.toString(transform),
         transition: transition,
+      }}
+      tabIndex={onRowClick ? 0 : undefined}
+      onClick={(event) => {
+        if (!onRowClick || shouldIgnoreRowClick(event.target)) {
+          return;
+        }
+
+        onRowClick(row.original);
+      }}
+      onKeyDown={(event) => {
+        if (
+          !onRowClick ||
+          shouldIgnoreRowClick(event.target) ||
+          (event.key !== "Enter" && event.key !== " ")
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        onRowClick(row.original);
       }}
     >
       {row.getVisibleCells().map((cell) => (
@@ -139,6 +196,8 @@ export function DataTable<TData, TValue>({
   limit,
   page,
   linkInfo,
+  onRowClick,
+  getRowClassName,
   // FIXED: Replace this line
   getRowId = (original: TData) =>
     (original as Record<string, unknown>).id as UniqueIdentifier,
@@ -292,7 +351,12 @@ export function DataTable<TData, TValue>({
                     strategy={verticalListSortingStrategy}
                   >
                     {table.getRowModel().rows.map((row) => (
-                      <DraggableRow<TData> key={row.id} row={row} />
+                      <DraggableRow<TData>
+                        key={row.id}
+                        row={row}
+                        onRowClick={onRowClick}
+                        getRowClassName={getRowClassName}
+                      />
                     ))}
                   </SortableContext>
                 ) : (

@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDistanceToNow } from "date-fns";
-import { Mail, ArrowRight, Inbox } from "lucide-react";
+import { Mail, ArrowRight, Inbox, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -140,7 +140,7 @@ function MessageRow({ msg }: { msg: QueryTypes }) {
       </div>
 
       {/* Arrow on hover */}
-      <ArrowRight
+      <MessageCircle
         size={14}
         className="text-slate-300 group-hover:text-sky-400 transition-colors shrink-0 mt-1 opacity-0 group-hover:opacity-100"
       />

@@ -2,6 +2,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
+import { formatDistanceToNow } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MoreVertical, Pen, Trash } from "lucide-react";
+import { MoreVertical, Trash } from "lucide-react";
 import { shortText } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
@@ -27,12 +28,10 @@ export type QueryTypes = {
 };
 
 interface columnsProps {
-  onEdit: (query: QueryTypes) => void;
   onDelete: (query: QueryTypes) => void;
 }
 
 export const getColumns = ({
-  onEdit,
   onDelete,
 }: columnsProps): ColumnDef<QueryTypes>[] => [
   // Column for Dragging
@@ -67,51 +66,70 @@ export const getColumns = ({
   // Sender
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Contact",
     cell: ({ row }) => (
-      <Badge className="bg-sky-700">{row.original.name}</Badge>
+      <div className="min-w-[12rem]">
+        <p className="font-semibold text-slate-900">{row.original.name}</p>
+        <p className="mt-1 text-xs text-slate-500">{row.original.email}</p>
+      </div>
     ),
   },
-  // Sender
+
   {
     accessorKey: "sender",
-    header: "Sender",
-    cell: ({ row }) => <div className="font-mono">{row.original.email}</div>,
-  },
-  // Receiver
-  {
-    accessorKey: "receiver",
-    header: "Receiver",
+    header: "Recipient",
     cell: ({ row }) => (
-      <Badge className="bg-emerald-700">{row.original.sender}</Badge>
+      <Badge
+        variant="outline"
+        className="border-emerald-200 bg-emerald-50 text-emerald-700"
+      >
+        {row.original.sender}
+      </Badge>
     ),
   },
-  // Column for Subject
+
   {
     accessorKey: "subject",
     header: "Subject",
     cell: ({ row }) => (
-      <div className="font-mono">{shortText(row.original.subject, 40)}</div>
+      <div className="max-w-[14rem] font-medium text-slate-700">
+        {shortText(row.original.subject, 20) || "No subject"}
+      </div>
     ),
   },
 
-  // Column for Message
   {
     accessorKey: "message",
     header: "Message",
     cell: ({ row }) => (
-      <div className="font-mono">{shortText(row.original.message, 40)}</div>
+      <div className="max-w-[22rem] min-w-[16rem]">
+        <p className="line-clamp-2 text-sm leading-6 text-slate-600 transition-colors group-hover:text-slate-800 [overflow-wrap:anywhere]">
+          {row.original.message}
+        </p>
+      </div>
     ),
   },
 
-  // Column for Actions
+  {
+    accessorKey: "createdAt",
+    header: "Received",
+    cell: ({ row }) => {
+      const createdAt = new Date(row.original.createdAt);
+      const value = Number.isNaN(createdAt.getTime())
+        ? "Unknown date"
+        : formatDistanceToNow(createdAt, { addSuffix: true });
+
+      return <div className="min-w-[8rem] text-sm text-slate-500">{value}</div>;
+    },
+  },
+
   {
     header: "Actions",
     id: "actions",
     cell: ({ row }) => {
       const query = row.original;
       return (
-        <>
+        <div data-row-action>
           <div className="flex md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -140,7 +158,7 @@ export const getColumns = ({
               <Trash />
             </Button>
           </div>
-        </>
+        </div>
       );
     },
   },
