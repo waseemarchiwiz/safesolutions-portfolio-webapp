@@ -4,6 +4,9 @@ import { GetProjectBySlug } from "../(actions)/actions";
 type ParamsProps = {
   params: Promise<{ slug: string }>;
 };
+
+export const dynamic = "force-dynamic";
+
 // Project Details Page
 export default async function ProjectDetailsPage({ params }: ParamsProps) {
   // slug

@@ -14,6 +14,8 @@ export interface TeamTypes {
   updatedAt: string;
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   // fetch teams + projects
   const {

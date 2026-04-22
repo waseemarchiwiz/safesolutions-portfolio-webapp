@@ -5,6 +5,8 @@ type ParamsProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ServiceDetailsPage({ params }: ParamsProps) {
   // slug
   const { slug } = await params;

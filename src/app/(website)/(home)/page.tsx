@@ -1,6 +1,8 @@
 import Main from "./(client)";
 import { GetHomePageData } from "./(actions)/actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   // get faqs + projects + testimonials + services
   const {
